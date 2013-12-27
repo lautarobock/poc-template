@@ -1,0 +1,21 @@
+{
+  "name": "drunkslog",
+  "version": "0.1.0",
+  "description": "Drunk's Log =========",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lautarobock/drunkslog.git"
+  },
+  "author": "Lautaro Cozzani",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "6c9789acc936d885da3dfd2fb5cfa705645eeab2",
+  "devDependencies": {
+    "express": "3.4.7",
+    "passport": "0.1.17"
+  }
+}
