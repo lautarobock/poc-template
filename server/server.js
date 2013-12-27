@@ -1,7 +1,7 @@
-var logentries = require('node-logentries');
-var log = logentries.logger({
-  token:'a5e5473f-568f-4058-9f52-4fb5f1153f22'
-});
+// var logentries = require('node-logentries');
+// var log = logentries.logger({
+//   token:'a5e5473f-568f-4058-9f52-4fb5f1153f22'
+// });
 
 var express = require('express');
 var http = require('http');
@@ -30,8 +30,8 @@ var rootRedirect = function(req, res) {
 app.get("/", rootRedirect);
 app.get("/index.html", rootRedirect);
 
-log.info("TEST");
+// log.info("TEST");
 var server = http.createServer(app).listen(app.get('port'), function(){
-    log.info('Express server listening on port ' + app.get('port'));
+    // log.info('Express server listening on port ' + app.get('port'));
   console.log('Express server listening on port ' + app.get('port'));
 });
