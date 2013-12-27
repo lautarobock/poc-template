@@ -1,0 +1,15 @@
+{
+  "name": "drunkslog",
+  "version": "0.1.0",
+  "dependencies": {
+    "angular": "1.2.6",
+    "angular-resource": "1.2.6",
+    "angular-route": "1.2.6",
+    "requirejs": "2.1.9"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "client/lib"
+  ]
+}
