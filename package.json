@@ -14,9 +14,8 @@
   "license": "BSD",
   "readmeFilename": "README.md",
   "gitHead": "6c9789acc936d885da3dfd2fb5cfa705645eeab2",
-  "devDependencies": {
+  "dependencies": {
     "express": "3.4.7",
-    "passport": "0.1.17",
-    "node-logentries": "0.0.2"
+    "passport": "0.1.17"
   }
 }

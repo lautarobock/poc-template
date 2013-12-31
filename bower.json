@@ -13,5 +13,8 @@
     "**/.*",
     "node_modules",
     "client/lib"
-  ]
+  ],
+  "resolutions": {
+    "angular": "1.2.6"
+  }
 }
