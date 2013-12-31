@@ -11,7 +11,6 @@
     "url": "https://github.com/lautarobock/drunkslog.git"
   },
   "author": "Lautaro Cozzani",
-  "license": "BSD",
   "readmeFilename": "README.md",
   "gitHead": "6c9789acc936d885da3dfd2fb5cfa705645eeab2",
   "dependencies": {
