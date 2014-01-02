@@ -18,6 +18,7 @@
 
         <script src="../lib/angular/angular.min.js"></script>
         <script src="../lib/angular-route/angular-route.min.js"></script>
+        <script src="../lib/angular-resource/angular-resource.min.js"></script>
         <script src="../lib/angular-bootstrap/ui-bootstrap.min.js"></script>
         <script src="../lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script src="../lib/angular-translate/angular-translate.min.js"></script>
@@ -100,9 +101,13 @@
                 </div>
               </div>
           </div><!-- /well -->
-          <div class="well">
-            <h4>Otros datos</h4>
-            <p>Aca van otros datos</p>
+          <div class="well" style="min-height: 300px;">
+            <h4> {{ 'side.profile' | translate }}</h4>
+            <img style="max-width: 50%;float:left;margin-right: 1em;" ng-src="{{googleUser.picture}}"></img>
+            <div>
+              <b>{{ 'profile.name' | translate }}:</b> 
+              <a href="{{ googleUser.link}}">{{ googleUser.name}}</a>
+            </div>
           </div><!-- /well -->
         </div>
       </div>
@@ -131,18 +136,10 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         })();
 
-        // var additionalParams = {
-        //       'callback': cb,
-        //       'clientid': "819410194566.apps.googleusercontent.com",
-        //       'cookiepolicy': "single_host_origin",
-        //       'scope': "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-        //       'requestvisibleactions': "http://schemas.google.com/AddActivity",
-        //       approvalprompt: 'auto'
-        // };
-
         var google_client_id = '85681441773-v06bveckr9sig8k5aqtpbi19a1ogq511.apps.googleusercontent.com';
         var google_scope = ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'];
 
+        //Registrar nuevo usuario
         function googleSignIn() {
             gapi.auth.authorize({
                 client_id: google_client_id,
@@ -152,7 +149,8 @@
             cb);
         }
 
-        function onLoadSuccess() {
+        //Acceder con usuario existente
+        function googleLogIn() {
             gapi.auth.authorize({
                 client_id: google_client_id,
                 scope: google_scope,
@@ -161,10 +159,13 @@
             cb);
         }
 
+        function onLoadSuccess() {
+          googleLogIn()   
+        }
+
         function cb(authResult) {
-            console.log("authResult",authResult);
-            //var $scope = angular.element(document.getElementById('LoginController')).scope();
-            //$scope.$emit('g+login', authResult)
+            var $scope = angular.element(document.body).scope();
+            $scope.$emit('g+login', authResult);
         }
     </script>    
   </body>

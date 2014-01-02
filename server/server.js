@@ -23,12 +23,16 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-
 var rootRedirect = function(req, res) {
     res.redirect("html/");
 };
 app.get("/", rootRedirect);
 app.get("/index.html", rootRedirect);
+
+//Connect to Mongoose
+require("mongoose").connect(process.env.MONGOLAB_URI);
+
+require("./routes/config").createRoutes(app);
 
 // log.info("TEST");
 var server = http.createServer(app).listen(app.get('port'), function(){

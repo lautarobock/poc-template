@@ -1,6 +1,6 @@
 define([], function() {
 
-    var menu = angular.module("menu", [ ]);
+    var menu = angular.module("dl.menu", [ ]);
 
     menu.directive("mainMenu", function() {
         return {
