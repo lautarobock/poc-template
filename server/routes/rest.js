@@ -41,21 +41,21 @@ function createRest(service, customId) {
     };
 }
 
-exports.createAndBind = function(name, customId, app, path) {
+exports.createAndBind = function(name, customId, app, path, security) {
     var rest = exports.create(name, customId);
-    exports.bind(name, rest, app, path);
+    exports.bind(name, rest, app, path, security);
 };
 
 exports.create = function(name, customId) {
     return createRest(name, customId);
 };
 
-exports.bind = function(name, rest, app, path) {
+exports.bind = function(name, rest, app, path, security) {
+    security = security || {};
     path = path || '';
-    // console.log("INFO", "register " + name + " in " + path);
     app.get('/' + path + name+ "/:id", rest.findById)
     app.get('/' + path + name, rest.findAll);
-    app.post('/' + path + name + "/:id", rest.save);
-    app.post('/' + path + name, rest.save);
+    app.post('/' + path + name + "/:id", security.save || [], rest.save);
+    app.post('/' + path + name, security.save || [], rest.save);    
     app.delete('/' + path + name + "/:id", rest.remove);    
 };

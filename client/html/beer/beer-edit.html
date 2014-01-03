@@ -1,56 +1,126 @@
 <div class="col-lg-8">
+  <h2 ng-show="beer._id">{{ beer.name }}</h2>
+  <h2 ng-hide="beer._id">{{ 'beer.new' | translate }}</h2>
   <form class="bs-example form-horizontal">
     <fieldset>
-      <legend>{{ 'beer.new' | translate }}</legend>
+      <legend>{{ 'beer.form.general' | translate }}</legend>
       <div class="form-group">
-        <label for="name" class="col-lg-2 control-label">{{ 'beer.data.name' | translate }}</label>
-        <div class="col-lg-10">
-          <input type="text" ng-model="beer.name" class="form-control" id="name" placeholder="{{ 'beer.data.name' | translate }}">
+        <div class="col-lg-6">
+          <label for="beername" class="control-label">{{ 'beer.data.name' | translate }}</label>
+          <div class="">
+            <input type="text" ng-model="beer.name" class="form-control" id="beername" placeholder="{{ 'beer.data.name' | translate }}">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="style" class="col-lg-2 control-label">{{ 'beer.data.style' | translate }}</label>
-        <div class="col-lg-10">
-          <select class="form-control" id="style" ng-model="beer.style">
-            <option ng-repeat="style in styles" value="{{ style._id }}">
-              {{ style.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="styleByLabel" class="col-lg-2 control-label">{{ 'beer.data.styleByLabel' | translate }}</label>
-        <div class="col-lg-10">
-          <div class="input-group">
-            <select class="form-control" id="styleByLabel" ng-model="beer.styleByLabel">
-              <option ng-repeat="style in stylesByLabel" value="{{ style._id }}">
-                {{ style.name }}
-              </option>
-            </select>
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="openNewStyleByLabel()">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </span>
+        <div class="col-lg-6">
+          <label for="brewery" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.brewery.help' | translate }}">
+            {{ 'beer.data.brewery' | translate }}
+          </label>
+          <div class="">
+            <div class="input-group">
+              <select class="form-control" id="brewery" ng-model="beer.brewery">
+                <option ng-repeat="brewery in breweries" value="{{ brewery._id }}">
+                  {{ brewery.name }}
+                </option>
+              </select>
+              <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" ng-click="openNewBrewery()">
+                      <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+              </span>
+            </div>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="description" class="col-lg-2 control-label">{{ 'beer.data.description' | translate }}</label>
-        <div class="col-lg-10">
-          <textarea class="form-control" rows="3" ng-model="beer.description" id="description"></textarea>
-          <span class="help-block">{{ 'beer.data.description.help' | translate }}</span>
+        <div class="col-lg-6">
+          <label for="style" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.style.help' | translate }}">
+            {{ 'beer.data.style' | translate }}
+          </label>
+          <div class="">
+            <select class="form-control" id="style" ng-model="beer.style">
+              <option ng-repeat="style in styles" value="{{ style._id }}">
+                {{ style.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label for="styleByLabel" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.styleByLabel.help' | translate }}">
+            {{ 'beer.data.styleByLabel' | translate }}
+          </label>
+          <div class="">
+            <div class="input-group">
+              <select class="form-control" id="styleByLabel" ng-model="beer.styleByLabel">
+                <option ng-repeat="style in stylesByLabel" value="{{ style._id }}">
+                  {{ style.name }}
+                </option>
+              </select>
+              <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" ng-click="openNewStyleByLabel()">
+                      <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-      
       <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
+        <div class="col-lg-12">
+          <label for="description" class="control-label">{{ 'beer.data.description' | translate }}</label>
+          <div>
+            <textarea class="form-control" rows="5" ng-model="beer.description" id="description"></textarea>
+            <span class="help-block">{{ 'beer.data.description.help' | translate }}</span>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>{{ 'beer.form.technical' | translate }}</legend>
+      <div class="form-group">
+        <div class="col-lg-3">
+          <label for="style" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.abv.help' | translate }}">
+            {{ 'beer.data.abv' | translate }}
+          </label>
+          <div class="">
+            <input type="number" step="0.1" ng-model="beer.abv" class="form-control" id="abv" placeholder="{{ 'beer.data.abv' | translate }}">
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label for="style" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.ibu.help' | translate }}">
+            {{ 'beer.data.ibu' | translate }}
+          </label>
+          <div class="">
+            <input type="number" ng-model="beer.ibu" class="form-control" id="ibu" placeholder="{{ 'beer.data.ibu' | translate }}">
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label for="style" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.og.help' | translate }}">
+            {{ 'beer.data.og' | translate }}
+          </label>
+          <div class="">
+            <input type="number" ng-model="beer.og" class="form-control" id="og" placeholder="{{ 'beer.data.og' | translate }}">
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label for="style" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.fg.help' | translate }}">
+            {{ 'beer.data.fg' | translate }}
+          </label>
+          <div class="">
+            <input type="number" ng-model="beer.fg" class="form-control" id="fg" placeholder="{{ 'beer.data.fg' | translate }}">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <div class="col-lg-12">
+        <div class="pull-right">
           <a class="btn btn-default" href="#/beer" >{{ 'form.cancel' | translate }}</a> 
           <button type="submit" class="btn btn-primary" ng-click="save()">{{ 'form.save' | translate }}</button> 
         </div>
       </div>
-    </fieldset>
+    </div>
   </form>
+
 </div>
 <div class="col-lg-4">
   <div ng-include="'side/side.html'"></div>

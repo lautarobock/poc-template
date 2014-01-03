@@ -1,44 +1,36 @@
 <div class="col-lg-8">
+  <h2>{{ beer.name }}</h2>
   <form class="bs-example form-horizontal">
     <fieldset>
-      <legend>{{beer.name}}</legend>
-      <div class="form-group">
-        <label for="style" class="col-lg-2 control-label">{{ 'beer.data.style' | translate }}</label>
-        <div class="col-lg-10">
-          <span class="form-control" id="style">
-            {{ beer.style }}
-          </span>
-        </div>
+      <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
+      <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
+      <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
+      <p/>
+      <div class="well well-sm" ng-show="beer.abv||beer.ibu||beer.og||beer.fg">
+        <span ng-show="beer.abv">
+          {{ 'beer.data.abv' | translate }}: <b>{{beer.abv}}%</b> <span class="glyphicon glyphicon-flash"></span>
+        </span>
+        <span ng-show="beer.ibu">
+          {{ 'beer.data.ibu' | translate }}: <b>{{beer.ibu}}</b> <span class="glyphicon glyphicon-flash"></span>
+        </span>
+        <span ng-show="beer.og">
+          {{ 'beer.data.og' | translate }}: <b>{{beer.og}}</b> <span class="glyphicon glyphicon-flash"></span>
+        </span>
+        <span ng-show="beer.fg">
+          {{ 'beer.data.fg' | translate }}: <b>{{beer.fg}}</b> <span class="glyphicon glyphicon-flash"></span>
+        </span>
       </div>
-      <div class="form-group">
-        <label for="styleByLabel" class="col-lg-2 control-label">{{ 'beer.data.styleByLabel' | translate }}</label>
-        <div class="col-lg-10">
-          <div class="input-group">
-            <select class="form-control" id="styleByLabel" ng-model="beer.styleByLabel">
-              <option ng-repeat="style in stylesByLabel" value="{{ style._id }}">
-                {{ style.name }}
-              </option>
-            </select>
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="openNewStyleByLabel()">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </span>
+      <p/>
+      <div class="well well-sm">
+        <h4>{{ 'beer.data.description' | translate }}</h4>
+        <p>{{beer.description}}</p>
+      </div>
+      <div class="form-group" >
+        <div class="col-lg-12">
+          <div class="pull-right">
+            <a secure class="btn btn-success" href="#/rate/new?beer_id{{beer._id}}" >{{ 'beer.setAsDrunk' | translate }}</a> 
+            <a secure-admin class="btn btn-primary" href="#/beer/edit/{{beer._id}}" >{{ 'form.edit' | translate }}</a> 
           </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="description" class="col-lg-2 control-label">{{ 'beer.data.description' | translate }}</label>
-        <div class="col-lg-10">
-          <textarea class="form-control" rows="3" ng-model="beer.description" id="description"></textarea>
-          <span class="help-block">{{ 'beer.data.description.help' | translate }}</span>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
-          <a class="btn btn-default" href="#/beer" >{{ 'form.cancel' | translate }}</a> 
-          <button type="submit" class="btn btn-primary" ng-click="save()">{{ 'form.save' | translate }}</button> 
         </div>
       </div>
     </fieldset>

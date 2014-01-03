@@ -6,29 +6,53 @@ exports.findAll = function(req, res) {
 	model.Beer.find()
         .populate('style')
         .populate('styleByLabel')
+        .populate('brewery')
         .exec(function(err,results) {
             res.send(results);
     });    
 };
 
-// exports.save = function(req, res) {
-//     console.log("INFO", "Beer.save");
-//     delete req.body._id;
-//     model.Beer.findByIdAndUpdate(req.params.id,req.body,{upsert:true})
-//         // .populate('styleByLabel')
-//         // .populate('style')
-//         .exec(function(err,results) {
-//             console.log("INFO", "results",results);
-//             res.send(results);
-//         }
-//     );
-// };
+exports.save = function(req, res) {
+    delete req.body._id;
+    var now = new Date();
+    req.body.updateDate = now;
+    if ( !req.body.version || req.body.version.length == 0 ) {
+        req.body.version = [{
+            number: 1,
+            user_id: req.session.user_id,
+            timeStamp: now,
+            user_name: req.session.user_name
+        }];
+        req.body.creationDate = now;
+        req.body.createdBy = req.session.user_id;
+    } else {
+        var oldV = req.body.version[req.body.version.length-1];
+        req.body.version.push({
+            number: oldV.number+1,
+            user_id: req.session.user_id,
+            timeStamp: now,
+            user_name: req.session.user_name
+        });
+    }
+    model.Beer.findByIdAndUpdate(req.params.id,req.body,{upsert:true})
+        .exec(function(err,results) {
+            if ( err ) {
+                console.log("ERR", err);
+                throw err;
+            }
+            res.send(results);
+        }
+    );
+};
 
-// exports.findById = function(req, res) {
-//     model.Beer.findOne({_id:req.params.id})
-//         // .populate('styleByLabel')
-//         // .populate('style')
-//         .exec(function(err,results) {
-//             res.send(results);
-//     });  
-// };
+exports.findById = function(req, res) {
+    var query = model.Beer.findOne({_id:req.params.id});
+    if ( req.query.populate ) {
+        query.populate('styleByLabel')
+        query.populate('style')
+        query.populate('brewery')
+    }
+    query.exec(function(err,results) {
+        res.send(results);
+    });  
+};

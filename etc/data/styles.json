@@ -56,7 +56,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/brown-ale/15/"
                 },
                 {
-                  "_id": "14c",
+                  "_id": "14b",
                   "name": "American IPA",
                   "co2_min": 2.26,
                   "co2_max": 2.78,
