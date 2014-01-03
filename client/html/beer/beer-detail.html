@@ -1,0 +1,57 @@
+<div class="col-lg-8">
+  <form class="bs-example form-horizontal">
+    <fieldset>
+      <legend>{{ 'beer.new' | translate }}</legend>
+      <div class="form-group">
+        <label for="name" class="col-lg-2 control-label">{{ 'beer.data.name' | translate }}</label>
+        <div class="col-lg-10">
+          <input type="text" ng-model="beer.name" class="form-control" id="name" placeholder="{{ 'beer.data.name' | translate }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="style" class="col-lg-2 control-label">{{ 'beer.data.style' | translate }}</label>
+        <div class="col-lg-10">
+          <select class="form-control" id="style" ng-model="beer.style">
+            <option ng-repeat="style in styles" value="{{ style._id }}">
+              {{ style.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="styleByLabel" class="col-lg-2 control-label">{{ 'beer.data.styleByLabel' | translate }}</label>
+        <div class="col-lg-10">
+          <div class="input-group">
+            <select class="form-control" id="styleByLabel" ng-model="beer.styleByLabel">
+              <option ng-repeat="style in stylesByLabel" value="{{ style._id }}">
+                {{ style.name }}
+              </option>
+            </select>  
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="openNewStyleByLabel()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description" class="col-lg-2 control-label">{{ 'beer.data.description' | translate }}</label>
+        <div class="col-lg-10">
+          <textarea class="form-control" rows="3" ng-model="beer.description" id="description"></textarea>
+          <span class="help-block">{{ 'beer.data.description.help' | translate }}</span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <a class="btn btn-default" href="#/beer" >{{ 'form.cancel' | translate }}</a> 
+          <button type="submit" class="btn btn-primary" ng-click="save()">{{ 'form.save' | translate }}</button> 
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<div class="col-lg-4">
+  <div ng-include="'side/side.html'"></div>
+</div>

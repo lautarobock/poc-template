@@ -2,15 +2,18 @@ require([
     "locale/locale",
     "menu/menu",
     "resources",
-    "gplus"
-    ], function(locale, menu, resources, gplus) {
+    "gplus",
+    "beer/beer"
+    ], function(locale, menu, resources, gplus, beer) {
 
     var app = angular.module("app", [
+        'ngRoute',
         'ui.bootstrap',
         'pascalprecht.translate',
         'dl.menu',
         'dl.resources',
-        'dl.gplus']);
+        'dl.gplus',
+        'dl.beer']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
@@ -53,9 +56,32 @@ require([
     }]);
 
 
-    app.config(['$translateProvider', function ($translateProvider) {
+    app.config(['$translateProvider','$routeProvider', function ($translateProvider, $routeProvider) {
+
+        //Configure Translate
         $translateProvider.translations('es', locale.es);
         $translateProvider.preferredLanguage('es');
+
+
+        //Configure Routes
+        $routeProvider.
+                when('/beer/new', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
+                when('/beer/edit/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
+                when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
+                otherwise({redirectTo: '/beer'});
+
     }]);
+
+    app.directive('secure', function() {
+        return function(scope,element) {
+            scope.$watch("user", function(value, old) {
+                if ( value ) {
+                    element.removeClass('dl-hide');
+                } else {
+                    element.addClass('dl-hide');
+                }    
+            });
+        };
+    });
 
 });

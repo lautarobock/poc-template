@@ -1,6 +1,7 @@
 db.styles.remove();
 db.styles.insert([
                 {
+                  "_id": "10b",
                   "name": "American Amber Ale",
                   "co2_min": 2.26,
                   "co2_max": 2.78,
@@ -19,6 +20,7 @@ db.styles.insert([
                   
                 },
                 {
+                  "_id": "19c",
                   "name": "American Barleywine",
                   "co2_min": 1.3,
                   "co2_max": 2.3,
@@ -36,6 +38,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/american-strong-ale/64/"
                 },
                 {
+                  "_id": "10c",
                   "name": "American Brown Ale",
                   "co2_min": 1.5,
                   "co2_max": 2.5,
@@ -53,6 +56,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/brown-ale/15/"
                 },
                 {
+                  "_id": "14c",
                   "name": "American IPA",
                   "co2_min": 2.26,
                   "co2_max": 2.78,
@@ -70,6 +74,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/india-pale-ale-ipa/17/"
                 },
                 {
+                  "_id": "10a",
                   "name": "American Pale Ale",
                   "co2_min": 2.26,
                   "co2_max": 2.78,
@@ -87,6 +92,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/american-pale-ale/18/"
                 },
                 {
+                  "_id": "13e",
                   "name": "American Stout",
                   "co2_min": 2.3,
                   "co2_max": 2.6,
@@ -104,6 +110,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/stout/6/"
                 },
                 {
+                  "_id": "06d",
                   "name": "American Wheat or Rye Beer",
                   "co2_min": 2.3,
                   "co2_max": 2.6,
@@ -121,76 +128,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/wheat-ale/19/"
                 },
                 {
-                  "name": "Australian Dark/Old Ale",
-                  "OG_Min": 1.040,
-                  "OG_Max": 1.050,
-                  "FG_Min": 1.010,
-                  "FG_Max": 1.016,
-                  "IBU_Min": 15,
-                  "IBU_Max": 20,
-                  "Colour_Min": 19,
-                  "Colour_Max": 35,
-                  "ABV_Min": 4.5,
-                  "ABV_Max": 5.3,
-                  "link": ""
-                },
-                {
-                  "name": "Australian Lager",
-                  "OG_Min": 1.040,
-                  "OG_Max": 1.050,
-                  "FG_Min": 1.004,
-                  "FG_Max": 1.010,
-                  "IBU_Min": 10,
-                  "IBU_Max": 20,
-                  "Colour_Min": 2,
-                  "Colour_Max": 6,
-                  "ABV_Min": 4.2,
-                  "ABV_Max": 5.1,
-                  "link": ""
-                },
-                {
-                  "name": "Australian Light Lager",
-                  "OG_Min": 1.028,
-                  "OG_Max": 1.035,
-                  "FG_Min": 1.004,
-                  "FG_Max": 1.008,
-                  "IBU_Min": 10,
-                  "IBU_Max": 15,
-                  "Colour_Min": 2,
-                  "Colour_Max": 4,
-                  "ABV_Min": 2.8,
-                  "ABV_Max": 3.5,
-                  "link": ""
-                },
-                {
-                  "name": "Australian Pale Ale",
-                  "OG_Min": 1.0435,
-                  "OG_Max": 1.050,
-                  "FG_Min": 1.004,
-                  "FG_Max": 1.006,
-                  "IBU_Min": 25,
-                  "IBU_Max": 40,
-                  "Colour_Min": 5,
-                  "Colour_Max": 9,
-                  "ABV_Min": 4.2,
-                  "ABV_Max": 6.0,
-                  "link": ""
-                },
-                {
-                  "name": "Australian Premium Lager",
-                  "OG_Min": 1.045,
-                  "OG_Max": 1.055,
-                  "FG_Min": 1.008,
-                  "FG_Max": 1.012,
-                  "IBU_Min": 15,
-                  "IBU_Max": 25,
-                  "Colour_Min": 2,
-                  "Colour_Max": 6,
-                  "ABV_Min": 4.7,
-                  "ABV_Max": 6.0,
-                  "link": ""
-                },
-                {
+                  "_id": "12c",
                   "name": "Baltic Porter",
                   "OG_Min": 1.060,
                   "OG_Max": 1.090,
@@ -206,6 +144,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/baltic-porter/63/"
                 },
                 {
+                  "_id": "18a",
                   "name": "Belgian Blond Ale",
                   "co2_min": 1.9,
                   "co2_max": 2.4,
@@ -223,6 +162,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/belgian-ale/12/"
                 },
                 {
+                  "_id": "18e",
                   "name": "Belgian Dark Strong Ale",
                   "co2_min": 1.9,
                   "co2_max": 2.5,
@@ -240,6 +180,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/abt-quadrupel/80/"
                 },
                 {
+                  "_id": "18b",
                   "name": "Belgian Dubbel",
                   "co2_min": 1.9,
                   "co2_max": 2.4,
@@ -257,6 +198,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/abbey-dubbel/71/"
                 },
                 {
+                  "_id": "18d",
                   "name": "Belgian Golden Strong Ale",
                   "co2_min": 1.9,
                   "co2_max": 2.4,
@@ -274,6 +216,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/belgian-strong-ale/13/"
                 },
                 {
+                  "_id": "16b",
                   "name": "Belgian Pale Ale",
                   "co2_min": 1.9,
                   "co2_max": 2.5,
@@ -291,6 +234,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/belgian-ale/12/"
                 },
                 {
+                  "_id": "16e",
                   "name": "Belgian Specialty Ale",
                   "co2_min": 1.9,
                   "co2_max": 2.4,
@@ -308,6 +252,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/specialty-grain/106/"
                 },
                 {
+                  "_id": "18c",
                   "name": "Belgian Tripel",
                   "co2_min": 1.9,
                   "co2_max": 2.4,
@@ -325,6 +270,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/abbey-tripel/72/"
                 },
                 {
+                  "_id": "17a",
                   "name": "Berliner Weisse",
                   "co2_min": 3.45,
                   "co2_max": 3.45,
@@ -342,6 +288,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/berliner-weisse/61/"
                 },
                 {
+                  "_id": "16d",
                   "name": "Biere de Garde",
                   "co2_min": 1.9,
                   "co2_max": 2.5,
@@ -359,6 +306,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/biere-de-garde/58/"
                 },
                 {
+                  "_id": "06b",
                   "name": "Blonde Ale",
                   "co2_min": 2.3,
                   "co2_max": 2.6,
@@ -376,6 +324,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/golden-ale-blond-ale/54/"
                 },
                 {
+                  "_id": "02b",
                   "name": "Bohemian Pilsener",
                   "co2_min": 2.3,
                   "co2_max": 2.5,
@@ -393,6 +342,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/czech-pilsner-sv283tly/31/"
                 },
                 {
+                  "_id": "12a",
                   "name": "Brown Porter",
                   "co2_min": 1.7,
                   "co2_max": 2.5,
@@ -410,6 +360,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/porter/5/"
                 },
                 {
+                  "_id": "10d",
                   "name": "Cascadian Dark Ale",
                   "OG_Min": 1.060,
                   "OG_Max": 1.075,
@@ -424,6 +375,7 @@ db.styles.insert([
                   "link": ""
                 },
                 {
+                  "_id": "07b",
                   "name": "California Common Beer",
                   "co2_min": 2.4,
                   "co2_max": 2.8,
@@ -441,6 +393,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/california-common/42/"
                 },
                 {
+                  "_id": "21b",
                   "name": "Christmas/Winter Specialty Spiced Beer",
                   "co2_min": 1.9,
                   "co2_max": 2.4,
@@ -457,6 +410,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style21.php#1b"
                 },
                 {
+                  "_id": "02c",
                   "name": "Classic American Pilsner",
                   "co2_min": 2.3,
                   "co2_max": 2.5,
@@ -474,6 +428,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/pilsener/4/"
                 },
                 {
+                  "_id": "22a",
                   "name": "Classic Rauchbier",
                   "co2_min": 2.16,
                   "co2_max": 2.57,
@@ -491,6 +446,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/smoked/41/"
                 },
                 {
+                  "_id": "06a",
                   "name": "Cream Ale",
                   "co2_min": 2.6,
                   "co2_max": 2.7,
@@ -508,6 +464,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/cream-ale/35/"
                 },
                 {
+                  "_id": "04a",
                   "name": "Dark American Lager",
                   "co2_min": 2.5,
                   "co2_max": 2.7,
@@ -524,6 +481,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style04.php#1a"
                 },
                 {
+                  "_id": "05c",
                   "name": "Doppelbock",
                   "co2_min": 2.26,
                   "co2_max": 2.62,
@@ -541,6 +499,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/doppelbock/26/"
                 },
                 {
+                  "_id": "06e",
                   "name": "Dorada Pampeana",
                   "co2_min": 2.3,
                   "co2_max": 2.6,
@@ -557,6 +516,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/intl/dorada.doc"
                 },
                 {
+                  "_id": "01e",
                   "name": "Dortmunder Export",
                   "co2_min": 2.57,
                   "co2_max": 2.57,
@@ -573,6 +533,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style01.php#1e"
                 },
                 {
+                  "_id": "13a",
                   "name": "Dry Stout",
                   "co2_min": 1.6,
                   "co2_max": 2.0,
@@ -590,6 +551,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/dry-stout/22/"
                 },
                 {
+                  "_id": "15b",
                   "name": "Dunkelweizen",
                   "co2_min": 3.6,
                   "co2_max": 4.48,
@@ -607,6 +569,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/dunkelweizen/100/"
                 },
                 {
+                  "_id": "07c",
                   "name": "Dusseldorf Altbier",
                   "co2_min": 2.16,
                   "co2_max": 3.09,
@@ -624,6 +587,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/altbier/2/"
                 },
                 {
+                  "_id": "05d",
                   "name": "Eisbock",
                   "co2_min": 2.37,
                   "co2_max": 2.37,
@@ -641,6 +605,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/eisbock/27/"
                 },
                 {
+                  "_id": "19b",
                   "name": "English Barleywine",
                   "co2_min": 1.3,
                   "co2_max": 2.3,
@@ -658,6 +623,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/barley-wine/11/"
                 },
                 {
+                  "_id": "14a",
                   "name": "English IPA",
                   "co2_min": 1.5,
                   "co2_max": 2.3,
@@ -675,6 +641,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/india-pale-ale-ipa/17/"
                 },
                 {
+                  "_id": "08c",
                   "name": "Extra Special/Strong Bitter (English Pale Ale)",
                   "co2_min": 0.75,
                   "co2_max": 1.3,
@@ -692,6 +659,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/english-pale-ale/16/"
                 },
                 {
+                  "_id": "17c",
                   "name": "Flanders Brown Ale/Oud Bruin",
                   "co2_min": 1.9,
                   "co2_max": 2.5,
@@ -709,6 +677,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/sour-red-brown/118/"
                 },
                 {
+                  "_id": "17b",
                   "name": "Flanders Red Ale",
                   "co2_min": 1.9,
                   "co2_max": 2.5,
@@ -726,6 +695,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/sour-red-brown/118/"
                 },
                 {
+                  "_id": "13d",
                   "name": "Foreign Extra Stout",
                   "co2_min": 2.3,
                   "co2_max": 2.6,
@@ -743,6 +713,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/foreign-stout/79/"
                 },
                 {
+                  "_id": "20a",
                   "name": "Fruit Beer",
                   "co2_min": 2.0,
                   "co2_max": 3.0,
@@ -760,6 +731,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/fruit-beer/40/"
                 },
                 {
+                  "_id": "17f",
                   "name": "Fruit Lambic",
                   "co2_min": 2.6,
                   "co2_max": 4.5,
@@ -777,6 +749,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/lambic-style--fruit/14/"
                 },
                 {
+                  "_id": "02a",
                   "name": "German Pilsner (Pils)",
                   "co2_min": 2.52,
                   "co2_max": 2.52,
@@ -793,6 +766,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style02.php#1a"
                 },
                 {
+                  "_id": "17e",
                   "name": "Gueuze",
                   "co2_min": 3.0,
                   "co2_max": 4.5,
@@ -810,6 +784,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/lambic-style--gueuze/73/"
                 },
                 {
+                  "_id": "14c",
                   "name": "Imperial IPA",
                   "OG_Min": 1.075,
                   "OG_Max": 1.090,
@@ -825,6 +800,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/imperial-double-ipa/81/"
                 },
                 {
+                  "_id": "13f",
                   "name": "Imperial Stout",
                   "co2_min": 1.5,
                   "co2_max": 2.3,
@@ -842,6 +818,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/imperial-stout/24/"
                 },
                 {
+                  "_id": "14d",
                   "name": "IPA Argenta",
                   "OG_Min": 1.050,
                   "OG_Max": 1.070,
@@ -856,6 +833,7 @@ db.styles.insert([
                   "link": "http://goo.gl/4ybhp0"
                 },
                 {
+                  "_id": "09d",
                   "name": "Irish Red Ale",
                   "OG_Min": 1.044,
                   "OG_Max": 1.060,
@@ -871,6 +849,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/irish-ale/62/"
                 },
                 {
+                  "_id": "06c",
                   "name": "Kolsch",
                   "co2_min": 2.42,
                   "co2_max": 2.73,
@@ -888,6 +867,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/kolsch/39/"
                 },
                 {
+                  "_id": "01a",
                   "name": "Lite American Lager",
                   "co2_min": 2.57,
                   "co2_max": 2.73,
@@ -904,6 +884,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style01.php#1a"
                 },
                 {
+                  "_id": "05a",
                   "name": "Maibock/Helles Bock",
                   "co2_min": 2.16,
                   "co2_max": 2.73,
@@ -921,6 +902,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/heller-bock/105/"
                 },
                 {
+                  "_id": "11a",
                   "name": "Mild",
                   "co2_min": 1.3,
                   "co2_max": 2.0,
@@ -938,6 +920,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/mild-ale/55/"
                 },
                 {
+                  "_id": "04b",
                   "name": "Munich Dunkel",
                   "co2_min": 2.21,
                   "co2_max": 2.66,
@@ -955,6 +938,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/dunkel-tmavy/28/"
                 },
                 {
+                  "_id": "01d",
                   "name": "Munich Helles",
                   "co2_min": 2.26,
                   "co2_max": 2.68,
@@ -972,6 +956,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/dortmunder-helles/60/"
                 },
                 {
+                  "_id": "07a",
                   "name": "North German Altbier",
                   "co2_min": 2.16,
                   "co2_max": 3.09,
@@ -988,6 +973,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style07.php#1a"
                 },
                 {
+                  "_id": "11c",
                   "name": "Northern English Brown Ale",
                   "co2_min": 1.5,
                   "co2_max": 2.3,
@@ -1005,6 +991,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/brown-ale/15/"
                 },
                 {
+                  "_id": "13c",
                   "name": "Oatmeal Stout",
                   "co2_min": 2.0,
                   "co2_max": 2.4,
@@ -1022,6 +1009,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/stout/6/"
                 },
                 {
+                  "_id": "03b",
                   "name": "Oktoberfest/Marzen",
                   "co2_min": 2.57,
                   "co2_max": 2.73,
@@ -1039,6 +1027,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/oktoberfest-marzen/37/"
                 },
                 {
+                  "_id": "19a",
                   "name": "Old Ale",
                   "co2_min": 1.5,
                   "co2_max": 2.3,
@@ -1056,6 +1045,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/old-ale/76/"
                 },
                 {
+                  "_id": "22b",
                   "name": "Other Smoked Beer",
                   "co2_min": 2.16,
                   "co2_max": 2.57,
@@ -1073,6 +1063,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/smoked/41/"
                 },
                 {
+                  "_id": "01c",
                   "name": "Premium American Lager",
                   "co2_min": 2.57,
                   "co2_max": 2.73,
@@ -1090,6 +1081,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/premium-lager/103/"
                 },
                 {
+                  "_id": "12b",
                   "name": "Robust Porter",
                   "co2_min": 1.8,
                   "co2_max": 2.5,
@@ -1107,6 +1099,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/imperial-strong-porter/113/"
                 },
                 {
+                  "_id": "15d",
                   "name": "Roggenbier (German Rye Beer)",
                   "co2_min": 3.45,
                   "co2_max": 3.45,
@@ -1123,6 +1116,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style15.php#1d"
                 },
                 {
+                  "_id": "16c",
                   "name": "Saison",
                   "co2_min": 1.9,
                   "co2_max": 2.4,
@@ -1140,6 +1134,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/saison/45/"
                 },
                 {
+                  "_id": "04c",
                   "name": "Schwarzbier",
                   "co2_min": 2.2,
                   "co2_max": 2.6,
@@ -1157,6 +1152,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/schwarzbier/29/"
                 },
                 {
+                  "_id": "09a",
                   "name": "Scottish Light 60/-",
                   "co2_min": 0.75,
                   "co2_max": 1.3,
@@ -1174,6 +1170,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/scottish-ale/21/"
                 },
                 {
+                  "_id": "09b",
                   "name": "Scottish Light 70/-",
                   "co2_min": 0.75,
                   "co2_max": 1.3,
@@ -1191,6 +1188,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/scottish-ale/21/"
                 },
                 {
+                  "_id": "09c",
                   "name": "Scottish Light 80/-",
                   "co2_min": 0.75,
                   "co2_max": 1.3,
@@ -1208,6 +1206,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/scottish-ale/21/"
                 },
                 {
+                  "_id": "11b",
                   "name": "Southern English Brown Ale",
                   "co2_min": 1.5,
                   "co2_max": 2.3,
@@ -1225,6 +1224,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/brown-ale/15/"
                 },
                 {
+                  "_id": "08b",
                   "name": "Special/Best/Premium Bitter",
                   "co2_min": 0.75,
                   "co2_max": 1.3,
@@ -1242,6 +1242,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/premium-bitter-esb/101/"
                 },
                 {
+                  "_id": "23a",
                   "name": "Specialty Beer",
                   "co2_min": 2.2,
                   "co2_max": 2.5,
@@ -1259,6 +1260,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/specialty-grain/106/"
                 },
                 {
+                  "_id": "21a",
                   "name": "Spice, Herb, or Vegetable Beer",
                   "co2_min": 2.0,
                   "co2_max": 3.0,
@@ -1275,6 +1277,7 @@ db.styles.insert([
                   "link": "http://www.bjcp.org/2008styles/style21.php#1a"
                 },
                 {
+                  "_id": "01b",
                   "name": "Standard American Lager",
                   "co2_min": 2.57,
                   "co2_max": 2.73,
@@ -1292,6 +1295,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/pale-lager/3/"
                 },
                 {
+                  "_id": "08a",
                   "name": "Standard/Ordinary Bitter",
                   "co2_min": 0.75,
                   "co2_max": 1.3,
@@ -1309,6 +1313,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/bitter/20/"
                 },
                 {
+                  "_id": "17d",
                   "name": "Straight (Unblended) Lambic",
                   "co2_min": 3.0,
                   "co2_max": 4.5,
@@ -1326,6 +1331,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/lambic-style--unblended/78/"
                 },
                 {
+                  "_id": "09e",
                   "name": "Strong Scotch Ale",
                   "co2_min": 1.5,
                   "co2_max": 2.3,
@@ -1343,6 +1349,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/scotch-ale/102/"
                 },
                 {
+                  "_id": "13b",
                   "name": "Sweet Stout",
                   "co2_min": 2.0,
                   "co2_max": 2.4,
@@ -1360,6 +1367,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/sweet-stout/23/"
                 },
                 {
+                  "_id": "05b",
                   "name": "Traditional Bock",
                   "co2_min": 2.2,
                   "co2_max": 2.7,
@@ -1377,6 +1385,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/dunkler-bock/9/"
                 },
                 {
+                  "_id": "03a",
                   "name": "Vienna Lager",
                   "co2_min": 2.4,
                   "co2_max": 2.6,
@@ -1394,6 +1403,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/amber-lager-vienna/36/"
                 },
                 {
+                  "_id": "15a",
                   "name": "Weizen/Weissbier",
                   "co2_min": 3.6,
                   "co2_max": 4.48,
@@ -1411,6 +1421,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/german-hefeweizen/7/"
                 },
                 {
+                  "_id": "15c",
                   "name": "Weizenbock",
                   "co2_min": 3.71,
                   "co2_max": 4.74,
@@ -1428,6 +1439,7 @@ db.styles.insert([
                   "related": "http://www.ratebeer.com/beerstyles/weizen-bock/25/"
                 },
                 {
+                  "_id": "16a",
                   "name": "Witbier",
                   "co2_min": 2.1,
                   "co2_max": 2.6,
@@ -1445,6 +1457,7 @@ db.styles.insert([
                   "related":"http://www.ratebeer.com/beerstyles/belgian-white-witbier/48/"
                 },
                 {
+                  "_id": "22c",
                   "name": "Wood-Aged Beer",
                   "OG_Min": 1.030,
                   "OG_Max": 1.110,
