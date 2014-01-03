@@ -45,8 +45,10 @@ define(['../resources'], function() {
 				modalInstance.result.then(function (styleByLabel) {
 				  	console.log("StyleByLabel",styleByLabel);
 				  	styleByLabel._id = styleByLabel.name;
-				  	styleByLabel.$save(function() {
-						$scope.stylesByLabel = StyleByLabel.query();
+				  	styleByLabel.$save(function(saved) {
+						$scope.stylesByLabel = StyleByLabel.query(function() {
+							$scope.beer.styleByLabel = saved._id;
+						});
 					});
 				}, function () {
 				  
@@ -55,7 +57,9 @@ define(['../resources'], function() {
 
 			//Save
 			$scope.save = function() {
-				$scope.beer._id = $scope.beer.name + "-" + new Date().getTime();
+				if ( !$scope.beer._id ) {
+					$scope.beer._id = $scope.beer.name + "-" + new Date().getTime();
+				}
 				$scope.beer.$save(function(beer) {
 					$location.path('/beer/edit/' + beer._id);
 				});
