@@ -23,6 +23,18 @@ define(['../resources'], function() {
 	beer.controller("BeerDetailController", 
 		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal',
 		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal) {
+
+			//Load Styles
+			$scope.styles = Style.query();
+			$scope.stylesByLabel = StyleByLabel.query();
+
+			$scope.beer = Beer.get({_id: $routeParams.beer_id});
+
+	}]);
+
+	beer.controller("BeerEditController", 
+		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal',
+		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal) {
 			
 			//Load Styles
 			$scope.styles = Style.query();
@@ -44,7 +56,7 @@ define(['../resources'], function() {
 
 				modalInstance.result.then(function (styleByLabel) {
 				  	console.log("StyleByLabel",styleByLabel);
-				  	styleByLabel._id = styleByLabel.name;
+				  	styleByLabel._id = styleByLabel.name.replace(/[^a-z0-9]/ig, '');
 				  	styleByLabel.$save(function(saved) {
 						$scope.stylesByLabel = StyleByLabel.query(function() {
 							$scope.beer.styleByLabel = saved._id;
@@ -58,7 +70,7 @@ define(['../resources'], function() {
 			//Save
 			$scope.save = function() {
 				if ( !$scope.beer._id ) {
-					$scope.beer._id = $scope.beer.name + "-" + new Date().getTime();
+					$scope.beer._id = $scope.beer.name.replace(/[^a-z0-9]/ig, '') + "-" + new Date().getTime();
 				}
 				$scope.beer.$save(function(beer) {
 					$location.path('/beer/edit/' + beer._id);

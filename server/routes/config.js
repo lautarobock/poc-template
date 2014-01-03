@@ -14,6 +14,8 @@ exports.createRoutes = function(app) {
 
     var beer = rest.create("Beer", true);
     beer.findAll = require("./beer").findAll;
+    // beer.save = require("./beer").save;
+    // beer.findById = require("./beer").findById;
     rest.bind("Beer", beer, app, 'api/');
 }
 

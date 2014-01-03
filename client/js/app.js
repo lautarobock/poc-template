@@ -65,8 +65,9 @@ require([
 
         //Configure Routes
         $routeProvider.
-                when('/beer/new', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
-                when('/beer/edit/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
+                when('/beer/new', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
+                when('/beer/edit/:beer_id', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
+                when('/beer/detail/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
                 otherwise({redirectTo: '/beer'});
 

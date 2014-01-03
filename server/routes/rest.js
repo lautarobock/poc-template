@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 function createRest(service, customId) {
     return {
         findAll: function(req, res) {
-            console.log("INFO", "findAll");
+            // console.log("INFO", "findAll");
             model[service].find().exec(function(err,results) {
                 if ( err ) {
                     res.send(err);    
@@ -14,7 +14,7 @@ function createRest(service, customId) {
             });    
         },
         save: function(req, res) {
-            console.log("INFO", "save");
+            // console.log("INFO", "save");
             delete req.body._id;
             var id;
             if ( customId ) {
@@ -27,13 +27,13 @@ function createRest(service, customId) {
             });
         },
         remove: function(req, res) {
-            console.log("INFO", "remove");
+            // console.log("INFO", "remove");
             model[service].findByIdAndRemove(req.params.id,function(err,results) {
                 res.send(results);
             });
         },
         findById: function(req, res) {
-            console.log("INFO", "findById");
+            // console.log("INFO", "findById");
             model[service].findOne({_id:req.params.id},function(err,results) {
                 res.send(results);
             });  
@@ -52,7 +52,7 @@ exports.create = function(name, customId) {
 
 exports.bind = function(name, rest, app, path) {
     path = path || '';
-    console.log("INFO", "register " + name + " in " + path);
+    // console.log("INFO", "register " + name + " in " + path);
     app.get('/' + path + name+ "/:id", rest.findById)
     app.get('/' + path + name, rest.findAll);
     app.post('/' + path + name + "/:id", rest.save);
