@@ -3,8 +3,9 @@ require([
     "menu/menu",
     "resources",
     "gplus",
-    "beer/beer"
-    ], function(locale, menu, resources, gplus, beer) {
+    "beer/beer",
+    "rating/rating"
+    ], function(locale, menu, resources, gplus, beer, rating) {
 
     var app = angular.module("app", [
         'ngRoute',
@@ -13,7 +14,8 @@ require([
         'dl.menu',
         'dl.resources',
         'dl.gplus',
-        'dl.beer']);
+        'dl.beer',
+        'dl.rating']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
@@ -70,6 +72,11 @@ require([
                 when('/beer/edit/:beer_id', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
                 when('/beer/detail/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
+
+                when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
+                when('/rating/edit/:beer_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
+                when('/rating/detail/:beer_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
+                when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingController'}).
 
                 otherwise({redirectTo: '/beer'});
 

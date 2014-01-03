@@ -40,7 +40,8 @@ define([], function() {
                 'form.save': 'Guardar',
                 'form.edit': 'Editar',
                 'styleByLabel.form.title': 'Agregar Estilo Segun Etiqueta',
-                'brewery.form.title': 'Agregar nueva cerveceria'
+                'brewery.form.title': 'Agregar nueva cerveceria',
+                'rating.data.aroma': 'Aroma'
             }
         };
 });

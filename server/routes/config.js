@@ -33,6 +33,8 @@ var services = [{
     name: "Brewery",
     customId: true
 },{
+    name: "Rating"
+},{
     name: "User"
 },{
     name: "Style",
