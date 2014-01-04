@@ -13,7 +13,7 @@ define([], function() {
                 'side.profile': 'Perfil Google+',
                 'profile.name': 'Nombre',
                 'beer.new': 'Nueva Cerveza',
-                'beer.setAsDrunk': 'Agregar a birras tomadas',
+                'beer.setAsDrunk': 'Me tome esta birra!',
                 'beer.data.name': 'Nombre',
                 'beer.data.beer': 'Cerveza',
                 'beer.data.brewery': 'Cerveceria',
@@ -36,12 +36,24 @@ define([], function() {
                 'beer.form.technical': 'Informacion Tecnica',
                 'beer.data.score': 'Puntaje',
                 'beer.data.score.help': 'Es el promedio de todos los puntajes que hicieron los usuarios',
+                'beer.data.finalScore': 'Puntaje Final',
                 'form.cancel': 'Cancelar',
                 'form.save': 'Guardar',
                 'form.edit': 'Editar',
                 'styleByLabel.form.title': 'Agregar Estilo Segun Etiqueta',
                 'brewery.form.title': 'Agregar nueva cerveceria',
-                'rating.data.aroma': 'Aroma'
+                'rating.data.aroma': 'Aroma',
+                'rating.data.appearance': 'Apariencia',
+                'rating.data.flavor': 'Sabor',
+                'rating.data.mouthfeel': 'Sensacion en boca',
+                'rating.data.overall': 'Impresion general',
+                'rating.data.score.problematic': 'Problematica',
+                'rating.data.score.fair': 'Pasable',
+                'rating.data.score.good': 'Buena',
+                'rating.data.score.veryGood': 'Muy Buena',
+                'rating.data.score.excellent': 'Excelente',
+                'rating.data.score.outstanding': 'Excepcional'
+
             }
         };
 });

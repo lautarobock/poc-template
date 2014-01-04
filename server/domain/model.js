@@ -15,12 +15,13 @@ exports.Rating = mongoose.model("Rating", new Schema({
 	beer: {type: String, ref: 'Beer'},
 	user: {type: String, ref: 'User'},
 	score: {
-		aroma: Number,
-		appearance: Number,
-		flavor: Number,
-		mouthfeel: Number,
-		overall: Number
+		aroma: {type: Number, default: null},
+		appearance: {type: Number, default: null},
+		flavor: {type: Number, default: null},
+		mouthfeel: {type: Number, default: null},
+		overall: {type: Number, default: null}
 	},
+	finalScore: {type: Number, default: null},
 	description: {
 		aroma: Number,
 		appearance: Number,

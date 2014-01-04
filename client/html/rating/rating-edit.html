@@ -34,26 +34,43 @@
       </div>
     </div>
   </form>
-  
   <form class="bs-example form-horizontal">
-    <fieldset>
-      <legend>Calificacion</legend>
-      <div class="form-group">
-        <div class="col-lg-12">
-          <label for="aroma" class="control-label">{{ 'rating.data.aroma' | translate }}</label>
-          <div class="col-lg-12">
-            <div class="col-lg-1">
-              <span class="form-control ">{{rating.score.aroma}}</span>
-            </div>
-            <rating class="col-lg-10" on-hover="hoveringOverAroma(value)" on-leave="overAroma = null" value="rating.score.aroma" max="12" ></rating>
-            <div class="col-lg-1">
-              <span class="form-control ">{{overAroma}}</span>
-            </div>
-          </div>
-          <textarea class="form-control" rows="5" ng-model="beer.description" id="description"></textarea>
-        </div>
-      </div>
-    </fieldset>
+    <table class="table">
+      <tbody>
+        <tr ng-repeat="type in scoreType">
+          <th>
+            {{ ('rating.data.' + type.name ) | translate }}
+          </th>
+          <td>
+            <rating style="font-size: 20px;" state-off="'glyphicon glyphicon-star-empty'" state-on="'glyphicon glyphicon-star dl-color-yellow'"  value="rating.score[type.name]" max="type.max" ></rating>
+          </td>
+          <td style="width:4em">
+            <input type="text.name" ng-model="rating.score[type.name]" style="font-weight: bold;" class="form-control input-sm"></input>
+          </td>
+        </tr>
+      </tbody>
+        <!-- TOTAL -->
+      <tfoot>
+        <tr>
+          <th>
+            {{ 'beer.data.finalScore' | translate }}
+          </th>
+          <th>
+            <progressbar type="{{typeBar(rating.finalScore)}}" value="rating.finalScore" max="50" >
+              {{ valueBar(rating.finalScore) }}
+            </progressbar>
+          </th>
+          <th style="width:4em">
+            <span ng-bind="rating.finalScore" style="font-weight: bold;width:4em"/>
+          </th>
+        </tr>
+      </tfoot>
+  <!--       <tr>
+          <td colspan="3">
+            <textarea class="form-control" rows="5" ng-model="rating.description.aroma" id="description"></textarea>
+          </td>
+        </tr> -->
+    </table>
     <div class="form-group">
       <div class="col-lg-12">
         <div class="pull-right">

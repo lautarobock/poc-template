@@ -5,3 +5,11 @@
 .dl-show {
   display: run-in
 }
+
+.dl-color-yellow {
+	color: yellow;
+}
+
+.dl-color-blue {
+	color: blue;
+}
