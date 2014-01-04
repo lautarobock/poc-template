@@ -74,6 +74,14 @@ define([], function() {
                 return $translate('rating.data.score.outstanding');
             };
 
+            $scope.array = function(from, to) {
+                var values = [];
+                for ( var i=from; i<=to; i++ ) {
+                    values.push(i);
+                }
+                return values;
+            };
+
         }]);
 
     return rating;

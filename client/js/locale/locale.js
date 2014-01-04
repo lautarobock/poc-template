@@ -52,7 +52,8 @@ define([], function() {
                 'rating.data.score.good': 'Buena',
                 'rating.data.score.veryGood': 'Muy Buena',
                 'rating.data.score.excellent': 'Excelente',
-                'rating.data.score.outstanding': 'Excepcional'
+                'rating.data.score.outstanding': 'Excepcional',
+                'rating.data.comments': 'Comentarios'
 
             }
         };
