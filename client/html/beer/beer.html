@@ -1,7 +1,10 @@
 <div main-content>
   <h1>{{'content.beers' | translate }}</h1>
   <hr>
-  <table class="table table-striped table-hover">
+  <gt-table
+          config="config"
+          ></gt-table>
+  <!-- <table class="table table-striped table-hover">
       <thead>
           <tr>
               <th>{{'beer.data.beer'|translate}}</th>
@@ -26,7 +29,7 @@
               </td>
           </tr>
       </tbody>
-  </table>
+  </table> -->
   <hr/>
   <a class="btn btn-success btn-sm" href="#/beer/new" secure>
     <span class="glyphicon glyphicon-plus"></span> Agregar Cerveza

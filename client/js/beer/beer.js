@@ -2,8 +2,35 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
-	beer.controller("BeerController", function($scope, Beer) {
-		$scope.beers = Beer.query();
+	beer.controller("BeerController", function($scope, Beer, $translate) {
+		//$scope.beers = Beer.query();
+
+
+		$scope.config = {
+            data: Beer,
+            name: $translate('beer.data.beer'),
+            singular: $translate('beer.data.beer')+'s',
+            orderBy: "score.avg",
+            orderDir: "-",
+            headers: [{
+                    field:'name',
+                    caption: 'Nombre',
+                    type: 'link',
+                    href: function(row) {
+                    	return '#/beer/detail/' + row._id;
+                    }
+                },{
+                    field:'brewery.name',
+                    caption: 'Cerveceria'
+                },{
+                    field:'style.name',
+                    caption: 'Estilo'
+                },{
+                    field:'score.avg',
+                    caption: 'Promedio'
+                }
+            ]
+        };
 	});
 
 	beer.controller("NewStyleByLabelController", function($scope, $modalInstance, StyleByLabel) {

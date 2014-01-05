@@ -4,7 +4,11 @@ define([], function() {
 
 	directives.directive("inputNumeric", function() {
 		return {
-			
+			restrict : 'EA',
+            scope : {
+                beer: '=beerDetail'
+            },
+            templateUrl: 'beer/beer-detail-directive.html'
 		};
 	});
 

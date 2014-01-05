@@ -37,10 +37,10 @@ define([], function() {
             }
 
             $scope.scoreType = [{
-                name: 'aroma',
+                name: 'appearance',
                 max: 3
             },{
-                name: 'appearance',
+                name: 'aroma',
                 max: 12
             },{
                 name: 'flavor',

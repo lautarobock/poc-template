@@ -137,9 +137,9 @@
                     if ( $scope.isEditing(row) && !header.readonly) {
                         if ( !header.type || header.type == 'text' || header.type == 'number'  ) {
                             return templateDir + '/abm-input.html';
-                        } if ( header.type == 'checkbox' ) {
+                        } else if ( header.type == 'checkbox' ) {
                             return templateDir + '/abm-checkbox.html';
-                        } if ( header.type == 'combo' ) {
+                        } else if ( header.type == 'combo' ) {
                             return templateDir + '/abm-combo.html';
                         } else {
                             return templateDir + '/abm-input.html';
@@ -148,6 +148,8 @@
                         return header.valueTemplateUrl;
                     } else if ( header.type == 'checkbox' ) {
                         return templateDir + '/abm-value-checkbox.html';
+                    } else if ( header.type == 'link' ) {
+                        return templateDir + '/abm-link.html';
                     } else {
                         return templateDir + '/abm-value.html';
                     }

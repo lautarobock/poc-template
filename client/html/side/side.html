@@ -28,11 +28,15 @@
       </div>
     </div>
 </div><!-- /well -->
-<div class="well" style="min-height: 300px;" secure>
-  <h4> {{ 'side.profile' | translate }}</h4>
-  <img style="max-width: 50%;float:left;margin-right: 1em;" ng-src="{{googleUser.picture}}"></img>
-  <div>
-    <b>{{ 'profile.name' | translate }}:</b> 
-    <a href="{{ googleUser.link}}">{{ googleUser.name}}</a>
+<div class="well" secure>
+  <div class="row">
+    <h4 class="col-lg-12"> {{ 'side.profile' | translate }}</h4>
+    <div class="col-lg-6">
+      <img style="max-width:100%" ng-src="{{googleUser.picture}}"></img> 
+    </div>
+    <div class="col-lg-6">
+      <b>{{ 'profile.name' | translate }}:</b> 
+      <a href="{{ googleUser.link}}">{{ googleUser.name}}</a>
+    </div>
   </div>
 </div><!-- /well -->
