@@ -6,7 +6,8 @@ require([
     "beer/beer",
     "rating/rating",
     "util/directives",
-    "abm/abm"
+    "abm/abm",
+    "util/helper"
     ], function(locale, menu, resources, gplus, beer, rating) {
 
     var app = angular.module("app", [
@@ -19,7 +20,8 @@ require([
         'dl.beer',
         'dl.rating',
         'dl.directives',
-        'gt.abm']);
+        'gt.abm',
+        'dl.helper']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
@@ -119,13 +121,13 @@ require([
 
     app.directive('mainContent', function() {
         return function(scope, element) {
-            element.addClass("col-lg-8");
+            element.addClass("col-md-9");
         };
     });
 
     app.directive('sideBar', function() {
         return function(scope, element) {
-            element.addClass("col-lg-4");
+            element.addClass("col-md-3");
         };
     });
 

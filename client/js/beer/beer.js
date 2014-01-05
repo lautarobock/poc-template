@@ -2,7 +2,7 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
-	beer.controller("BeerController", function($scope, Beer, $translate) {
+	beer.controller("BeerController", function($scope, Beer, $translate, DLHelper) {
 		//$scope.beers = Beer.query();
 
 
@@ -27,7 +27,13 @@ define(['../resources'], function() {
                     caption: 'Estilo'
                 },{
                     field:'score.avg',
-                    caption: 'Promedio'
+                    caption: 'Promedio',
+                    class: function(beer) {
+                    	return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);;	
+                    },
+                    sort: function(beer) {
+                    	return beer.score.avg || 0;
+                    }
                 }
             ]
         };

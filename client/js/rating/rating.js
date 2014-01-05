@@ -5,8 +5,8 @@ define([], function() {
 
 
     rating.controller("RatingEditController", [
-        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate',
-        function($scope, $routeParams, Rating, $location, Beer, $translate) {
+        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 'DLHelper',
+        function($scope, $routeParams, Rating, $location, Beer, $translate, DLHelper) {
 
             $scope.$watch("user._id", function(user_id) {
                 if ( user_id ) {
@@ -73,11 +73,7 @@ define([], function() {
             }
 
             $scope.typeBar = function(score) {
-                if ( score <= 20 ) return null;
-                if ( score <= 29 ) return 'danger';
-                if ( score <= 37 ) return 'warning';
-                if ( score <= 44 ) return 'info';
-                return 'success';
+                return DLHelper.colorByScore(score);
             };
 
             $scope.valueBar = function(score) {
@@ -112,7 +108,9 @@ define([], function() {
 
             $scope.save = function() {
 
-                $scope.rating.$save();
+                $scope.rating.$save(function() {
+                    window.history.back();
+                });
 
             };
 
@@ -129,18 +127,18 @@ define([], function() {
                 orderBy: "date",
                 orderDir: "-",
                 headers: [{
-                        field:'date',
-                        caption: 'Fecha',
-                        format: function(value) {
-                            return $filter('date')(value,'dd-MM-yyyy');
-                        }
-                    },{
                         field:'beer.name',
                         caption: 'Cerveza',
                         valueTemplateUrl: 'rating/list/link.html'
                     },{
                         field:'finalScore',
                         caption: 'Score'
+                    },{
+                        field:'date',
+                        caption: 'Fecha',
+                        format: function(value) {
+                            return $filter('date')(value,'dd-MM-yyyy');
+                        }
                     }
                 ]
             };
