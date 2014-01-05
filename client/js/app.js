@@ -4,7 +4,9 @@ require([
     "resources",
     "gplus",
     "beer/beer",
-    "rating/rating"
+    "rating/rating",
+    "util/directives",
+    "abm/abm"
     ], function(locale, menu, resources, gplus, beer, rating) {
 
     var app = angular.module("app", [
@@ -15,7 +17,9 @@ require([
         'dl.resources',
         'dl.gplus',
         'dl.beer',
-        'dl.rating']);
+        'dl.rating',
+        'dl.directives',
+        'gt.abm']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
@@ -73,10 +77,11 @@ require([
                 when('/beer/detail/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
 
+                when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingBeerController'}).
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/edit/:beer_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/detail/:beer_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
-                when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingController'}).
+                
 
                 otherwise({redirectTo: '/beer'});
 
@@ -103,6 +108,24 @@ require([
                     element.addClass('dl-hide');
                 }    
             });
+        };
+    });
+
+    app.directive('dlIcon', function() {
+        return function(scope, element) {
+            element.html('<img src="../images/'+element.attr('dl-icon')+'.png"/>');
+        };
+    });
+
+    app.directive('mainContent', function() {
+        return function(scope, element) {
+            element.addClass("col-lg-8");
+        };
+    });
+
+    app.directive('sideBar', function() {
+        return function(scope, element) {
+            element.addClass("col-lg-4");
         };
     });
 

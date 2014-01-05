@@ -1,6 +1,7 @@
 var rest = require("./rest");
 var model = require("../domain/model.js");
-var beerService = require("./beer")
+var beerService = require("./beer");
+var ratingService = require("./rating");
 
 
 /**
@@ -33,7 +34,11 @@ var services = [{
     name: "Brewery",
     customId: true
 },{
-    name: "Rating"
+    name: "Rating",
+    process: function(rest) {
+        rest.findAll = ratingService.findAll;
+        rest.save = ratingService.save;
+    }
 },{
     name: "User"
 },{

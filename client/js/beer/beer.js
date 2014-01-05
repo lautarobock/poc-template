@@ -114,5 +114,18 @@ define(['../resources'], function() {
 	}]);
 
 
+	/*
+	 * Directives
+	 */
+	beer.directive("beerDetail", function() {
+		return {
+			restrict : 'A',
+            scope : {
+                beer: '=beerDetail'
+            },
+            templateUrl: 'beer/beer-detail-directive.html'
+		};
+	});
+
 	return beer;
 });

@@ -1,4 +1,4 @@
-<div class="col-lg-8">
+<div main-content>
   <h2 ng-show="beer._id">{{ beer.name }}</h2>
   <h2 ng-hide="beer._id">{{ 'beer.new' | translate }}</h2>
   <form class="bs-example form-horizontal">
@@ -122,6 +122,6 @@
   </form>
 
 </div>
-<div class="col-lg-4">
+<div side-bar>
   <div ng-include="'side/side.html'"></div>
 </div>

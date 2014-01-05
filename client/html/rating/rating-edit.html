@@ -1,40 +1,74 @@
-<div class="col-lg-8">
-  <h2>{{ beer.name }}</h2>
+<div main-content>
+
+  <div beer-detail="beer"></div>
+
   <form class="bs-example form-horizontal">
     <fieldset>
-      <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
-      <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
-      <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
-      <p/>
-      <div class="well well-sm" ng-show="beer.abv||beer.ibu||beer.og||beer.fg">
-        <span ng-show="beer.abv">
-          {{ 'beer.data.abv' | translate }}: <b>{{beer.abv}}%</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.ibu">
-          {{ 'beer.data.ibu' | translate }}: <b>{{beer.ibu}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.og">
-          {{ 'beer.data.og' | translate }}: <b>{{beer.og}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.fg">
-          {{ 'beer.data.fg' | translate }}: <b>{{beer.fg}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-      </div>
-      <p/>
-      <div class="well well-sm">
-        <h4>{{ 'beer.data.description' | translate }}</h4>
-        <p>{{beer.description}}</p>
-      </div>
-    </fieldset>
-    <div class="form-group">
-      <div class="col-lg-12">
-        <div class="pull-right">
-          <a class="btn btn-warning" href="#/beer" >Agregar sin calificacion</a> 
+      <legend>{{ 'rating.data.title' | translate }}</legend>
+      <div class="form-group">
+        <div class="col-lg-6">
+          <label for="date" class="control-label" tooltip-placement="right" tooltip="{{ 'rating.data.date.help' | translate }}">
+            {{ 'rating.data.date' | translate }}
+          </label>
+          <div class="input-group">
+            <input type="text" readonly="true" class="form-control input-sm" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="rating.date" is-open="opened.date" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-sm" ng-click="open($event,'date')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label for="mode" class="control-label" tooltip-placement="right" tooltip="{{ 'rating.data.mode.help' | translate }}">
+            {{ 'rating.data.mode' | translate }}
+          </label>
+          <select ng-model="rating.mode" class="form-control input-sm">
+            <option value="330">333cc</option>
+            <option value="500">500cc</option>
+            <option value="660">660cc</option>
+            <option value="750">750cc</option>
+            <option value="1000">1L</option>
+            <option value="draft">{{ 'rating.data.mode.draft' | translate }}</option>
+            <option value="other">{{ 'rating.data.mode.other' | translate }}</option>
+          </select>
         </div>
       </div>
-    </div>
+      <div class="form-group">
+        <div class="col-lg-6">
+          <label for="bottled" class="control-label" tooltip-placement="right" tooltip="{{ 'rating.data.bottled.help' | translate }}">
+            {{ 'rating.data.bottled' | translate }}
+          </label>
+          <div class="input-group">
+            <input type="text" readonly="true" class="form-control input-sm" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="rating.bottled" is-open="opened.bottled" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-sm" ng-click="open($event,'bottled')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label for="bottled" class="control-label" tooltip-placement="right" tooltip="{{ 'rating.data.expiration.help' | translate }}">
+            {{ 'rating.data.expiration' | translate }}
+          </label>
+          <div class="input-group">
+            <input type="text" readonly="true" class="form-control input-sm" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="rating.expiration" is-open="opened.expiration" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-sm" ng-click="open($event,'expiration')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-12">
+          <label for="comments" class="control-label" tooltip-placement="right" tooltip="{{ 'rating.data.comments.help' | translate }}">
+              {{ 'rating.data.comments' | translate }}
+          </label>
+          <textarea class="form-control" rows="5" ng-model="rating.comments" id="description"></textarea>
+        </div>
+      </div>
+    </fieldset>  
   </form>
-  <form class="bs-example form-horizontal">
+  <hr ng-show="rating.score"/>
+  <form class="bs-example form-horizontal" ng-show="rating.score">
+    <legend>{{ 'rating.title' | translate }}</legend>
     <table class="table">
       <tbody>
         <tr ng-repeat="type in scoreType">
@@ -46,7 +80,7 @@
           </td>
           <td style="width:6em">
             <!-- <input type="text.name" ng-model="rating.score[type.name]" style="font-weight: bold;" class="form-control input-sm"></input> -->
-            <select class="form-control" ng-model="rating.score[type.name]">
+            <select class="form-control input-sm" style="font-weight: bold;" ng-model="rating.score[type.name]">
               <option ng-repeat="point in array(0,type.max)" value="{{ point }}">
                 {{ point }}
               </option>
@@ -70,28 +104,50 @@
             <span ng-bind="rating.finalScore" style="font-weight: bold;width:4em"/>
           </th>
         </tr>
-        <tr>
+<!--         <tr>
           <th>
             {{ 'rating.data.comments' | translate }}
           </th>
           <th colspan="2">
             <textarea class="form-control" rows="5" ng-model="rating.comments" id="description"></textarea>
           </th>
-        </tr>
+        </tr> -->
       </tfoot>
         
     </table>
+  </form>
+
+  <hr/>
+  <alert type="'info'" ng-show="rating.finalScore == 0 && rating.score">
+    {{ 'rating.alert.zero' | translate }}
+  </alert>
+  <form class="bs-example form-horizontal">
     <div class="form-group">
       <div class="col-lg-12">
         <div class="pull-right">
-          <a class="btn btn-default" href="#/beer" >{{ 'form.cancel' | translate }}</a> 
-          <button type="button" class="btn btn-success" ng-click="save()">Agrega Calificacion</button> 
+          <a class="btn btn-default" href="javascript:window.history.back()" >
+            <span class="glyphicon glyphicon-remove-sign"></span>
+            {{ 'form.cancel' | translate }}
+          </a> 
+          <button type="button" class="btn btn-success" ng-click="toggleScore()">
+            <span ng-hide="rating.score">
+              <span class="glyphicon glyphicon-star"></span>
+              {{ 'beer.rate' | translate }}
+            </span>
+            <span ng-show="rating.score">
+              <span class="glyphicon glyphicon-star-empty"></span>
+              {{ 'beer.dontRate' | translate }}
+            </span>
+          </button> 
+          <button class="btn btn-warning" type="button" ng-click="save()">
+            <span class="glyphicon glyphicon-ok"></span>
+            {{ 'form.save' | translate }}
+          </button> 
         </div>
       </div>
     </div>
   </form>
-
 </div>
-<div class="col-lg-4">
+<div side-bar>
   <div ng-include="'side/side.html'"></div>
 </div>

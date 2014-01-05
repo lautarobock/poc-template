@@ -8,12 +8,16 @@ define([], function() {
                 'menu.title.mobile': 'B.Q.H.T.',
                 'content.myBeers': 'He Tomado',
                 'content.beers': 'Mejores birras',
+                'content.ratings': 'Las que he tomado',
                 'side.search': 'Buscar Cerveza',
                 'side.rankings': 'Rankings por categoria',
                 'side.profile': 'Perfil Google+',
                 'profile.name': 'Nombre',
                 'beer.new': 'Nueva Cerveza',
-                'beer.setAsDrunk': 'Me tome esta birra!',
+                'beer.setAsDrunk': 'He tomado esta birra!',
+                'beer.drunk': 'Tomada!',
+                'beer.rate': 'Calificar',
+                'beer.dontRate': 'No Calificar',
                 'beer.data.name': 'Nombre',
                 'beer.data.beer': 'Cerveza',
                 'beer.data.brewery': 'Cerveceria',
@@ -53,7 +57,19 @@ define([], function() {
                 'rating.data.score.veryGood': 'Muy Buena',
                 'rating.data.score.excellent': 'Excelente',
                 'rating.data.score.outstanding': 'Excepcional',
-                'rating.data.comments': 'Comentarios'
+                'rating.data.comments': 'Comentarios',
+                'rating.data.date': 'Si mal no recuerdo la tome el',
+                'rating.data.bottled': 'Embotellada el',
+                'rating.data.expiration': 'Vence el',
+                'rating.alert.zero': 'Ojo que le pusiste 0 puntos a la cerveza ¿seguro que queres calificarla asi?',
+                'rating.title': 'Calificacion',
+                'rating.data.title': 'Algunos datos',
+                'rating.data.mode': 'Servida en',
+                'rating.data.mode.help': 'Si fue en botella o tirada y tamaño',
+                'rating.data.mode.other': 'Otro',
+                'rating.data.mode.draft': 'Tirada',
+                'popup.close': 'Cerrar'
+
 
             }
         };

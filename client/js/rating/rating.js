@@ -2,6 +2,8 @@ define([], function() {
 
     var rating = angular.module("dl.rating", []);
 
+
+
     rating.controller("RatingEditController", [
         '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate',
         function($scope, $routeParams, Rating, $location, Beer, $translate) {
@@ -17,11 +19,22 @@ define([], function() {
                         $scope.rating = new Rating();
                         $scope.rating.beer = $location.search().beer_id;
                         $scope.rating.user = $scope.user._id;
-                        $scope.rating.score = {};
+                        $scope.rating.date = new Date();
                         loadBeer();
                     }
                 }
             });
+
+            $scope.tmpScore = {};
+            $scope.toggleScore = function() {
+                if ( $scope.rating.score ) {
+                    $scope.tmpScore = $scope.rating.score;
+                    $scope.rating.score = null;
+                } else {
+                    $scope.rating.score = $scope.tmpScore;
+                    $scope.tmpScore = null;
+                }
+            }
 
             $scope.scoreType = [{
                 name: 'aroma',
@@ -49,11 +62,13 @@ define([], function() {
                 $scope.beer = Beer.get({_id: $scope.rating.beer, populate:true});
 
                 $scope.$watch("rating.score", function(score) {
-                    var sum = 0;
-                    angular.forEach($scope.scoreType, function(t) {
-                        sum +=  parseInt($scope.rating.score[t.name]) || 0;
-                    });
-                    $scope.rating.finalScore = sum;
+                    if ( score ) {
+                        var sum = 0;
+                        angular.forEach($scope.scoreType, function(t) {
+                            sum +=  parseInt($scope.rating.score[t.name]) || 0;
+                        });
+                        $scope.rating.finalScore = sum;
+                    }
                 }, true);
             }
 
@@ -80,6 +95,54 @@ define([], function() {
                     values.push(i);
                 }
                 return values;
+            };
+
+            $scope.opened = {
+                date: false,
+                bottled: false,
+                expiration: false
+            };
+            
+            $scope.open = function($event, type) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened[type] = true;
+            };
+
+            $scope.save = function() {
+
+                $scope.rating.$save();
+
+            };
+
+
+        }]);
+
+    rating.controller("RatingBeerController", [
+        '$scope', 'Rating','$filter',
+        function($scope,Rating,$filter) {
+            $scope.config = {
+                data: Rating,
+                name: "Calificaciones",
+                singular: "Calificacion",
+                orderBy: "date",
+                orderDir: "-",
+                headers: [{
+                        field:'date',
+                        caption: 'Fecha',
+                        format: function(value) {
+                            return $filter('date')(value,'dd-MM-yyyy');
+                        }
+                    },{
+                        field:'beer.name',
+                        caption: 'Cerveza',
+                        valueTemplateUrl: 'rating/list/link.html'
+                    },{
+                        field:'finalScore',
+                        caption: 'Score'
+                    }
+                ]
             };
 
         }]);

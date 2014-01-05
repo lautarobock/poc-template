@@ -1,41 +1,22 @@
-<div class="col-lg-8">
-  <h2>{{ beer.name }}</h2>
-  <form class="bs-example form-horizontal">
-    <fieldset>
-      <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
-      <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
-      <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
-      <p/>
-      <div class="well well-sm" ng-show="beer.abv||beer.ibu||beer.og||beer.fg">
-        <span ng-show="beer.abv">
-          {{ 'beer.data.abv' | translate }}: <b>{{beer.abv}}%</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.ibu">
-          {{ 'beer.data.ibu' | translate }}: <b>{{beer.ibu}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.og">
-          {{ 'beer.data.og' | translate }}: <b>{{beer.og}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.fg">
-          {{ 'beer.data.fg' | translate }}: <b>{{beer.fg}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-      </div>
-      <p/>
-      <div class="well well-sm">
-        <h4>{{ 'beer.data.description' | translate }}</h4>
-        <p>{{beer.description}}</p>
-      </div>
-      <div class="form-group" >
-        <div class="col-lg-12">
-          <div class="pull-right">
-            <a secure class="btn btn-success" href="#/rating/new?beer_id={{beer._id}}" >{{ 'beer.setAsDrunk' | translate }}</a> 
-            <a secure-admin class="btn btn-primary" href="#/beer/edit/{{beer._id}}" >{{ 'form.edit' | translate }}</a> 
-          </div>
+<div main-content>
+  <div beer-detail="beer"></div>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <div class="col-lg-12">
+        <div class="pull-right">
+          <a secure-admin class="btn btn-info" href="#/beer/edit/{{beer._id}}" >
+            <span class="glyphicon glyphicon-edit"></span>
+            {{ 'form.edit' | translate }}
+          </a> 
+          <a secure class="btn btn-success" href="#/rating/new?beer_id={{beer._id}}" >
+            <span dl-icon="chopp"></span>
+            {{ 'beer.setAsDrunk' | translate }}
+          </a> 
         </div>
       </div>
-    </fieldset>
+    </div>
   </form>
 </div>
-<div class="col-lg-4">
+<div side-bar>
   <div ng-include="'side/side.html'"></div>
 </div>
