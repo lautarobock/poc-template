@@ -19,13 +19,15 @@ exports.save = function(req, res) {
     delete req.body._id;
     var id = new mongoose.Types.ObjectId(req.params.id);
 	model.Rating.findByIdAndUpdate(id,req.body,{upsert:true}).exec(function(err,results) {
-
-		model.Beer.findOne({_id: req.body.beer}).exec(function (err,beer) {
-			exports.updateRating(beer, function() {
-				res.send(results);
-			});
-		});
-        
+		if ( req.body.finalScore ) {
+			model.Beer.findOne({_id: req.body.beer}).exec(function (err,beer) {
+				exports.updateRating(beer, function() {
+					res.send(results);
+				});
+			});	
+		} else {
+			res.send(results);
+		}
     });	
 };
 
@@ -34,8 +36,10 @@ exports.updateRating = function(beer,callback) {
 		var count = 0;
 		var sum = 0;
 		for ( var i=0; i<ratings.length; i++ ) {
-			sum += ratings[i].finalScore;
-			count++;
+			if ( ratings[i].finalScore ) {
+				sum += ratings[i].finalScore;
+				count++;
+			}
 		}
 		beer.score.avg = sum / count;
 		beer.score.count = count;

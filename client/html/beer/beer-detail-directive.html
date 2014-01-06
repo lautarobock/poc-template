@@ -2,9 +2,18 @@
   <h2>{{ beer.name }}</h2>
   <form class="form-horizontal">
     <fieldset>
-      <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
-      <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
-      <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-1 well well-sm dl-score-detail" ng-class="scoreClass(beer.score.avg)">
+            {{ beer.score.avg }}
+          </div>
+          <div class="col-md-11">
+            <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
+            <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
+            <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
+          </div>
+        </div>
+      </div>
       <p></p>
       <div class="well well-sm" ng-show="beer.abv||beer.ibu||beer.og||beer.fg">
         <span ng-show="beer.abv">

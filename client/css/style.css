@@ -14,6 +14,15 @@
 	color: blue;
 }
 
+.dl-score-detail {
+	font-size: 24px;
+	font-weight: bold;
+	font-family: Courier;
+	text-align: center;
+	border-radius: 100px;
+	width: 80px;
+}
+
 .dl-score-overall {
 	background: blue;
 	padding: 2px;

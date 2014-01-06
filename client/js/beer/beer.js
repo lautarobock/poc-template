@@ -37,7 +37,7 @@ define(['../resources'], function() {
                     caption: 'P',
                     class: function(beer) {
                     	if ( beer.score ) {
-                    		return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);;		
+                    		return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);		
                     	} else {
                     		return 'badge';
                     	}
@@ -48,15 +48,10 @@ define(['../resources'], function() {
                     caption: 'G / S',
                     tooltip: 'Percentil sobre el global y sobre el estilo (ordena por el del estilo)',
                     valueTemplateUrl: 'beer/list/score.html'
-                    // class: function() {
-                    // 	return 'dl-score-overall';
-                    // }
-                // },{
-                //     field:'score.style',
-                //     caption: 'S',
-                //     class: function() {
-                //     	return 'dl-score-style';
-                //     }
+                },{
+                    field:'score.count',
+                    caption: 'C',
+                    tooltip: 'Cantidad de valoraciones'
                 }
             ]
         };
@@ -179,7 +174,12 @@ define(['../resources'], function() {
             scope : {
                 beer: '=beerDetail'
             },
-            templateUrl: 'beer/beer-detail-directive.html'
+            templateUrl: 'beer/beer-detail-directive.html',
+            controller: function($scope, DLHelper) {
+            	$scope.scoreClass = function(score) {
+            		return 'text-' + DLHelper.colorByScore(score);
+            	}
+            }
 		};
 	});
 
