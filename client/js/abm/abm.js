@@ -111,7 +111,7 @@
             },
             controller: function($scope) {
                 
-                $scope.sort = sortData($scope.config().orderBy,$scope.config().orderDir||"");
+                $scope.sort = sortData($scope.config().orderBy,$scope.config().orderDir||"",$scope.config().sort);
                 
                 $scope.getActiveClass = function(tab) {
                     if (tab == $scope.entity()) {
@@ -240,15 +240,23 @@
     });
 
     gt.factory("sortData",function() {
-        return function(startField, startAsc) {
+        return function(startField, startAsc, startSort) {
             var data = {
+                sort: startSort,
                 asc: startAsc,
                 field: startField,
                 orderStyle:{},
                 orderBy: function() {
-                    return this.asc+this.field;
+                    if ( this.sort ) {
+                        return this.sort;
+                    } else  {
+                        return this.field; 
+                    }
                 },
-                resort: function(field) {
+                reverse: function() {
+                    return this.asc || this.asc == '-';
+                },
+                resort: function(field, sort) {
                     if ( field == this.field) {
                         if (this.asc == '-' ) {
                             this.asc = '';
@@ -262,6 +270,7 @@
                             data.orderStyle[key] = '';
                         });
                         this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
+                        this.sort = sort;
                         this.field = field;
                         this.asc = '';
                     }

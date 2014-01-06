@@ -13,3 +13,26 @@
 .dl-color-blue {
 	color: blue;
 }
+
+.dl-score-overall {
+	background: blue;
+	padding: 2px;
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+	font-weight: bold;
+	color: black;
+	width: 2.5em;
+	display: inline-block;
+	text-align: right;
+}
+
+.dl-score-style {
+	background: green;
+	padding: 2px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	font-weight: bold;
+	color: black;
+	width: 2.5em;
+	display: inline-block;
+}

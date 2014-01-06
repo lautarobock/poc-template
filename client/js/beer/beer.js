@@ -5,35 +5,58 @@ define(['../resources'], function() {
 	beer.controller("BeerController", function($scope, Beer, $translate, DLHelper) {
 		//$scope.beers = Beer.query();
 
+		function sortScore(beer) {
+        	if ( beer.score ) {
+        		return beer.score.avg || 0;	
+        	}
+        	return 0;
+        }
 
 		$scope.config = {
             data: Beer,
             name: $translate('beer.data.beer'),
             singular: $translate('beer.data.beer')+'s',
-            orderBy: "score.avg",
+            orderBy: 'score.avg',
             orderDir: "-",
+            sort: sortScore,
             headers: [{
                     field:'name',
-                    caption: 'Nombre',
+                    caption: $translate('beer.data.beer'),
                     type: 'link',
                     href: function(row) {
                     	return '#/beer/detail/' + row._id;
                     }
                 },{
                     field:'brewery.name',
-                    caption: 'Cerveceria'
+                    caption: $translate('beer.data.brewery')
                 },{
                     field:'style.name',
-                    caption: 'Estilo'
+                    caption: $translate('beer.data.style')
                 },{
                     field:'score.avg',
-                    caption: 'Promedio',
+                    caption: 'P',
                     class: function(beer) {
-                    	return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);;	
+                    	if ( beer.score ) {
+                    		return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);;		
+                    	} else {
+                    		return 'badge';
+                    	}
                     },
-                    sort: function(beer) {
-                    	return beer.score.avg || 0;
-                    }
+                    sort: sortScore
+                },{
+                    field:'score.style',
+                    caption: 'G / S',
+                    tooltip: 'Percentil sobre el global y sobre el estilo (ordena por el del estilo)',
+                    valueTemplateUrl: 'beer/list/score.html'
+                    // class: function() {
+                    // 	return 'dl-score-overall';
+                    // }
+                // },{
+                //     field:'score.style',
+                //     caption: 'S',
+                //     class: function() {
+                //     	return 'dl-score-style';
+                //     }
                 }
             ]
         };

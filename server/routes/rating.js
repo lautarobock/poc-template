@@ -40,7 +40,53 @@ exports.updateRating = function(beer,callback) {
 		beer.score.avg = sum / count;
 		beer.score.count = count;
 		beer.save(function(err, beer) {
-			if ( callback ) callback(beer);
+			exports.updatePercentil(null, function(err) {
+				exports.updatePercentil(beer.style, function(err) {
+					if ( callback ) callback(beer);
+				});
+			});
 		});
 	});
+}
+
+exports.updatePercentil = function(style_id, callback) {
+	var actual = 100;
+
+	var filter = {};
+	if ( style_id ) {
+		filter = {style:style_id,'score.avg':{$exists:true}};
+	} else  {
+		filter = {'score.avg':{$exists:true}};
+	}
+	model.Beer.find(filter).sort('-score.avg').exec(function(err, beers) {
+		if ( err ) console.log("ERR",err);
+		var count = beers.length;
+		var byPerc = Math.ceil(count/100);
+		var actPercRest = byPerc;
+		
+		var updateBeers = function(beers,i) {
+			if ( i<count ) {
+				var beer = beers[i];
+				if ( style_id) {
+					beer.score.style = actual;
+				} else {
+					beer.score.overall = actual;
+				}
+				actPercRest--;
+				if ( actPercRest == 0 ) {
+					actual--;
+					actPercRest = byPerc;
+				}
+				beer.save(function() {
+					updateBeers(beers,i+1);
+				});
+			} else {
+				callback();
+			}
+		}
+
+		updateBeers(beers,0)
+		
+	});
+
 }

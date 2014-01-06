@@ -29,14 +29,16 @@
                     class="gt-sorted"
                     ng-repeat="header in config().headers"
                     ng-style="{width: header.width}">
-                    {{header.caption}} <span ng-class="sort.orderStyle[header.field]"></span>
+                    <span tooltip="{{header.tooltip}}" tooltip-append-to-body="true">
+                        {{header.caption}}
+                    </span> <span ng-class="sort.orderStyle[header.field]"></span>
                 </th>
                 <th style="width: 1em"></th>
                 <th style="width: 1em"></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy() | filter:searchCriteria | pageFilter:page:pageSize() ">
+            <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy():sort.reverse() | filter:searchCriteria | pageFilter:page:pageSize() ">
                 <td ng-repeat="header in config().headers">
                     <ng-include src="valueTemplate(row,header)"></ng-include>
                 </td>
