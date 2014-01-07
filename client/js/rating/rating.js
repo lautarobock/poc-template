@@ -8,11 +8,14 @@ define([], function() {
         '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 'DLHelper',
         function($scope, $routeParams, Rating, $location, Beer, $translate, DLHelper) {
 
+            $scope.initialScore = null;
+
             $scope.$watch("user._id", function(user_id) {
                 if ( user_id ) {
                     //Load or create Rating
                     if ( $routeParams.rating_id ) {
                         $scope.rating = Rating.get({_id: $routeParams.rating_id}, function() {
+                            $scope.initialScore = $scope.rating.finalScore;
                             loadBeer();
                         });
                     } else {
@@ -109,17 +112,24 @@ define([], function() {
             $scope.save = function() {
 
                 $scope.rating.$save(function(rating) {
+                    //Esto deberia hacerlo en el servidor y luego de el $save deberia volver a cargar el 
+                    //usuario, nada mas.
                     if ( rating.finalScore ) {
                         var result = util.Arrays.filter($scope.user.ratings, function(item) {
                             return item.beer == rating.beer ? 0 : -1;
                         });
                         if ( result.length != 0 ) {
+                            //Esto quiere decir q esta editando y que tenia un valor antes (lo elimino)
+                            if ( $scope.initialScore ) {
+                                util.Arrays.remove(result[0].finalScore,$scope.initialScore);
+                            }
+                            //Ahora ya puedo agregar el valor
                             result[0].finalScore.push(rating.finalScore);
                         } else {
                             $scope.user.ratings.push({
                                 beer: rating.beer,
                                 finalScore: [rating.finalScore]
-                            });
+                            });    
                         }
                         $scope.user.$save(function() {
                             window.history.back();

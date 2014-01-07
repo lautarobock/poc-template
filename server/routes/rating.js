@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var mongoutil = require("./util/mongoutil.js");
 
 exports.findAll = function(req, res) {
-	var query = model.Rating.find();
+	var query = model.Rating.find({user:req.session.user_id});
 	query.populate('beer');
     query.exec(function(err,results) {
         res.send(results);
@@ -42,7 +42,7 @@ exports.updateRating = function(beer,callback) {
 				count++;
 			}
 		}
-		beer.score.avg = sum / count;
+		beer.score.avg = Math.round((sum / count)*10)/10;
 		beer.score.count = count;
 		beer.save(function(err, beer) {
 			exports.updatePercentil(null, function(err) {
@@ -95,3 +95,12 @@ exports.updatePercentil = function(style_id, callback) {
 	});
 
 }
+
+exports.getByBeer = function(req, res) {
+	var query = model.Rating.find({beer:req.query.beer_id});
+	query.populate("user");
+    query.exec(function(err,results) {
+    	if ( err ) throw err;
+        res.send(results);
+    });
+};

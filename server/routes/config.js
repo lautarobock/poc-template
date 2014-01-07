@@ -35,6 +35,7 @@ var services = [{
     customId: true
 },{
     name: "Rating",
+    security: {findAll:[userFilter]},
     process: function(rest) {
         rest.findAll = ratingService.findAll;
         rest.save = ratingService.save;
@@ -64,6 +65,9 @@ var services = [{
 exports.createRoutes = function(app) {
     //Special for login
     app.get('/api/login/by_google/:google_id', require("./user").getForLogin);
+
+    //Special for raging by beer
+    app.get('/api/Rating/byBeer', require("./rating").getByBeer);
 
     for( var i=0; i<services.length; i++ ) {
         if ( services[i].process ) {

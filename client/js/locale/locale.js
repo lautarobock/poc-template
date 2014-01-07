@@ -75,9 +75,9 @@ define([], function() {
                 'rating.data.mode.help': 'Si fue en botella o tirada y tamaño',
                 'rating.data.mode.other': 'Otro',
                 'rating.data.mode.draft': 'Tirada',
-                'popup.close': 'Cerrar'
-
-
+                'popup.close': 'Cerrar',
+                'user.name': 'Usuario',
+                'general.date': 'Fecha'
             }
         };
 });

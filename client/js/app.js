@@ -84,8 +84,8 @@ require([
 
                 when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingBeerController'}).
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
-                when('/rating/edit/:beer_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
-                when('/rating/detail/:beer_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
+                when('/rating/edit/:rating_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
+                when('/rating/detail/:rating_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
                 
 
                 otherwise({redirectTo: '/beer'});
@@ -137,5 +137,11 @@ require([
     app.controller("RankingsController", function($scope,Category) {
         $scope.categories = Category.query();
     });
+
+    // app.filter("round", function() {
+    //     return function(value, decimal) {
+    //         return Math.round(value, decimal);
+    //     }
+    // });
 
 });

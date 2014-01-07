@@ -30,7 +30,7 @@ define(['../resources'], function() {
                         }
                     });
                     if ( count != 0 ) {
-                        return sum/count;
+                        return parseFloat((sum/count).toFixed(1));
                     } else {
                         return null;
                     }
@@ -185,14 +185,20 @@ define(['../resources'], function() {
 	}]);
 
 	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal) {
+		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Rating', 'DLHelper',
+		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Rating,   DLHelper) {
 
 			//Load Styles
 			$scope.styles = Style.query();
 			$scope.stylesByLabel = StyleByLabel.query();
 
-			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true});
+			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
+                $scope.ratings = Rating.getByBeer({beer_id:$scope.beer._id});
+            });
+
+            $scope.scoreClass = function(score) {
+                return 'alert-' + DLHelper.colorByScore(score);
+            };
 
 	}]);
 
