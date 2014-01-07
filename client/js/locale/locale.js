@@ -40,6 +40,7 @@ define([], function() {
                 'beer.form.technical': 'Informacion Tecnica',
                 'beer.data.score': 'Puntaje',
                 'beer.data.score.help': 'Es el promedio de todos los puntajes que hicieron los usuarios',
+                'beer.data.score.gs.help': 'Percentil sobre el global y sobre el estilo (ordena por el del estilo)',
                 'beer.data.finalScore': 'Puntaje Final',
                 'form.cancel': 'Cancelar',
                 'form.save': 'Guardar',

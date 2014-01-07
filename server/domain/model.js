@@ -8,7 +8,11 @@ exports.User = mongoose.model("User",new Schema({
     email: String,
     creationDate: Date,
     lastLoginDate: Date,
-    isAdmin: Boolean
+    isAdmin: Boolean,
+    ratings: [{
+    	beer: {type: String, ref: 'Beer'},
+		finalScore: [Number]
+    }]
 }));
 
 exports.Rating = mongoose.model("Rating", new Schema({

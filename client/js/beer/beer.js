@@ -12,6 +12,27 @@ define(['../resources'], function() {
         	return 0;
         }
 
+        $scope.dataHelper = {
+        	getMyScore: function(beer_id) {
+        		var sum = 0;
+        		var count = 0;
+        		if ( !$scope.user ) return '-';
+        		angular.forEach($scope.user.ratings, function(r) {
+        			if ( r.beer == beer_id ) {
+        				angular.forEach(r.finalScore, function(s) {
+        					sum += s;
+        					count++;
+        				});
+        			}
+        		});
+        		if ( count != 0 ) {
+        			return sum/count;
+        		} else {
+        			return '-';
+        		}
+        	}
+        };
+
 		$scope.config = {
             data: Beer,
             name: $translate('beer.data.beer'),
@@ -34,7 +55,8 @@ define(['../resources'], function() {
                     caption: $translate('beer.data.style')
                 },{
                     field:'score.avg',
-                    caption: 'P',
+                    caption: $translate('beer.data.score'),
+                    tooltip: $translate('beer.data.score.help'),
                     class: function(beer) {
                     	if ( beer.score ) {
                     		return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);		
@@ -46,12 +68,17 @@ define(['../resources'], function() {
                 },{
                     field:'score.style',
                     caption: 'G / S',
-                    tooltip: 'Percentil sobre el global y sobre el estilo (ordena por el del estilo)',
+                    tooltip: $translate('beer.data.score.gs.help'),
                     valueTemplateUrl: 'beer/list/score.html'
                 },{
                     field:'score.count',
-                    caption: 'C',
+                    caption: 'Valoracion',
                     tooltip: 'Cantidad de valoraciones'
+                },{
+                    field:'',
+                    caption: 'Mi Cal.',
+                    tooltip: 'El promedio de mis calificaciones a esta cerveza',
+                    valueTemplateUrl: 'beer/list/my-score.html'
                 }
             ]
         };

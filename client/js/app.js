@@ -28,11 +28,12 @@ require([
         angular.bootstrap(document, ['app']);
     });
     
-    app.run(['$rootScope','Login','evaluateAuthResult', 
+    app.run(['$rootScope','Login','evaluateAuthResult','User', 
                 function(
                     $rootScope, 
                     Login, 
-                    evaluateAuthResult) {
+                    evaluateAuthResult,
+                    User) {
 
         $rootScope.loginSuccess = false;
 
@@ -51,9 +52,11 @@ require([
                             name:googleUser.name, 
                             email: googleUser.email
                         }, function(user) {
-                            $rootScope.loginSuccess = true;
-                            $rootScope.user = user;
-                            console.log(user);
+                            User.get({_id: user._id}, function(user) {
+                                $rootScope.loginSuccess = true;
+                                $rootScope.user = user;
+                                console.log(user);    
+                            });
                     });
                 } else {
                     console.log("INFO", "Silent Login Error");

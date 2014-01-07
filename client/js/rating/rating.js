@@ -108,8 +108,26 @@ define([], function() {
 
             $scope.save = function() {
 
-                $scope.rating.$save(function() {
-                    window.history.back();
+                $scope.rating.$save(function(rating) {
+                    if ( rating.finalScore ) {
+                        var result = util.Arrays.filter($scope.user.ratings, function(item) {
+                            return item.beer == rating.beer ? 0 : -1;
+                        });
+                        if ( result.length != 0 ) {
+                            result[0].finalScore.push(rating.finalScore);
+                        } else {
+                            $scope.user.ratings.push({
+                                beer: rating.beer,
+                                finalScore: [rating.finalScore]
+                            });
+                        }
+                        $scope.user.$save(function() {
+                            window.history.back();
+                        });
+                    } else {
+                        window.history.back();    
+                    }
+                    
                 });
 
             };
