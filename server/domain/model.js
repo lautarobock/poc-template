@@ -96,6 +96,11 @@ exports.Style = mongoose.model("Style",new Schema({
     "ABV_Min": Number,
     "ABV_Max": Number,
     "link": String,
-    "related": String
+    "related": String,
+    "category": {type:String, ref:'Category'}
 },{ _id: false }));
 
+exports.Category = mongoose.model("Category",new Schema({
+    "_id": String,
+    "name": String
+},{ _id: false }));

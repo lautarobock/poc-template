@@ -2,87 +2,92 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
-	beer.controller("BeerController", function($scope, Beer, $translate, DLHelper) {
-		//$scope.beers = Beer.query();
-
-		function sortScore(beer) {
-        	if ( beer.score ) {
-        		return beer.score.avg || 0;	
-        	}
-        	return 0;
-        }
-
-        $scope.dataHelper = {
-        	getMyScore: function(beer_id) {
-        		var sum = 0;
-        		var count = 0;
-        		if ( !$scope.user ) return '-';
-        		angular.forEach($scope.user.ratings, function(r) {
-        			if ( r.beer == beer_id ) {
-        				angular.forEach(r.finalScore, function(s) {
-        					sum += s;
-        					count++;
-        				});
-        			}
-        		});
-        		if ( count != 0 ) {
-        			return sum/count;
-        		} else {
-        			return '-';
-        		}
-        	}
-        };
-
-		$scope.config = {
-            data: Beer,
-            name: $translate('beer.data.beer'),
-            singular: $translate('beer.data.beer')+'s',
-            orderBy: 'score.avg',
-            orderDir: "-",
-            sort: sortScore,
-            headers: [{
-                    field:'name',
-                    caption: $translate('beer.data.beer'),
-                    type: 'link',
-                    href: function(row) {
-                    	return '#/beer/detail/' + row._id;
-                    }
-                },{
-                    field:'brewery.name',
-                    caption: $translate('beer.data.brewery')
-                },{
-                    field:'style.name',
-                    caption: $translate('beer.data.style')
-                },{
-                    field:'score.avg',
-                    caption: $translate('beer.data.score'),
-                    tooltip: $translate('beer.data.score.help'),
-                    class: function(beer) {
-                    	if ( beer.score ) {
-                    		return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);		
-                    	} else {
-                    		return 'badge';
-                    	}
-                    },
-                    sort: sortScore
-                },{
-                    field:'score.style',
-                    caption: 'G / S',
-                    tooltip: $translate('beer.data.score.gs.help'),
-                    valueTemplateUrl: 'beer/list/score.html'
-                },{
-                    field:'score.count',
-                    caption: 'Valoracion',
-                    tooltip: 'Cantidad de valoraciones'
-                },{
-                    field:'',
-                    caption: 'Mi Cal.',
-                    tooltip: 'El promedio de mis calificaciones a esta cerveza',
-                    valueTemplateUrl: 'beer/list/my-score.html'
+	beer.controller("BeerController", ['$scope', 'Beer', '$translate', 'DLHelper',
+        function($scope, Beer, $translate, DLHelper) {
+    
+            function sortScore(beer) {
+                if ( beer.score ) {
+                    return beer.score.avg || 0;    
                 }
-            ]
-        };
-	});
+                return 0;
+            }
+    
+            function sortMyScore(beer) {
+                return $scope.dataHelper.getMyScore(beer)||0;
+            }
+    
+            $scope.dataHelper = {
+                getMyScore: function(beer) {
+                    var sum = 0;
+                    var count = 0;
+                    if ( !$scope.user ) return '-';
+                    angular.forEach($scope.user.ratings, function(r) {
+                        if ( r.beer == beer._id ) {
+                            angular.forEach(r.finalScore, function(s) {
+                                sum += s;
+                                count++;
+                            });
+                        }
+                    });
+                    if ( count != 0 ) {
+                        return sum/count;
+                    } else {
+                        return null;
+                    }
+                }
+            };
+    
+            $scope.config = {
+                data: Beer,
+                name: $translate('beer.data.beer'),
+                singular: $translate('beer.data.beer')+'s',
+                orderBy: 'score.avg',
+                orderDir: "-",
+                sort: sortScore,
+                headers: [{
+                        field:'name',
+                        caption: $translate('beer.data.beer'),
+                        type: 'link',
+                        href: function(row) {
+                            return '#/beer/detail/' + row._id;
+                        }
+                    },{
+                        field:'brewery.name',
+                        caption: $translate('beer.data.brewery')
+                    },{
+                        field:'style.name',
+                        caption: $translate('beer.data.style')
+                    },{
+                        field:'score.avg',
+                        caption: $translate('beer.data.score'),
+                        tooltip: $translate('beer.data.score.help'),
+                        class: function(beer) {
+                            if ( beer.score ) {
+                                return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
+                            } else {
+                                return 'badge';
+                            }
+                        },
+                        sort: sortScore
+                    },{
+                        field:'score.style',
+                        caption: 'G / S',
+                        tooltip: $translate('beer.data.score.gs.help'),
+                        valueTemplateUrl: 'beer/list/score.html'
+                    },{
+                        field:'score.count',
+                        caption: $translate('beer.data.score.count'),
+                        tooltip: $translate('beer.data.score.count.help')
+                    },{
+                        field:'score.myScore',
+                        caption: $translate('beer.data.score.my'),
+                        tooltip: $translate('beer.data.score.my.help'),
+                        valueTemplateUrl: 'beer/list/my-score.html',
+                        sort: sortMyScore
+                    }
+                ]
+            };
+        }]);
 
 	beer.controller("NewStyleByLabelController", function($scope, $modalInstance, StyleByLabel) {
 		$scope.styleByLabel = new StyleByLabel();
@@ -203,12 +208,29 @@ define(['../resources'], function() {
             },
             templateUrl: 'beer/beer-detail-directive.html',
             controller: function($scope, DLHelper) {
+
+                $scope.values = ['abv','ibu','og','fg'];
+
             	$scope.scoreClass = function(score) {
             		return 'text-' + DLHelper.colorByScore(score);
             	}
             }
 		};
 	});
+
+    beer.directive("beerPercentil", function() {
+        return {
+            scope: {
+                beer:'=beerPercentil'
+            },
+            template: '<span><span tooltip="{{tooltipG}}" class="dl-score-overall">{{beer.score.overall||"-"}}</span>'+
+                '<span tooltip="{{tooltipS}}" class="dl-score-style">{{beer.score.style||"-"}}</span></span>',
+            controller: ['$scope', '$translate',function($scope, $translate) {
+                $scope.tooltipG = $translate('beer.data.score.overall');
+                $scope.tooltipS = $translate('beer.data.score.style');
+            }]
+        };
+    });
 
 	return beer;
 });

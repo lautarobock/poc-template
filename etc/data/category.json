@@ -1,0 +1,71 @@
+db.categories.remove();
+db.categories.insert([{
+    _id: '1',
+    name: 'Light Lager'
+},{
+    _id: '2',
+    name: 'Pilsner'
+},{
+    _id: '3',
+    name: 'European Amber Lager'
+},{
+    _id: '4',
+    name: 'Dark Lager'
+},{
+    _id: '5',
+    name: 'Bock'
+},{
+    _id: '6',
+    name: 'Light Hybrid Beer'
+},{
+    _id: '7',
+    name: 'Amber Hybrid Beer'
+},{
+    _id: '8',
+    name: 'English Pale Ale'
+},{
+    _id: '9',
+    name: 'Scottish and Irish Ale'
+},{
+    _id: '10',
+    name: 'American Ale'
+},{
+    _id: '11',
+    name: 'English Brown Ale'
+},{
+    _id: '12',
+    name: 'Porter'
+},{
+    _id: '13',
+    name: 'Stout'
+},{
+    _id: '14',
+    name: 'India Pale Ale (IPA)'
+},{
+    _id: '15',
+    name: 'German Wheat and Rye Beer'
+},{
+    _id: '16',
+    name: 'Belgian and French Ale'
+},{
+    _id: '17',
+    name: 'Sour Ale'
+},{
+    _id: '18',
+    name: 'Belgian Strong Ale'
+},{
+    _id: '19',
+    name: 'Strong Ale'
+},{
+    _id: '20',
+    name: 'Fruit Beer'
+},{
+    _id: '21',
+    name: 'Spice/Herb/Vegetable Beer'
+},{
+    _id: '22',
+    name: 'Smoke-Flavored/Wood-Aged Beer'
+},{
+    _id: '23',
+    name: 'Specialty Beer'
+}]);

@@ -4,29 +4,26 @@
     <fieldset>
       <div class="row">
         <div class="col-md-12">
-          <div class="col-md-1 well well-sm dl-score-detail" ng-class="scoreClass(beer.score.avg)">
-            {{ beer.score.avg }}
+          <div tooltip="{{ 'beer.data.score.help' | translate }}" class="col-md-1 well well-sm dl-score-detail" ng-class="scoreClass(beer.score.avg)">
+            {{ beer.score.avg || '-'}}
           </div>
-          <div class="col-md-11">
+          <div class="col-md-8">
             <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
             <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
             <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
+            <div><b>{{'beer.data.score.count'|translate}}</b>: {{ beer.score.count }}</div>
           </div>
         </div>
+        <div class="col-md-12">
+          <div beer-percentil="beer"></div>
+        </div>
+        
       </div>
       <p></p>
       <div class="well well-sm" ng-show="beer.abv||beer.ibu||beer.og||beer.fg">
-        <span ng-show="beer.abv">
-          {{ 'beer.data.abv' | translate }}: <b>{{beer.abv}}%</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.ibu">
-          {{ 'beer.data.ibu' | translate }}: <b>{{beer.ibu}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.og">
-          {{ 'beer.data.og' | translate }}: <b>{{beer.og}}</b> <span class="glyphicon glyphicon-flash"></span>
-        </span>
-        <span ng-show="beer.fg">
-          {{ 'beer.data.fg' | translate }}: <b>{{beer.fg}}</b> <span class="glyphicon glyphicon-flash"></span>
+        <span ng-repeat="value in values" ng-show="beer[value]">
+          {{ ('beer.data.' + value) | translate }}: <b>{{beer[value]}}%</b> 
+          <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
         </span>
       </div>
       <p></p>

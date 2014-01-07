@@ -134,4 +134,8 @@ require([
         };
     });
 
+    app.controller("RankingsController", function($scope,Category) {
+        $scope.categories = Category.query();
+    });
+
 });

@@ -48,6 +48,9 @@ var services = [{
     name: "StyleByLabel",
     customId: true
 },{
+    name: "Category",
+    customId: true
+},{
     name: "Beer",
     customId: true,
     security: {save:[userFilter]},
