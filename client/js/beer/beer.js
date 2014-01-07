@@ -72,6 +72,7 @@ define(['../resources'], function() {
                     },{
                         field:'score.style',
                         caption: 'G / S',
+                        width: '8em',
                         tooltip: $translate('beer.data.score.gs.help'),
                         valueTemplateUrl: 'beer/list/score.html'
                     },{
