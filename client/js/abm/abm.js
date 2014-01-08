@@ -120,7 +120,15 @@
                         return '';
                     }
                 };
-                
+
+                $scope.getHeaderStyle = function(header) {
+                    var style = header.headerStyle || {};
+                    if ( header.width ) {
+                        style.width= header.width;
+                    }
+                    return style;
+                };
+
                 $scope.addNew = function() {
                     $scope.rows.push({_draft:true});
                     $scope.page = $scope.getPageCount($scope.rows.length);

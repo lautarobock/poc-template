@@ -28,7 +28,7 @@
                 <th ng-click="sort.resort(header.field, header.sort)"
                     class="gt-sorted"
                     ng-repeat="header in config().headers"
-                    ng-style="{width: header.width}">
+                    ng-style="getHeaderStyle(header)">
                     <span tooltip="{{header.tooltip}}" tooltip-append-to-body="true">
                         {{header.caption}}
                     </span> <span ng-class="sort.orderStyle[header.field]"></span>

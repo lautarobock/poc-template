@@ -44,6 +44,16 @@
 .dl-score-style {
 	background: #66A212;
 	padding: 2px;
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	width: 2.5em;
+	display: inline-block;
+}
+
+.dl-score-category {
+	background: #CC3300;
+	padding: 2px;
 	border-bottom-right-radius: 5px;
 	border-top-right-radius: 5px;
 	font-weight: bold;

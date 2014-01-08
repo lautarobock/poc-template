@@ -88,7 +88,8 @@ define(['../resources'], function() {
                     },{
                         field:'score.style',
                         caption: 'G / S',
-                        width: '8em',
+                        width: '9em',
+                        headerStyle: {'text-align': 'center'},
                         tooltip: $translate('beer.data.score.gs.help'),
                         valueTemplateUrl: 'beer/list/score.html',
                         sort: sortScoreStyle
@@ -257,10 +258,12 @@ define(['../resources'], function() {
                 beer:'=beerPercentil'
             },
             template: '<span><span tooltip="{{tooltipG}}" class="dl-score-overall">{{beer.score.overall||"-"}}</span>'+
-                '<span tooltip="{{tooltipS}}" class="dl-score-style">{{beer.score.style||"-"}}</span></span>',
+                '<span tooltip="{{tooltipS}}" class="dl-score-style">{{beer.score.style||"-"}}</span>' +
+                '<span tooltip="{{tooltipC}}" class="dl-score-category">{{beer.score.category||"-"}}</span></span>',
             controller: ['$scope', '$translate',function($scope, $translate) {
                 $scope.tooltipG = $translate('beer.data.score.overall');
                 $scope.tooltipS = $translate('beer.data.score.style');
+                $scope.tooltipC = $translate('beer.data.score.category');
             }]
         };
     });

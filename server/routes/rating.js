@@ -47,19 +47,23 @@ exports.updateRating = function(beer,callback) {
 		beer.save(function(err, beer) {
 			exports.updatePercentil(null, function(err) {
 				exports.updatePercentil(beer.style, function(err) {
-					if ( callback ) callback(beer);
+					exports.updatePercentil(null, function(err) {
+						if ( callback ) callback(beer);
+					},beer.category);
 				});
 			});
 		});
 	});
 }
 
-exports.updatePercentil = function(style_id, callback) {
+exports.updatePercentil = function(style_id, callback, category_id) {
 	var actual = 100;
 
 	var filter = {};
 	if ( style_id ) {
 		filter = {style:style_id,'score.avg':{$exists:true}};
+	} else if ( category_id ) {
+		filter = {category:category_id,'score.avg':{$exists:true}};
 	} else  {
 		filter = {'score.avg':{$exists:true}};
 	}
@@ -74,6 +78,8 @@ exports.updatePercentil = function(style_id, callback) {
 				var beer = beers[i];
 				if ( style_id) {
 					beer.score.style = actual;
+				} else if ( category_id ) {
+					beer.score.category = actual;
 				} else {
 					beer.score.overall = actual;
 				}
