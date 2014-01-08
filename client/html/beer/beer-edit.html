@@ -38,9 +38,12 @@
           </label>
           <div class="">
             <select class="form-control" id="style" ng-model="beer.style">
-              <option ng-repeat="style in styles" value="{{ style._id }}">
-                {{ style.name }}
-              </option>
+              <optgroup ng-repeat="cat in categories | orderBy:'_id'" label="{{cat._id}}-{{cat.name}}">
+                <option ng-repeat="style in styles | filter:{category: cat._id} | orderBy:'_id'" value="{{ style._id }}">
+                  {{ style.name }} ({{ style._id.toUpperCase() }})
+                </option>  
+              </optgroup>
+              
             </select>
           </div>
         </div>

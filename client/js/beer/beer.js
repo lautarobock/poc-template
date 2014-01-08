@@ -123,18 +123,20 @@ define(['../resources'], function() {
 	});
 
 	beer.controller("BeerEditController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Brewery', '$rootScope', '$timeout', '$q',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Brewery,   $rootScope,   $timeout,   $q) {
+		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Brewery', '$rootScope', '$timeout', '$q','Category',
+		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Brewery,   $rootScope,   $timeout,   $q,  Category) {
 			
 			//Load combos and beer			
 			$q.all([
 				Style.query().$promise, 
 				StyleByLabel.query().$promise, 
-				Brewery.query().$promise])
+				Brewery.query().$promise,
+                Category.query().$promise])
 					.then(function(result) {
 						$scope.styles = result[0];
 						$scope.stylesByLabel = result[1];
 						$scope.breweries = result[2];
+                        $scope.categories = result[3];
 
 						//Load Beer o create New (After wait for load all combos)
 						if ( $routeParams.beer_id ) {
