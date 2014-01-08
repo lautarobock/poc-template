@@ -18,7 +18,7 @@
           <div class="">
             <div class="input-group">
               <select class="form-control" id="brewery" ng-model="beer.brewery">
-                <option ng-repeat="brewery in breweries" value="{{ brewery._id }}">
+                <option ng-repeat="brewery in breweries | orderBy:'name'" value="{{ brewery._id }}">
                   {{ brewery.name }}
                 </option>
               </select>
