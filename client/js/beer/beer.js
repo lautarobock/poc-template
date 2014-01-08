@@ -11,7 +11,18 @@ define(['../resources'], function() {
                 }
                 return 0;
             }
-    
+            function sortScoreStyle(beer) {
+                if ( beer.score ) {
+                    return beer.score.style || 0;    
+                }
+                return 0;   
+            }
+            function sortOverall(beer) {
+                if ( beer.score ) {
+                    return beer.score.overall || 0;    
+                }
+                return 0;   
+            }
             function sortMyScore(beer) {
                 return $scope.dataHelper.getMyScore(beer)||0;
             }
@@ -73,13 +84,14 @@ define(['../resources'], function() {
                                 return 'badge';
                             }
                         },
-                        sort: sortScore
+                        sort: [sortOverall,sortScore]
                     },{
                         field:'score.style',
                         caption: 'G / S',
                         width: '8em',
                         tooltip: $translate('beer.data.score.gs.help'),
-                        valueTemplateUrl: 'beer/list/score.html'
+                        valueTemplateUrl: 'beer/list/score.html',
+                        sort: sortScoreStyle
                     },{
                         field:'score.count',
                         caption: $translate('beer.data.score.count.short'),
