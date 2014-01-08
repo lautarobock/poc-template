@@ -64,6 +64,7 @@ define(['../resources'], function() {
                     },{
                         field:'score.avg',
                         caption: $translate('beer.data.score'),
+                        width: '7em',
                         tooltip: $translate('beer.data.score.help'),
                         class: function(beer) {
                             if ( beer.score ) {
@@ -81,13 +82,20 @@ define(['../resources'], function() {
                         valueTemplateUrl: 'beer/list/score.html'
                     },{
                         field:'score.count',
-                        caption: $translate('beer.data.score.count'),
+                        caption: $translate('beer.data.score.count.short'),
                         tooltip: $translate('beer.data.score.count.help')
                     },{
                         field:'score.myScore',
                         caption: $translate('beer.data.score.my'),
                         tooltip: $translate('beer.data.score.my.help'),
                         valueTemplateUrl: 'beer/list/my-score.html',
+                        class: function(beer) {
+                            if ( beer.score ) {
+                                return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
+                            } else {
+                                return 'badge';
+                            }
+                        },
                         sort: sortMyScore
                     }
                 ]
