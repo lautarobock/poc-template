@@ -35,12 +35,10 @@ exports.save = function(req, res) {
             user_name: req.session.user_name
         });
     }
+
+    req.body.category = req.body.style.substr(0,2);
     model.Beer.findByIdAndUpdate(req.params.id,req.body,{upsert:true})
         .exec(function(err,results) {
-            if ( err ) {
-                console.log("ERR", err);
-                throw err;
-            }
             res.send(results);
         }
     );
