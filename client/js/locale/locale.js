@@ -26,6 +26,8 @@ define([], function() {
                 'beer.data.style.help': 'Estilo de la cerveza segun el BCJP',
                 'beer.data.styleByLabel': 'Estilo (Etiqueta)',
                 'beer.data.styleByLabel.help': 'Es el estilo que dice la botella',
+                'beer.data.category': 'Categoria',
+                'beer.data.category.help': 'Categoria del estilo de cerveza segun el BJCP',
                 'beer.data.description': 'Descripcion comercial',
                 'beer.data.description.help': 'Ingrese la descripcion comercial de la cerveza',
                 'beer.data.abv': 'ABV',

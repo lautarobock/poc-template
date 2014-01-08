@@ -41,6 +41,7 @@ exports.Beer = mongoose.model("Beer", new Schema({
 	name: String,
 	style: {type: String, ref: 'Style'},
 	styleByLabel: {type: String, ref: 'StyleByLabel'},
+    category: {type:String, ref:'Category'},
 	score: {
 		avg: Number,
 		overall: Number,

@@ -7,6 +7,7 @@ exports.findAll = function(req, res) {
         .populate('style')
         .populate('styleByLabel')
         .populate('brewery')
+        .populate('category')
         .exec(function(err,results) {
             res.send(results);
     });    
@@ -51,6 +52,7 @@ exports.findById = function(req, res) {
         query.populate('styleByLabel')
         query.populate('style')
         query.populate('brewery')
+        query.populate('category')
     }
     query.exec(function(err,results) {
         res.send(results);

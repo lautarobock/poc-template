@@ -62,11 +62,11 @@
                 <a ng-click="selectPage(page.number)">{{page.text}}</a>
               </li>
             </ul>
-            <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*itemsPerPage + 1}} - <span ng-hide="page == pages.length-4">{{page*itemsPerPage}}</span><span ng-show="page == pages.length-4">{{totalItems}}</span> de {{totalItems}}</div>
         </div>
     </script>-->
     <div class="container">
         <pagination boundary-links="true" total-items="(rows | filter:searchCriteria).length" items-per-page="pageSize()" page="page" max-size="20" class="pagination-small"></pagination>
+        <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*pageSize() + 1}} - <span ng-hide="page == getPageCount((rows | filter:searchCriteria).length)">{{page*pageSize()}}</span><span ng-show="page == getPageCount((rows | filter:searchCriteria).length)">{{(rows | filter:searchCriteria).length}}</span> de {{(rows | filter:searchCriteria).length}}</div>
     </div>
     <div class="panel-body">
         <div class="col-md-12" >
