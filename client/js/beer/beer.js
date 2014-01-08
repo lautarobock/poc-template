@@ -55,7 +55,7 @@ define(['../resources'], function() {
                 orderBy: 'score.avg',
                 orderDir: "-",
                 pageSize: 20,
-                sort: sortScore,
+                sort: [sortOverall,sortScore],
                 headers: [{
                         field:'name',
                         caption: $translate('beer.data.beer'),
