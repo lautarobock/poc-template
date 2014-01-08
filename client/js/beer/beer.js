@@ -43,7 +43,7 @@ define(['../resources'], function() {
                 singular: $translate('beer.data.beer')+'s',
                 orderBy: 'score.avg',
                 orderDir: "-",
-                pageSize: 5,
+                pageSize: 20,
                 sort: sortScore,
                 headers: [{
                         field:'name',
