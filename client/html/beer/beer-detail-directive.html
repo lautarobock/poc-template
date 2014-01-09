@@ -20,9 +20,12 @@
         
       </div>
       <p></p>
-      <div class="well well-sm" ng-show="beer.abv||beer.ibu||beer.og||beer.fg">
+      <div class="well well-sm" ng-show="showValues(beer)">
         <span ng-repeat="value in values" ng-show="beer[value]">
-          {{ ('beer.data.' + value) | translate }}: <b>{{beer[value]}}%</b> 
+          {{ ('beer.data.' + value) | translate }}: 
+          <b>
+            {{beer[value]}}{{units[value]}}
+          </b> 
           <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
         </span>
       </div>

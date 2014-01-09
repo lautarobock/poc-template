@@ -271,6 +271,17 @@ define(['../resources'], function() {
             controller: function($scope, DLHelper) {
 
                 $scope.values = ['abv','ibu','og','fg'];
+                $scope.units = {
+                    abv: '%'
+                };
+
+                $scope.showValues = function(beer) {
+                    var show = false;
+                    angular.forEach($scope.values, function(v) {
+                        show = show || beer[v];
+                    });
+                    return show;
+                };
 
             	$scope.scoreClass = function(score) {
             		return 'text-' + DLHelper.colorByScore(score);
