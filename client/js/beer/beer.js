@@ -72,6 +72,9 @@ define(['../resources'], function() {
                         field:'name',
                         caption: $translate('beer.data.beer'),
                         type: 'link',
+                        class: function() {
+                            return "dl-font-bold";
+                        },
                         href: function(row) {
                             return '#/beer/detail/' + row._id;
                         }

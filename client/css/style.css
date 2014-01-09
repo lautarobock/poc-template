@@ -61,3 +61,7 @@
 	width: 2.5em;
 	display: inline-block;
 }
+
+.dl-font-bold {
+	font-weight: bold;
+}
