@@ -12,6 +12,7 @@ require([
 
     var app = angular.module("app", [
         'ngRoute',
+        'ngSanitize',
         'ui.bootstrap',
         'pascalprecht.translate',
         'dl.menu',
@@ -136,6 +137,13 @@ require([
 
     app.controller("RankingsController", function($scope,Category) {
         $scope.categories = Category.query();
+    });
+
+    app.filter("enrich", function() {
+        return function(value) {
+            if ( value ) return markdown.toHTML(value);
+            return value;
+        };
     });
 
     // app.filter("round", function() {

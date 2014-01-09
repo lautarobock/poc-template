@@ -10,6 +10,7 @@ define([], function() {
                 'content.beers': 'Mejores birras',
                 'content.ratings': 'Las que he tomado',
                 'side.search': 'Buscar Cerveza',
+                'side.search.fields': 'Por todos los campos',
                 'side.rankings': 'Rankings por categoria',
                 'side.profile': 'Perfil Google+',
                 'profile.name': 'Nombre',

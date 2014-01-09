@@ -2,7 +2,7 @@ var rest = require("./rest");
 var model = require("../domain/model.js");
 var beerService = require("./beer");
 var ratingService = require("./rating");
-
+var styleService = require("./style");
 
 /**
  * Filtro para detectar qeu haya un usuario logueado
@@ -44,7 +44,10 @@ var services = [{
     name: "User"
 },{
     name: "Style",
-    customId: true
+    customId: true,
+    process: function(rest) {
+        rest.findAll = styleService.findAll;
+    }
 },{
     name: "StyleByLabel",
     customId: true

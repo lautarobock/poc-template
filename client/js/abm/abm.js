@@ -103,7 +103,8 @@
                 canRemove: '=',
                 canEdit: '=',
                 canAdd: '=',
-                context: '&'
+                context: '&',
+                filterData: '='
             },
             templateUrl: 'abm/abm.html',
             link : function(scope, element, attrs) {
@@ -120,7 +121,11 @@
                         return '';
                     }
                 };
-
+ 
+                $scope.urlTemplate = function(filter) {
+                    return 'abm/abm-filter-' + filter.type + ".html";
+                };
+                
                 $scope.getHeaderStyle = function(header) {
                     var style = header.headerStyle || {};
                     if ( header.width ) {

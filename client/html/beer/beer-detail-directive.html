@@ -32,7 +32,7 @@
       <p></p>
       <div class="well well-sm">
         <h4>{{ 'beer.data.description' | translate }}</h4>
-        <p style="white-space: pre-wrap;box-sizing: border-box;">{{beer.description}}</p>
+        <div style="white-space: pre-wrap;box-sizing: border-box;" ng-bind-html="beer.description|enrich" ></div>
       </div>
     </fieldset>
   </form>

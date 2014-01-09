@@ -9,6 +9,14 @@
   display: run-in
 }
 
+.dl-visible {
+	visibility: visible
+}
+
+.dl-hidden {
+	visibility: hidden; !important
+}
+
 .dl-color-yellow {
 	color: yellow;
 }

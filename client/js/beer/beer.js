@@ -2,8 +2,8 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
-	beer.controller("BeerController", ['$scope', 'Beer', '$translate', 'DLHelper',
-        function($scope, Beer, $translate, DLHelper) {
+	beer.controller("BeerController", ['$scope', 'Beer', '$translate', 'DLHelper','Style', 'Category',
+        function($scope, Beer, $translate, DLHelper, Style, Category) {
     
             function sortScore(beer) {
                 if ( beer.score ) {
@@ -62,8 +62,8 @@ define(['../resources'], function() {
     
             $scope.config = {
                 data: Beer,
-                name: $translate('beer.data.beer'),
-                singular: $translate('beer.data.beer')+'s',
+                name: $translate('beer.data.beer')+'s',
+                singular: $translate('beer.data.beer'),
                 orderBy: 'score.avg',
                 orderDir: "-",
                 // pageSize: 20,
@@ -128,6 +128,36 @@ define(['../resources'], function() {
                     }
                 ]
             };
+
+            $scope.filterData = {};
+            $scope.filterData['style._id'] = {
+                caption: $translate('beer.data.style'),
+                type: 'group-combo',
+                groupBy: function(value) {
+                    return value.category._id + '-' + value.category.name;
+                },
+                comparator: 'equal',
+                getLabel: function(value) {
+                    return value.name + ' (' + value._id.toUpperCase() + ')';
+                },
+                valueKey: '_id',
+                ignoreCase: false,
+                data: Style.query(),
+                orderBy: '_id'
+            };
+            $scope.filterData['category._id'] = {
+                caption: $translate('beer.data.category'),
+                type: 'group-combo',
+                comparator: 'equal',
+                getLabel: function(value) {
+                    return value._id + '-   ' + value.name;
+                },
+                valueKey: '_id',
+                ignoreCase: false,
+                data: Category.query(),
+                orderBy: '_id'
+            };
+
         }]);
 
 	beer.controller("NewStyleByLabelController", function($scope, $modalInstance, StyleByLabel) {
