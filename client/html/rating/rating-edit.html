@@ -73,12 +73,13 @@
       <tbody>
         <tr ng-repeat="type in scoreType">
           <th>
-            {{ ('rating.data.' + type.name ) | translate }}
+            {{ ('rating.data.' + type.name ) | translate }} ({{type.max}})
           </th>
-          <td>
-            <rating style="font-size: 20px;" state-off="'glyphicon glyphicon-star-empty'" state-on="'glyphicon glyphicon-star dl-color-yellow'"  value="rating.score[type.name]" max="type.max" ></rating>
+          <td ng-inti="showOver='hidden'">
+            <rating style="font-size: 20px;" state-off="'glyphicon glyphicon-star-empty'" state-on="'glyphicon glyphicon-star dl-color-yellow'"  value="rating.score[type.name]" max="type.max" on-hover="hoveringOver(value,type.name);showOver='visible'" on-leave="over[type.name]=-1;showOver='hidden'"></rating>
+            <span style="width:4em;visibility:{{showOver}}" >{{over[type.name]}}</span>
           </td>
-          <td style="width:6em">
+          <td style="width:7em">
             <!-- <input type="text.name" ng-model="rating.score[type.name]" style="font-weight: bold;" class="form-control input-sm"></input> -->
             <select class="form-control input-sm" style="font-weight: bold;" ng-model="rating.score[type.name]">
               <option ng-repeat="point in array(0,type.max)" value="{{ point }}">
@@ -93,7 +94,7 @@
       <tfoot>
         <tr>
           <th>
-            {{ 'beer.data.finalScore' | translate }}
+            {{ 'beer.data.finalScore' | translate }} (50)
           </th>
           <th>
             <progressbar type="{{typeBar(rating.finalScore)}}" value="rating.finalScore" max="50" >

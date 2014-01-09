@@ -69,6 +69,7 @@ define([], function() {
                 'rating.data.score.excellent': 'Excelente',
                 'rating.data.score.outstanding': 'Excepcional',
                 'rating.data.comments': 'Comentarios',
+                'rating.data.notCalification': 'Sin calificacion',
                 'rating.data.date': 'Si mal no recuerdo la tome el',
                 'rating.data.bottled': 'Embotellada el',
                 'rating.data.expiration': 'Vence el',

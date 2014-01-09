@@ -17,11 +17,14 @@
     </div>
   </form>
   <form class="form-horizontal">
-    <h3>Calificaciones</h3>
+    <h3>{{'beer.data.score.count'|translate}}</h3>
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="rating in ratings">
           <div>
-            <span class="badge" style="float: left;margin-right: 1em;" ng-class="scoreClass(rating.finalScore)">{{ rating.finalScore }}</span>
+            <span class="badge" style="float: left;margin-right: 1em;" ng-class="scoreClass(rating.finalScore)">
+              <span ng-show="rating.score">{{ rating.finalScore }}</span>
+              <span tooltip="{{'rating.data.notCalification'|translate}}" ng-hide="rating.score" class="glyphicon glyphicon-minus"></span>
+            </span>
             <span class="pull-right" ng-show="rating.user._id == user._id" secure>
               <a href="#/rating/edit/{{rating._id}}">
                 <span class="glyphicon glyphicon-edit"/>
@@ -29,18 +32,18 @@
             </span>
             <b>{{ rating.user.name }}</b>
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
-            <b>{{ rating.date | date:'dd/MM/yyyy' }}</b>
+            {{ rating.date | date:'dd/MM/yyyy' }}
           </div>
-          <div>
-            <b>{{ 'rating.data.appearance' | translate }}</b>: {{ rating.score.appearance }}/3
+          <div ng-show="rating.score">
+            {{ 'rating.data.appearance' | translate }}: <b>{{ rating.score.appearance }}/3</b>
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
-            <b>{{ 'rating.data.aroma' | translate }}</b>: {{ rating.score.aroma }}/12
+            {{ 'rating.data.aroma' | translate }}: <b>{{ rating.score.aroma }}/12</b>
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
-            <b>{{ 'rating.data.flavor' | translate }}</b>: {{ rating.score.flavor }}/20
+            {{ 'rating.data.flavor' | translate }}: <b>{{ rating.score.flavor }}/20</b>
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
-            <b>{{ 'rating.data.mouthfeel' | translate }}</b>: {{ rating.score.mouthfeel }}/5
+            {{ 'rating.data.mouthfeel' | translate }}: <b>{{ rating.score.mouthfeel }}/5</b>
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
-            <b>{{ 'rating.data.overall' | translate }}</b>: {{ rating.score.overall }}/10
+            {{ 'rating.data.overall' | translate }}: <b>{{ rating.score.overall }}/10</b>
           </div>
           <div ng-show="rating.comments" style="border: solid;border-radius: 5px;border-color: darkgray;margin-top: 1em;padding: 5px;background: darkgray;color: black;">
             <!-- <h4>{{ 'rating.data.comments' | translate }}</h4> -->

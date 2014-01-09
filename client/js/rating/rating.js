@@ -114,10 +114,10 @@ define([], function() {
                 $scope.rating.$save(function(rating) {
                     //Esto deberia hacerlo en el servidor y luego de el $save deberia volver a cargar el 
                     //usuario, nada mas.
+                    var result = util.Arrays.filter($scope.user.ratings, function(item) {
+                        return item.beer == rating.beer ? 0 : -1;
+                    });
                     if ( rating.finalScore ) {
-                        var result = util.Arrays.filter($scope.user.ratings, function(item) {
-                            return item.beer == rating.beer ? 0 : -1;
-                        });
                         if ( result.length != 0 ) {
                             //Esto quiere decir q esta editando y que tenia un valor antes (lo elimino)
                             if ( $scope.initialScore ) {
@@ -131,6 +131,14 @@ define([], function() {
                                 finalScore: [rating.finalScore]
                             });    
                         }
+                        $scope.user.$save(function() {
+                            window.history.back();
+                        });
+                    } else if ( result.length == 0 ) {
+                        $scope.user.ratings.push({
+                            beer: rating.beer,
+                            finalScore: []
+                        });
                         $scope.user.$save(function() {
                             window.history.back();
                         });
