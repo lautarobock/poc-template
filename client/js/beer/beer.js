@@ -221,6 +221,18 @@ define(['../resources'], function() {
 				});
 			};
 
+            $scope.formatBrewerySelection = function(brewery_id, breweries) {
+                if ( !breweries ) return null;
+                var filtered = util.Arrays.filter(breweries, function(item) {
+                    return item._id == brewery_id ? 0 : -1;
+                });
+                if ( filtered.length > 0 ) {
+                    return filtered[0].name;
+                } else {
+                    return null;
+                }
+            }
+
 
 	}]);
 

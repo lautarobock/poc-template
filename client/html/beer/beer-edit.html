@@ -17,11 +17,12 @@
           </label>
           <div class="">
             <div class="input-group">
-              <select class="form-control" id="brewery" ng-model="beer.brewery">
+              <!-- <select class="form-control" id="brewery" ng-model="beer.brewery">
                 <option ng-repeat="brewery in breweries | orderBy:'name'" value="{{ brewery._id }}">
                   {{ brewery.name }}
                 </option>
-              </select>
+              </select> -->
+              <input typeahead="brewery._id as brewery.name for brewery in breweries | filter:$viewValue | orderBy:'name'" class="form-control" type="text" ng-model="beer.brewery" typeahead-editable="false" typeahead-input-formatter="formatBrewerySelection($model,breweries)" placeholder="Comience a escribir para buscar" >
               <span class="input-group-btn">
                   <button class="btn btn-default" type="button" ng-click="openNewBrewery()">
                       <span class="glyphicon glyphicon-plus"></span>
