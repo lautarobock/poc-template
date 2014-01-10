@@ -34,22 +34,22 @@ require("mongoose").connect(process.env.MONGOLAB_URI);
 
 require("./routes/config").createRoutes(app);
 
-var model = require("./domain/model");
-var rating = require("./routes/rating");
+// var model = require("./domain/model");
+// var rating = require("./routes/rating");
 
-model.Style.find().exec(function(err, styles) {
-    styles.forEach(function(style) {
-        rating.updatePercentil(style._id);
-    });
-});
+// model.Style.find().exec(function(err, styles) {
+//     styles.forEach(function(style) {
+//         rating.updatePercentil(style._id);
+//     });
+// });
 
-model.Category.find().exec(function(err,categories) {
-    categories.forEach(function(category) {
-        rating.updatePercentil(null,null,category._id);
-    });
-});
+// model.Category.find().exec(function(err,categories) {
+//     categories.forEach(function(category) {
+//         rating.updatePercentil(null,null,category._id);
+//     });
+// });
 
-rating.updatePercentil();
+// rating.updatePercentil();
 
 
 // log.info("TEST");
