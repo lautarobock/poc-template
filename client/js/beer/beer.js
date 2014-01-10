@@ -279,14 +279,14 @@ define(['../resources'], function() {
                 } else {
                     return null;
                 }
-            }
+            };
 
 
 	}]);
 
 	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Rating', 'DLHelper',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Rating,   DLHelper) {
+		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Rating', 'DLHelper', '$filter',
+		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Rating,   DLHelper,   $filter) {
 
 			//Load Styles
 			$scope.styles = Style.query();
@@ -295,6 +295,34 @@ define(['../resources'], function() {
 			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
                 $scope.ratings = Rating.getByBeer({beer_id:$scope.beer._id});
             });
+
+            $scope.vintageTooltip = function(rating) {
+                if ( rating.bottled ) {
+                    var dateFormat = $filter('date');
+                    var bot = new Date(rating.bottled).getTime();
+                    var drink = new Date(rating.date).getTime();
+                    var time = drink - bot;
+                    console.log("time", time);
+                    var anos = time / (1000*60*60*24*365);
+                    var rest = anos - Math.floor(anos);
+                    rest = Math.ceil(rest *12);
+                    if ( rest == 12 )  {
+                        anos++;
+                        rest = 0;
+                    }
+                    if ( anos > 1 ) {
+                        var resp = 'Embotellada en ' + dateFormat(rating.bottled,'dd/MM/yyyy') + ' tomada con ' + Math.floor(anos) + ' años';
+                        if ( rest != 0 ) {
+                             resp += 'y ' + rest + ' meses';
+                        }
+                        return resp;
+                    } else {
+                        return 'Embotellada en ' + dateFormat(rating.bottled,'dd/MM/yyyy') + ' tomada con ' + rest + ' meses';
+                    }
+                } else {
+                    return null;
+                }
+            };
 
             $scope.scoreClass = function(score) {
                 return 'alert-' + DLHelper.colorByScore(score);

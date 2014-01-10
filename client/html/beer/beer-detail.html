@@ -33,6 +33,11 @@
             <b>{{ rating.user.name }}</b>
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
             {{ rating.date | date:'dd/MM/yyyy' }}
+            <span style="color: black;" class="glyphicon glyphicon-flash"></span>
+            <span tooltip="{{vintageTooltip(rating)}}">
+              {{'rating.vintage'|translate}}:
+              <b>{{ rating.bottled | date:'yyyy' }}</b>
+            </span>
           </div>
           <div ng-show="rating.score">
             {{ 'rating.data.appearance' | translate }}: <b>{{ rating.score.appearance }}/3</b>
