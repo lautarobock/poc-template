@@ -65,6 +65,58 @@ exports.updateRating = function(beer,callback) {
 }
 
 exports.updatePercentil = function(style_id, callback, category_id) {
+	
+
+	var filter = {};
+	if ( style_id ) {
+		filter = {style:style_id,'score.avg':{$exists:true}};
+	} else if ( category_id ) {
+		filter = {category:category_id,'score.avg':{$exists:true}};
+	} else  {
+		filter = {'score.avg':{$exists:true}};
+	}
+	model.Beer.find(filter).sort('score.avg score.count').exec(function(err, beers) {
+		var count = beers.length;
+		// var byPerc = Math.ceil(count/100);
+		// var actPercRest = byPerc;
+		// var percentils = [];
+		// for ( var i=1; i<=100; i++ ) {
+		// 	percentils.push(Math.ceil(count*i/100));
+		// }
+		var actualPos = 1;
+		// var actualValue = percentils[actualPos];
+		var actualValue = Math.ceil(count*actualPos/100);
+		// console.log("actualPos",actualValue);
+		var updateBeers = function(beers,i) {
+			if ( i<=count ) {
+				var beer = beers[i-1];
+				while ( i >= actualValue )  {
+					actualPos++;
+					actualValue = Math.ceil(count*actualPos/100);
+					// console.log("actualPos",actualValue);
+				}
+				if ( style_id) {
+					beer.score.style = actualPos-1;
+				} else if ( category_id ) {
+					beer.score.category = actualPos-1;
+				} else {
+					beer.score.overall = actualPos-1;
+				}
+				beer.save(function() {
+					updateBeers(beers,i+1);
+				});
+			} else {
+				callback();
+			}
+		}
+
+		updateBeers(beers,1)
+		
+	});
+
+}
+
+exports.updatePercentilOld = function(style_id, callback, category_id) {
 	var actual = 100;
 
 	var filter = {};
