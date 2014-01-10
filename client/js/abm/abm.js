@@ -69,10 +69,16 @@
         }
     };
     
+    gt.filter("textFilter", function($filter,$timeout) {
+        return function(rows, criteria) {
+            return $filter('filter')(rows,criteria);
+        };
+    });
+
     gt.filter("advanced",function() {
         return function(rows,filterData) {
             if ( !rows) return rows;
-            
+
             if (!filterData) {
                 return rows;
             } else {
@@ -110,7 +116,23 @@
             link : function(scope, element, attrs) {
                 
             },
-            controller: function($scope) {
+            controller: function($scope,$timeout) {
+
+                $scope.searchCriteria = "";
+
+                var activeTimeout = null;
+                $scope.search = function() {
+                    if ( activeTimeout ) $timeout.cancel(activeTimeout);
+
+                    activeTimeout = $timeout(function() {
+                        $scope.searchCriteria = $scope._searchCriteria;
+                    },500);
+                };
+
+                $scope.clearSearch = function() {
+                    $scope.searchCriteria = ""
+                    $scope._searchCriteria = "";
+                };
                 
                 $scope.sort = sortData($scope.config().orderBy,$scope.config().orderDir||"",$scope.config().sort);
                 

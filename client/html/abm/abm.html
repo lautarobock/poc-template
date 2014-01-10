@@ -2,7 +2,7 @@
     <div class="panel-body" >
         <div class="col-md-5" style="padding-top: 5px;">
             <span >
-                <ng-pluralize count="(rows | filter:searchCriteria).length"
+                <ng-pluralize count="(rows | textFilter:searchCriteria | advanced:filterData).length"
                               when="{'0':'No se ha encontrado ningun resultado con su busqueda','one': '1 ' +config().singular+ ' encontrada','other':'{} '+config().name+' encontradas'}"></ng-pluralize>
             </span>
         </div>
@@ -16,18 +16,19 @@
     <div class="panel panel-default" style="margin: 0 1em">
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3" >
-                    <label for="filter.name">{{'side.search'|translate}}</label>
+                <div class="col-md-{{config().filterColSpan||'12'}}" style="margin-bottom: 1em;">
+                    <label for="filter.name">{{config().filterLabel}}</label>
                     <div class="input-group" style="width: 100%">
-                        <input type="text" id="filter.name"  class="form-control input-sm" ng-model="searchCriteria" placeholder="({{'side.search.fields'|translate}})" />
+                        <input ng-change="search()" type="text" id="filter.name"  class="form-control input-sm" ng-model="_searchCriteria" placeholder="({{'side.search.fields'|translate}})" />
                         <span class="input-group-btn">
-                            <button ng-init="searchCriteria=''" ng-disabled="searchCriteria==''"  ng-click="searchCriteria=''" class="btn btn-default btn-sm" type="button">
+                            <button ng-disabled="searchCriteria==''"  ng-click="clearSearch()" class="btn btn-default btn-sm" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </span>
                     </div>
                 </div>
-                <div ng-repeat="(filterName,filter) in filterData" ng-include="urlTemplate(filter)">
+                <div ng-repeat="_value in config().filterOrder" ng-init="filterName=_value; filter=filterData[_value]">
+                    <ng-include src="urlTemplate(filter)"></ng-include>
                 </div>
             </div>
         </div>
@@ -49,7 +50,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy():sort.reverse() | filter:searchCriteria | advanced:filterData | pageFilter:page:pageSize() ">
+            <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy():sort.reverse() | textFilter:searchCriteria | advanced:filterData | pageFilter:page:pageSize() ">
                 <td ng-repeat="header in config().headers">
                     <ng-include src="valueTemplate(row,header)"></ng-include>
                 </td>
@@ -76,8 +77,8 @@
         </div>
     </script>-->
     <div class="container">
-        <pagination boundary-links="true" total-items="(rows | filter:searchCriteria | advanced:filterData).length" items-per-page="pageSize()" page="page" max-size="20" class="pagination-small"></pagination>
-        <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*pageSize() + 1}} - <span ng-hide="page == getPageCount((rows | filter:searchCriteria | advanced:filterData).length)">{{page*pageSize()}}</span><span ng-show="page == getPageCount((rows | filter:searchCriteria | advanced:filterData).length)">{{(rows | filter:searchCriteria | advanced:filterData).length}}</span> de {{(rows | filter:searchCriteria | advanced:filterData).length}}</div>
+        <pagination boundary-links="true" total-items="(rows | textFilter:searchCriteria | advanced:filterData).length" items-per-page="pageSize()" page="page" max-size="20" class="pagination-small"></pagination>
+        <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*pageSize() + 1}} - <span ng-hide="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{page*pageSize()}}</span><span ng-show="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{(rows | textFilter:searchCriteria | advanced:filterData).length}}</span> de {{(rows | textFilter:searchCriteria | advanced:filterData).length}}</div>
     </div>
     <div class="panel-body">
         <div class="col-md-12" >
