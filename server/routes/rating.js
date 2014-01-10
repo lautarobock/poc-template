@@ -77,23 +77,14 @@ exports.updatePercentil = function(style_id, callback, category_id) {
 	}
 	model.Beer.find(filter).sort('score.avg score.count').exec(function(err, beers) {
 		var count = beers.length;
-		// var byPerc = Math.ceil(count/100);
-		// var actPercRest = byPerc;
-		// var percentils = [];
-		// for ( var i=1; i<=100; i++ ) {
-		// 	percentils.push(Math.ceil(count*i/100));
-		// }
 		var actualPos = 1;
-		// var actualValue = percentils[actualPos];
 		var actualValue = Math.ceil(count*actualPos/100);
-		// console.log("actualPos",actualValue);
 		var updateBeers = function(beers,i) {
 			if ( i<=count ) {
 				var beer = beers[i-1];
 				while ( i >= actualValue )  {
 					actualPos++;
 					actualValue = Math.ceil(count*actualPos/100);
-					// console.log("actualPos",actualValue);
 				}
 				if ( style_id) {
 					beer.score.style = actualPos-1;
@@ -106,7 +97,7 @@ exports.updatePercentil = function(style_id, callback, category_id) {
 					updateBeers(beers,i+1);
 				});
 			} else {
-				callback();
+				if ( callback ) callback();
 			}
 		}
 
