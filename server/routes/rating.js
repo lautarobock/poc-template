@@ -1,6 +1,7 @@
 var model = require('../domain/model.js');
 var mongoose = require('mongoose');
 var mongoutil = require("./util/mongoutil.js");
+var async = require("async");
 
 exports.findAll = function(req, res) {
 	var query = model.Rating.find({user:req.session.user_id});
@@ -45,12 +46,19 @@ exports.updateRating = function(beer,callback) {
 		beer.score.avg = Math.round((sum / count)*10)/10;
 		beer.score.count = count;
 		beer.save(function(err, beer) {
-			exports.updatePercentil(null, function(err) {
-				exports.updatePercentil(beer.style, function(err) {
-					exports.updatePercentil(null, function(err) {
-						if ( callback ) callback(beer);
-					},beer.category);
-				});
+			async.series([
+					function (callback) {
+						exports.updatePercentil(null, callback);
+					},
+					function (callback) {
+						exports.updatePercentil(beer.style, callback);
+					},
+					function (callback) {
+						exports.updatePercentil(null, callback, beer.category);
+					}
+				],
+				function(err) {
+					if ( callback ) callback(beer);
 			});
 		});
 	});

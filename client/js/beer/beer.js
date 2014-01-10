@@ -2,8 +2,8 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
-	beer.controller("BeerController", ['$scope', 'Beer', '$translate', 'DLHelper','Style', 'Category',
-        function($scope, Beer, $translate, DLHelper, Style, Category) {
+	beer.controller("BeerController", ['$scope', 'Beer', '$translate', 'DLHelper','Style', 'Category','Brewery',
+        function($scope, Beer, $translate, DLHelper, Style, Category, Brewery) {
     
             function sortScore(beer) {
                 if ( beer.score ) {
@@ -132,7 +132,7 @@ define(['../resources'], function() {
             $scope.filterData = {};
             $scope.filterData['style._id'] = {
                 caption: $translate('beer.data.style'),
-                type: 'group-combo',
+                type: 'combo',
                 groupBy: function(value) {
                     return value.category._id + '-' + value.category.name;
                 },
@@ -147,7 +147,7 @@ define(['../resources'], function() {
             };
             $scope.filterData['category._id'] = {
                 caption: $translate('beer.data.category'),
-                type: 'group-combo',
+                type: 'combo',
                 comparator: 'equal',
                 getLabel: function(value) {
                     return value._id + '-   ' + value.name;
@@ -156,6 +156,18 @@ define(['../resources'], function() {
                 ignoreCase: false,
                 data: Category.query(),
                 orderBy: '_id'
+            };
+            $scope.filterData['brewery._id'] = {
+                caption: $translate('beer.data.brewery'),
+                type: 'combo',
+                comparator: 'equal',
+                getLabel: function(value) {
+                    return value.name;
+                },
+                valueKey: '_id',
+                ignoreCase: false,
+                data: Brewery.query(),
+                orderBy: 'name'
             };
 
         }]);
