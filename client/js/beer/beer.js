@@ -69,7 +69,7 @@ define(['../resources'], function() {
                 filterOrder: ['brewery._id','style._id', 'category._id'],
                 orderBy: 'score.avg',
                 orderDir: "-",
-                // pageSize: 20,
+                pageSize: 25,
                 sort: [sortOverall,sortScore],
                 headers: [{
                         field:'name',
@@ -115,7 +115,7 @@ define(['../resources'], function() {
                         field:'score.style',
                         caption: 'G / S',
                         width: '9em',
-                        headerStyle: {'text-align': 'center'},
+                        headerStyle: {'text-align': 'center','min-width': '9em'},
                         tooltip: $translate('beer.data.score.gs.help'),
                         valueTemplateUrl: 'beer/list/score.html',
                         sort: sortScoreStyle
