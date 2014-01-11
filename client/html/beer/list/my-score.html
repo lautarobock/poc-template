@@ -1,4 +1,4 @@
-<span>
+<span ng-class="header.class(row)">
 	<span ng-hide="context().getMyScore(row)==-1">{{ context().getMyScore(row) || '-' }}</span>
 	<span style="color:orange" tooltip="{{'beer.drunk' | translate}}" ng-show="context().getMyScore(row)==-1" class="glyphicon glyphicon-ok"></span>
 </span>

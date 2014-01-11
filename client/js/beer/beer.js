@@ -83,13 +83,21 @@ define(['../resources'], function() {
                         }
                     },{
                         field:'brewery.name',
-                        caption: $translate('beer.data.brewery')
+                        caption: $translate('beer.data.brewery'),
+                        hidden: {
+                            xs: true,
+                            sm: true
+                        }
                     },{
                         field:'style.name',
                         caption: $translate('beer.data.style')
                     },{
                         field:'category.name',
-                        caption: $translate('beer.data.category')
+                        caption: $translate('beer.data.category'),
+                        hidden: {
+                            xs: true,
+                            sm: true
+                        }
                     },{
                         field:'score.avg',
                         caption: $translate('beer.data.score'),
@@ -121,8 +129,9 @@ define(['../resources'], function() {
                         tooltip: $translate('beer.data.score.my.help'),
                         valueTemplateUrl: 'beer/list/my-score.html',
                         class: function(beer) {
-                            if ( beer.score ) {
-                                return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
+                            var s = $scope.dataHelper.getMyScore(beer);
+                            if ( s ) {
+                                return 'badge alert-' + DLHelper.colorByScore(s);        
                             } else {
                                 return 'badge';
                             }

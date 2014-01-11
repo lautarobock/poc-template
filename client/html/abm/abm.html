@@ -16,7 +16,7 @@
     <div class="panel panel-default" style="margin: 0 1em">
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-{{config().filterColSpan||'12'}}" style="margin-bottom: 1em;">
+                <div class="col-sm-{{config().filterColSpan||'12'}}" style="margin-bottom: 1em;">
                     <label for="filter.name">{{config().filterLabel}}</label>
                     <div class="input-group" style="width: 100%">
                         <input ng-change="search()" type="text" id="filter.name"  class="form-control input-sm" ng-model="_searchCriteria" placeholder="({{'side.search.fields'|translate}})" />
@@ -39,6 +39,7 @@
             <tr>
                 <th ng-click="sort.resort(header.field, header.sort)"
                     class="gt-sorted"
+                    ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}
                     ng-repeat="header in config().headers"
                     ng-style="getHeaderStyle(header)">
                     <span tooltip="{{header.tooltip}}" tooltip-append-to-body="true">
@@ -51,7 +52,7 @@
         </thead>
         <tbody>
             <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy():sort.reverse() | textFilter:searchCriteria | advanced:filterData | pageFilter:page:pageSize() ">
-                <td ng-repeat="header in config().headers">
+                <td ng-repeat="header in config().headers" ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}>
                     <ng-include src="valueTemplate(row,header)"></ng-include>
                 </td>
                 <!-- BUTTONS -->
