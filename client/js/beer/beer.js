@@ -2,8 +2,9 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
-	beer.controller("BeerController", ['$scope', 'Beer', '$translate', 'DLHelper','Style', 'Category','Brewery',
-        function($scope, Beer, $translate, DLHelper, Style, Category, Brewery) {
+	beer.controller("BeerController", 
+        ['$scope', 'Beer', '$translate', 'DLHelper','Style', 'Category','Brewery','$location',
+        function($scope, Beer, $translate, DLHelper, Style, Category, Brewery,$location) {
     
             function sortScore(beer) {
                 if ( beer.score ) {
@@ -181,6 +182,18 @@ define(['../resources'], function() {
                 data: Brewery.query(),
                 orderBy: 'name'
             };
+
+            // $scope.$watch("filterData['category._id'].value", function(value) {
+            //     if ( !value || value == '' ) {
+            //         $location.search({});
+            //     }
+            // });
+
+            angular.forEach($scope.filterData,function(f,key){
+                if ( $location.$$search[key] ) {
+                    $scope.filterData[key].value = $location.$$search[key];
+                }
+            });
 
         }]);
 

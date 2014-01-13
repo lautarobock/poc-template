@@ -90,7 +90,9 @@ require([
                 when('/beer/new', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
                 when('/beer/edit/:beer_id', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
                 when('/beer/detail/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
+                when('/beer/search_:filter', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
+
 
                 when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingBeerController'}).
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
