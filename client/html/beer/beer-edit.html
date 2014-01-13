@@ -55,7 +55,7 @@
           <div class="">
             <div class="input-group">
               <select class="form-control" id="styleByLabel" ng-model="beer.styleByLabel">
-                <option ng-repeat="style in stylesByLabel" value="{{ style._id }}">
+                <option ng-repeat="style in stylesByLabel | orderBy:'name'" value="{{ style._id }}">
                   {{ style.name }}
                 </option>
               </select>
