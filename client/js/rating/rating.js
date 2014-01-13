@@ -154,8 +154,9 @@ define([], function() {
         }]);
 
     rating.controller("RatingBeerController", [
-        '$scope', 'Rating','$filter',
-        function($scope,Rating,$filter) {
+        '$scope', 'Rating','$filter', '$translate','DLHelper',
+        function($scope,Rating,$filter,$translate,DLHelper) {
+            
             $scope.config = {
                 data: Rating,
                 name: "Calificaciones",
@@ -167,8 +168,39 @@ define([], function() {
                         caption: 'Cerveza',
                         valueTemplateUrl: 'rating/list/link.html'
                     },{
+                        field:'score.appearance',
+                        caption: $translate('rating.data.appearance.short'),
+                        tooltip: $translate('rating.data.appearance')
+                    },{
+                        field:'score.aroma',
+                        caption: $translate('rating.data.aroma.short'),
+                        tooltip: $translate('rating.data.aroma')
+                    },{
+                        field:'score.flavor',
+                        caption: $translate('rating.data.flavor.short'),
+                        tooltip: $translate('rating.data.flavor')
+                    },{
+                        field:'score.mouthfeel',
+                        caption: $translate('rating.data.mouthfeel.short'),
+                        tooltip: $translate('rating.data.mouthfeel')
+                    },{
+                        field:'score.overall',
+                        caption: $translate('rating.data.overall.short'),
+                        tooltip: $translate('rating.data.overall')
+                    },{
                         field:'finalScore',
-                        caption: 'Score'
+                        caption: $translate('beer.data.finalScore'),
+                        tooltip: $translate('beer.data.finalScore.help'),
+                        class: function(rating) {
+                            if ( rating.finalScore ) {
+                                return 'badge alert-' + DLHelper.colorByScore(rating.finalScore);   
+                            } else {
+                                return 'badge';
+                            }
+                        },
+                        sort: function (rating) {
+                            return rating.finalScore || 0;
+                        }
                     },{
                         field:'date',
                         caption: 'Fecha',
@@ -178,6 +210,7 @@ define([], function() {
                     }
                 ]
             };
+
 
         }]);
 
