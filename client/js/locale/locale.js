@@ -55,6 +55,7 @@ define([], function() {
                 'beer.data.score.style': 'Percentil sobre el total de cervezas del mismo estilo BJCP',
                 'beer.data.score.category': 'Percentil sobre el total de cervezas de la misma categoria BJCP',
                 'beer.data.finalScore': 'Puntaje Final',
+                'beer.data.finalScore.short': 'P.F.',
                 'beer.data.finalScore.help': 'Suma de los puntos de cada categoria',
                 'form.cancel': 'Cancelar',
                 'form.save': 'Guardar',

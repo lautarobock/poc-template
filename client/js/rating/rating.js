@@ -189,7 +189,7 @@ define([], function() {
                         tooltip: $translate('rating.data.overall')
                     },{
                         field:'finalScore',
-                        caption: $translate('beer.data.finalScore'),
+                        caption: $translate('beer.data.finalScore.short'),
                         tooltip: $translate('beer.data.finalScore.help'),
                         class: function(rating) {
                             if ( rating.finalScore ) {
@@ -201,6 +201,13 @@ define([], function() {
                         sort: function (rating) {
                             return rating.finalScore || 0;
                         }
+                    },{
+                        field:'beer.score',
+                        caption: 'G / S',
+                        width: '9em',
+                        headerStyle: {'text-align': 'center','min-width': '9em'},
+                        tooltip: $translate('beer.data.score.gs.help'),
+                        valueTemplateUrl: 'beer/list/score.html'
                     },{
                         field:'date',
                         caption: 'Fecha',

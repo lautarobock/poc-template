@@ -113,7 +113,7 @@ define(['../resources'], function() {
                         },
                         sort: [sortOverall,sortScore]
                     },{
-                        field:'score.style',
+                        field:'score',
                         caption: 'G / S',
                         width: '9em',
                         headerStyle: {'text-align': 'center','min-width': '9em'},
@@ -400,11 +400,11 @@ define(['../resources'], function() {
     beer.directive("beerPercentil", function() {
         return {
             scope: {
-                beer:'=beerPercentil'
+                score:'=beerPercentil'
             },
-            template: '<span><span tooltip="{{tooltipG}}" class="dl-score-overall">{{beer.score.overall||"-"}}</span>'+
-                '<span tooltip="{{tooltipS}}" class="dl-score-style">{{beer.score.style||"-"}}</span>' +
-                '<span tooltip="{{tooltipC}}" class="dl-score-category">{{beer.score.category||"-"}}</span></span>',
+            template: '<span><span tooltip="{{tooltipG}}" class="dl-score-overall">{{score.overall||"-"}}</span>'+
+                '<span tooltip="{{tooltipS}}" class="dl-score-style">{{score.style||"-"}}</span>' +
+                '<span tooltip="{{tooltipC}}" class="dl-score-category">{{score.category||"-"}}</span></span>',
             controller: ['$scope', '$translate',function($scope, $translate) {
                 $scope.tooltipG = $translate('beer.data.score.overall');
                 $scope.tooltipS = $translate('beer.data.score.style');
