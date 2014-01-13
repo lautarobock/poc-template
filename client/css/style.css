@@ -2,7 +2,7 @@
 .nav, .pagination, .carousel a { cursor: pointer; }
 
 .dl-hide {
-  display: none
+  display: none !important
 }
 
 .dl-show {

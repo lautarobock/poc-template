@@ -41,6 +41,8 @@ define([], function() {
                 'beer.data.fg.help': 'Densidad del mosto al finalizar la fermentacion.',
                 'beer.form.general': 'Informacion General',
                 'beer.form.technical': 'Informacion Tecnica',
+                'menu.myBeers': 'Mis Cervezas',
+                'menu.me.califications': 'Mis Calificaciones',
                 'beer.data.score': 'Puntaje',
                 'beer.data.score.my': 'Yo',
                 'beer.data.score.my.help': 'Promedio de mis calificaciones a esta cereveza',

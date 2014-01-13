@@ -135,6 +135,40 @@ require([
         };
     });
 
+    app.directive('logIn', function() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            template: '<a href="javascript:googleLogIn()">Acceder</a>',
+            link: function(scope, element) {
+                scope.$watch("user", function(value) {
+                    if ( value ) {
+                        element.addClass('dl-hide');
+                    } else {
+                        element.removeClass('dl-hide');
+                    }    
+                });
+            }
+        };
+    })
+
+    app.directive('signIn', function() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            template: '<a href="javascript:googleSignIn()">Registarse</a>',
+            link: function(scope, element) {
+                scope.$watch("user", function(value) {
+                    if ( value ) {
+                        element.addClass('dl-hide');
+                    } else {
+                        element.removeClass('dl-hide');
+                    }    
+                });
+            }
+        };
+    })
+
     app.controller("RankingsController", function($scope,Category) {
         $scope.categories = Category.query();
     });
