@@ -205,8 +205,8 @@ define(['../resources'], function() {
 	});
 
 	beer.controller("BeerEditController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Brewery', '$rootScope', '$timeout', '$q','Category',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Brewery,   $rootScope,   $timeout,   $q,  Category) {
+		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Brewery', '$rootScope', '$timeout', '$q','Category','MainTitle',
+		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Brewery,   $rootScope,   $timeout,   $q,  Category,  MainTitle) {
 			
 			//Load combos and beer			
 			$q.all([
@@ -222,7 +222,13 @@ define(['../resources'], function() {
 
 						//Load Beer o create New (After wait for load all combos)
 						if ( $routeParams.beer_id ) {
-							$scope.beer = Beer.get({_id: $routeParams.beer_id});	
+							$scope.beer = Beer.get({_id: $routeParams.beer_id}, function() {
+                                MainTitle.add($scope.beer.name);
+                                $scope.$on("$destroy", function() {
+                                    MainTitle.clearAdd();
+                                });
+                            });
+
 						} else {
 							$scope.beer = new Beer();
 						}
@@ -294,8 +300,8 @@ define(['../resources'], function() {
 	}]);
 
 	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Rating', 'DLHelper', '$filter',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Rating,   DLHelper,   $filter) {
+		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Rating', 'DLHelper', '$filter', 'MainTitle',
+		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Rating,   DLHelper,   $filter,   MainTitle) {
 
 			//Load Styles
 			$scope.styles = Style.query();
@@ -303,7 +309,13 @@ define(['../resources'], function() {
 
 			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
                 $scope.ratings = Rating.getByBeer({beer_id:$scope.beer._id});
+                MainTitle.add($scope.beer.name);
+                $scope.$on("$destroy", function() {
+                    MainTitle.clearAdd();
+                });
             });
+
+
 
             $scope.vintageTooltip = function(rating) {
                 if ( rating.bottled ) {

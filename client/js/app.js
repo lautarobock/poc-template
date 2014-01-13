@@ -29,14 +29,23 @@ require([
         angular.bootstrap(document, ['app']);
     });
     
-    app.run(['$rootScope','Login','evaluateAuthResult','User', 
+    app.run(['$rootScope','Login','evaluateAuthResult','User', '$translate','MainTitle',
                 function(
                     $rootScope, 
                     Login, 
                     evaluateAuthResult,
-                    User) {
+                    User,
+                    $translate,
+                    MainTitle) {
 
         $rootScope.loginSuccess = false;
+
+        MainTitle.set($translate('menu.title.desktop'));
+
+        $rootScope.mainTitle = function() {
+            return MainTitle.get();
+        };
+
 
         $rootScope.$on('g+login', function(event, authResult) {
             console.log("authResult",authResult);
@@ -92,6 +101,35 @@ require([
                 otherwise({redirectTo: '/beer'});
 
     }]);
+
+    app.factory("MainTitle", function() {
+        var main = '';
+        var add = null;
+        var replace = null;
+        return {
+            get: function() {
+                if ( add ) {
+                    return add + ' - ' + main;
+                } else if ( replace ) {
+                    return replace;
+                } else {
+                    return main;    
+                }
+            },
+            set: function(title) {
+                main = title;
+            },
+            add: function(title) {
+                add = title;
+            },
+            clearAdd: function() {
+                add = null;
+            },
+            replace: function(title) {
+                replace = title;
+            }
+        };
+    });
 
     app.directive('secure', function() {
         return function(scope,element) {

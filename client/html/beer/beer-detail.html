@@ -34,7 +34,7 @@
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
             {{ rating.date | date:'dd/MM/yyyy' }}
             <span style="color: black;" class="glyphicon glyphicon-flash"></span>
-            <span tooltip="{{vintageTooltip(rating)}}">
+            <span ng-show="rating.bottled" tooltip="{{vintageTooltip(rating)}}">
               {{'rating.vintage'|translate}}:
               <b>{{ rating.bottled | date:'yyyy' }}</b>
             </span>
