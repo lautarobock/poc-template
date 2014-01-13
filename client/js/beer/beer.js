@@ -162,7 +162,7 @@ define(['../resources'], function() {
                 type: 'combo',
                 comparator: 'equal',
                 getLabel: function(value) {
-                    return value._id + '-   ' + value.name;
+                    return value.name + ' (' + value._id + ')';
                 },
                 valueKey: '_id',
                 ignoreCase: false,
