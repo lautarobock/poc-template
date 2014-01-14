@@ -72,6 +72,7 @@ define(['../resources'], function() {
                 orderDir: "-",
                 pageSize: 25,
                 sort: [sortOverall,sortScore],
+                emptyResultText: $translate('beer.search.emtpy'),
                 headers: [{
                         field:'name',
                         caption: $translate('beer.data.beer'),
@@ -142,6 +143,7 @@ define(['../resources'], function() {
                 ]
             };
 
+            
             $scope.filterData = {};
             $scope.filterData['style._id'] = {
                 caption: $translate('beer.data.style'),
@@ -183,17 +185,14 @@ define(['../resources'], function() {
                 orderBy: 'name'
             };
 
-            // $scope.$watch("filterData['category._id'].value", function(value) {
-            //     if ( !value || value == '' ) {
-            //         $location.search({});
-            //     }
-            // });
-
             angular.forEach($scope.filterData,function(f,key){
                 if ( $location.$$search[key] ) {
                     $scope.filterData[key].value = $location.$$search[key];
                 }
             });
+            if ( $location.$$search.searchCriteria ) {
+                $scope.searchCriteria = $location.$$search.searchCriteria;
+            }
 
         }]);
 

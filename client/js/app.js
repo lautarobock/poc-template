@@ -210,9 +210,19 @@ require([
         };
     })
 
-    app.controller("RankingsController", function($scope,Category) {
-        $scope.categories = Category.query();
-    });
+    app.controller("RankingsController", 
+        ['$scope','Category',
+        function($scope,Category) {
+            $scope.categories = Category.query();
+        }]);
+
+    app.controller("SideSearchController", 
+        ['$scope', '$sce',
+        function($scope, $sce) {
+            $scope.safeSearch = function(searchText) {
+                return $sce.trustAsUrl("#/beer?searchCriteria="+searchText);
+            }
+        }]);
 
     app.filter("enrich", function() {
         return function(value) {
@@ -220,11 +230,5 @@ require([
             return value;
         };
     });
-
-    // app.filter("round", function() {
-    //     return function(value, decimal) {
-    //         return Math.round(value, decimal);
-    //     }
-    // });
 
 });

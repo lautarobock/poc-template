@@ -34,52 +34,49 @@
         </div>
     </div>
     <!-- END ADVANCED SEARCH -->
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th ng-click="sort.resort(header.field, header.sort)"
-                    class="gt-sorted"
-                    ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}
-                    ng-repeat="header in config().headers"
-                    ng-style="getHeaderStyle(header)">
-                    <span tooltip="{{header.tooltip}}" tooltip-append-to-body="true">
-                        {{header.caption}}
-                    </span> <span ng-class="sort.orderStyle[header.field]"></span>
-                </th>
-                <th style="width: 1em"></th>
-                <th style="width: 1em"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy():sort.reverse() | textFilter:searchCriteria | advanced:filterData | pageFilter:page:pageSize() ">
-                <td ng-repeat="header in config().headers" ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}>
-                    <ng-include src="valueTemplate(row,header)"></ng-include>
-                </td>
-                <!-- BUTTONS -->
-                <td>
-                    <a ng-show="!isEditing(row) && canEdit" ng-click="edit(row)" href="" type="button" class="btn btn-primary btn-xs">editar</a>
-                    <a ng-show="isEditing(row)" ng-click="save(value,row)" href="" type="button" class="btn btn-success btn-xs">guardar</a>
-                </td>
-                <td>
-                    <a ng-show="!isEditing(row) && canRemove" ng-click="remove(row)" href="" type="button" class="btn btn-danger btn-xs">eliminar</a>
-                    <a ng-show="isEditing(row)" ng-click="cancel(row,value)" href="" type="button" class="btn btn-warning btn-xs">cancelar</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!--
-    <script id="template/pagination/pagination.html" type="text/ng-template">
-        <div>
-            <ul class="pagination">
-              <li ng-repeat="page in pages" ng-class="{active: page.active, disabled: page.disabled}">
-                <a ng-click="selectPage(page.number)">{{page.text}}</a>
-              </li>
-            </ul>
+    <div class="panel-body" ng-hide="(rows | textFilter:searchCriteria | advanced:filterData).length > 0">
+        <div class="alert alert-info" >
+            {{emptyResultText}}
         </div>
-    </script>-->
-    <div class="container">
-        <pagination boundary-links="true" total-items="(rows | textFilter:searchCriteria | advanced:filterData).length" items-per-page="pageSize()" page="page" max-size="20" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-        <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*pageSize() + 1}} - <span ng-hide="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{page*pageSize()}}</span><span ng-show="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{(rows | textFilter:searchCriteria | advanced:filterData).length}}</span> de {{(rows | textFilter:searchCriteria | advanced:filterData).length}}</div>
+    </div>
+    <div ng-show="(rows | textFilter:searchCriteria | advanced:filterData).length > 0">
+        <table class="table table-striped table-hover" >
+            <thead>
+                <tr>
+                    <th ng-click="sort.resort(header.field, header.sort)"
+                        class="gt-sorted"
+                        ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}
+                        ng-repeat="header in config().headers"
+                        ng-style="getHeaderStyle(header)">
+                        <span tooltip="{{header.tooltip}}" tooltip-append-to-body="true">
+                            {{header.caption}}
+                        </span> <span ng-class="sort.orderStyle[header.field]"></span>
+                    </th>
+                    <th style="width: 1em"></th>
+                    <th style="width: 1em"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy():sort.reverse() | textFilter:searchCriteria | advanced:filterData | pageFilter:page:pageSize() ">
+                    <td ng-repeat="header in config().headers" ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}>
+                        <ng-include src="valueTemplate(row,header)"></ng-include>
+                    </td>
+                    <!-- BUTTONS -->
+                    <td>
+                        <a ng-show="!isEditing(row) && canEdit" ng-click="edit(row)" href="" type="button" class="btn btn-primary btn-xs">editar</a>
+                        <a ng-show="isEditing(row)" ng-click="save(value,row)" href="" type="button" class="btn btn-success btn-xs">guardar</a>
+                    </td>
+                    <td>
+                        <a ng-show="!isEditing(row) && canRemove" ng-click="remove(row)" href="" type="button" class="btn btn-danger btn-xs">eliminar</a>
+                        <a ng-show="isEditing(row)" ng-click="cancel(row,value)" href="" type="button" class="btn btn-warning btn-xs">cancelar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="container">
+            <pagination boundary-links="true" total-items="(rows | textFilter:searchCriteria | advanced:filterData).length" items-per-page="pageSize()" page="page" max-size="20" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+            <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*pageSize() + 1}} - <span ng-hide="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{page*pageSize()}}</span><span ng-show="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{(rows | textFilter:searchCriteria | advanced:filterData).length}}</span> de {{(rows | textFilter:searchCriteria | advanced:filterData).length}}</div>
+        </div>
     </div>
     <div class="panel-body">
         <div class="col-md-12" >

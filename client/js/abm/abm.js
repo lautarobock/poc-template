@@ -110,7 +110,8 @@
                 canEdit: '=',
                 canAdd: '=',
                 context: '&',
-                filterData: '='
+                filterData: '=',
+                searchCriteria: '='
             },
             templateUrl: 'abm/abm.html',
             link : function(scope, element, attrs) {
@@ -118,12 +119,15 @@
             },
             controller: function($scope,$timeout) {
 
-                $scope.searchCriteria = "";
+                $scope.emptyResultText = $scope.config().emptyResultText || "La busqueda no ha devuelto ningun resultado";
+
+                $scope.searchCriteria = $scope.searchCriteria || "";
+                $scope._searchCriteria = $scope.searchCriteria;
 
                 var activeTimeout = null;
+                
                 $scope.search = function() {
                     if ( activeTimeout ) $timeout.cancel(activeTimeout);
-
                     activeTimeout = $timeout(function() {
                         $scope.searchCriteria = $scope._searchCriteria;
                     },500);

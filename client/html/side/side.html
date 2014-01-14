@@ -1,16 +1,20 @@
-<!-- <div class="well">
+<div class="well" ng-controller="SideSearchController">
   <h4>{{'side.search'|translate}}</h4>
-  <div class="input-group">
-    <input type="text" class="form-control">
-    <span class="input-group-btn">
-      <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-    </span>
+  <form action="{{safeSearch(searchText).$$unwrapTrustedValue()}}">
+    <div class="input-group">
+      <input type="text" class="form-control" ng-model="searchText" />
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default" >
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
+    </div>
+  </form>
+  <div class="input-group" style="margin-top: 1em;">
+    <a class="btn btn-success btn-sm" href="#/beer/new" secure>
+      <span class="glyphicon glyphicon-plus"></span> Agregar Cerveza
+    </a>
   </div>
-</div> -->
-<div class="well">
-  <a class="btn btn-success btn-sm" href="#/beer/new" secure>
-    <span class="glyphicon glyphicon-plus"></span> Agregar Cerveza
-  </a>
 </div>
 <div class="well" ng-controller="RankingsController">
   <h4>{{'side.rankings'|translate}}</h4>

@@ -94,7 +94,8 @@ define([], function() {
                 'rating.vintage': 'Vintage',
                 'popup.close': 'Cerrar',
                 'user.name': 'Usuario',
-                'general.date': 'Fecha'
+                'general.date': 'Fecha',
+                'beer.search.emtpy': 'No se ha encontrado ninguna cerveza con este criterio de busqueda'
             }
         };
 });
