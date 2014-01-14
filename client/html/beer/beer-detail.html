@@ -28,7 +28,7 @@
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="rating in ratings">
           <div>
-            <span class="badge" style="float: left;margin-right: 1em;" ng-class="scoreClass(rating.finalScore)">
+            <span class="badge" style="float: left;margin-right: 1em;" ng-class="ratingScoreClass(rating.finalScore)">
               <span ng-show="rating.score">{{ rating.finalScore }}</span>
               <span tooltip="{{'rating.data.notCalification'|translate}}" ng-hide="rating.score" class="glyphicon glyphicon-minus"></span>
             </span>
