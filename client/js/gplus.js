@@ -4,7 +4,7 @@ define([],function() {
 
     gplus.factory("evaluateAuthResult", function() {
         return function(authResult, callback) {
-            console.log("authResult",authResult);
+            // console.log("authResult",authResult);
 
             if ( authResult == null ) {
                 callback({
@@ -19,7 +19,7 @@ define([],function() {
               gapi.client.load('oauth2', 'v2', function() {
                 var request = gapi.client.oauth2.userinfo.get();
                 request.execute(function (googleUser){
-                    console.log("INFO", "googleUser", googleUser);
+                    // console.log("INFO", "googleUser", googleUser);
                     callback(null, googleUser);
                 });
               });

@@ -98,6 +98,18 @@
             
         };
     });
+
+    gt.run(function($templateCache) {
+        $templateCache.put("abm/abm-checkbox.html",
+            '<div class="checkbox" style="margin-bottom: 0;">'+
+                '<input type="checkbox" ng-model="value[header.field]" />'+
+            '</div>');
+        $templateCache.put("abm/abm-value.html",'<span ng-class="header.class(row)">{{getValue(row,header)}}</span>');
+        $templateCache.put("abm/abm-link.html",
+            '<a href="{{header.href(row)}}" ng-class="header.class(row)">' +
+                '{{getValue(row,header)}}' +
+            '</a>');
+    });
     
     gt.directive('gtTable', function($compile, $rootScope, sortData, PAGE_SIZE) {
         return {
@@ -111,7 +123,7 @@
                 canAdd: '=',
                 context: '&',
                 filterData: '=',
-                searchCriteria: '='
+                searchCriteria: '=?'
             },
             templateUrl: 'abm/abm.html',
             link : function(scope, element, attrs) {

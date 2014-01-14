@@ -2,6 +2,10 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
+    beer.run(function($templateCache) {
+        $templateCache.put("score.html",'<span beer-percentil="getValue(row,header)"></span>');
+    });
+
 	beer.controller("BeerController", 
         ['$scope', 'Beer', '$translate', 'DLHelper','Style', 'Category','Brewery','$location',
         function($scope, Beer, $translate, DLHelper, Style, Category, Brewery,$location) {
@@ -60,7 +64,7 @@ define(['../resources'], function() {
                     }
                 }
             };
-    
+
             $scope.config = {
                 data: Beer,
                 name: $translate('beer.data.beer')+'s',
@@ -77,29 +81,19 @@ define(['../resources'], function() {
                         field:'name',
                         caption: $translate('beer.data.beer'),
                         type: 'link',
-                        class: function() {
-                            return "dl-font-bold";
-                        },
-                        href: function(row) {
-                            return '#/beer/detail/' + row._id;
-                        }
+                        class: function() {return "dl-font-bold";},
+                        href: function(row) {return '#/beer/detail/' + row._id;}
                     },{
                         field:'brewery.name',
                         caption: $translate('beer.data.brewery'),
-                        hidden: {
-                            xs: true,
-                            sm: true
-                        }
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'style.name',
                         caption: $translate('beer.data.style')
                     },{
                         field:'category.name',
                         caption: $translate('beer.data.category'),
-                        hidden: {
-                            xs: true,
-                            sm: true
-                        }
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'score.avg',
                         caption: $translate('beer.data.score'),
@@ -119,7 +113,7 @@ define(['../resources'], function() {
                         width: '9em',
                         headerStyle: {'text-align': 'center','min-width': '9em'},
                         tooltip: $translate('beer.data.score.gs.help'),
-                        valueTemplateUrl: 'beer/list/score.html',
+                        valueTemplateUrl: 'score.html',
                         sort: sortScoreStyle
                     },{
                         field:'score.count',

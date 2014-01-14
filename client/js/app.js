@@ -48,13 +48,13 @@ require([
 
 
         $rootScope.$on('g+login', function(event, authResult) {
-            console.log("authResult",authResult);
+            // console.log("authResult",authResult);
 
             evaluateAuthResult(authResult, function(err, googleUser) {
                 if ( err ) {
                     $rootScope.loginError = err.message;
                     $rootScope.$apply();
-                    console.log("INFO", "Login Error", err.message);
+                    console.log("ERROR", "Login Error", err.message);
                 } else if ( googleUser ) {
                     $rootScope.googleUser = googleUser;
                     Login.get({
@@ -65,11 +65,11 @@ require([
                             User.get({_id: user._id}, function(user) {
                                 $rootScope.loginSuccess = true;
                                 $rootScope.user = user;
-                                console.log(user);    
+                                // console.log(user);    
                             });
                     });
                 } else {
-                    console.log("INFO", "Silent Login Error");
+                    console.log("ERROR", "Silent Login Error");
                 }
             });
         });
