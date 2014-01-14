@@ -354,7 +354,7 @@ define(['../resources'], function() {
             };
 
             $scope.scoreClass = function(score) {
-                return 'alert-' + DLHelper.colorByScore(score);
+                return 'text-' + DLHelper.colorByScore(score);
             };
 
 	}]);
