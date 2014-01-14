@@ -57,6 +57,7 @@ define([], function() {
                 'beer.data.finalScore': 'Puntaje Final',
                 'beer.data.finalScore.short': 'P.F.',
                 'beer.data.finalScore.help': 'Suma de los puntos de cada categoria',
+                'beer.share': 'Compartir',
                 'form.cancel': 'Cancelar',
                 'form.save': 'Guardar',
                 'form.edit': 'Editar',

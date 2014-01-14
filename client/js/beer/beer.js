@@ -357,6 +357,10 @@ define(['../resources'], function() {
                 return 'text-' + DLHelper.colorByScore(score);
             };
 
+            $scope.embed = function(beer) {
+                return '<iframe src="http://www.birrasquehetomado.com.ar/html/tag.html#/beer/tag/' + beer._id+ '" width="400" height="200"></iframe>'
+            };
+
 	}]);
 
 

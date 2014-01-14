@@ -4,6 +4,10 @@
     <div class="form-group">
       <div class="col-md-12">
         <div class="pull-right">
+          <button ng-init="showShare=false" type="button" class="btn btn-primary" ng-click="showShare=!showShare">
+            <span class="glyphicon glyphicon-share-alt"></span>
+            {{ 'beer.share' | translate }}
+          </button> 
           <a secure-admin class="btn btn-info" href="#/beer/edit/{{beer._id}}" >
             <span class="glyphicon glyphicon-edit"></span>
             {{ 'form.edit' | translate }}
@@ -16,6 +20,9 @@
       </div>
     </div>
   </form>
+  <div collapse="!showShare">
+    <input type="text" class="form-control" value="{{embed(beer)}}"/>
+  </div>
   <form class="form-horizontal">
     <h3>{{'beer.data.score.count'|translate}}</h3>
       <ul class="list-group">
