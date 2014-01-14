@@ -1,0 +1,34 @@
+<div>
+  <h2>{{ beer.name }}</h2>
+  <form class="form-horizontal">
+    <fieldset>
+      <div class="row">
+        <div class="col-xs-12">
+          <div tooltip="{{ 'beer.data.score.help' | translate }}" class="col-xs-1 well well-sm dl-score-detail" ng-class="scoreClass(beer.score.avg)">
+            {{ beer.score.avg || '-'}}
+          </div>
+          <div class="col-xs-9">
+            <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
+            <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
+            <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
+            <div><b>{{'beer.data.score.count'|translate}}</b>: {{ beer.score.count }}</div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div beer-percentil="beer.score"></div>
+        </div>
+        
+      </div>
+      <p></p>
+      <div class="well well-sm" ng-show="showValues(beer)">
+        <span ng-repeat="value in values" ng-show="beer[value]">
+          {{ ('beer.data.' + value) | translate }}: 
+          <b>
+            {{beer[value]}}{{units[value]}}
+          </b> 
+          <span ng-hide="$last" class="glyphicon glyphicon-flash"></span>
+        </span>
+      </div>
+    </fieldset>
+  </form>
+</div>

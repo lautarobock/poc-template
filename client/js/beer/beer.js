@@ -313,12 +313,8 @@ define(['../resources'], function() {
 	}]);
 
 	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Rating', 'DLHelper', '$filter', 'MainTitle',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Rating,   DLHelper,   $filter,   MainTitle) {
-
-			//Load Styles
-			$scope.styles = Style.query();
-			$scope.stylesByLabel = StyleByLabel.query();
+		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 'MainTitle',
+		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   MainTitle) {
 
 			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
                 $scope.ratings = Rating.getByBeer({beer_id:$scope.beer._id});
@@ -327,7 +323,6 @@ define(['../resources'], function() {
                     MainTitle.clearAdd();
                 });
             });
-
 
 
             $scope.vintageTooltip = function(rating) {

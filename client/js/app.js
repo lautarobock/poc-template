@@ -90,6 +90,7 @@ require([
                 when('/beer/new', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
                 when('/beer/edit/:beer_id', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
                 when('/beer/detail/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
+                when('/beer/tag/:beer_id', {templateUrl: 'beer/beer-tag.html',   controller: 'BeerDetailController'}).
                 when('/beer/search_:filter', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
 
