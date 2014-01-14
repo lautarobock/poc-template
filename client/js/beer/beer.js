@@ -361,7 +361,8 @@ define(['../resources'], function() {
             };
 
             $scope.embed = function(beer) {
-                return '<iframe src="http://www.birrasquehetomado.com.ar/html/tag.html#/beer/tag/' + beer._id+ '" width="400" height="200"></iframe>'
+                return '<iframe src="http://www.birrasquehetomado.com.ar/html/tag.html#/beer/tag/' + beer._id + 
+                '" width="400" height="200" scrolling="no" frameborder="0"></iframe>'
             };
 
 	}]);
