@@ -7,8 +7,8 @@ define(['../resources'], function() {
     });
 
 	beer.controller("BeerController", 
-        ['$scope', 'Beer', '$translate', 'DLHelper','Style', 'Category','Brewery','$location',
-        function($scope, Beer, $translate, DLHelper, Style, Category, Brewery,$location) {
+        ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache',
+        function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache) {
     
             function sortScore(beer) {
                 if ( beer.score ) {
@@ -151,7 +151,7 @@ define(['../resources'], function() {
                 },
                 valueKey: '_id',
                 ignoreCase: false,
-                data: Style.query(),
+                data: Cache.styles(),
                 orderBy: '_id'
             };
             $scope.filterData['category._id'] = {
@@ -163,7 +163,7 @@ define(['../resources'], function() {
                 },
                 valueKey: '_id',
                 ignoreCase: false,
-                data: Category.query(),
+                data: Cache.categories(),
                 orderBy: '_id'
             };
             $scope.filterData['brewery._id'] = {

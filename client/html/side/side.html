@@ -1,6 +1,6 @@
 <div class="well" ng-controller="SideSearchController">
   <h4>{{'side.search'|translate}}</h4>
-  <form action="{{safeSearch(searchText).$$unwrapTrustedValue()}}">
+  <form ng-submit="search(searchText)">
     <div class="input-group">
       <input type="text" class="form-control" ng-model="searchText" />
       <span class="input-group-btn">

@@ -29,16 +29,40 @@ require([
         angular.bootstrap(document, ['app']);
     });
     
-    app.run(['$rootScope','Login','evaluateAuthResult','User', '$translate','MainTitle',
+    app.factory("Cache", function(Category, Style) {
+        var _categories = null;
+        var _styles = null;
+        return {
+            categories: function() {
+                return _categories || Category.query(function(r) {
+                    _categories = r;
+                });
+            },
+            styles: function() {
+                return _styles || Style.query(function(r) {
+                    _styles = r;
+                });
+            }
+        };
+    });
+
+    app.run(['$rootScope','Login','evaluateAuthResult','User', '$translate','MainTitle','Category','Cache','Style',
                 function(
                     $rootScope, 
                     Login, 
                     evaluateAuthResult,
                     User,
                     $translate,
-                    MainTitle) {
+                    MainTitle,
+                    Category,
+                    Cache,
+                    Style) {
 
         $rootScope.loginSuccess = false;
+
+        // Cache.categories = Category.query();
+
+        // Cache.styles = Style.query();
 
         MainTitle.set($translate('menu.title.desktop'));
 
@@ -211,14 +235,20 @@ require([
     })
 
     app.controller("RankingsController", 
-        ['$scope','Category',
-        function($scope,Category) {
-            $scope.categories = Category.query();
+        ['$scope','Cache',
+        function($scope,Cache) {
+            $scope.categories = Cache.categories();
         }]);
 
     app.controller("SideSearchController", 
-        ['$scope', '$sce',
-        function($scope, $sce) {
+        ['$scope', '$location',
+        function($scope, $location) {
+
+            $scope.search = function(searchText) {
+                $location.path("/beer").search('searchCriteria',searchText);
+            };
+
+            //@Deprecated
             $scope.safeSearch = function(searchText) {
                 return $sce.trustAsUrl("#/beer?searchCriteria="+searchText);
             }
