@@ -275,8 +275,11 @@
                     }
                 };
         
+                $scope.loading = true;
                 $scope.page = 1;
-                $scope.rows = $scope.config().data.query();
+                $scope.rows = $scope.config().data.query(function() {
+                    $scope.loading = false;
+                });
                 
                 $scope.pageSize = function() {
                     return $scope.config().pageSize || PAGE_SIZE;
