@@ -76,8 +76,13 @@ define(['../resources'], function() {
                 orderDir: "-",
                 pageSize: 25,
                 sort: [sortOverall,sortScore],
+                showIndex: true,
                 emptyResultText: $translate('beer.search.emtpy'),
                 headers: [{
+                        field:'score.position',
+                        caption: '#',
+                        tooltip: $translate('beer.data.position')
+                    },{
                         field:'name',
                         caption: $translate('beer.data.beer'),
                         type: 'link',
@@ -238,7 +243,7 @@ define(['../resources'], function() {
 
 						} else {
 							$scope.beer = new Beer();
-                            focus('focusName');
+                            focus('beername');
 						}
 			});
 

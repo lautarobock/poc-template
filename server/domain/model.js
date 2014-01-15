@@ -47,7 +47,8 @@ exports.Beer = mongoose.model("Beer", new Schema({
 		overall: Number,
 		style: Number,
 		count: Number,
-        category: Number
+        category: Number,
+        position: Number
 	},
 	calories: Number,
 	abv: Number,

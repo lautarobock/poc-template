@@ -79,6 +79,7 @@ exports.updatePercentil = function(style_id, callback, category_id) {
 		var count = beers.length;
 		var actualPos = 1;
 		var actualValue = Math.ceil(count*actualPos/100);
+		var position = count;
 		var updateBeers = function(beers,i) {
 			if ( i<=count ) {
 				var beer = beers[i-1];
@@ -92,6 +93,7 @@ exports.updatePercentil = function(style_id, callback, category_id) {
 					beer.score.category = actualPos-1;
 				} else {
 					beer.score.overall = actualPos-1;
+					beer.score.position = position--;
 				}
 				beer.save(function() {
 					updateBeers(beers,i+1);

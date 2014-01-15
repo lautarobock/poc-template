@@ -5,7 +5,7 @@ define([], function() {
     directives.run(['$templateCache',function($templateCache) {
         $templateCache.put("input-text.html",
             '<label tooltip="{{dlTooltip}}" tooltip-placement="right" for="{{id}}" class="control-label">{{caption}}</label>' + 
-            '<input type="text" ng-model="value" class="form-control" id="{{id}}" placeholder="{{placeholder}}">'
+            '<input focus-on="{{id}}" type="text" ng-model="value" class="form-control" id="{{id}}" placeholder="{{placeholder}}">'
         );
         
         $templateCache.put("input-numeric.html",
