@@ -284,7 +284,7 @@ require([
         return function(name) {
             $timeout(function (){
                 $rootScope.$broadcast('focusOn', name);
-            });
+            },100);
         }
     }]);
 

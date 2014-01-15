@@ -2,9 +2,9 @@ define(['../resources'], function() {
 	
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
-    beer.run(function($templateCache) {
+    beer.run(['$templateCache',function($templateCache) {
         $templateCache.put("score.html",'<span beer-percentil="getValue(row,header)"></span>');
-    });
+    }]);
 
 	beer.controller("BeerController", 
         ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache',
@@ -200,8 +200,9 @@ define(['../resources'], function() {
 		};
 	});
 
-	beer.controller("NewBreweryController", function($scope, $modalInstance, Brewery) {
+	beer.controller("NewBreweryController", function($scope, $modalInstance, Brewery,focus) {
 		$scope.brewery = new Brewery();
+        focus('breweryName');
 		$scope.ok = function () {
 		    $modalInstance.close($scope.brewery);
 		};
