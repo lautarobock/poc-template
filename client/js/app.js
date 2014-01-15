@@ -50,7 +50,7 @@ require([
 
     app.run(
         ['$rootScope','Login','evaluateAuthResult','User', 
-        '$translate','MainTitle','Cache',
+        '$translate','MainTitle','Cache','$log',
             function(
                     $rootScope, 
                     Login, 
@@ -58,7 +58,8 @@ require([
                     User,
                     $translate,
                     MainTitle,
-                    Cache) {
+                    Cache,
+                    $log) {
 
         $rootScope.loginSuccess = false;
 
@@ -79,7 +80,7 @@ require([
                 if ( err ) {
                     $rootScope.loginError = err.message;
                     $rootScope.$apply();
-                    console.log("ERROR", "Login Error", err.message);
+                    $log.error("ERROR", "Login Error", err.message);
                 } else if ( googleUser ) {
                     $rootScope.googleUser = googleUser;
                     Login.get({
@@ -94,11 +95,15 @@ require([
                             });
                     });
                 } else {
-                    console.log("ERROR", "Silent Login Error");
+                    $log.info("ERROR", "Silent Login Error");
                 }
             });
         });
         
+    }]);
+
+    app.config(['$logProvider',function($logProvider) {
+        $logProvider.debugEnabled(false);
     }]);
 
 

@@ -7,9 +7,9 @@ define(['../resources'], function() {
     }]);
 
 	beer.controller("BeerController", 
-        ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache',
-        function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache) {
-    
+        ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log',
+        function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache, $log) {
+
             function sortScore(beer) {
                 if ( beer.score ) {
                     return beer.score.avg || 0;    
@@ -275,7 +275,6 @@ define(['../resources'], function() {
 				});
 
 				modalInstance.result.then(function (styleByLabel) {
-				  	console.log("StyleByLabel",styleByLabel);
 				  	styleByLabel._id = styleByLabel.name.replace(/[^a-z0-9]/ig, '');
 				  	styleByLabel.$save(function(saved) {
 						$scope.stylesByLabel = StyleByLabel.query(function() {
