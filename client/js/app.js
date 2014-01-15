@@ -7,7 +7,8 @@ require([
     "rating/rating",
     "util/directives",
     "abm/abm",
-    "util/helper"
+    "util/helper",
+    "util/mousetrap"
     ], function(locale, menu, resources, gplus, beer, rating) {
 
     var app = angular.module("app", [
@@ -22,7 +23,8 @@ require([
         'dl.rating',
         'dl.directives',
         'gt.abm',
-        'dl.helper']);
+        'dl.helper',
+        'ng-mousetrap']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
@@ -46,23 +48,19 @@ require([
         };
     });
 
-    app.run(['$rootScope','Login','evaluateAuthResult','User', '$translate','MainTitle','Category','Cache','Style',
-                function(
+    app.run(
+        ['$rootScope','Login','evaluateAuthResult','User', 
+        '$translate','MainTitle','Cache',
+            function(
                     $rootScope, 
                     Login, 
                     evaluateAuthResult,
                     User,
                     $translate,
                     MainTitle,
-                    Category,
-                    Cache,
-                    Style) {
+                    Cache) {
 
         $rootScope.loginSuccess = false;
-
-        // Cache.categories = Category.query();
-
-        // Cache.styles = Style.query();
 
         MainTitle.set($translate('menu.title.desktop'));
 
@@ -70,6 +68,9 @@ require([
             return MainTitle.get();
         };
 
+        // Mousetrap.bind('/', function(e) {
+        //     $rootScope.$broadcast('keypress:47', e);
+        // });
 
         $rootScope.$on('g+login', function(event, authResult) {
             // console.log("authResult",authResult);
@@ -241,8 +242,12 @@ require([
         }]);
 
     app.controller("SideSearchController", 
-        ['$scope', '$location',
-        function($scope, $location) {
+        ['$scope', '$location','focus','mousetrap',
+        function($scope, $location,focus,mousetrap) {
+            mousetrap('/', $scope, function(e) {
+                console.log("INFO", "keypress", e);
+                focus('focusSearch');
+            });
 
             $scope.search = function(searchText) {
                 $location.path("/beer").search('searchCriteria',searchText);
@@ -260,5 +265,24 @@ require([
             return value;
         };
     });
+
+    app.directive('focusOn', function() {
+        return function(scope, elem, attr) {
+            scope.$on('focusOn', function(e, name) {
+                if(name === attr.focusOn) {
+                    elem[0].focus();
+                }
+            });
+        };
+    });
+
+    app.factory('focus', ['$rootScope', '$timeout',function ($rootScope, $timeout) {
+        return function(name) {
+            $timeout(function (){
+                $rootScope.$broadcast('focusOn', name);
+            });
+        }
+    }]);
+
 
 });

@@ -207,7 +207,7 @@ define([], function() {
                         width: '9em',
                         headerStyle: {'text-align': 'center','min-width': '9em'},
                         tooltip: $translate('beer.data.score.gs.help'),
-                        valueTemplateUrl: 'beer/list/score.html'
+                        valueTemplateUrl: 'score.html'
                     },{
                         field:'date',
                         caption: 'Fecha',
