@@ -6,7 +6,9 @@ define([], function() {
 
         return function(shortcut, $scope, invoke) {
             console.log("BIND", shortcut);
-            Mousetrap.bind(shortcut,invoke);
+            Mousetrap.bind(shortcut,function() {
+                $scope.$apply(invoke);
+            });
 
             $scope.$on('$destroy',function() {
                 console.log("UNBIND", shortcut);

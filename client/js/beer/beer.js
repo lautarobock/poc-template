@@ -211,8 +211,8 @@ define(['../resources'], function() {
 	});
 
 	beer.controller("BeerEditController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Brewery', '$rootScope', '$timeout', '$q','Category','MainTitle',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Brewery,   $rootScope,   $timeout,   $q,  Category,  MainTitle) {
+		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Brewery', '$rootScope', '$timeout', '$q','Category','MainTitle', 'focus',
+		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Brewery,   $rootScope,   $timeout,   $q,  Category,  MainTitle,   focus) {
 			
 			//Load combos and beer			
 			$q.all([
@@ -237,6 +237,7 @@ define(['../resources'], function() {
 
 						} else {
 							$scope.beer = new Beer();
+                            focus('focusName');
 						}
 			});
 
@@ -352,6 +353,10 @@ define(['../resources'], function() {
 
             $scope.ratingScoreClass = function(score) {
                 return 'alert-' + DLHelper.colorByScore(score);
+            };
+
+            $scope.beerLink = function(beer) {
+                return encodeURIComponent('http://www.birrasquehetomado.com.ar/html/tag.html#/beer/detail/' + beer._id);
             };
 
             $scope.embed = function(beer) {

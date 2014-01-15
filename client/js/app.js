@@ -244,8 +244,12 @@ require([
     app.controller("SideSearchController", 
         ['$scope', '$location','focus','mousetrap',
         function($scope, $location,focus,mousetrap) {
+            
+            mousetrap('n', $scope, function() {
+                $location.path("/beer/new");
+            });
+
             mousetrap('/', $scope, function(e) {
-                console.log("INFO", "keypress", e);
                 focus('focusSearch');
             });
 

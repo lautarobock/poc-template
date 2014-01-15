@@ -2,6 +2,16 @@ define([], function() {
 
     var menu = angular.module("dl.menu", [ ]);
 
+    menu.run(['$rootScope','$location', 'mousetrap',
+        function($rootScope,$location,mousetrap) {
+        mousetrap('g m', $rootScope, function() {
+            $location.url("rating");
+        });
+        mousetrap('g h', $rootScope, function() {
+            $location.url("beer");
+        });
+    }]);
+
     menu.directive("mainMenu", function() {
         return {
             restrict: "EA",
