@@ -98,20 +98,22 @@
             
         };
     });
+    
+    // var templateDir = "abm";
 
-    gt.run(function($templateCache) {
-        $templateCache.put("abm/abm-checkbox.html",
+    gt.run(function($templateCache,abm) {
+        $templateCache.put(abm.templateDir +"/abm-checkbox.html",
             '<div class="checkbox" style="margin-bottom: 0;">'+
                 '<input type="checkbox" ng-model="value[header.field]" />'+
             '</div>');
-        $templateCache.put("abm/abm-value.html",'<span ng-class="header.class(row)">{{getValue(row,header)}}</span>');
-        $templateCache.put("abm/abm-link.html",
+        $templateCache.put(abm.templateDir +"/abm-value.html",'<span ng-class="header.class(row)">{{getValue(row,header)}}</span>');
+        $templateCache.put(abm.templateDir +"/abm-link.html",
             '<a href="{{header.href(row)}}" ng-class="header.class(row)">' +
                 '{{getValue(row,header)}}' +
             '</a>');
     });
     
-    gt.directive('gtTable', function($compile, $rootScope, sortData, PAGE_SIZE) {
+    gt.directive('gtTable', function($compile, $rootScope, sortData, PAGE_SIZE, abm) {
         return {
             restrict : 'EA',
             replace : true,
@@ -125,7 +127,7 @@
                 filterData: '=',
                 searchCriteria: '=?'
             },
-            templateUrl: 'abm/abm.html',
+            templateUrl: abm.templateDir +'/abm.html',
             link : function(scope, element, attrs) {
                 
             },
@@ -159,9 +161,9 @@
                         return '';
                     }
                 };
- 
+                
                 $scope.urlTemplate = function(filter) {
-                    return 'abm/abm-filter-' + filter.type + ".html";
+                    return abm.templateDir + '/abm-filter-' + filter.type + ".html";
                 };
                 
                 $scope.getHeaderStyle = function(header) {
@@ -183,26 +185,26 @@
                     return row._id == $scope.edit_id;
                 };
 
-                var templateDir = "abm";
+                
                 $scope.valueTemplate = function(row,header) {
                     if ( $scope.isEditing(row) && !header.readonly) {
                         if ( !header.type || header.type == 'text' || header.type == 'number'  ) {
-                            return templateDir + '/abm-input.html';
+                            return abm.templateDir + '/abm-input.html';
                         } else if ( header.type == 'checkbox' ) {
-                            return templateDir + '/abm-checkbox.html';
+                            return abm.templateDir + '/abm-checkbox.html';
                         } else if ( header.type == 'combo' ) {
-                            return templateDir + '/abm-combo.html';
+                            return abm.templateDir + '/abm-combo.html';
                         } else {
-                            return templateDir + '/abm-input.html';
+                            return abm.templateDir + '/abm-input.html';
                         }
                     } else if (header.valueTemplateUrl) {
                         return header.valueTemplateUrl;
                     } else if ( header.type == 'checkbox' ) {
-                        return templateDir + '/abm-value-checkbox.html';
+                        return abm.templateDir + '/abm-value-checkbox.html';
                     } else if ( header.type == 'link' ) {
-                        return templateDir + '/abm-link.html';
+                        return abm.templateDir + '/abm-link.html';
                     } else {
-                        return templateDir + '/abm-value.html';
+                        return abm.templateDir + '/abm-value.html';
                     }
                 };
                 
@@ -292,6 +294,21 @@
             }
         };
     });
+    
+    gt.provider("abm", function() {
+        var service = {
+            templateDir: "abm"
+        };
+
+        this.setTemplateDir = function(dir) {
+            service.templateDir = dir;
+        };
+
+        this.$get = function() {
+            return service;
+        };
+    });
+
 
     gt.factory("sortData",function() {
         return function(startField, startAsc, startSort) {

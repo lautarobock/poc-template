@@ -106,6 +106,9 @@ require([
         $logProvider.debugEnabled(false);
     }]);
 
+    app.config(['abmProvider',function(abmProvider) {
+        // abmProvider.setTemplateDir('template');
+    }]);
 
     app.config(['$translateProvider','$routeProvider', function ($translateProvider, $routeProvider) {
 
