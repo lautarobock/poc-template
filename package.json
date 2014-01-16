@@ -21,6 +21,12 @@
   },
   "devDependencies": {
     "jasmine-node": "1.12.0",
-    "supertest": "0.8.2"
+    "supertest": "0.8.2",
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-jasmine-node": "*",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-angular-templates": "~0.5.1"
   }
 }

@@ -1,6 +1,6 @@
-(function() {
+define(["abm/abm-init", "abm/templates"],function() {
 
-    var gt = angular.module('gt.abm',[]);
+    var gt = angular.module('gt.abm');
 
     gt.constant("PAGE_SIZE",10);
     
@@ -99,8 +99,6 @@
         };
     });
     
-    // var templateDir = "abm";
-
     gt.run(function($templateCache,abm) {
         $templateCache.put(abm.templateDir +"/abm-checkbox.html",
             '<div class="checkbox" style="margin-bottom: 0;">'+
@@ -356,5 +354,6 @@
             return data;
         };
     });
-
-})();
+    
+    return gt;
+});
