@@ -120,9 +120,13 @@ require([
                     templateUrl: 'beer/beer-edit.html',   
                     controller: 'BeerEditController',
                     resolve: {
-                        combosData: ['BeerEditControllerResolve',
-                                function(BeerEditControllerResolve) {
-                            return BeerEditControllerResolve();
+                        combosData: ['BeerEditControllerResolve', 
+                            function(BeerEditControllerResolve) {
+                                return BeerEditControllerResolve();
+                            }
+                        ],
+                        beer: ['Beer', function(Beer) {
+                            return new Beer();
                         }]
                     }
                 }).
@@ -130,9 +134,13 @@ require([
                     templateUrl: 'beer/beer-edit.html',   
                     controller: 'BeerEditController',
                     resolve: {
-                        combosData: ['BeerEditControllerResolve',
-                                function(BeerEditControllerResolve) {
-                            return BeerEditControllerResolve();
+                        combosData: ['BeerEditControllerResolve', 
+                            function(BeerEditControllerResolve) {
+                                return BeerEditControllerResolve();
+                            }
+                        ],
+                        beer: ['Beer', '$route', function(Beer, $route) {
+                            return Beer.get({_id: $route.current.params.beer_id}).$promise;
                         }]
                     }
                 }).
