@@ -105,8 +105,8 @@ require([
     app.config(['$logProvider',function($logProvider) {
         $logProvider.debugEnabled(false);
     }]);
-
-    app.config(['abmProvider',function(abmProvider) {
+ 
+   app.config(['abmProvider',function(abmProvider) {
         // abmProvider.setTemplateDir('template');
     }]);
 

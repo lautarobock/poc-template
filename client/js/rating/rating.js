@@ -166,7 +166,8 @@ define([], function() {
                 headers: [{
                         field:'beer.name',
                         caption: 'Cerveza',
-                        valueTemplateUrl: 'rating/list/link.html'
+                        type: 'link',
+                        href: function(row) {return '#/beer/detail/' + row.beer._id;}
                     },{
                         field:'score.appearance',
                         caption: $translate('rating.data.appearance.short'),
