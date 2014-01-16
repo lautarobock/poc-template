@@ -216,36 +216,50 @@ define(['../resources'], function() {
 		};
 	});
 
-	beer.controller("BeerEditController", 
-		        ['$scope', 'Beer','$routeParams', 'Style', 'StyleByLabel', '$location', '$modal', 'Brewery', '$rootScope', '$timeout', '$q','Category','MainTitle', 'focus',
-		function( $scope,   Beer,  $routeParams,   Style,   StyleByLabel,   $location,   $modal,   Brewery,   $rootScope,   $timeout,   $q,  Category,  MainTitle,   focus) {
-			
-			//Load combos and beer			
-			$q.all([
-				Style.query().$promise, 
-				StyleByLabel.query().$promise, 
-				Brewery.query().$promise,
-                Category.query().$promise])
-					.then(function(result) {
-						$scope.styles = result[0];
-						$scope.stylesByLabel = result[1];
-						$scope.breweries = result[2];
-                        $scope.categories = result[3];
+    beer.factory("BeerEditControllerResolve", 
+            ['Cache', 'StyleByLabel', 'Brewery', '$q',
+            function(Cache, StyleByLabel, Brewery, $q) {
+        return function() {
+            var p = $q.all([
+                Cache.styles().$promise, 
+                StyleByLabel.query().$promise, 
+                Brewery.query().$promise,
+                Cache.categories().$promise]);
+            return p;
+        }
+    }]);
 
-						//Load Beer o create New (After wait for load all combos)
-						if ( $routeParams.beer_id ) {
-							$scope.beer = Beer.get({_id: $routeParams.beer_id}, function() {
-                                MainTitle.add($scope.beer.name);
-                                $scope.$on("$destroy", function() {
-                                    MainTitle.clearAdd();
-                                });
-                            });
+	beer.controller("BeerEditController", [
+                '$scope', 'Beer','$routeParams', 'Style', 
+                'StyleByLabel', '$location', '$modal', 'Brewery', 
+                '$rootScope', '$timeout', '$q','Category',
+                'MainTitle', 'focus','combosData',
+		function( 
+                $scope,   Beer,  $routeParams,   Style,   
+                StyleByLabel,   $location,   $modal,   Brewery,   
+                $rootScope,   $timeout,   $q,  Category,  
+                MainTitle,   focus, combosData) {
 
-						} else {
-							$scope.beer = new Beer();
-                            focus('beername');
-						}
-			});
+            //comboData comes from routeparams
+			$scope.styles = combosData[0];
+			$scope.stylesByLabel = combosData[1];
+			$scope.breweries = combosData[2];
+            $scope.categories = combosData[3];
+
+			//Load Beer o create New (After wait for load all combos)
+			if ( $routeParams.beer_id ) {
+                Beer.get({_id: $routeParams.beer_id}).$promise.then(function(result) {
+                    $scope.beer = result;
+                    MainTitle.add($scope.beer.name);
+                    $scope.$on("$destroy", function() {
+                        MainTitle.clearAdd();
+                    });
+                });
+
+			} else {
+				$scope.beer = new Beer();
+                focus('beername');
+			}
 
 			$scope.openNewBrewery = function () {
 				var modalInstance = $modal.open({
@@ -330,7 +344,7 @@ define(['../resources'], function() {
                     var bot = new Date(rating.bottled).getTime();
                     var drink = new Date(rating.date).getTime();
                     var time = drink - bot;
-                    console.log("time", time);
+                    $scope.$log.debug("time", time);
                     var anos = time / (1000*60*60*24*365);
                     var rest = anos - Math.floor(anos);
                     rest = Math.ceil(rest *12);

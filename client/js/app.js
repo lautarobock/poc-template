@@ -36,14 +36,10 @@ require([
         var _styles = null;
         return {
             categories: function() {
-                return _categories || Category.query(function(r) {
-                    _categories = r;
-                });
+                return _categories || ( _categories = Category.query() );
             },
             styles: function() {
-                return _styles || Style.query(function(r) {
-                    _styles = r;
-                });
+                return _styles || ( _styles = Style.query() );
             }
         };
     });
@@ -62,6 +58,8 @@ require([
                     $log) {
 
         $rootScope.loginSuccess = false;
+
+        $rootScope.$log = $log;
 
         MainTitle.set($translate('menu.title.desktop'));
 
@@ -106,7 +104,7 @@ require([
         $logProvider.debugEnabled(false);
     }]);
  
-   app.config(['abmProvider',function(abmProvider) {
+    app.config(['abmProvider',function(abmProvider) {
         // abmProvider.setTemplateDir('template');
     }]);
 
@@ -116,12 +114,28 @@ require([
         $translateProvider.translations('es', locale.es);
         $translateProvider.preferredLanguage('es');
 
-
         //Configure Routes
-        $routeProvider.
-                
-                when('/beer/new', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
-                when('/beer/edit/:beer_id', {templateUrl: 'beer/beer-edit.html',   controller: 'BeerEditController'}).
+        $routeProvider.            
+                when('/beer/new', {
+                    templateUrl: 'beer/beer-edit.html',   
+                    controller: 'BeerEditController',
+                    resolve: {
+                        combosData: ['BeerEditControllerResolve',
+                                function(BeerEditControllerResolve) {
+                            return BeerEditControllerResolve();
+                        }]
+                    }
+                }).
+                when('/beer/edit/:beer_id', {
+                    templateUrl: 'beer/beer-edit.html',   
+                    controller: 'BeerEditController',
+                    resolve: {
+                        combosData: ['BeerEditControllerResolve',
+                                function(BeerEditControllerResolve) {
+                            return BeerEditControllerResolve();
+                        }]
+                    }
+                }).
                 when('/beer/detail/:beer_id', {templateUrl: 'beer/beer-detail.html',   controller: 'BeerDetailController'}).
                 when('/beer/tag/:beer_id', {templateUrl: 'beer/beer-tag.html',   controller: 'BeerDetailController'}).
                 when('/beer/search_:filter', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
