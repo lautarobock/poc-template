@@ -55,6 +55,9 @@ var services = [{
     name: "Category",
     customId: true
 },{
+    name: "Cellar",
+    customId: true
+},{
     name: "Beer",
     customId: true,
     security: {save:[userFilter]},

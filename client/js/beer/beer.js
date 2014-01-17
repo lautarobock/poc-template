@@ -233,12 +233,12 @@ define(['../resources'], function() {
                 '$scope', 'Beer','$routeParams', 'Style', 
                 'StyleByLabel', '$location', '$modal', 'Brewery', 
                 '$rootScope', '$timeout', '$q','Category',
-                'MainTitle', 'focus','combosData','beer','$translate',
+                'MainTitle', 'focus','combosData','beer','$translate','loading',
 		function( 
                 $scope,   Beer,  $routeParams,   Style,   
                 StyleByLabel,   $location,   $modal,   Brewery,   
                 $rootScope,   $timeout,   $q,  Category,  
-                MainTitle,   focus, combosData, beer, $translate) {
+                MainTitle,   focus, combosData, beer, $translate, loading) {
 
             $scope.$log.debug("BEER",beer);
 
@@ -326,7 +326,9 @@ define(['../resources'], function() {
 				if ( !$scope.beer._id ) {
 					$scope.beer._id = $scope.beer.name.replace(/[^a-z0-9]/ig, '') + "-" + new Date().getTime();
 				}
+                loading.inc();
 				$scope.beer.$save(function(beer) {
+                    $timeout(loading.dec,1000);
 					$location.path('/beer/detail/' + beer._id);
 				});
 			};

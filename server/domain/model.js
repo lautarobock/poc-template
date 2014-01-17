@@ -107,3 +107,12 @@ exports.Category = mongoose.model("Category",new Schema({
     "_id": String,
     "name": String
 },{ _id: false }));
+
+exports.Cellar = mongoose.model("Cellar",new Schema({
+    "_id": String,
+    "user": {type:String, ref: 'User'},
+    "beer": {type:String, ref: 'Beer'},
+    "size": Number,
+    "amount": Number,
+    "date": Date
+},{ _id: false }));

@@ -100,6 +100,8 @@ require([
         
     }]);
 
+
+
     app.config(['$logProvider',function($logProvider) {
         $logProvider.debugEnabled(false);
     }]);
@@ -318,5 +320,38 @@ require([
         }
     }]);
 
+    app.factory('loading', function($rootScope) {
+        
+        return {
+            inc: function(count) {
+                console.log("INC");
+                this.services += count || 1;
+                //user broadcast
+            },
+            dec: function(count) {
+                console.log("DEC");
+                this.services -= count || 1;
+            },
+            services: 0
+        };
+    })
+
+    app.directive("loading", function() {
+        return {
+            scope: {
+                loading: '='
+            },
+            template: '<div class="dl-loading" ng-show="loading">Loading {{loading}}</div>',
+            link: function(scope) {
+                scope.$watch("loading", function() {
+                    console.log("CHANGE");
+                });
+            }
+        };
+    });
+
+    app.run(function($rootScope, loading) {
+        $rootScope.servicesLoading = loading.services;
+    });
 
 });
