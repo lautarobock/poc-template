@@ -230,12 +230,12 @@ define(['../resources'], function() {
     }]);
 
 	beer.controller("BeerEditController", [
-                '$scope', 
+                '$scope', 'Brewery', 'StyleByLabel',
                 '$location', '$modal', 
                 '$rootScope', '$timeout', '$q',
                 'MainTitle', 'focus','combosData','beer','$translate',
 		function( 
-                $scope,   
+                $scope, Brewery, StyleByLabel,
                 $location,   $modal,   
                 $rootScope,   $timeout,   $q,  
                 MainTitle,   focus, combosData, beer, $translate) {
