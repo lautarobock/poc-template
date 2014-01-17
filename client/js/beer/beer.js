@@ -230,15 +230,15 @@ define(['../resources'], function() {
     }]);
 
 	beer.controller("BeerEditController", [
-                '$scope', 'Beer','$routeParams', 'Style', 
-                'StyleByLabel', '$location', '$modal', 'Brewery', 
-                '$rootScope', '$timeout', '$q','Category',
-                'MainTitle', 'focus','combosData','beer','$translate','loading',
+                '$scope', 
+                '$location', '$modal', 
+                '$rootScope', '$timeout', '$q',
+                'MainTitle', 'focus','combosData','beer','$translate',
 		function( 
-                $scope,   Beer,  $routeParams,   Style,   
-                StyleByLabel,   $location,   $modal,   Brewery,   
-                $rootScope,   $timeout,   $q,  Category,  
-                MainTitle,   focus, combosData, beer, $translate, loading) {
+                $scope,   
+                $location,   $modal,   
+                $rootScope,   $timeout,   $q,  
+                MainTitle,   focus, combosData, beer, $translate) {
 
             $scope.$log.debug("BEER",beer);
 
@@ -248,39 +248,12 @@ define(['../resources'], function() {
 			$scope.breweries = combosData[2];
             $scope.categories = combosData[3];
 
-			//Load Beer o create New (After wait for load all combos)
-			// if ( $routeParams.beer_id ) {
-   //              Beer.get({_id: $routeParams.beer_id}).$promise.then(function(result) {
-   //                  $scope.beer = result;
-   //                  MainTitle.add($scope.beer.name);
-   //                  $scope.$on("$destroy", function() {
-   //                      MainTitle.clearAdd();
-   //                  });
-   //              });
-
-			// } else {
-			// 	$scope.beer = new Beer();
-   //              focus('beername');
-			// }
             $scope.beer = beer;
             MainTitle.add($scope.beer.name||$translate('beer.new'));
             $scope.$on("$destroy", function() {
                 MainTitle.clearAdd();
             });
             focus('beername');
-            // if ( $routeParams.beer_id ) {
-            //     Beer.get({_id: $routeParams.beer_id}).$promise.then(function(result) {
-            //         $scope.beer = result;
-            //         MainTitle.add($scope.beer.name);
-            //         $scope.$on("$destroy", function() {
-            //             MainTitle.clearAdd();
-            //         });
-            //     });
-
-            // } else {
-            //     $scope.beer = new Beer();
-            //     focus('beername');
-            // }            
 
 			$scope.openNewBrewery = function () {
 				var modalInstance = $modal.open({
@@ -326,9 +299,7 @@ define(['../resources'], function() {
 				if ( !$scope.beer._id ) {
 					$scope.beer._id = $scope.beer.name.replace(/[^a-z0-9]/ig, '') + "-" + new Date().getTime();
 				}
-                loading.inc();
 				$scope.beer.$save(function(beer) {
-                    $timeout(loading.dec,1000);
 					$location.path('/beer/detail/' + beer._id);
 				});
 			};

@@ -321,37 +321,61 @@ require([
     }]);
 
     app.factory('loading', function($rootScope) {
-        
+        var services = 0;
         return {
             inc: function(count) {
-                console.log("INC");
-                this.services += count || 1;
-                //user broadcast
+                services = 1;
+                $rootScope.$broadcast('loading', services);
             },
             dec: function(count) {
-                console.log("DEC");
-                this.services -= count || 1;
-            },
-            services: 0
+                services = 0;
+                $rootScope.$broadcast('loading', services);
+            }
         };
     })
 
     app.directive("loading", function() {
         return {
-            scope: {
-                loading: '='
-            },
-            template: '<div class="dl-loading" ng-show="loading">Loading {{loading}}</div>',
+            transclude: true,
+            template: '<div class="dl-loading" ng-show="loading" ng-transclude></div>',
             link: function(scope) {
-                scope.$watch("loading", function() {
-                    console.log("CHANGE");
+                scope.loading = null;
+                scope.$on("loading", function(e, value) {
+                    scope.loading = value;
                 });
             }
         };
     });
 
-    app.run(function($rootScope, loading) {
-        $rootScope.servicesLoading = loading.services;
+    app.factory('httpInterceptor', function($q,loading,$injector) {
+        var _http = null;
+        var _requestEnded = function() {
+            _http = _http || $injector.get('$http');
+            if (_http.pendingRequests.length < 1) {
+                // send notification requests are complete
+                loading.dec();
+            }
+        };
+        return {
+            request: function(config) {
+                loading.inc();
+                return config;
+            },
+
+            response: function(response) {
+                _requestEnded();
+                return response;
+            },
+
+            responseError: function(reason) {
+                _requestEnded();
+                return $q.reject(reason);
+            }
+        }
     });
 
+    app.config(['$httpProvider',function($httpProvider) {
+        $httpProvider.interceptors.push('httpInterceptor');    
+    }]);
+    
 });
