@@ -324,11 +324,11 @@ require([
         var services = 0;
         return {
             inc: function(count) {
-                services = 1;
+                services += count||1;
                 $rootScope.$broadcast('loading', services);
             },
             dec: function(count) {
-                services = 0;
+                services -= count||1;
                 $rootScope.$broadcast('loading', services);
             }
         };
@@ -337,7 +337,7 @@ require([
     app.directive("loading", function() {
         return {
             transclude: true,
-            template: '<div class="dl-loading" ng-show="loading" ng-transclude></div>',
+            template: '<div class="dl-loading" ng-show="loading" ><span ng-transclude></span> ({{loading}})</div>',
             link: function(scope) {
                 scope.loading = null;
                 scope.$on("loading", function(e, value) {
@@ -351,10 +351,11 @@ require([
         var _http = null;
         var _requestEnded = function() {
             _http = _http || $injector.get('$http');
-            if (_http.pendingRequests.length < 1) {
-                // send notification requests are complete
-                loading.dec();
-            }
+            loading.dec();
+            // if (_http.pendingRequests.length < 1) {
+            //     // send notification requests are complete
+            //     loading.dec();
+            // }
         };
         return {
             request: function(config) {
