@@ -320,8 +320,8 @@ define(['../resources'], function() {
 	}]);
 
 	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 'MainTitle',
-		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   MainTitle) {
+		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 'MainTitle','CellarService',
+		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   MainTitle, CellarService) {
 
 			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
                 $scope.ratings = Rating.getByBeer({beer_id:$scope.beer._id});
@@ -331,6 +331,7 @@ define(['../resources'], function() {
                 });
             });
 
+            $scope.CellarService = CellarService;
 
             $scope.vintageTooltip = function(rating) {
                 if ( rating.bottled ) {

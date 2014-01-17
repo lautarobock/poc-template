@@ -5,6 +5,7 @@ require([
     "gplus",
     "beer/beer",
     "rating/rating",
+    "cellar/cellar",
     "util/directives",
     "abm/abm",
     "util/helper",
@@ -21,6 +22,7 @@ require([
         'dl.gplus',
         'dl.beer',
         'dl.rating',
+        'dl.cellar',
         'dl.directives',
         'gt.abm',
         'dl.helper',
@@ -45,19 +47,12 @@ require([
     });
 
     app.run(
-        ['$rootScope','Login','evaluateAuthResult','User', 
-        '$translate','MainTitle','Cache','$log',
+        ['$rootScope','$translate','MainTitle','$log',
             function(
-                    $rootScope, 
-                    Login, 
-                    evaluateAuthResult,
-                    User,
+                    $rootScope,
                     $translate,
                     MainTitle,
-                    Cache,
                     $log) {
-
-        $rootScope.loginSuccess = false;
 
         $rootScope.$log = $log;
 
@@ -67,12 +62,22 @@ require([
             return MainTitle.get();
         };
 
-        // Mousetrap.bind('/', function(e) {
-        //     $rootScope.$broadcast('keypress:47', e);
-        // });
+        
+    }]);
+
+    app.run(
+        ['$rootScope','Login','evaluateAuthResult','User', '$log', 'CellarService',
+            function(
+                    $rootScope, 
+                    Login, 
+                    evaluateAuthResult,
+                    User,
+                    $log,
+                    CellarService) {
+
+        $rootScope.loginSuccess = false;
 
         $rootScope.$on('g+login', function(event, authResult) {
-            // console.log("authResult",authResult);
 
             evaluateAuthResult(authResult, function(err, googleUser) {
                 if ( err ) {
@@ -89,7 +94,7 @@ require([
                             User.get({_id: user._id}, function(user) {
                                 $rootScope.loginSuccess = true;
                                 $rootScope.user = user;
-                                // console.log(user);    
+                                CellarService.loadMyCellar();
                             });
                     });
                 } else {
@@ -151,6 +156,7 @@ require([
                 when('/beer/search_:filter', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
 
+                when('/cellar', {templateUrl: 'cellar/cellar.html',   controller: 'CellarController'}).
 
                 when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingBeerController'}).
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).

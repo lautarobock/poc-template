@@ -97,7 +97,10 @@ define([], function() {
                 'popup.close': 'Cerrar',
                 'user.name': 'Usuario',
                 'general.date': 'Fecha',
-                'beer.search.emtpy': 'No se ha encontrado ninguna cerveza con este criterio de busqueda'
+                'beer.search.emtpy': 'No se ha encontrado ninguna cerveza con este criterio de busqueda',
+                'cellar.count.tooltip': 'Cantidad de cervezas en la bodega',
+                'cellar.inMy': 'En mi bodega',
+                'cellar.amount': 'Cantidad'
             }
         };
 });

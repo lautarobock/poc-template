@@ -3,6 +3,7 @@ var model = require("../domain/model.js");
 var beerService = require("./beer");
 var ratingService = require("./rating");
 var styleService = require("./style");
+var cellarService = require("./cellar");
 
 /**
  * Filtro para detectar qeu haya un usuario logueado
@@ -39,6 +40,16 @@ var services = [{
     process: function(rest) {
         rest.findAll = ratingService.findAll;
         rest.save = ratingService.save;
+    }
+},{
+    name: "Cellar",
+    security: {
+        save:[userFilter],
+        findAll:[userFilter]
+    },
+    process: function(rest) {
+        rest.save = cellarService.save;
+        rest.findAll = cellarService.findAll;
     }
 },{
     name: "User"

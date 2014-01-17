@@ -4,11 +4,16 @@
     <div class="form-group">
       <div class="col-md-12">
         <div class="pull-left">
-          <button ng-init="showShare=false" type="button" class="btn btn-default" >
-            Stock
-            <input type="number" class="form-control input-sm" style="display: inline;width: 50px;height: 22px;padding: 0 0 0 10px;font-weight: bold;margin: 0 8px;">
-            Actualizar
-          </button> 
+          <span tooltip="{{'cellar.count.tooltip'|translate}}" class="glyphicon glyphicon-home pull-left" style="margin: 8px 8px 8px 0; font-size: 20px;" ></span>
+          <span class="form-control input" style="width: 70px; margin-right: 0.5em; float:left; display:inline;font-weight: bold;">
+            {{CellarService.countByBeer(beer)}}
+          </span>
+          <button type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+          <button type="button" class="btn btn-default" ng-click="CellarService.incBeer(beer)">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
         </div>
         <div class="pull-right">
           <button ng-init="showShare=false" type="button" class="btn btn-primary" ng-click="showShare=!showShare">

@@ -275,11 +275,16 @@ define(["abm/abm-init", "abm/templates"],function() {
                     }
                 };
         
-                $scope.loading = true;
                 $scope.page = 1;
-                $scope.rows = $scope.config().data.query(function() {
-                    $scope.loading = false;
-                });
+                if ( $scope.config().collection ) {
+                    $scope.rows = $scope.config().collection;
+                } else {
+                    $scope.loading = true;    
+                    $scope.rows = $scope.config().data.query(function() {
+                        $scope.loading = false;
+                    });    
+                }
+                
                 
                 $scope.pageSize = function() {
                     return $scope.config().pageSize || PAGE_SIZE;
