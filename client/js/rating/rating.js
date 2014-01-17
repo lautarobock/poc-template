@@ -163,6 +163,7 @@ define([], function() {
                 singular: "Calificacion",
                 orderBy: "date",
                 orderDir: "-",
+                pageSize: 25,
                 headers: [{
                         field:'beer.name',
                         caption: 'Cerveza',
