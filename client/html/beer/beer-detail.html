@@ -3,6 +3,13 @@
   <form class="form-horizontal">
     <div class="form-group">
       <div class="col-md-12">
+        <div class="pull-left">
+          <button ng-init="showShare=false" type="button" class="btn btn-default" >
+            Stock
+            <input type="number" class="form-control input-sm" style="display: inline;width: 50px;height: 22px;padding: 0 0 0 10px;font-weight: bold;margin: 0 8px;">
+            Actualizar
+          </button> 
+        </div>
         <div class="pull-right">
           <button ng-init="showShare=false" type="button" class="btn btn-primary" ng-click="showShare=!showShare">
             <span class="glyphicon glyphicon-share-alt"></span>

@@ -4,6 +4,7 @@ define([], function() {
      */
     return {
             'es': {
+                'menu.loading': 'Cargando',
                 'menu.title.desktop': 'Birras que he tomado',
                 'menu.title.mobile': 'B.Q.H.T.',
                 'content.myBeers': 'He Tomado',

@@ -100,6 +100,8 @@ require([
         
     }]);
 
+
+
     app.config(['$logProvider',function($logProvider) {
         $logProvider.debugEnabled(false);
     }]);
@@ -318,5 +320,62 @@ require([
         }
     }]);
 
+    app.factory('loading', function($rootScope) {
+        var services = 0;
+        return {
+            inc: function(count) {
+                services = 1;
+                $rootScope.$broadcast('loading', services);
+            },
+            dec: function(count) {
+                services = 0;
+                $rootScope.$broadcast('loading', services);
+            }
+        };
+    })
 
+    app.directive("loading", function() {
+        return {
+            transclude: true,
+            template: '<div class="dl-loading" ng-show="loading" ng-transclude></div>',
+            link: function(scope) {
+                scope.loading = null;
+                scope.$on("loading", function(e, value) {
+                    scope.loading = value;
+                });
+            }
+        };
+    });
+
+    app.factory('httpInterceptor', function($q,loading,$injector) {
+        var _http = null;
+        var _requestEnded = function() {
+            _http = _http || $injector.get('$http');
+            if (_http.pendingRequests.length < 1) {
+                // send notification requests are complete
+                loading.dec();
+            }
+        };
+        return {
+            request: function(config) {
+                loading.inc();
+                return config;
+            },
+
+            response: function(response) {
+                _requestEnded();
+                return response;
+            },
+
+            responseError: function(reason) {
+                _requestEnded();
+                return $q.reject(reason);
+            }
+        }
+    });
+
+    app.config(['$httpProvider',function($httpProvider) {
+        $httpProvider.interceptors.push('httpInterceptor');    
+    }]);
+    
 });
