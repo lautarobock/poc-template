@@ -48,8 +48,8 @@ module.exports = function(grunt) {
 				dest: 'client/js/abm/templates.js',
 				options:{
 					bootstrap:  function(module, script) {
-						return 'define(["abm/abm-init"], function() { ' +
-							' 	angular.module("gt.abm").run(["$templateCache", function($templateCache) { ' + 
+						return 'define([], function() { ' +
+							' 	angular.module("gt.abm.templates", []).run(["$templateCache", function($templateCache) { ' + 
 							script + 
 							'	}]);' +
 							' });';

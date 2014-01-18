@@ -1,6 +1,6 @@
-define(["abm/abm-init", "abm/templates"],function() {
+define(["abm/templates"],function() {
 
-    var gt = angular.module('gt.abm');
+    var gt = angular.module('gt.abm', ['gt.abm.templates']);
 
     gt.constant("PAGE_SIZE",10);
     

@@ -10,6 +10,9 @@ define([], function() {
         mousetrap('g h', $rootScope, function() {
             $location.url("beer");
         });
+        mousetrap('g b', $rootScope, function() {
+            $location.url("cellar");
+        });
     }]);
 
     menu.directive("mainMenu", function() {

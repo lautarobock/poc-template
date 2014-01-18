@@ -1,4 +1,4 @@
-define(["abm/abm-init"], function() {  	angular.module("gt.abm").run(["$templateCache", function($templateCache) {   'use strict';
+define([], function() {  	angular.module("gt.abm.templates", []).run(["$templateCache", function($templateCache) {   'use strict';
 
   $templateCache.put('abm/abm-combo.html',
     "<select class=\"form-control input-sm\"\n" +

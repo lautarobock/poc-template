@@ -358,10 +358,6 @@ require([
         var _requestEnded = function() {
             _http = _http || $injector.get('$http');
             loading.dec();
-            // if (_http.pendingRequests.length < 1) {
-            //     // send notification requests are complete
-            //     loading.dec();
-            // }
         };
         return {
             request: function(config) {

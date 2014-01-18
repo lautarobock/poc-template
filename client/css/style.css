@@ -83,6 +83,7 @@
 	width: 180px;
 	height: 20px;
 	z-index: 1050;
-	border-radius: 2px;
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
 	padding: 0 50px;
 }
