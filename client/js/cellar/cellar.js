@@ -40,8 +40,8 @@ define(["resources"], function() {
         };
     }]);
 
-    cellar.controller("CellarController", ['$scope','CellarService','Cellar','$translate','$filter',
-        function($scope,CellarService,Cellar,$translate,$filter) {
+    cellar.controller("CellarController", ['$scope','CellarService','Cellar','$translate','$filter', 'DLHelper',
+        function($scope,CellarService,Cellar,$translate,$filter,DLHelper) {
         $scope.config = {
             data: Cellar,
             collection: Cellar.query({populate:true}),
@@ -56,11 +56,25 @@ define(["resources"], function() {
                     type: 'link',
                     href: function(row) {return '#/beer/detail/' + row.beer._id;}
                 },{
+                    field:'beer.score.avg',
+                    caption: $translate('beer.data.score'),
+                    width: '7em',
+                    tooltip: $translate('beer.data.score.help'),
+                    class: function(cellar) {
+                        if ( cellar.beer.score ) {
+                            return 'badge alert-' + DLHelper.colorByScore(cellar.beer.score.avg);        
+                        } else {
+                            return 'badge';
+                        }
+                    }
+                },{
                     field: 'amount',
+                    width: '10em',
                     caption: $translate('cellar.amount')
                 },{
                     field:'date',
                     caption: 'Fecha',
+                    width: '14em',
                     format: function(value) {
                         return $filter('date')(value,'dd-MM-yyyy');
                     }
