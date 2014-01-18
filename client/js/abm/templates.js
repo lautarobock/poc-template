@@ -40,6 +40,15 @@ define(["abm/abm-init"], function() {  	angular.module("gt.abm").run(["$template
 
   $templateCache.put('abm/abm.html',
     "<div class=\"panel panel-default\">\n" +
+    "    <style>\n" +
+    "        .gt-sorted {\n" +
+    "            cursor: pointer\n" +
+    "        }\n" +
+    "\n" +
+    "        .gt-sorted:hover {\n" +
+    "            text-decoration: underline;\n" +
+    "        }\n" +
+    "    </style>\n" +
     "    <div class=\"panel-body\" >\n" +
     "        <div class=\"col-md-10\" style=\"padding-top: 5px;\">\n" +
     "            <span ng-class=\"{invisible:loading}\">\n" +
