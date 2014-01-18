@@ -54,7 +54,12 @@ define(["resources"], function() {
         function($scope,CellarService,Cellar,$translate,$filter,DLHelper) {
         $scope.config = {
             data: Cellar,
-            collection: Cellar.query({populate:true}),
+            collection: Cellar.query({populate:true}, function(cellars) {
+                $scope.bottleCount = 0;
+                angular.forEach(cellars, function(c) {
+                    $scope.bottleCount += c.amount;
+                });
+            }),
             name: $translate('beer.data.beer')+'s',
             singular: $translate('beer.data.beer'),
             orderBy: "date",
