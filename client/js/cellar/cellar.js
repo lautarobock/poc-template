@@ -36,6 +36,16 @@ define(["resources"], function() {
                     f[0].$save()
                 }
                 
+            },
+            decBeer: function(beer) {
+                var f = util.Arrays.filter(cellars, function(item) {
+                    return item.beer == beer._id ? 0 : -1;
+                });
+                if ( f.length != 0 ) {
+                    f[0].amount--;
+                    f[0].$save()
+                }
+                
             }
         };
     }]);
