@@ -62,14 +62,19 @@ define(["resources"], function() {
             }),
             name: $translate('beer.data.beer')+'s',
             singular: $translate('beer.data.beer'),
-            orderBy: "date",
-            orderDir: "",
-            pageSize: 10,
+            orderBy: "amount",
+            orderDir: "-",
+            pageSize: 20,
             headers: [{
                     field:'beer.name',
                     caption: $translate('beer.data.beer'),
                     type: 'link',
-                    href: function(row) {return '#/beer/detail/' + row.beer._id;}
+                    href: function(row) {return '#/beer/detail/' + row.beer._id;},
+                    class: function(cellar) {
+                        if ( cellar.amount == 0 ) {
+                            return 'dl-line-through';
+                        }
+                    }
                 },{
                     field:'beer.score.avg',
                     caption: $translate('beer.data.score'),
@@ -85,7 +90,12 @@ define(["resources"], function() {
                 },{
                     field: 'amount',
                     width: '10em',
-                    caption: $translate('cellar.amount')
+                    caption: $translate('cellar.amount'),
+                    class: function(cellar) {
+                        if ( cellar.amount == 0 ) {
+                            return 'dl-line-through';
+                        }
+                    }
                 },{
                     field:'date',
                     caption: 'Fecha',

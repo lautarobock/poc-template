@@ -87,3 +87,7 @@
 	border-bottom-left-radius: 2px;
 	padding: 0 50px;
 }
+
+.dl-line-through {
+	text-decoration: line-through;
+}

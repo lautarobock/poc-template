@@ -10,7 +10,7 @@ define([], function() {
         mousetrap('g h', $rootScope, function() {
             $location.url("beer");
         });
-        mousetrap('g b', $rootScope, function() {
+        mousetrap('g c', $rootScope, function() {
             $location.url("cellar");
         });
     }]);

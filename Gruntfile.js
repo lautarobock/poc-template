@@ -56,6 +56,16 @@ module.exports = function(grunt) {
 					}
 				}
 			}
+		},
+		nodemon: {
+		  	dev: {
+		    	script: 'server/server.js',
+		    	options: {
+		    		env: {
+		    			'MONGOLAB_URI': 'localhost:27017/drunkslog'
+		    		}
+		    	}
+		  	}
 		}
   	}); // The end of grunt.initConfig
 
@@ -69,6 +79,10 @@ module.exports = function(grunt) {
 	//for angular template concatenation
 	grunt.loadNpmTasks('grunt-angular-templates');
 
+	grunt.loadNpmTasks('grunt-nodemon');
+
 	// Register our own custom task alias.
 	grunt.registerTask('build', ['ngtemplates','concat']);
+
+	grunt.registerTask('run', ['nodemon']);
 };
