@@ -1,0 +1,14 @@
+<div main-content>
+  <h1>{{'content.stats' | translate }}</h1>
+  <hr>
+    <div>Cerveza con mas alcohol: <b>{{myStats.maxABV.name}} con {{myStats.maxABV.abv}}%</b></div>
+    <div>Cerveza con menos alcohol: <b>{{myStats.minABV.name}} con {{myStats.minABV.abv}}%</b></div>
+    <div>La cerveza con mejor rating: <b>{{myStats.maxScore.beer.name}} con {{myStats.maxScore.finalScore}} Pts</b></div>
+    <div>La cerveza con peor rating: <b>{{myStats.minScore.beer.name}} con {{myStats.minScore.finalScore}} Pts</b></div>
+    <!-- <div>La cerveceria con mas ratings: <b>{{myStats.maxBreweryCount.name}} con {{myStats.minScore.finalScore}} Pts</b></div> -->
+  <hr/>
+</div>
+
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

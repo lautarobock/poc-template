@@ -6,6 +6,7 @@ require([
     "beer/beer",
     "rating/rating",
     "cellar/cellar",
+    "stats/stats",
     "util/directives",
     "abm/abm",
     "util/helper",
@@ -23,6 +24,7 @@ require([
         'dl.beer',
         'dl.rating',
         'dl.cellar',
+        'dl.stats',
         'dl.directives',
         'gt.abm',
         'dl.helper',
@@ -157,6 +159,8 @@ require([
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
 
                 when('/cellar', {templateUrl: 'cellar/cellar.html',   controller: 'CellarController'}).
+
+                when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
 
                 when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingBeerController'}).
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).

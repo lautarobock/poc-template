@@ -10,6 +10,7 @@ define([], function() {
                 'content.myBeers': 'He Tomado',
                 'content.beers': 'Mejores birras',
                 'content.ratings': 'Las que he tomado',
+                'content.stats': 'Estadisticas',
                 'side.search': 'Buscar Cerveza',
                 'side.search.placeholder': "'/' para buscar",
                 'side.search.fields': 'Por todos los campos',
@@ -101,7 +102,8 @@ define([], function() {
                 'beer.search.emtpy': 'No se ha encontrado ninguna cerveza con este criterio de busqueda',
                 'cellar.count.tooltip': 'Cantidad de cervezas en la bodega',
                 'cellar.inMy': 'En mi bodega',
-                'cellar.amount': 'Cantidad'
+                'cellar.amount': 'Cantidad',
+                'cellar.bottlesAmount': 'Cantidad de botellas'
             }
         };
 });
