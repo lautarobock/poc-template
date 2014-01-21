@@ -172,23 +172,28 @@ define([], function() {
                     },{
                         field:'score.appearance',
                         caption: $translate('rating.data.appearance.short'),
-                        tooltip: $translate('rating.data.appearance')
+                        tooltip: $translate('rating.data.appearance'),
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'score.aroma',
                         caption: $translate('rating.data.aroma.short'),
-                        tooltip: $translate('rating.data.aroma')
+                        tooltip: $translate('rating.data.aroma'),
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'score.flavor',
                         caption: $translate('rating.data.flavor.short'),
-                        tooltip: $translate('rating.data.flavor')
+                        tooltip: $translate('rating.data.flavor'),
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'score.mouthfeel',
                         caption: $translate('rating.data.mouthfeel.short'),
-                        tooltip: $translate('rating.data.mouthfeel')
+                        tooltip: $translate('rating.data.mouthfeel'),
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'score.overall',
                         caption: $translate('rating.data.overall.short'),
-                        tooltip: $translate('rating.data.overall')
+                        tooltip: $translate('rating.data.overall'),
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'finalScore',
                         caption: $translate('beer.data.finalScore.short'),

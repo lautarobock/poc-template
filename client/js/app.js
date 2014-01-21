@@ -1,4 +1,4 @@
-require([
+define("app", [
     "locale/locale",
     "menu/menu",
     "resources",
