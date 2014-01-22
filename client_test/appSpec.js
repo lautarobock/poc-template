@@ -10,9 +10,27 @@ define(["app"], function() {
 			expect($rootScope.loginSuccess).toBeFalsy();
 		}));
 
-		it("Should define routes", function() {
-			expect("1").toBe("2");
-		});
+		it("Should define routes", inject(function($rootScope,$location, $route, $httpBackend) {
+			// expect("1").toBe("2");
+
+			$httpBackend.when('GET', 'stats/stats.html').respond("<div></div>");
+			$httpBackend.when('GET', 'beer/beer-edit.html').respond("<div></div>");
+			$httpBackend.when('GET', '/api/Style?').respond({});
+			$httpBackend.when('GET', '/api/StyleByLabel?').respond({});
+			$httpBackend.when('GET', '/api/Brewery?').respond({});
+			$httpBackend.when('GET', '/api/Category?').respond({});
+
+			$rootScope.$on('$routeChangeStart', function() {
+				console.log("CHANGE");
+			});
+
+			$location.path("/beer/new");
+			$rootScope.$digest();
+			console.log("ROUTE", $route.current.resolve.combosData);
+			console.log("ROUTE", $route.current.resolve.beer);
+			console.log("ROUTE", $route.current);
+
+		}));
 
 	});
 

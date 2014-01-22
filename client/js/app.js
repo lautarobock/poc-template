@@ -35,19 +35,6 @@ define("app", [
         angular.bootstrap(document, ['app']);
     });
     
-    app.factory("Cache", function(Category, Style) {
-        var _categories = null;
-        var _styles = null;
-        return {
-            categories: function() {
-                return _categories || ( _categories = Category.query() );
-            },
-            styles: function() {
-                return _styles || ( _styles = Style.query() );
-            }
-        };
-    });
-
     app.run(
         ['$rootScope','$translate','MainTitle','$log',
             function(
@@ -171,6 +158,20 @@ define("app", [
                 otherwise({redirectTo: '/beer'});
 
     }]);
+
+    app.factory("Cache", function(Category, Style) {
+        var _categories = null;
+        var _styles = null;
+        return {
+            categories: function() {
+                return _categories || ( _categories = Category.query() );
+            },
+            styles: function() {
+                return _styles || ( _styles = Style.query() );
+            }
+        };
+    });
+
 
     app.factory("MainTitle", function() {
         var main = '';
