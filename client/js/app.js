@@ -174,49 +174,6 @@ define("app", [
 
     }]);
 
-
-    app.directive('secure', function() {
-        return function(scope,element) {
-            scope.$watch("user", function(value, old) {
-                if ( value ) {
-                    element.removeClass('dl-hide');
-                } else {
-                    element.addClass('dl-hide');
-                }    
-            });
-        };
-    });
-
-    app.directive('secureAdmin', function() {
-        return function(scope,element) {
-            scope.$watch("user", function(value, old) {
-                if ( value && value.isAdmin ) {
-                    element.removeClass('dl-hide');
-                } else {
-                    element.addClass('dl-hide');
-                }    
-            });
-        };
-    });
-
-    app.directive('dlIcon', function() {
-        return function(scope, element) {
-            element.html('<img src="../images/'+element.attr('dl-icon')+'.png"/>');
-        };
-    });
-
-    app.directive('mainContent', function() {
-        return function(scope, element) {
-            element.addClass("col-md-9");
-        };
-    });
-
-    app.directive('sideBar', function() {
-        return function(scope, element) {
-            element.addClass("col-md-3");
-        };
-    });
-
     app.directive('logIn', function() {
         return {
             restrict: 'AE',

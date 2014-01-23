@@ -43,6 +43,49 @@ define([], function() {
         };
     });
 
+    directives.directive('secure', function() {
+        return function(scope,element) {
+            scope.$watch("user", function(value, old) {
+                if ( value ) {
+                    element.removeClass('hidden');
+                } else {
+                    element.addClass('hidden');
+                }    
+            });
+        };
+    });
+
+    directives.directive('secureAdmin', function() {
+        return function(scope,element) {
+            scope.$watch("user", function(value, old) {
+                if ( value && value.isAdmin ) {
+                    element.removeClass('hidden');
+                } else {
+                    element.addClass('hidden');
+                }    
+            });
+        };
+    });
+
+    directives.directive('dlIcon', function() {
+        return function(scope, element) {
+            element.html('<img src="../images/'+element.attr('dl-icon')+'.png"/>');
+        };
+    });
+
+    directives.directive('mainContent', function() {
+        return function(scope, element) {
+            element.addClass("col-md-9");
+        };
+    });
+
+    directives.directive('sideBar', function() {
+        return function(scope, element) {
+            element.addClass("col-md-3");
+        };
+    });
+
+
 
 	return directives;
 });

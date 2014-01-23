@@ -41,6 +41,64 @@ define(["app"], function() {
 
 	});
 
+	//Take off to ther file
+	describe("dl.directives", function() {
+		
+		beforeEach(angular.mock.module('dl.directives'));
+
+		it("Should hide element if not logged", inject(function($rootScope,$compile) {
+
+			var element = $compile("<div secure></div>")($rootScope);
+			$rootScope.$digest();
+			expect(element.hasClass("hidden")).toBeTruthy();
+			$rootScope.user = {name:'Jose'};
+			$rootScope.$digest();
+			expect(element.hasClass("hidden")).toBeFalsy();
+
+		}));
+
+		it("Should hide element if not Admin", inject(function($rootScope,$compile) {
+
+			var element = $compile("<div secure-admin></div>")($rootScope);
+			$rootScope.$digest();
+			expect(element.hasClass("hidden")).toBeTruthy();
+			$rootScope.user = {name:'Jose'};
+			$rootScope.$digest();
+			expect(element.hasClass("hidden")).toBeTruthy();
+
+			//Now the admin one
+			$rootScope.user = {name:'Jose', isAdmin:true};
+			$rootScope.$digest();
+			expect(element.hasClass("hidden")).toBeFalsy();
+
+		}));
+
+		it("Should add icon to element", inject(function($rootScope,$compile) {
+
+			var element = $compile("<div dl-icon='photo'></div>")($rootScope);
+			$rootScope.$digest();
+			expect(element.html()).toContain("<img src=\"../images/photo.png\">");
+
+		}));
+
+		//Esto deberia ser configurable la cantidad de columnas que quiero para cada sector
+		it("Should add class to main content and sidebar", inject(function($rootScope,$compile) {
+
+			var element = $compile("<div main-content></div>")($rootScope);
+			$rootScope.$digest();
+			expect(element.hasClass('col-md-9')).toBeTruthy()
+
+			var element = $compile("<div side-bar></div>")($rootScope);
+			$rootScope.$digest();
+			expect(element.hasClass('col-md-3')).toBeTruthy()
+
+		}));
+
+
+
+
+	});
+
 	//Take to other file
 	describe("dl.misc", function() {
 
