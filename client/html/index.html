@@ -96,8 +96,16 @@
         }
 
         function cb(authResult) {
-            var $scope = angular.element(document.body).scope();
-            $scope.$emit('g+login', authResult);
+            function waitForNg() {
+                console.log("Try");
+                var $scope = angular.element(document.body).scope();
+                if ( !$scope ) {
+                    setTimeout(waitForNg,500);
+                } else {
+                    $scope.$emit('g+login', authResult);
+                }
+            }
+            waitForNg();
         }
     </script>    
   </body>

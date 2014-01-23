@@ -12,7 +12,8 @@ define(["app"], function() {
 
 		it("Should define routes", inject(function($rootScope,$location, $route, $httpBackend) {
 			// expect("1").toBe("2");
-
+			//puedo hacer asi creo
+			//$httpBackend.expectGET('')
 			$httpBackend.when('GET', 'stats/stats.html').respond("<div></div>");
 			$httpBackend.when('GET', 'beer/beer-edit.html').respond("<div></div>");
 			$httpBackend.when('GET', '/api/Style?').respond({});

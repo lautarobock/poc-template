@@ -32,7 +32,9 @@ define("app", [
 
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
-        angular.bootstrap(document, ['app']);
+        // setTimeout(function() {
+            angular.bootstrap(document, ['app']);    
+        // },3000);
     });
     
     app.run(
@@ -80,9 +82,9 @@ define("app", [
                             name:googleUser.name, 
                             email: googleUser.email
                         }, function(user) {
-                            User.get({_id: user._id}, function(user) {
+                            $rootScope.user = User.get({_id: user._id}, function(user) {
                                 $rootScope.loginSuccess = true;
-                                $rootScope.user = user;
+                                // $rootScope.user = user;
                                 CellarService.loadMyCellar();
                             });
                     });
@@ -149,7 +151,18 @@ define("app", [
 
                 when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
 
-                when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingBeerController'}).
+                when('/rating', {
+                    templateUrl: 'rating/rating.html',   
+                    controller: 'RatingBeerController'
+                    // ,
+                    // resolve: {
+                    //     loggedUser: ['$q','$rootScope', function($q,$rootScope) {
+                    //         var defer = $q.defer;
+                    //         $rootScope.$
+                    //         return defer.promise;
+                    //     }]
+                    // }
+                }).
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/edit/:rating_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/detail/:rating_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
