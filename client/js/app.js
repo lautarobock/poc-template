@@ -8,6 +8,7 @@ define("app", [
     "cellar/cellar",
     "stats/stats",
     "util/directives",
+    "util/misc",
     "abm/abm",
     "util/helper",
     "util/mousetrap"
@@ -28,6 +29,7 @@ define("app", [
         'dl.directives',
         'gt.abm',
         'dl.helper',
+        'dl.misc',
         'ng-mousetrap']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
@@ -159,48 +161,6 @@ define("app", [
 
     }]);
 
-    app.factory("Cache", function(Category, Style) {
-        var _categories = null;
-        var _styles = null;
-        return {
-            categories: function() {
-                return _categories || ( _categories = Category.query() );
-            },
-            styles: function() {
-                return _styles || ( _styles = Style.query() );
-            }
-        };
-    });
-
-
-    app.factory("MainTitle", function() {
-        var main = '';
-        var add = null;
-        var replace = null;
-        return {
-            get: function() {
-                if ( add ) {
-                    return add + ' - ' + main;
-                } else if ( replace ) {
-                    return replace;
-                } else {
-                    return main;    
-                }
-            },
-            set: function(title) {
-                main = title;
-            },
-            add: function(title) {
-                add = title;
-            },
-            clearAdd: function() {
-                add = null;
-            },
-            replace: function(title) {
-                replace = title;
-            }
-        };
-    });
 
     app.directive('secure', function() {
         return function(scope,element) {
