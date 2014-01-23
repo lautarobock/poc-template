@@ -66,6 +66,23 @@ module.exports = function(grunt) {
 		    		}
 		    	}
 		  	}
+		},
+		karma: {
+			unit: {
+				configFile: 'client_test/karma.conf.js'
+			},
+			cont: {
+				configFile: 'client_test/karma.conf.js',
+				singleRun: true
+			}
+		},
+		shell: {
+			runTest: {
+				options: {
+	                stdout: true
+	            },
+				command: 'node_modules/jasmine-node/bin/jasmine-node server/test/'
+			}
 		}
   	}); // The end of grunt.initConfig
 
@@ -81,8 +98,14 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-nodemon');
 
+	grunt.loadNpmTasks('grunt-karma');
+
+	grunt.loadNpmTasks('grunt-shell');
+
 	// Register our own custom task alias.
 	grunt.registerTask('build', ['ngtemplates','concat']);
 
 	grunt.registerTask('run', ['nodemon']);
+
+	grunt.registerTask('test', ['karma:cont', 'shell:runTest']);
 };
