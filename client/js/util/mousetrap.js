@@ -1,4 +1,4 @@
-define([], function() {
+define(["../../lib/mousetrap/mousetrap.min"], function() {
 
     var mousetrap = angular.module("ng-mousetrap", []);
 

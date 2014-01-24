@@ -157,68 +157,82 @@ define([], function() {
         '$scope', 'Rating','$filter', '$translate','DLHelper',
         function($scope,Rating,$filter,$translate,DLHelper) {
             
-            $scope.config = {
-                data: Rating,
-                name: "Calificaciones",
-                singular: "Calificacion",
-                orderBy: "date",
-                orderDir: "-",
-                pageSize: 25,
-                headers: [{
-                        field:'beer.name',
-                        caption: 'Cerveza',
-                        type: 'link',
-                        href: function(row) {return '#/beer/detail/' + row.beer._id;}
-                    },{
-                        field:'score.appearance',
-                        caption: $translate('rating.data.appearance.short'),
-                        tooltip: $translate('rating.data.appearance')
-                    },{
-                        field:'score.aroma',
-                        caption: $translate('rating.data.aroma.short'),
-                        tooltip: $translate('rating.data.aroma')
-                    },{
-                        field:'score.flavor',
-                        caption: $translate('rating.data.flavor.short'),
-                        tooltip: $translate('rating.data.flavor')
-                    },{
-                        field:'score.mouthfeel',
-                        caption: $translate('rating.data.mouthfeel.short'),
-                        tooltip: $translate('rating.data.mouthfeel')
-                    },{
-                        field:'score.overall',
-                        caption: $translate('rating.data.overall.short'),
-                        tooltip: $translate('rating.data.overall')
-                    },{
-                        field:'finalScore',
-                        caption: $translate('beer.data.finalScore.short'),
-                        tooltip: $translate('beer.data.finalScore.help'),
-                        class: function(rating) {
-                            if ( rating.finalScore ) {
-                                return 'badge alert-' + DLHelper.colorByScore(rating.finalScore);   
-                            } else {
-                                return 'badge';
+            // $scope.$watch("user._id", function(user_id) {
+            //     if ( user_id ) {
+            //         loadData();
+            //     }
+            // });
+            loadData();
+
+            function loadData() {
+                $scope.config = {
+                    data: Rating,
+                    name: "Calificaciones",
+                    singular: "Calificacion",
+                    orderBy: "date",
+                    orderDir: "-",
+                    pageSize: 25,
+                    headers: [{
+                            field:'beer.name',
+                            caption: 'Cerveza',
+                            type: 'link',
+                            href: function(row) {return '#/beer/detail/' + row.beer._id;}
+                        },{
+                            field:'score.appearance',
+                            caption: $translate('rating.data.appearance.short'),
+                            tooltip: $translate('rating.data.appearance'),
+                            hidden: {xs: true,sm: true}
+                        },{
+                            field:'score.aroma',
+                            caption: $translate('rating.data.aroma.short'),
+                            tooltip: $translate('rating.data.aroma'),
+                            hidden: {xs: true,sm: true}
+                        },{
+                            field:'score.flavor',
+                            caption: $translate('rating.data.flavor.short'),
+                            tooltip: $translate('rating.data.flavor'),
+                            hidden: {xs: true,sm: true}
+                        },{
+                            field:'score.mouthfeel',
+                            caption: $translate('rating.data.mouthfeel.short'),
+                            tooltip: $translate('rating.data.mouthfeel'),
+                            hidden: {xs: true,sm: true}
+                        },{
+                            field:'score.overall',
+                            caption: $translate('rating.data.overall.short'),
+                            tooltip: $translate('rating.data.overall'),
+                            hidden: {xs: true,sm: true}
+                        },{
+                            field:'finalScore',
+                            caption: $translate('beer.data.finalScore.short'),
+                            tooltip: $translate('beer.data.finalScore.help'),
+                            class: function(rating) {
+                                if ( rating.finalScore ) {
+                                    return 'badge alert-' + DLHelper.colorByScore(rating.finalScore);   
+                                } else {
+                                    return 'badge';
+                                }
+                            },
+                            sort: function (rating) {
+                                return rating.finalScore || 0;
                             }
-                        },
-                        sort: function (rating) {
-                            return rating.finalScore || 0;
+                        },{
+                            field:'beer.score',
+                            caption: 'G / S',
+                            width: '9em',
+                            headerStyle: {'text-align': 'center','min-width': '9em'},
+                            tooltip: $translate('beer.data.score.gs.help'),
+                            valueTemplateUrl: 'score.html'
+                        },{
+                            field:'date',
+                            caption: 'Fecha',
+                            format: function(value) {
+                                return $filter('date')(value,'dd-MM-yyyy');
+                            }
                         }
-                    },{
-                        field:'beer.score',
-                        caption: 'G / S',
-                        width: '9em',
-                        headerStyle: {'text-align': 'center','min-width': '9em'},
-                        tooltip: $translate('beer.data.score.gs.help'),
-                        valueTemplateUrl: 'score.html'
-                    },{
-                        field:'date',
-                        caption: 'Fecha',
-                        format: function(value) {
-                            return $filter('date')(value,'dd-MM-yyyy');
-                        }
-                    }
-                ]
-            };
+                    ]
+                };
+            }
 
 
         }]);

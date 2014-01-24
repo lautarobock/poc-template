@@ -1,4 +1,4 @@
-require([
+define("app", [
     "locale/locale",
     "menu/menu",
     "resources",
@@ -8,6 +8,7 @@ require([
     "cellar/cellar",
     "stats/stats",
     "util/directives",
+    "util/misc",
     "abm/abm",
     "util/helper",
     "util/mousetrap"
@@ -28,26 +29,16 @@ require([
         'dl.directives',
         'gt.abm',
         'dl.helper',
+        'dl.misc',
         'ng-mousetrap']);
 
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
-        angular.bootstrap(document, ['app']);
+        // setTimeout(function() {
+            angular.bootstrap(document, ['app']);    
+        // },3000);
     });
     
-    app.factory("Cache", function(Category, Style) {
-        var _categories = null;
-        var _styles = null;
-        return {
-            categories: function() {
-                return _categories || ( _categories = Category.query() );
-            },
-            styles: function() {
-                return _styles || ( _styles = Style.query() );
-            }
-        };
-    });
-
     app.run(
         ['$rootScope','$translate','MainTitle','$log',
             function(
@@ -93,9 +84,9 @@ require([
                             name:googleUser.name, 
                             email: googleUser.email
                         }, function(user) {
-                            User.get({_id: user._id}, function(user) {
+                            $rootScope.user = User.get({_id: user._id}, function(user) {
                                 $rootScope.loginSuccess = true;
-                                $rootScope.user = user;
+                                // $rootScope.user = user;
                                 CellarService.loadMyCellar();
                             });
                     });
@@ -162,7 +153,18 @@ require([
 
                 when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
 
-                when('/rating', {templateUrl: 'rating/rating.html',   controller: 'RatingBeerController'}).
+                when('/rating', {
+                    templateUrl: 'rating/rating.html',   
+                    controller: 'RatingBeerController'
+                    // ,
+                    // resolve: {
+                    //     loggedUser: ['$q','$rootScope', function($q,$rootScope) {
+                    //         var defer = $q.defer;
+                    //         $rootScope.$
+                    //         return defer.promise;
+                    //     }]
+                    // }
+                }).
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/edit/:rating_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/detail/:rating_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
@@ -171,111 +173,6 @@ require([
                 otherwise({redirectTo: '/beer'});
 
     }]);
-
-    app.factory("MainTitle", function() {
-        var main = '';
-        var add = null;
-        var replace = null;
-        return {
-            get: function() {
-                if ( add ) {
-                    return add + ' - ' + main;
-                } else if ( replace ) {
-                    return replace;
-                } else {
-                    return main;    
-                }
-            },
-            set: function(title) {
-                main = title;
-            },
-            add: function(title) {
-                add = title;
-            },
-            clearAdd: function() {
-                add = null;
-            },
-            replace: function(title) {
-                replace = title;
-            }
-        };
-    });
-
-    app.directive('secure', function() {
-        return function(scope,element) {
-            scope.$watch("user", function(value, old) {
-                if ( value ) {
-                    element.removeClass('dl-hide');
-                } else {
-                    element.addClass('dl-hide');
-                }    
-            });
-        };
-    });
-
-    app.directive('secureAdmin', function() {
-        return function(scope,element) {
-            scope.$watch("user", function(value, old) {
-                if ( value && value.isAdmin ) {
-                    element.removeClass('dl-hide');
-                } else {
-                    element.addClass('dl-hide');
-                }    
-            });
-        };
-    });
-
-    app.directive('dlIcon', function() {
-        return function(scope, element) {
-            element.html('<img src="../images/'+element.attr('dl-icon')+'.png"/>');
-        };
-    });
-
-    app.directive('mainContent', function() {
-        return function(scope, element) {
-            element.addClass("col-md-9");
-        };
-    });
-
-    app.directive('sideBar', function() {
-        return function(scope, element) {
-            element.addClass("col-md-3");
-        };
-    });
-
-    app.directive('logIn', function() {
-        return {
-            restrict: 'AE',
-            replace: true,
-            template: '<a href="javascript:googleLogIn()">Acceder</a>',
-            link: function(scope, element) {
-                scope.$watch("user", function(value) {
-                    if ( value ) {
-                        element.addClass('dl-hide');
-                    } else {
-                        element.removeClass('dl-hide');
-                    }    
-                });
-            }
-        };
-    })
-
-    app.directive('signIn', function() {
-        return {
-            restrict: 'AE',
-            replace: true,
-            template: '<a href="javascript:googleSignIn()">Registarse</a>',
-            link: function(scope, element) {
-                scope.$watch("user", function(value) {
-                    if ( value ) {
-                        element.addClass('dl-hide');
-                    } else {
-                        element.removeClass('dl-hide');
-                    }    
-                });
-            }
-        };
-    })
 
     app.controller("RankingsController", 
         ['$scope','Cache',
@@ -299,18 +196,8 @@ require([
                 $location.path("/beer").search('searchCriteria',searchText);
             };
 
-            //@Deprecated
-            $scope.safeSearch = function(searchText) {
-                return $sce.trustAsUrl("#/beer?searchCriteria="+searchText);
-            }
-        }]);
+    }]);
 
-    app.filter("enrich", function() {
-        return function(value) {
-            if ( value ) return markdown.toHTML(value);
-            return value;
-        };
-    });
 
     app.directive('focusOn', function() {
         return function(scope, elem, attr) {

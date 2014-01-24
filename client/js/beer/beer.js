@@ -81,7 +81,8 @@ define(['../resources'], function() {
                 headers: [{
                         field:'score.position',
                         caption: '#',
-                        tooltip: $translate('beer.data.position')
+                        tooltip: $translate('beer.data.position'),
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'name',
                         caption: $translate('beer.data.beer'),
@@ -123,7 +124,8 @@ define(['../resources'], function() {
                     },{
                         field:'score.count',
                         caption: $translate('beer.data.score.count.short'),
-                        tooltip: $translate('beer.data.score.count.help')
+                        tooltip: $translate('beer.data.score.count.help'),
+                        hidden: {xs: true,sm: true}
                     },{
                         field:'score.myScore',
                         caption: $translate('beer.data.score.my'),
