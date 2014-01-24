@@ -192,7 +192,7 @@ define(['../resources'], function() {
                 }
             });
             if ( $location.$$search.searchCriteria ) {
-                $scope.searchCriteria = $location.$$search.searchCriteria;
+                $scope.searchCriteria = $location.search().searchCriteria;
             }
 
         }]);

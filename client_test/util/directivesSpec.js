@@ -102,5 +102,16 @@ describe("dl.directives", function() {
 		expect(nulled).toBeNull();
 	}));
 
+	it("Should set name to focus it", inject(function($controller, $rootScope) {
+		// var $scope = $rootScope.$new();
+
+		// spyOn(Cache,"categories").andReturn([{name:"Cat1"}]);
+
+		// var rankingsController = $controller("RankingsController", {$scope: $scope});
+
+		// expect(Cache.categories).toHaveBeenCalled();
+		// expect($scope.categories).toEqual([{name:"Cat1"}]);
+	}));
+
 
 });

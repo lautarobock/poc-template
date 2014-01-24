@@ -7,6 +7,7 @@ define("app", [
     "rating/rating",
     "cellar/cellar",
     "stats/stats",
+    "side/side",
     "util/directives",
     "util/misc",
     "abm/abm",
@@ -26,6 +27,7 @@ define("app", [
         'dl.rating',
         'dl.cellar',
         'dl.stats',
+        'dl.side',
         'dl.directives',
         'gt.abm',
         'dl.helper',
@@ -55,7 +57,6 @@ define("app", [
             return MainTitle.get();
         };
 
-        
     }]);
 
     app.run(
@@ -174,48 +175,6 @@ define("app", [
 
     }]);
 
-    app.controller("RankingsController", 
-        ['$scope','Cache',
-        function($scope,Cache) {
-            $scope.categories = Cache.categories();
-        }]);
-
-    app.controller("SideSearchController", 
-        ['$scope', '$location','focus','mousetrap',
-        function($scope, $location,focus,mousetrap) {
-            
-            mousetrap('n', $scope, function() {
-                $location.path("/beer/new");
-            });
-
-            mousetrap('/', $scope, function(e) {
-                focus('focusSearch');
-            });
-
-            $scope.search = function(searchText) {
-                $location.path("/beer").search('searchCriteria',searchText);
-            };
-
-    }]);
-
-
-    app.directive('focusOn', function() {
-        return function(scope, elem, attr) {
-            scope.$on('focusOn', function(e, name) {
-                if(name === attr.focusOn) {
-                    elem[0].focus();
-                }
-            });
-        };
-    });
-
-    app.factory('focus', ['$rootScope', '$timeout',function ($rootScope, $timeout) {
-        return function(name) {
-            $timeout(function (){
-                $rootScope.$broadcast('focusOn', name);
-            },100);
-        }
-    }]);
 
     app.factory('loading', function($rootScope) {
         var services = 0;
