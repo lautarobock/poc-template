@@ -22,7 +22,7 @@ define(["app"], function() {
 			$httpBackend.when('GET', '/api/Category?').respond([]);
 
 			$rootScope.$on('$routeChangeStart', function() {
-				console.log("CHANGE");
+				// console.log("CHANGE");
 			});
 
 			$location.path("/beer/new");
@@ -36,11 +36,43 @@ define(["app"], function() {
 
 		afterEach(inject(function($httpBackend) {
 			$httpBackend.verifyNoOutstandingExpectation();
-     			$httpBackend.verifyNoOutstandingRequest();
+     		$httpBackend.verifyNoOutstandingRequest();
 		}));
 
 	});
 
+	describe("RankingsController", function() {
+
+		beforeEach(angular.mock.module('app'));
+
+		it("Should load categories", inject(function($controller, $rootScope, Cache) {
+			var $scope = $rootScope.$new();
+
+			spyOn(Cache,"categories").andReturn([{name:"Cat1"}]);
+
+			var rankingsController = $controller("RankingsController", {$scope: $scope});
+
+			expect(Cache.categories).toHaveBeenCalled();
+			expect($scope.categories).toEqual([{name:"Cat1"}]);
+		}));
+
+	});
+
+	describe("SideSearchController", function() {
+
+		beforeEach(angular.mock.module('app'));
+
+		it("Should set shortcut and search beer", 
+			inject(function($controller, $rootScope, Cache) {
+				var $scope = $rootScope.$new();
+
+				var sideSearchController = $controller("SideSearchController", {$scope: $scope});
+
+				// expect(Cache.categories).toHaveBeenCalled();
+				// expect($scope.categories).toEqual([{name:"Cat1"}]);
+		}));
+
+	});
 
 
 

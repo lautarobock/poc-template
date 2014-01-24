@@ -196,10 +196,6 @@ define("app", [
                 $location.path("/beer").search('searchCriteria',searchText);
             };
 
-            //@Deprecated
-            $scope.safeSearch = function(searchText) {
-                return $sce.trustAsUrl("#/beer?searchCriteria="+searchText);
-            }
     }]);
 
 
