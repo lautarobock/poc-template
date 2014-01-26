@@ -1,12 +1,64 @@
 <div main-content>
-  <h1>{{'content.stats' | translate }}</h1>
-  <hr>
+    <h1>{{'content.stats' | translate }}</h1>
+    <hr>
     <div>Cerveza con mas alcohol: <b>{{myStats.maxABV.name}} con {{myStats.maxABV.abv}}%</b></div>
     <div>Cerveza con menos alcohol: <b>{{myStats.minABV.name}} con {{myStats.minABV.abv}}%</b></div>
     <div>La cerveza con mejor rating: <b>{{myStats.maxScore.beer.name}} con {{myStats.maxScore.finalScore}} Pts</b></div>
     <div>La cerveza con peor rating: <b>{{myStats.minScore.beer.name}} con {{myStats.minScore.finalScore}} Pts</b></div>
     <!-- <div>La cerveceria con mas ratings: <b>{{myStats.maxBreweryCount.name}} con {{myStats.minScore.finalScore}} Pts</b></div> -->
-  <hr/>
+    <hr/>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default"> 
+                <div class="panel-heading">Estilos mas tomados</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{'beer.data.style' | translate}}
+                                </th>
+                                <th>
+                                    {{'stats.amount' | translate}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="style in myStats.styles | orderBy:'-count' | limitTo:3">
+                                <td>{{style._id}}</td>
+                                <td>{{style.count}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default"> 
+                <div class="panel-heading">Estilos menos tomados.</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{'beer.data.style' | translate}}
+                                </th>
+                                <th>
+                                    {{'stats.amount' | translate}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="style in myStats.styles | orderBy:'-count' | limitTo:-3">
+                                <td>{{style._id}}</td>
+                                <td>{{style.count}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div side-bar>

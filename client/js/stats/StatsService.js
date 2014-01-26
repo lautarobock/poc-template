@@ -69,9 +69,22 @@
             if ( myStats.breweries.indexOf(rating.beer.brewery) == -1 ) {
                 myStats.breweries.push(rating.beer.brewery);
             }
-            if ( myStats.styles.indexOf(rating.beer.style) == -1 ) {
-                myStats.styles.push(rating.beer.style);
+
+            function idComp(item) {
+                return item._id == rating.beer.style ? 0 : -1;
             }
+
+            var index = -1;
+            if ( (index = util.Arrays.indexOf(myStats.styles,  idComp)) == -1 ) {
+                myStats.styles.push({
+                    _id: rating.beer.style,
+                    count: 0,
+                    avg: -1
+                });
+                index = myStats.styles.length - 1;
+            }
+            myStats.styles[index].count ++;
+
             if ( myStats.categories.indexOf(rating.beer.category) == -1 ) {
                 myStats.categories.push(rating.beer.category);
             }

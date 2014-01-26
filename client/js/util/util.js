@@ -116,6 +116,15 @@
                 }
             }
             return result;
+        },
+        indexOf: function(array, comparator) {
+            var index = [];
+            for (var i=0; i<array.length; i++) {
+                if ( comparator(array[i]) == 0 ) {
+                    return i;
+                }
+            }
+            return -1;  
         }
     };
 

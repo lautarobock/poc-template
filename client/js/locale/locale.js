@@ -103,7 +103,8 @@ define([], function() {
                 'cellar.count.tooltip': 'Cantidad de cervezas en la bodega',
                 'cellar.inMy': 'En mi bodega',
                 'cellar.amount': 'Cantidad',
-                'cellar.bottlesAmount': 'Cantidad de botellas'
+                'cellar.bottlesAmount': 'Cantidad de botellas',
+                'stats.amount': 'Cantidad'
             }
         };
 });

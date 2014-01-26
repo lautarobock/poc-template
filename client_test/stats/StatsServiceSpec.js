@@ -17,7 +17,7 @@ define(["../DataHelper.js"], function(DataHelper) {
     */    
 	describe("StatsService", function() {
 
-		it("Should calculate stats", function() {
+		it("Should calculate stats", inject(function($filter) {
 			var myStats = StatsService.myStats(DataHelper.ratings);
 
 			//Count
@@ -26,7 +26,24 @@ define(["../DataHelper.js"], function(DataHelper) {
 			expect(myStats.breweries.length).toBe(137);
 			expect(myStats.styles.length).toBe(58);
 			expect(myStats.categories.length).toBe(21);
-		});
+            
+            var orderBy = $filter("orderBy");
+            var limitTo = $filter("limitTo");
+            byCount = orderBy(myStats.styles,'count',true);
+            var top3 = limitTo(byCount,3);
+            var bottom3 = limitTo(byCount,-3);
+
+            expect(byCount.length).toBe(58);
+            expect(top3.length).toBe(3);
+            expect(bottom3.length).toBe(3);
+            expect(top3[0]._id).toBe('18e');
+            expect(top3[1]._id).toBe('01b');
+            expect(top3[2]._id).toBe('18c');
+            expect(bottom3[0]._id).toBe('17b');
+            expect(bottom3[1]._id).toBe('11a');
+            expect(bottom3[2]._id).toBe('21b');
+
+		}));
 
 	});
 
