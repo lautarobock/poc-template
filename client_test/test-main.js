@@ -6,7 +6,9 @@ for (var file in window.__karma__.files) {
     }
   }
 }
-
+console.log("TESTS", tests);
+// tests.push('/base/client_test/DataHelper.js');
+console.log("TESTS", tests);
 requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/client/js/',

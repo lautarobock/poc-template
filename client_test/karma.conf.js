@@ -25,8 +25,10 @@ module.exports = function(config) {
       'client/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
       'client/lib/angular-translate/angular-translate.min.js',
       'client/js/util/util.js',
+      'client/js/stats/StatsService.js',
       // 'client/js/app.js',
       'client_test/test-main.js',
+      {pattern: 'client_test/DataHelper.js', included: false},
       {pattern: 'client_test/**/*Spec.js', included: false},
       {pattern: 'client/js/**/*.js', included: false},
       {pattern: 'client/lib/mousetrap/mousetrap.min.js', included: false}

@@ -2,6 +2,29 @@ define([], function() {
 
     var stats = angular.module("dl.stats", []);
 
+    /*
+    - Genenral
+     - Cantidad de Tomadas
+     - Cantidad puntuada
+     - Cantidad de cervecerias
+     - Cantidad de Esilos
+     - Cantidad de categorias
+     - Con mas %. Top 3 & Bottom 3
+     - Con mas ptos. Top 3 & Bottom 3
+     - Con max IBUS. Top 3 & Bottom 3
+    - Por cantidad
+     - Por mes, 12 meses.
+     - Por estilo. (3 estilos + otros)
+     - Por categoria. (3 cat + otros)
+     - Por cerveceria. (3 cerv + otros)
+    - Por Puntaje
+     - Por mes, 12 meses.
+     - Por estilo. (3 estilos + otros)
+     - Por categoria. (3 cat + otros)
+     - Por cerveceria. (3 cerv + otros)
+
+    */
+
 
     stats.controller("StatsController", 
         ['$scope','Rating',
