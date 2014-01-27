@@ -2,15 +2,33 @@ define([], function() {
 
 	var misc = angular.module("dl.misc", ['dl.resources']);
 
-    misc.factory("Cache", function(Category, Style) {
+    misc.factory("Cache", function(Category, Style,$q) {
         var _categories = null;
         var _styles = null;
         return {
-            categories: function() {
-                return _categories || ( _categories = Category.query() );
+            categories: function(cb) {
+                if ( _categories ) {
+                    var deferred = $q.defer();
+                    deferred.promise.then(function() {
+                        if ( cb ) cb(_categories);
+                    });
+                    deferred.resolve();
+                    return _categories;
+                } else {
+                    return _categories = Category.query(cb);
+                }
             },
-            styles: function() {
-                return _styles || ( _styles = Style.query() );
+            styles: function(cb) {
+                if ( _styles ) {
+                    var deferred = $q.defer();
+                    deferred.promise.then(function() {
+                        if ( cb ) cb(_styles);
+                    });
+                    deferred.resolve();
+                    return _styles;
+                } else {
+                    return _styles = Style.query(cb);
+                }
             }
         };
     });

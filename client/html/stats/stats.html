@@ -15,17 +15,35 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>
+                                <th style="width:60%">
                                     {{'beer.data.style' | translate}}
                                 </th>
-                                <th>
+                                <th style="width:40%">
                                     {{'stats.amount' | translate}}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="style in myStats.styles | orderBy:'-count' | limitTo:3">
-                                <td>{{style._id}}</td>
+                                <td>{{styles[style._id].name}}</td>
+                                <td>{{style.count}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <thead style="visibility:hidden">
+                            <tr>
+                                <th style="width:60%">
+                                    {{'beer.data.style' | translate}}
+                                </th>
+                                <th style="width:40%">
+                                    {{'stats.amount' | translate}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="style in myStats.styles | orderBy:'-count' | limitTo:-3">
+                                <td>{{styles[style._id].name}}</td>
                                 <td>{{style.count}}</td>
                             </tr>
                         </tbody>
