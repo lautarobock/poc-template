@@ -103,4 +103,61 @@ describe("dl.misc", function() {
 
 	});
 
+	describe("Responsive", function() {
+
+		beforeEach(function() {
+			var m = angular.module('myTest', []);
+			m.factory("$window", function() {
+				return {
+					document: {
+						width: 100
+					}
+				};
+			});
+		});
+
+		beforeEach(angular.mock.module('dl.misc'));
+		beforeEach(angular.mock.module('myTest'));
+
+
+
+		it("Should get display size", inject(function(Responsive,$window, $rootScope) {
+			//For Extra Small devices
+			$window.document.width = 500;
+			expect(Responsive.isXs()).toBeTruthy();
+			$window.document.width = 767;
+			expect(Responsive.isXs()).toBeTruthy();
+			$window.document.width = 768;
+			expect(Responsive.isXs()).toBeFalsy();
+
+			//Small devices
+			expect(Responsive.isSm()).toBeTruthy();
+			$window.document.width = 900;
+			expect(Responsive.isSm()).toBeTruthy();
+			$window.document.width = 991;
+			expect(Responsive.isSm()).toBeTruthy();
+			$window.document.width = 992;
+			expect(Responsive.isSm()).toBeFalsy();
+
+			//Medium devices
+			expect(Responsive.isMd()).toBeTruthy();
+			$window.document.width = 1000;
+			expect(Responsive.isMd()).toBeTruthy();
+			$window.document.width = 1199;
+			expect(Responsive.isMd()).toBeTruthy();
+			$window.document.width = 1200;
+			expect(Responsive.isMd()).toBeFalsy();
+
+			//Medium devices
+			expect(Responsive.isLg()).toBeTruthy();
+			$window.document.width = 1300;
+			expect(Responsive.isLg()).toBeTruthy();
+			$window.document.width = 5000;
+			expect(Responsive.isLg()).toBeTruthy();
+			
+
+		}));
+
+	});
+
 });

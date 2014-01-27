@@ -127,7 +127,7 @@ define([], function() {  	angular.module("gt.abm.templates", []).run(["$template
     "            </tbody>\n" +
     "        </table>\n" +
     "        <div class=\"container\">\n" +
-    "            <pagination boundary-links=\"true\" total-items=\"(rows | textFilter:searchCriteria | advanced:filterData).length\" items-per-page=\"pageSize()\" page=\"page\" max-size=\"20\" class=\"pagination-small\" previous-text=\"&lsaquo;\" next-text=\"&rsaquo;\" first-text=\"&laquo;\" last-text=\"&raquo;\"></pagination>\n" +
+    "            <pagination boundary-links=\"true\" total-items=\"(rows | textFilter:searchCriteria | advanced:filterData).length\" items-per-page=\"pageSize()\" page=\"page\" max-size=\"10\" class=\"pagination-small\" previous-text=\"&lsaquo;\" next-text=\"&rsaquo;\" first-text=\"&laquo;\" last-text=\"&raquo;\"></pagination>\n" +
     "            <div style=\"white-space: pre-wrap;box-sizing: border-box;\">{{(page-1)*pageSize() + 1}} - <span ng-hide=\"page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)\">{{page*pageSize()}}</span><span ng-show=\"page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)\">{{(rows | textFilter:searchCriteria | advanced:filterData).length}}</span> de {{(rows | textFilter:searchCriteria | advanced:filterData).length}}</div>\n" +
     "        </div>\n" +
     "    </div>\n" +

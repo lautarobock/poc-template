@@ -7,8 +7,8 @@ define(['../resources'], function() {
     }]);
 
 	beer.controller("BeerController", 
-        ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log',
-        function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache, $log) {
+        ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log', 'Responsive',
+        function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache, $log, Responsive) {
 
             function sortScore(beer) {
                 if ( beer.score ) {
@@ -74,7 +74,7 @@ define(['../resources'], function() {
                 filterOrder: ['brewery._id','style._id', 'category._id'],
                 orderBy: 'score.avg',
                 orderDir: "-",
-                pageSize: 25,
+                pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
                 sort: [sortOverall,sortScore],
                 showIndex: true,
                 emptyResultText: $translate('beer.search.emtpy'),

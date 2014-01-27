@@ -154,8 +154,8 @@ define([], function() {
         }]);
 
     rating.controller("RatingBeerController", [
-        '$scope', 'Rating','$filter', '$translate','DLHelper',
-        function($scope,Rating,$filter,$translate,DLHelper) {
+        '$scope', 'Rating','$filter', '$translate','DLHelper', 'Responsive',
+        function($scope,Rating,$filter,$translate,DLHelper,Responsive) {
             
             // $scope.$watch("user._id", function(user_id) {
             //     if ( user_id ) {
@@ -171,7 +171,7 @@ define([], function() {
                     singular: "Calificacion",
                     orderBy: "date",
                     orderDir: "-",
-                    pageSize: 25,
+                    pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
                     headers: [{
                             field:'beer.name',
                             caption: 'Cerveza',
