@@ -12,67 +12,15 @@
             <div class="panel panel-default"> 
                 <div class="panel-heading">Estilos mas y menos tomados</div>
                 <div class="panel-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th style="width:60%">
-                                    {{'beer.data.style' | translate}}
-                                </th>
-                                <th style="width:40%">
-                                    {{'stats.amount' | translate}}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="style in myStats.styles | orderBy:'-count' | limitTo:3">
-                                <td>{{styles[style._id].name}}</td>
-                                <td>{{style.count}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table" style="margin-top: -3em;">
-                        <thead style="visibility:hidden">
-                            <tr>
-                                <th style="width:60%">
-                                    {{'beer.data.style' | translate}}
-                                </th>
-                                <th style="width:40%">
-                                    {{'stats.amount' | translate}}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="style in myStats.styles | orderBy:'-count' | limitTo:-3">
-                                <td>{{styles[style._id].name}}</td>
-                                <td>{{style.count}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div table-top-bottom config="styleTBConfig"></div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default"> 
-                <div class="panel-heading">Estilos menos tomados.</div>
+                <div class="panel-heading">Categorias</div>
                 <div class="panel-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    {{'beer.data.style' | translate}}
-                                </th>
-                                <th>
-                                    {{'stats.amount' | translate}}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="style in myStats.styles | orderBy:'-count' | limitTo:-3">
-                                <td>{{style._id}}</td>
-                                <td>{{style.count}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div table-top-bottom config="catTBConfig"></div>
                 </div>
             </div>
         </div>

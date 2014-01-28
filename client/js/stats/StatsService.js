@@ -85,9 +85,20 @@
             }
             myStats.styles[index].count ++;
 
-            if ( myStats.categories.indexOf(rating.beer.category) == -1 ) {
-                myStats.categories.push(rating.beer.category);
+            function catComp(item) {
+                return item._id == rating.beer.category ? 0 : -1;
             }
+
+            index = -1
+            if ( (index = util.Arrays.indexOf(myStats.categories, catComp) )  == -1 ) {
+                myStats.categories.push({
+                    _id: rating.beer.category,
+                    count: 0,
+                    avg: -1
+                });
+                index = myStats.categories.length - 1;
+            }
+            myStats.categories[index].count ++;
         }
 
         return myStats;

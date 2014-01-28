@@ -63,7 +63,8 @@ module.exports = function(grunt) {
 		    	options: {
 		    		env: {
 		    			'MONGOLAB_URI': 'localhost:27017/drunkslog'
-		    		}
+		    		},
+		    		watch: ['server']
 		    	}
 		  	}
 		},

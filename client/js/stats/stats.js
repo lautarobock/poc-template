@@ -27,8 +27,8 @@ define([], function() {
 
 
     stats.controller("StatsController", 
-        ['$scope','Rating', 'StatsService', '$filter', 'Cache',
-        function($scope,Rating, StatsService, $filter, Cache) {
+        ['$scope','Rating', 'StatsService', '$filter', 'Cache', '$translate', '$location',
+        function($scope,Rating, StatsService, $filter, Cache, $translate,$location) {
             
             $scope.$watch("user", function(user) {
                 if ( user ) {
@@ -36,13 +36,18 @@ define([], function() {
                 }
             });
 
-            
 
             function loadData() {
                 $scope.styles = {};
+                $scope.categories = {};
                 Cache.styles(function(styles) {
                     angular.forEach(styles, function(style) {
                         $scope.styles[style._id] = style;
+                    });
+                });
+                Cache.categories(function(cats) {
+                    angular.forEach(cats, function(cat) {
+                        $scope.categories[cat._id] = cat;
                     });
                 });
                 Rating.query(function(ratings) {
@@ -69,9 +74,65 @@ define([], function() {
                     $scope.myStats.minABV = orderBy(filter(ratings,abvDefined),sortABV,false)[0].beer;
                     $scope.myStats.maxScore = orderBy(ratings,sortOverall,true)[0];
                     $scope.myStats.minScore = orderBy(filter(ratings,scoreDefined),sortOverall,false)[0];
+
+                    $scope.styleTBConfig = {
+                        rows: $scope.myStats.styles,
+                        headers: [{
+                            caption: $translate('beer.data.style'),
+                            style: {width: '60%'},
+                            value: function(row) {
+                                return $scope.styles[row._id].name
+                            }
+                        },{
+                            caption: $translate('stats.amount'),
+                            style: {width: '40%'},
+                            value: function(row) {
+                                return row.count;
+                            }
+                        }],
+                        orderBy: '-count',
+                        top: 3,
+                        bottom: 3
+                    };
+
+                    console.log($scope.myStats.categories);
+                    $scope.catTBConfig = {
+                        rows: $scope.myStats.categories,
+                        headers: [{
+                            caption: $translate('beer.data.style'),
+                            style: {width: '60%'},
+                            rowStyle: function(row) {
+                                return {cursor: 'pointer'};
+                            },
+                            onClick: function(row) {
+                                $location.path("/beer").search('category._id',row._id);
+                            },
+                            value: function(row) {
+                                return $scope.categories[row._id].name
+                            }
+                        },{
+                            caption: $translate('stats.amount'),
+                            style: {width: '40%'},
+                            value: function(row) {
+                                return row.count;
+                            }
+                        }],
+                        orderBy: '-count',
+                        top: 3,
+                        bottom: 3
+                    };
                 });
             }
     }]);
+
+    stats.directive("tableTopBottom", function() {
+        return {
+            scope: {
+                config: '='
+            },
+            templateUrl: 'stats/table-top-bottom.html'
+        };
+    });
 
     stats.factory("StatsService", function() {
         return StatsService;

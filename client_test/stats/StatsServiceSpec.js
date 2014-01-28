@@ -43,6 +43,9 @@ define(["../DataHelper.js"], function(DataHelper) {
             expect(bottom3[1]._id).toBe('11a');
             expect(bottom3[2]._id).toBe('21b');
 
+            expect(myStats.categories[0].count).toBeDefined();
+            expect(myStats.categories[0]._id).toBeDefined();
+
 		}));
 
 	});
