@@ -20,16 +20,16 @@ exports.save = function(req, res) {
     delete req.body._id;
     var id = new mongoose.Types.ObjectId(req.params.id);
 	model.Rating.findByIdAndUpdate(id,req.body,{upsert:true}).exec(function(err,results) {
-		if ( req.body.finalScore ) {
+		// if ( req.body.finalScore ) {
 			//Si le puse score, recalculo el avg de la birra y luego todos los percentiles.
 			model.Beer.findOne({_id: req.body.beer}).exec(function (err,beer) {
 				exports.updateRating(beer, function() {
 					res.send(results);
 				});
 			});	
-		} else {
-			res.send(results);
-		}
+		// } else {
+		// 	res.send(results);
+		// }
     });	
 };
 

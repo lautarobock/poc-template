@@ -29,13 +29,18 @@ define([], function() {
             });
 
             $scope.tmpScore = {};
+            $scope.tmpFinal = null;
             $scope.toggleScore = function() {
                 if ( $scope.rating.score ) {
                     $scope.tmpScore = $scope.rating.score;
+                    $scope.tmpFinal = $scope.rating.finalScore;
                     $scope.rating.score = null;
+                    $scope.rating.finalScore = null;
                 } else {
                     $scope.rating.score = $scope.tmpScore;
+                    $scope.rating.finalScore = $scope.tmpFinal;
                     $scope.tmpScore = null;
+                    $scope.tmpFinal = null;
                 }
             }
 
