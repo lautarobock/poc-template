@@ -43,8 +43,14 @@ exports.updateRating = function(beer,callback) {
 				count++;
 			}
 		}
-		beer.score.avg = Math.round((sum / count)*10)/10;
-		beer.score.count = count;
+		if ( count ) {
+			beer.score.avg = Math.round((sum / count)*10)/10;
+			beer.score.count = count;
+		} else {
+			beer.score.avg = null;
+			beer.score.count = null;
+		}
+		
 		beer.save(function(err, beer) {
 			async.series([
 					function (callback) {
