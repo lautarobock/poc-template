@@ -1,12 +1,12 @@
 define([], function() {
 
-    var rating = angular.module("dl.rating", []);
+    var rating = angular.module("dl.rating", ['dl.resources']);
 
 
 
     rating.controller("RatingEditController", [
-        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 'DLHelper',
-        function($scope, $routeParams, Rating, $location, Beer, $translate, DLHelper) {
+        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 'DLHelper', 'RatingService',
+        function($scope, $routeParams, Rating, $location, Beer, $translate, DLHelper,RatingService) {
 
             $scope.initialScore = null;
 
@@ -117,40 +117,41 @@ define([], function() {
             $scope.save = function() {
 
                 $scope.rating.$save(function(rating) {
-                    //Esto deberia hacerlo en el servidor y luego de el $save deberia volver a cargar el 
-                    //usuario, nada mas.
-                    var result = util.Arrays.filter($scope.user.ratings, function(item) {
-                        return item.beer == rating.beer ? 0 : -1;
-                    });
-                    if ( rating.finalScore ) {
-                        if ( result.length != 0 ) {
-                            //Esto quiere decir q esta editando y que tenia un valor antes (lo elimino)
-                            if ( $scope.initialScore ) {
-                                util.Arrays.remove(result[0].finalScore,$scope.initialScore);
-                            }
-                            //Ahora ya puedo agregar el valor
-                            result[0].finalScore.push(rating.finalScore);
-                        } else {
-                            $scope.user.ratings.push({
-                                beer: rating.beer,
-                                finalScore: [rating.finalScore]
-                            });    
-                        }
-                        $scope.user.$save(function() {
-                            window.history.back();
-                        });
-                    } else if ( result.length == 0 ) {
-                        $scope.user.ratings.push({
-                            beer: rating.beer,
-                            finalScore: []
-                        });
-                        $scope.user.$save(function() {
-                            window.history.back();
-                        });
-                    } else {
-                        window.history.back();    
-                    }
-                    
+                    // //Esto deberia hacerlo en el servidor y luego de el $save deberia volver a cargar el 
+                    // //usuario, nada mas.
+                    // var result = util.Arrays.filter($scope.user.ratings, function(item) {
+                    //     return item.beer == rating.beer ? 0 : -1;
+                    // });
+                    // if ( rating.finalScore ) {
+                    //     if ( result.length != 0 ) {
+                    //         //Esto quiere decir q esta editando y que tenia un valor antes (lo elimino)
+                    //         if ( $scope.initialScore ) {
+                    //             util.Arrays.remove(result[0].finalScore,$scope.initialScore);
+                    //         }
+                    //         //Ahora ya puedo agregar el valor
+                    //         result[0].finalScore.push(rating.finalScore);
+                    //     } else {
+                    //         $scope.user.ratings.push({
+                    //             beer: rating.beer,
+                    //             finalScore: [rating.finalScore]
+                    //         });    
+                    //     }
+                    //     $scope.user.$save(function() {
+                    //         window.history.back();
+                    //     });
+                    // } else if ( result.length == 0 ) {
+                    //     $scope.user.ratings.push({
+                    //         beer: rating.beer,
+                    //         finalScore: []
+                    //     });
+                    //     $scope.user.$save(function() {
+                    //         window.history.back();
+                    //     });
+                    // } else {
+                    //     window.history.back();    
+                    // }
+                    RatingService.loadMyRatings();
+                    window.history.back();
                 });
 
             };
@@ -159,8 +160,8 @@ define([], function() {
         }]);
 
     rating.controller("RatingBeerController", [
-        '$scope', 'Rating','$filter', '$translate','DLHelper', 'Responsive',
-        function($scope,Rating,$filter,$translate,DLHelper,Responsive) {
+        '$scope', 'Rating','$filter', '$translate','DLHelper', 'Responsive','RatingService',
+        function($scope,Rating,$filter,$translate,DLHelper,Responsive, RatingService) {
             
             // $scope.$watch("user._id", function(user_id) {
             //     if ( user_id ) {
@@ -172,6 +173,7 @@ define([], function() {
             function loadData() {
                 $scope.config = {
                     data: Rating,
+                    collection: RatingService.ratings(),
                     name: "Calificaciones",
                     singular: "Calificacion",
                     orderBy: "date",
@@ -241,6 +243,41 @@ define([], function() {
 
 
         }]);
+
+
+    rating.factory("RatingService", ['Rating',function(Rating) {
+        var ratings = [];
+        return {
+            ratings: function() {
+                return ratings;
+            },
+            loadMyRatings: function(cb) {
+                ratings = Rating.query(cb);
+            },
+            avgForBeer: function(beer) {
+                var sum = 0;
+                var count = 0;
+                var found = false;
+                angular.forEach(ratings, function(rating) {
+                    if ( rating.beer._id == beer._id ) {
+                        found = true;
+                        if ( rating.finalScore ) {
+                            sum+= rating.finalScore;
+                            count++;    
+                        }
+                    }
+                    
+                });
+                if ( count != 0 ) {
+                    return sum/count;
+                } else if ( found ) {
+                    return -1;
+                } else {
+                    return null;
+                }
+            }
+        };
+    }]);
 
     return rating;
 

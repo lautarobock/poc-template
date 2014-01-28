@@ -60,14 +60,15 @@ define("app", [
     }]);
 
     app.run(
-        ['$rootScope','Login','evaluateAuthResult','User', '$log', 'CellarService',
+        ['$rootScope','Login','evaluateAuthResult','User', '$log', 'CellarService', 'RatingService',
             function(
                     $rootScope, 
                     Login, 
                     evaluateAuthResult,
                     User,
                     $log,
-                    CellarService) {
+                    CellarService,
+                    RatingService) {
 
         $rootScope.loginSuccess = false;
 
@@ -89,6 +90,7 @@ define("app", [
                                 $rootScope.loginSuccess = true;
                                 // $rootScope.user = user;
                                 CellarService.loadMyCellar();
+                                RatingService.loadMyRatings();
                             });
                     });
                 } else {
