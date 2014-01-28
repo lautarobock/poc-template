@@ -47,8 +47,8 @@ exports.updateRating = function(beer,callback) {
 			beer.score.avg = Math.round((sum / count)*10)/10;
 			beer.score.count = count;
 		} else {
-			beer.score.avg = null;
-			beer.score.count = null;
+			delete beer.score.avg;
+			delete beer.score.count;
 		}
 		
 		beer.save(function(err, beer) {
