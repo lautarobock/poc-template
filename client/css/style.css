@@ -91,3 +91,7 @@
 .dl-line-through {
 	text-decoration: line-through;
 }
+
+.dl-anchor {
+	cursor: pointer
+}

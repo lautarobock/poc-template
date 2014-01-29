@@ -97,7 +97,10 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.style'),
                             style: {width: '60%'},
-                            value: "{{context.styles[row._id].name}} ({{row._id}})"
+                            value: "{{context.styles[row._id].name}} ({{row._id}})",
+                            onClick: function(row) {
+                                $location.path("/beer").search('style._id',row._id);
+                            }
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
@@ -113,7 +116,10 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.style'),
                             style: {width: '60%'},
-                            value: "{{context.styles[row._id].name}} ({{row._id}})"
+                            value: "{{context.styles[row._id].name}} ({{row._id}})",
+                            onClick: function(row) {
+                                $location.path("/beer").search('style._id',row._id);
+                            }
                         },{
                             caption: $translate('stats.avg'),
                             style: {width: '40%'},
@@ -129,9 +135,6 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.style'),
                             style: {width: '60%'},
-                            rowStyle: function(row) {
-                                return {cursor: 'pointer'};
-                            },
                             onClick: function(row) {
                                 $location.path("/beer").search('category._id',row._id);
                             },
@@ -151,7 +154,6 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.style'),
                             style: {width: '60%'},
-                            rowStyle: function(row) {return {cursor: 'pointer'};},
                             onClick: function(row) {
                                 $location.path("/beer").search('category._id',row._id);
                             },
@@ -171,7 +173,10 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.brewery'),
                             style: {width: '60%'},
-                            value: "{{context.breweries[row._id].name}}"
+                            value: "{{context.breweries[row._id].name}}",
+                            onClick: function(row) {
+                                $location.path("/beer").search('brewery._id',row._id);
+                            }
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
@@ -187,7 +192,10 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.brewery'),
                             style: {width: '60%'},
-                            value: "{{context.breweries[row._id].name}}"
+                            value: "{{context.breweries[row._id].name}}",
+                            onClick: function(row) {
+                                $location.path("/beer").search('brewery._id',row._id);
+                            }
                         },{
                             caption: $translate('stats.avg'),
                             style: {width: '40%'},
