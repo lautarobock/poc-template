@@ -106,7 +106,7 @@ define([], function() {
                                 return row.count;
                             }
                         }],
-                        orderBy: '-count',
+                        orderBy: 'count',
                         top: 3,
                         bottom: 3
                     };
@@ -126,7 +126,7 @@ define([], function() {
                                 return row.avg.value + ' (' + row.avg.count + ')';
                             }
                         }],
-                        orderBy: '-avg',
+                        orderBy: 'avg.value',
                         top: 3,
                         bottom: 3
                     };
@@ -152,7 +152,7 @@ define([], function() {
                                 return row.count;
                             }
                         }],
-                        orderBy: '-count',
+                        orderBy: 'count',
                         top: 3,
                         bottom: 3
                     };
@@ -172,7 +172,7 @@ define([], function() {
                                 return row.count;
                             }
                         }],
-                        orderBy: '-count',
+                        orderBy: 'count',
                         top: 3,
                         bottom: 3
                     };
