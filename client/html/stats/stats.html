@@ -1,16 +1,20 @@
 <div main-content>
     <h1>{{'content.stats' | translate }}</h1>
     <hr>
+    <div>Cervezas tomadas: <b>{{myStats.count}}</b></div>
+    <div>Cervezas calificadas: <b>{{myStats.rated}}</b></div>
     <div>Cerveza con mas alcohol: <b>{{myStats.maxABV.name}} con {{myStats.maxABV.abv}}%</b></div>
     <div>Cerveza con menos alcohol: <b>{{myStats.minABV.name}} con {{myStats.minABV.abv}}%</b></div>
     <div>La cerveza con mejor rating: <b>{{myStats.maxScore.beer.name}} con {{myStats.maxScore.finalScore}} Pts</b></div>
     <div>La cerveza con peor rating: <b>{{myStats.minScore.beer.name}} con {{myStats.minScore.finalScore}} Pts</b></div>
+    <div>La cerveza con peor rating: <b>{{myStats.minScore.beer.name}} con {{myStats.minScore.finalScore}} Pts</b></div>
+
     <!-- <div>La cerveceria con mas ratings: <b>{{myStats.maxBreweryCount.name}} con {{myStats.minScore.finalScore}} Pts</b></div> -->
     <hr/>
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default"> 
-                <div class="panel-heading">Estilos mas y menos tomados</div>
+                <div class="panel-heading">Estilos</div>
                 <div class="panel-body">
                     <div table-top-bottom config="styleTBConfig"></div>
                 </div>
@@ -21,6 +25,24 @@
                 <div class="panel-heading">Categorias</div>
                 <div class="panel-body">
                     <div table-top-bottom config="catTBConfig"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default"> 
+                <div class="panel-heading">Cervecerias</div>
+                <div class="panel-body">
+                    <div table-top-bottom config="breweriesTBConfig"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default"> 
+                <div class="panel-heading">Estilos</div>
+                <div class="panel-body">
+                    <div table-top-bottom config="styleAvgTBConfig"></div>
                 </div>
             </div>
         </div>

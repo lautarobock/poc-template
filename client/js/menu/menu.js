@@ -13,6 +13,9 @@ define([], function() {
         mousetrap('g c', $rootScope, function() {
             $location.url("cellar");
         });
+        mousetrap('g s', $rootScope, function() {
+            $location.url("stats");
+        });
     }]);
 
     menu.directive("mainMenu", function() {

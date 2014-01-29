@@ -66,24 +66,44 @@
             if ( rating.score ) {
                 myStats.rated++;
             }
-            if ( myStats.breweries.indexOf(rating.beer.brewery) == -1 ) {
-                myStats.breweries.push(rating.beer.brewery);
+
+            function breweryComp(item) {
+                return item._id == rating.beer.brewery ? 0 : -1;
             }
+
+            var index = -1;
+            if ( ( index = util.Arrays.indexOf(myStats.breweries, breweryComp)) == -1 ) {
+                myStats.breweries.push({
+                    _id: rating.beer.brewery,
+                    count: 0,
+                    avg: -1
+                });
+                index = myStats.breweries.length - 1;
+            }
+            myStats.breweries[index].count ++;
 
             function idComp(item) {
                 return item._id == rating.beer.style ? 0 : -1;
             }
 
-            var index = -1;
+            index = -1;
             if ( (index = util.Arrays.indexOf(myStats.styles,  idComp)) == -1 ) {
                 myStats.styles.push({
                     _id: rating.beer.style,
                     count: 0,
-                    avg: -1
+                    avg: {
+                        count: 0,
+                        sum: 0
+                    }
                 });
                 index = myStats.styles.length - 1;
             }
             myStats.styles[index].count ++;
+            if ( rating.finalScore ) {
+                myStats.styles[index].avg.sum += rating.finalScore;
+                myStats.styles[index].avg.count++;
+            }
+            
 
             function catComp(item) {
                 return item._id == rating.beer.category ? 0 : -1;
@@ -100,6 +120,14 @@
             }
             myStats.categories[index].count ++;
         }
+
+        angular.forEach(myStats.styles, function(style) {
+            if ( style.avg.count != 0 ) {
+                style.avg.value = Math.round((style.avg.sum/style.avg.count)*10)/10;    
+            } else {
+                style.avg.value = null;
+            }
+        });
 
         return myStats;
     }

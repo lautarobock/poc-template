@@ -104,7 +104,9 @@ define([], function() {
                 'cellar.inMy': 'En mi bodega',
                 'cellar.amount': 'Cantidad',
                 'cellar.bottlesAmount': 'Cantidad de botellas',
-                'stats.amount': 'Cantidad'
+                'stats.amount': 'Cantidad',
+                'stats.avg': 'Promedio',
+                'stats.avg.help.style': 'Promedio de todas las calificaciones a cervezas del mismo estilo'
             }
         };
 });
