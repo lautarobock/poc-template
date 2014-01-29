@@ -51,6 +51,7 @@ define([], function() {
                 $scope.styles = {};
                 $scope.categories = {};
                 $scope.breweries = {};
+                $scope.context = $scope;
                 Cache.styles(function(styles) {
                     angular.forEach(styles, function(style) {
                         $scope.styles[style._id] = style;
@@ -96,9 +97,7 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.style'),
                             style: {width: '60%'},
-                            value: function(row) {
-                                return $scope.styles[row._id].name
-                            }
+                            value: "{{context.styles[row._id].name}} ({{row._id}})"
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
@@ -114,9 +113,7 @@ define([], function() {
                         headers: [{
                             caption: $translate('beer.data.style'),
                             style: {width: '60%'},
-                            value: function(row) {
-                                return $scope.styles[row._id].name
-                            }
+                            value: "{{context.styles[row._id].name}} ({{row._id}})"
                         },{
                             caption: $translate('stats.avg'),
                             style: {width: '40%'},
@@ -138,9 +135,7 @@ define([], function() {
                             onClick: function(row) {
                                 $location.path("/beer").search('category._id',row._id);
                             },
-                            value: function(row) {
-                                return $scope.categories[row._id].name
-                            }
+                            value: "{{context.categories[row._id].name}} ({{row._id}})"
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
@@ -151,20 +146,54 @@ define([], function() {
                         bottom: 3
                     };
 
+                    $scope.catAvgTBConfig = {
+                        rows: $filter("notNull")($scope.myStats.categories,'avg.value'),
+                        headers: [{
+                            caption: $translate('beer.data.style'),
+                            style: {width: '60%'},
+                            rowStyle: function(row) {return {cursor: 'pointer'};},
+                            onClick: function(row) {
+                                $location.path("/beer").search('category._id',row._id);
+                            },
+                            value: "{{context.categories[row._id].name}} ({{row._id}})"
+                        },{
+                            caption: $translate('stats.avg'),
+                            style: {width: '40%'},
+                            value: "{{row.avg.value}} ({{row.count}})"
+                        }],
+                        orderBy: 'avg.value',
+                        top: 3,
+                        bottom: 3
+                    };
+
                     $scope.breweriesTBConfig = {
                         rows: $scope.myStats.breweries,
                         headers: [{
                             caption: $translate('beer.data.brewery'),
                             style: {width: '60%'},
-                            value: function(row) {
-                                return $scope.breweries[row._id].name;
-                            }
+                            value: "{{context.breweries[row._id].name}}"
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
                             value: "{{row.count}}"
                         }],
                         orderBy: 'count',
+                        top: 3,
+                        bottom: 3
+                    };
+
+                    $scope.breweriesAvgTBConfig = {
+                        rows: $filter("notNull")($scope.myStats.breweries,'avg.value'),
+                        headers: [{
+                            caption: $translate('beer.data.brewery'),
+                            style: {width: '60%'},
+                            value: "{{context.breweries[row._id].name}}"
+                        },{
+                            caption: $translate('stats.avg'),
+                            style: {width: '40%'},
+                            value: "{{row.avg.value}} ({{row.count}})"
+                        }],
+                        orderBy: 'avg.value',
                         top: 3,
                         bottom: 3
                     };
@@ -176,7 +205,7 @@ define([], function() {
         return {
             scope: {
                 config: '=',
-                context: "="
+                context: '=?'
             },
             templateUrl: 'stats/table-top-bottom.html',
             controller: function($scope, $interpolate) {
@@ -184,7 +213,7 @@ define([], function() {
                     if ( header.value instanceof Function ) {
                         return header.value(row);    
                     } else {
-                        return $interpolate(header.value)({row:row});
+                        return $interpolate(header.value)({row:row, context: $scope.context});
                     }
                     
                 };

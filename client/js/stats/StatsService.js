@@ -76,11 +76,18 @@
                 myStats.breweries.push({
                     _id: rating.beer.brewery,
                     count: 0,
-                    avg: -1
+                    avg: {
+                        count: 0,
+                        sum: 0
+                    }
                 });
                 index = myStats.breweries.length - 1;
             }
             myStats.breweries[index].count ++;
+            if ( rating.finalScore ) {
+                myStats.breweries[index].avg.sum += rating.finalScore;
+                myStats.breweries[index].avg.count++;
+            }
 
             function idComp(item) {
                 return item._id == rating.beer.style ? 0 : -1;
@@ -114,12 +121,35 @@
                 myStats.categories.push({
                     _id: rating.beer.category,
                     count: 0,
-                    avg: -1
+                    avg: {
+                        count: 0,
+                        sum: 0
+                    }
                 });
                 index = myStats.categories.length - 1;
             }
             myStats.categories[index].count ++;
+            if ( rating.finalScore ) {
+                myStats.categories[index].avg.sum += rating.finalScore;
+                myStats.categories[index].avg.count++;
+            }
         }
+
+        angular.forEach(myStats.breweries, function(brewery) {
+            if ( brewery.avg.count != 0 ) {
+                brewery.avg.value = Math.round((brewery.avg.sum/brewery.avg.count)*10)/10;    
+            } else {
+                brewery.avg.value = null;
+            }
+        });
+
+        angular.forEach(myStats.categories, function(category) {
+            if ( category.avg.count != 0 ) {
+                category.avg.value = Math.round((category.avg.sum/category.avg.count)*10)/10;    
+            } else {
+                category.avg.value = null;
+            }
+        });
 
         angular.forEach(myStats.styles, function(style) {
             if ( style.avg.count != 0 ) {

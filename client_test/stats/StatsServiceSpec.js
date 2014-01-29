@@ -46,10 +46,12 @@ define(["../DataHelper.js"], function(DataHelper) {
             expect(myStats.styles[0].avg.value).toBeDefined();
 
             expect(myStats.categories[0].count).toBeDefined();
+            expect(myStats.categories[0].avg.value).toBeDefined();
             expect(myStats.categories[0]._id).toBeDefined();
 
             expect(myStats.breweries[0].count).toBeDefined();
             expect(myStats.breweries[0]._id).toBeDefined();
+            expect(myStats.breweries[0].avg.value).toBeDefined();
 
 		}));
 
