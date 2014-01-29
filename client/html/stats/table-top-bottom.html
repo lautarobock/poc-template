@@ -9,7 +9,9 @@
     <tbody>
         <tr ng-repeat="row in config.rows | orderBy:'-'+config.orderBy | limitTo:config.top">
             <td ng-repeat="header in config.headers" ng-style="header.rowStyle(row)">
-                <span ng-click="header.onClick(row)">{{header.value(row)}}</span>
+                <span ng-click="header.onClick(row)">
+                    {{getValue(header,row)}}
+                </span>
             </td>
         </tr>
     </tbody>
@@ -25,7 +27,9 @@
     <tbody>
         <tr ng-repeat="row in config.rows | orderBy:'-'+config.orderBy | limitTo:-config.bottom">
             <td ng-repeat="header in config.headers" ng-style="header.rowStyle(row)">
-                {{header.value(row)}}
+                <span ng-click="header.onClick(row)">
+                    {{getValue(header,row)}}
+                </span>
             </td>
         </tr>
     </tbody>

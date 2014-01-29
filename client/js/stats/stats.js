@@ -102,9 +102,7 @@ define([], function() {
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
-                            value: function(row) {
-                                return row.count;
-                            }
+                            value: "{{row.count}}"
                         }],
                         orderBy: 'count',
                         top: 3,
@@ -122,9 +120,7 @@ define([], function() {
                         },{
                             caption: $translate('stats.avg'),
                             style: {width: '40%'},
-                            value: function(row) {
-                                return row.avg.value + ' (' + row.avg.count + ')';
-                            }
+                            value: "{{row.avg.value}} ({{row.count}})"
                         }],
                         orderBy: 'avg.value',
                         top: 3,
@@ -148,9 +144,7 @@ define([], function() {
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
-                            value: function(row) {
-                                return row.count;
-                            }
+                            value: "{{row.count}}"
                         }],
                         orderBy: 'count',
                         top: 3,
@@ -168,9 +162,7 @@ define([], function() {
                         },{
                             caption: $translate('stats.amount'),
                             style: {width: '40%'},
-                            value: function(row) {
-                                return row.count;
-                            }
+                            value: "{{row.count}}"
                         }],
                         orderBy: 'count',
                         top: 3,
@@ -183,9 +175,20 @@ define([], function() {
     stats.directive("tableTopBottom", function() {
         return {
             scope: {
-                config: '='
+                config: '=',
+                context: "="
             },
-            templateUrl: 'stats/table-top-bottom.html'
+            templateUrl: 'stats/table-top-bottom.html',
+            controller: function($scope, $interpolate) {
+                $scope.getValue = function (header, row) {
+                    if ( header.value instanceof Function ) {
+                        return header.value(row);    
+                    } else {
+                        return $interpolate(header.value)({row:row});
+                    }
+                    
+                };
+            }
         };
     });
 
