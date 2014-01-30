@@ -50,6 +50,31 @@
     }));
     */
 
+    function createCountAvg(_id) {
+        return {
+            _id: _id,
+            count: 0,
+            avg: {
+                count: 0,
+                sum: 0
+            }
+        };
+    }
+
+    function compareItem(value) {
+        return function(item) {
+            return item._id == value ? 0 : -1;
+        }
+    }
+
+    function calculateAvg(item) {
+        if ( item.avg.count != 0 ) {
+            item.avg.value = Math.round((item.avg.sum/item.avg.count)*10)/10;    
+        } else {
+            item.avg.value = null;
+        }
+    }    
+
     exports.myStats = function(ratings) {
         // var breweriesIndex = {};
 
@@ -58,7 +83,8 @@
             rated: 0,
             breweries: [],
             styles: [],
-            categories: []
+            categories: [],
+            months: []
         };
 
         for( var i=0; i<ratings.length; i++ ) {
@@ -67,20 +93,10 @@
                 myStats.rated++;
             }
 
-            function breweryComp(item) {
-                return item._id == rating.beer.brewery ? 0 : -1;
-            }
-
-            var index = -1;
-            if ( ( index = util.Arrays.indexOf(myStats.breweries, breweryComp)) == -1 ) {
-                myStats.breweries.push({
-                    _id: rating.beer.brewery,
-                    count: 0,
-                    avg: {
-                        count: 0,
-                        sum: 0
-                    }
-                });
+            //Breweries
+            var index = util.Arrays.indexOf(myStats.breweries, compareItem(rating.beer.brewery));
+            if ( index  == -1 ) {
+                myStats.breweries.push(createCountAvg(rating.beer.brewery));
                 index = myStats.breweries.length - 1;
             }
             myStats.breweries[index].count ++;
@@ -89,20 +105,10 @@
                 myStats.breweries[index].avg.count++;
             }
 
-            function idComp(item) {
-                return item._id == rating.beer.style ? 0 : -1;
-            }
-
-            index = -1;
-            if ( (index = util.Arrays.indexOf(myStats.styles,  idComp)) == -1 ) {
-                myStats.styles.push({
-                    _id: rating.beer.style,
-                    count: 0,
-                    avg: {
-                        count: 0,
-                        sum: 0
-                    }
-                });
+            //Styles
+            index = util.Arrays.indexOf(myStats.styles,  compareItem(rating.beer.style));
+            if ( index == -1 ) {
+                myStats.styles.push(createCountAvg(rating.beer.style));
                 index = myStats.styles.length - 1;
             }
             myStats.styles[index].count ++;
@@ -111,21 +117,10 @@
                 myStats.styles[index].avg.count++;
             }
             
-
-            function catComp(item) {
-                return item._id == rating.beer.category ? 0 : -1;
-            }
-
-            index = -1
-            if ( (index = util.Arrays.indexOf(myStats.categories, catComp) )  == -1 ) {
-                myStats.categories.push({
-                    _id: rating.beer.category,
-                    count: 0,
-                    avg: {
-                        count: 0,
-                        sum: 0
-                    }
-                });
+            //Categories
+            index = util.Arrays.indexOf(myStats.categories, compareItem(rating.beer.category));
+            if ( index == -1 ) {
+                myStats.categories.push(createCountAvg(rating.beer.category));
                 index = myStats.categories.length - 1;
             }
             myStats.categories[index].count ++;
@@ -133,31 +128,22 @@
                 myStats.categories[index].avg.sum += rating.finalScore;
                 myStats.categories[index].avg.count++;
             }
+
+            //By Month (_id:'aaaa_mm')
+            var date = new Date(rating.date);
+            var month = (date.getYear()+1900) + '_' + util.pad(date.getMonth()+1,2);
+            index = util.Arrays.indexOf(myStats.months, compareItem(month));
+            if ( index == -1 ) {
+                myStats.months.push(createCountAvg(month));
+                index = myStats.months.length - 1;
+            }
+            //Just count
+            myStats.months[index].count ++;
         }
 
-        angular.forEach(myStats.breweries, function(brewery) {
-            if ( brewery.avg.count != 0 ) {
-                brewery.avg.value = Math.round((brewery.avg.sum/brewery.avg.count)*10)/10;    
-            } else {
-                brewery.avg.value = null;
-            }
-        });
-
-        angular.forEach(myStats.categories, function(category) {
-            if ( category.avg.count != 0 ) {
-                category.avg.value = Math.round((category.avg.sum/category.avg.count)*10)/10;    
-            } else {
-                category.avg.value = null;
-            }
-        });
-
-        angular.forEach(myStats.styles, function(style) {
-            if ( style.avg.count != 0 ) {
-                style.avg.value = Math.round((style.avg.sum/style.avg.count)*10)/10;    
-            } else {
-                style.avg.value = null;
-            }
-        });
+        angular.forEach(myStats.breweries, calculateAvg);
+        angular.forEach(myStats.categories, calculateAvg);
+        angular.forEach(myStats.styles, calculateAvg);
 
         return myStats;
     }

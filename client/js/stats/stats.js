@@ -205,6 +205,56 @@ define([], function() {
                         top: 3,
                         bottom: 3
                     };
+
+                    var categories = [];
+                    var values = [];
+                    var monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio', 'Julio', 'Agosto','Septiembre','Noviembre','Diciembre'];
+                    angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
+                        var year = month._id.split("_")[0];
+                        var monthValue = parseInt(month._id.split("_")[1]);
+                        categories.push(monthNames[monthValue-1] + ' ' + year);
+                        values.push(month.count);
+                    });
+
+
+                    $scope.beersPerMonth = {
+                        options: {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: 'Cervezas por mes'
+                            }
+                        },
+                        xAxis: {
+                            categories: categories
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Cantidad'
+                            }
+                        },
+                        // loading: true,
+                        tooltip: {
+                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                        },
+                        // plotOptions: {
+                        //     column: {
+                        //         pointPadding: 0.2,
+                        //         borderWidth: 0
+                        //     }
+                        // },
+                        series: [{
+                            name: $translate('beer.data.beer')+'s',
+                            data: values
+                        }]
+                    };
                 });
             }
     }]);

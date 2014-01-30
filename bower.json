@@ -9,7 +9,9 @@
     "angular-mocks": "1.2.6",
     "requirejs": "2.1.9",
     "angular-bootstrap": "0.9.0",
-    "angular-translate": "1.1.0"
+    "angular-translate": "1.1.0",
+    "highcharts.com": "v3.0.9",
+    "highcharts-ng": "0.0.4"
   },
   "resolutions": {
     "angular": "1.2.6"

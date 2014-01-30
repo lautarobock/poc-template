@@ -43,15 +43,25 @@ define(["../DataHelper.js"], function(DataHelper) {
             expect(bottom3[1]._id).toBe('11a');
             expect(bottom3[2]._id).toBe('21b');
 
-            expect(myStats.styles[0].avg.value).toBeDefined();
+            expect(myStats.styles[0].avg.value).toBe(39.3);
+            expect(myStats.styles[0]._id).toBe('18e');
+            expect(myStats.styles[0].count).toBe(19);
 
-            expect(myStats.categories[0].count).toBeDefined();
-            expect(myStats.categories[0].avg.value).toBeDefined();
-            expect(myStats.categories[0]._id).toBeDefined();
+            expect(myStats.categories[0]._id).toBe('18');
+            expect(myStats.categories[0].count).toBe(66);
+            expect(myStats.categories[0].avg.value).toBe(34.4);
+            expect(myStats.categories[1]._id).toBe('22');
+            expect(myStats.categories[1].count).toBe(2);
+            expect(myStats.categories[1].avg.value).toBe(40);
 
-            expect(myStats.breweries[0].count).toBeDefined();
-            expect(myStats.breweries[0]._id).toBeDefined();
-            expect(myStats.breweries[0].avg.value).toBeDefined();
+            expect(myStats.breweries[0]._id).toBe('Mikkeller');
+            expect(myStats.breweries[0].count).toBe(1);
+            expect(myStats.breweries[0].avg.value).toBe(39);
+
+            expect(myStats.months[0]._id).toBe('2014_01');
+            expect(myStats.months[0].count).toBe(27);
+            expect(myStats.months[1]._id).toBe('2012_12');
+            expect(myStats.months[1].count).toBe(36);
 
 		}));
 

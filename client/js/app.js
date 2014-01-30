@@ -20,6 +20,7 @@ define("app", [
         'ngSanitize',
         'ui.bootstrap',
         'pascalprecht.translate',
+        'highcharts-ng',
         'dl.menu',
         'dl.resources',
         'dl.gplus',
