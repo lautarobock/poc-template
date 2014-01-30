@@ -208,7 +208,7 @@ define([], function() {
 
                     var categories = [];
                     var values = [];
-                    var monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio', 'Julio', 'Agosto','Septiembre','Noviembre','Diciembre'];
+                    var monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio', 'Julio', 'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
                     angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
                         var year = month._id.split("_")[0];
                         var monthValue = parseInt(month._id.split("_")[1]);
