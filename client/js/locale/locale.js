@@ -106,7 +106,8 @@ define([], function() {
                 'cellar.bottlesAmount': 'Cantidad de botellas',
                 'stats.amount': 'Cantidad',
                 'stats.avg': 'Promedio',
-                'stats.avg.help.style': 'Promedio de todas las calificaciones a cervezas del mismo estilo'
+                'stats.avg.help.style': 'Promedio de todas las calificaciones a cervezas del mismo estilo',
+                'stats.others': 'Otros'
             }
         };
 });

@@ -206,6 +206,59 @@ define([], function() {
                         bottom: 3
                     };
 
+                    //Rating per month chart
+                    var maxStyles = 5; //include others
+                    var sumOthers = 0;
+                    var stylesCount = [];
+                    angular.forEach(orderBy($scope.myStats.styles,'-count'), function(style, index) {
+                        if ( index < maxStyles ) {
+                            stylesCount.push([style._id,style.count]);
+                        } else {
+                            sumOthers += style.count;
+                        }
+                    });
+                    if ( sumOthers > 0 ) {
+                        stylesCount.push(['Otros',sumOthers]);
+                    }
+
+                    //Style chart
+                    $scope.styleChartConfig = {
+                        options: {
+                            chart: {
+                                reflow: false
+                            },
+                            title: {
+                                text: null
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        distance: -50
+                                    },
+                                    showInLegend: false
+                                }
+                            },
+                            tooltip: {
+                                // pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+                                // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>'
+                                formatter: function() {
+                                    var style = $scope.styles[this.point.name] || {name:$translate('stats.others')};
+                                    return '<span style="font-size: 10px">'+style.name+'</span><br/>'
+                                                +this.series.name+': <b>'+this.y+'</b>';
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: $translate('stats.amount'),
+                            data: stylesCount
+                        }]
+                    };
+
+                    //Rating per month chart
                     var categories = [];
                     var values = [];
                     var monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio', 'Julio', 'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -232,7 +285,7 @@ define([], function() {
                         yAxis: {
                             min: 0,
                             title: {
-                                text: 'Cantidad'
+                                text: $translate('stats.amount')
                             }
                         },
                         // loading: true,
