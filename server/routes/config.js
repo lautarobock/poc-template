@@ -86,6 +86,8 @@ exports.createRoutes = function(app) {
     //Special for raging by beer
     app.get('/api/Rating/byBeer', require("./rating").getByBeer);
 
+    app.delete('/api/Cellar',userFilter, cellarService.clearZeros);
+
     for( var i=0; i<services.length; i++ ) {
         if ( services[i].process ) {
             var s = rest.create(services[i].name, true);

@@ -1,7 +1,10 @@
 <div main-content>
   <h1>{{'cellar.inMy' | translate }}</h1>
   <div class="well" style="font-size: 14px;">
-	{{'cellar.bottlesAmount'|translate}}: <b>{{bottleCount}}</b> 
+    <div class="row">
+    	<div class="col-xs-10">{{'cellar.bottlesAmount'|translate}}: <b>{{bottleCount}}</b> </div>
+      <div class="col-xs-2"><button ng-click="clearZeros()" type="button" class="btn btn-success">Limpiar ceros</button></div>
+    </div>
   </div>
   <hr>
   <gt-table

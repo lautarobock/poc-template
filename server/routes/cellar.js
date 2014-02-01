@@ -21,3 +21,11 @@ exports.findAll = function(req, res) {
         res.send(results);
     });    
 };
+
+exports.clearZeros = function(req, res) {
+    console.log("RRRRR",req.session.user_id);
+    model.Cellar.find({user:req.session.user_id, amount:0}).remove(function(err,resp) {
+        console.log("ERR",resp);
+        res.send();
+    });
+};

@@ -277,9 +277,13 @@ define(["abm/templates"],function() {
         
                 $scope.page = 1;
                 if ( $scope.config().collection ) {
-                    $scope.rows = $scope.config().collection;
+                    // $scope.rows = $scope.config().collection;
+                    $scope.$watch("config().collection", function() {
+                        console.log("ACA");
+                        $scope.rows = $scope.config().collection;
+                    });
                 } else {
-                    $scope.loading = true;    
+                    $scope.loading = true;
                     $scope.rows = $scope.config().data.query(function() {
                         $scope.loading = false;
                     });    
