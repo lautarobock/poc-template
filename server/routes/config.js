@@ -40,6 +40,7 @@ var services = [{
     process: function(rest) {
         rest.findAll = ratingService.findAll;
         rest.save = ratingService.save;
+        rest.remove = ratingService.remove;
     }
 },{
     name: "Cellar",

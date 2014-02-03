@@ -328,8 +328,8 @@ define(['../resources'], function() {
 	}]);
 
 	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 'MainTitle','CellarService',
-		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   MainTitle, CellarService) {
+		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 'MainTitle','CellarService','RatingService',
+		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   MainTitle, CellarService, RatingService) {
 
 			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
                 $scope.ratings = Rating.getByBeer({beer_id:$scope.beer._id});
@@ -384,6 +384,14 @@ define(['../resources'], function() {
             $scope.embed = function(beer) {
                 return '<iframe src="http://www.birrasquehetomado.com.ar/html/tag.html#/beer/tag/' + beer._id + 
                 '" width="400" height="200" scrolling="no" frameborder="0"></iframe>'
+            };
+
+            $scope.removeRating = function(rating) {
+                rating.$delete(function() {
+                    util.Arrays.remove($scope.ratings, rating);
+                    $scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true});
+                    RatingService.loadMyRatings();
+                });
             };
 
 	}]);

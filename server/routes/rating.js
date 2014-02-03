@@ -11,6 +11,18 @@ exports.findAll = function(req, res) {
     });    
 };
 
+exports.remove =  function(req, res) {
+    console.log("INFO", req.body);
+	model.Rating.findByIdAndRemove(req.params.id,function(err,results) {
+    	model.Beer.findOne({_id: results.beer}).exec(function (err,beer) {
+			exports.updateRating(beer, function() {
+				res.send(results);
+			});
+		});	
+    });
+};
+
+
 exports.save = function(req, res) {
 	console.log("INFO","save rating");
 	if ( !req.body._id ) {
@@ -44,14 +56,16 @@ exports.updateRating = function(beer,callback) {
 			}
 		}
 		if ( count ) {
+			console.log("COUNT");
 			beer.score.avg = Math.round((sum / count)*10)/10;
 			beer.score.count = count;
 		} else {
-			delete beer.score.avg;
-			delete beer.score.count;
+			console.log("NOT COUNT");
+			beer.score = undefined;
 		}
 		
 		beer.save(function(err, beer) {
+			console.log("err",err);
 			async.series([
 					function (callback) {
 						exports.updatePercentil(null, callback);
