@@ -23,14 +23,14 @@
             <div class="panel panel-default" > 
                 <div class="panel-heading">
                     Estilos
-                    <a ng-init="showStyleTable=true" href="" ng-click="showStyleTable=!showStyleTable">
+                    <a ng-init="showStyleTable=false" href="" ng-click="showStyleTable=!showStyleTable">
                         <span ng-hide="showStyleTable" class="glyphicon glyphicon-list pull-right"></span>
                         <span ng-show="showStyleTable" class="glyphicon glyphicon-stats pull-right"></span>
                     </a>
                 </div>
                 <div class="panel-body">
                     <div ng-class="{hidden:!showStyleTable}" table-top-bottom context="context" config="styleTBConfig"></div>
-                    <highchart ng-class="{invisible:showStyleTable}" config="styleChartConfig"></highchart>
+                    <highchart ng-class="{hidden:showStyleTable}" config="styleChartConfig"></highchart>
                 </div>
             </div>
         </div>

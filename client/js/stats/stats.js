@@ -1,6 +1,6 @@
 define([], function() {
 
-    var stats = angular.module("dl.stats", []);
+    var stats = angular.module("dl.stats", ['dl.resources','dl.misc','pascalprecht.translate']);
 
     /*
     - Genenral
@@ -225,7 +225,8 @@ define([], function() {
                     $scope.styleChartConfig = {
                         options: {
                             chart: {
-                                reflow: false
+                                reflow: false,
+                                height: 250
                             },
                             title: {
                                 text: null
@@ -288,7 +289,6 @@ define([], function() {
                                 text: $translate('stats.amount')
                             }
                         },
-                        // loading: true,
                         tooltip: {
                             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -297,12 +297,6 @@ define([], function() {
                             shared: true,
                             useHTML: true
                         },
-                        // plotOptions: {
-                        //     column: {
-                        //         pointPadding: 0.2,
-                        //         borderWidth: 0
-                        //     }
-                        // },
                         series: [{
                             name: $translate('beer.data.beer')+'s',
                             data: values
