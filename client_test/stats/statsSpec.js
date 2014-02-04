@@ -59,10 +59,10 @@ define(["../DataHelper.js"], function(DataHelper) {
 
             //Charts
             //Cantidad por estilo
-            expect($scope.styleChartConfig.series[0].data.length).toBe(11);
+            expect($scope.styleChartConfig.series[0].data.length).toBe(10);
             expect($scope.styleChartConfig.series[0].data[0]).toEqual(['18e',19]);
-            expect($scope.styleChartConfig.series[0].data[9]).toEqual(['18a',8]);
-            expect($scope.styleChartConfig.series[0].data[10]).toEqual(['Otros',114]);
+            expect($scope.styleChartConfig.series[0].data[8]).toEqual(['14a',8]);
+            expect($scope.styleChartConfig.series[0].data[9]).toEqual(['Otros',122]);
             //Cervezas por mes
             expect($scope.beersPerMonth.xAxis.categories.length).toEqual(11);
             expect($scope.beersPerMonth.series[0].data.length).toEqual(11);

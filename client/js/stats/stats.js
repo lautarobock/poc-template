@@ -207,7 +207,7 @@ define([], function() {
                     };
 
                     //Rating per month chart
-                    var maxStyles = 10; //include others
+                    var maxStyles = 9; //include others
                     var sumOthers = 0;
                     var stylesCount = [];
                     angular.forEach(orderBy($scope.myStats.styles,'-count'), function(style, index) {
