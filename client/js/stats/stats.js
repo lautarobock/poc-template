@@ -92,172 +92,9 @@ define([], function() {
                     $scope.myStats.maxScore = orderBy(ratings,sortOverall,true)[0];
                     $scope.myStats.minScore = orderBy(filter(ratings,scoreDefined),sortOverall,false)[0];
 
-                    $scope.styleTBConfig = {
-                        rows: $scope.myStats.styles,
-                        headers: [{
-                            caption: $translate('beer.data.style'),
-                            style: {width: '60%'},
-                            value: "{{context.styles[row._id].name}} ({{row._id}})",
-                            onClick: function(row) {
-                                $location.path("/beer").search('style._id',row._id);
-                            }
-                        },{
-                            caption: $translate('stats.amount'),
-                            style: {width: '40%'},
-                            value: "{{row.count}}"
-                        }],
-                        orderBy: 'count',
-                        top: 3,
-                        bottom: 3
-                    };
+                    loadTableData();
 
-                    $scope.styleAvgTBConfig = {
-                        rows: $filter("notNull")($scope.myStats.styles,'avg.value'),
-                        headers: [{
-                            caption: $translate('beer.data.style'),
-                            style: {width: '60%'},
-                            value: "{{context.styles[row._id].name}} ({{row._id}})",
-                            onClick: function(row) {
-                                $location.path("/beer").search('style._id',row._id);
-                            }
-                        },{
-                            caption: $translate('stats.avg'),
-                            style: {width: '40%'},
-                            value: "{{row.avg.value}} ({{row.count}})"
-                        }],
-                        orderBy: 'avg.value',
-                        top: 3,
-                        bottom: 3
-                    };
-
-                    $scope.catTBConfig = {
-                        rows: $scope.myStats.categories,
-                        headers: [{
-                            caption: $translate('beer.data.style'),
-                            style: {width: '60%'},
-                            onClick: function(row) {
-                                $location.path("/beer").search('category._id',row._id);
-                            },
-                            value: "{{context.categories[row._id].name}} ({{row._id}})"
-                        },{
-                            caption: $translate('stats.amount'),
-                            style: {width: '40%'},
-                            value: "{{row.count}}"
-                        }],
-                        orderBy: 'count',
-                        top: 3,
-                        bottom: 3
-                    };
-
-                    $scope.catAvgTBConfig = {
-                        rows: $filter("notNull")($scope.myStats.categories,'avg.value'),
-                        headers: [{
-                            caption: $translate('beer.data.style'),
-                            style: {width: '60%'},
-                            onClick: function(row) {
-                                $location.path("/beer").search('category._id',row._id);
-                            },
-                            value: "{{context.categories[row._id].name}} ({{row._id}})"
-                        },{
-                            caption: $translate('stats.avg'),
-                            style: {width: '40%'},
-                            value: "{{row.avg.value}} ({{row.count}})"
-                        }],
-                        orderBy: 'avg.value',
-                        top: 3,
-                        bottom: 3
-                    };
-
-                    $scope.breweriesTBConfig = {
-                        rows: $scope.myStats.breweries,
-                        headers: [{
-                            caption: $translate('beer.data.brewery'),
-                            style: {width: '60%'},
-                            value: "{{context.breweries[row._id].name}}",
-                            onClick: function(row) {
-                                $location.path("/beer").search('brewery._id',row._id);
-                            }
-                        },{
-                            caption: $translate('stats.amount'),
-                            style: {width: '40%'},
-                            value: "{{row.count}}"
-                        }],
-                        orderBy: 'count',
-                        top: 3,
-                        bottom: 3
-                    };
-
-                    $scope.breweriesAvgTBConfig = {
-                        rows: $filter("notNull")($scope.myStats.breweries,'avg.value'),
-                        headers: [{
-                            caption: $translate('beer.data.brewery'),
-                            style: {width: '60%'},
-                            value: "{{context.breweries[row._id].name}}",
-                            onClick: function(row) {
-                                $location.path("/beer").search('brewery._id',row._id);
-                            }
-                        },{
-                            caption: $translate('stats.avg'),
-                            style: {width: '40%'},
-                            value: "{{row.avg.value}} ({{row.count}})"
-                        }],
-                        orderBy: 'avg.value',
-                        top: 3,
-                        bottom: 3
-                    };
-
-                    //Rating per month chart
-                    var maxStyles = 9; //include others
-                    var sumOthers = 0;
-                    var stylesCount = [];
-                    angular.forEach(orderBy($scope.myStats.styles,'-count'), function(style, index) {
-                        if ( index < maxStyles ) {
-                            stylesCount.push([style._id,style.count]);
-                        } else {
-                            sumOthers += style.count;
-                        }
-                    });
-                    if ( sumOthers > 0 ) {
-                        stylesCount.push(['Otros',sumOthers]);
-                    }
-
-                    //Style chart
-                    $scope.styleChartConfig = {
-                        options: {
-                            chart: {
-                                reflow: false,
-                                height: 250
-                            },
-                            title: {
-                                text: null
-                            },
-                            plotOptions: {
-                                pie: {
-                                    allowPointSelect: true,
-                                    cursor: 'pointer',
-                                    dataLabels: {
-                                        enabled: true,
-                                        distance: -50
-                                    },
-                                    showInLegend: false
-                                }
-                            },
-                            tooltip: {
-                                // pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-                                // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>'
-                                formatter: function() {
-                                    var style = $scope.styles[this.point.name] || {name:$translate('stats.others')};
-                                    return '<span style="font-size: 10px">'+style.name+'</span><br/><b>'+Math.round(this.percentage)
-                                                +'%</b> (' + this.y + ')';
-                                }
-                            }
-                        },
-                        series: [{
-                            type: 'pie',
-                            name: $translate('stats.amount'),
-                            data: stylesCount
-                        }]
-                    };
+                    loadCharts();
 
                     //Rating per month chart
                     var categories = [];
@@ -303,6 +140,187 @@ define([], function() {
                         }]
                     };
                 });
+            }
+
+            function loadCharts() {
+                //double instantation
+                var orderBy = $filter('orderBy');
+
+                //Rating per month chart
+                var maxStyles = 9; //include others
+                var sumOthers = 0;
+                var stylesCount = [];
+                angular.forEach(orderBy($scope.myStats.styles,'-count'), function(style, index) {
+                    if ( index < maxStyles ) {
+                        stylesCount.push([style._id,style.count]);
+                    } else {
+                        sumOthers += style.count;
+                    }
+                });
+                if ( sumOthers > 0 ) {
+                    stylesCount.push(['Otros',sumOthers]);
+                }
+
+                //Style chart
+                $scope.styleChartConfig = {
+                    options: {
+                        chart: {
+                            reflow: false,
+                            height: 250
+                        },
+                        title: {
+                            text: null
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    distance: -20
+                                },
+                                showInLegend: false
+                            }
+                        },
+                        tooltip: {
+                            // pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+                            // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>'
+                            formatter: function() {
+                                var style = $scope.styles[this.point.name] || {name:$translate('stats.others')};
+                                return '<span style="font-size: 10px">'+style.name+'</span><br/><b>'+Math.round(this.percentage)
+                                            +'%</b> (' + this.y + ')';
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: $translate('stats.amount'),
+                        data: stylesCount
+                    }]
+                };
+            }
+
+            function transformChartData(data, count) {
+                
+
+            }
+
+            function loadTableData() {
+
+                $scope.styleTBConfig = {
+                    rows: $scope.myStats.styles,
+                    headers: [{
+                        caption: $translate('beer.data.style'),
+                        style: {width: '60%'},
+                        value: "{{context.styles[row._id].name}} ({{row._id}})",
+                        onClick: function(row) {
+                            $location.path("/beer").search('style._id',row._id);
+                        }
+                    },{
+                        caption: $translate('stats.amount'),
+                        style: {width: '40%'},
+                        value: "{{row.count}}"
+                    }],
+                    orderBy: 'count',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.styleAvgTBConfig = {
+                    rows: $filter("notNull")($scope.myStats.styles,'avg.value'),
+                    headers: [{
+                        caption: $translate('beer.data.style'),
+                        style: {width: '60%'},
+                        value: "{{context.styles[row._id].name}} ({{row._id}})",
+                        onClick: function(row) {
+                            $location.path("/beer").search('style._id',row._id);
+                        }
+                    },{
+                        caption: $translate('stats.avg'),
+                        style: {width: '40%'},
+                        value: "{{row.avg.value}} ({{row.count}})"
+                    }],
+                    orderBy: 'avg.value',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.catTBConfig = {
+                    rows: $scope.myStats.categories,
+                    headers: [{
+                        caption: $translate('beer.data.style'),
+                        style: {width: '60%'},
+                        onClick: function(row) {
+                            $location.path("/beer").search('category._id',row._id);
+                        },
+                        value: "{{context.categories[row._id].name}} ({{row._id}})"
+                    },{
+                        caption: $translate('stats.amount'),
+                        style: {width: '40%'},
+                        value: "{{row.count}}"
+                    }],
+                    orderBy: 'count',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.catAvgTBConfig = {
+                    rows: $filter("notNull")($scope.myStats.categories,'avg.value'),
+                    headers: [{
+                        caption: $translate('beer.data.style'),
+                        style: {width: '60%'},
+                        onClick: function(row) {
+                            $location.path("/beer").search('category._id',row._id);
+                        },
+                        value: "{{context.categories[row._id].name}} ({{row._id}})"
+                    },{
+                        caption: $translate('stats.avg'),
+                        style: {width: '40%'},
+                        value: "{{row.avg.value}} ({{row.count}})"
+                    }],
+                    orderBy: 'avg.value',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.breweriesTBConfig = {
+                    rows: $scope.myStats.breweries,
+                    headers: [{
+                        caption: $translate('beer.data.brewery'),
+                        style: {width: '60%'},
+                        value: "{{context.breweries[row._id].name}}",
+                        onClick: function(row) {
+                            $location.path("/beer").search('brewery._id',row._id);
+                        }
+                    },{
+                        caption: $translate('stats.amount'),
+                        style: {width: '40%'},
+                        value: "{{row.count}}"
+                    }],
+                    orderBy: 'count',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.breweriesAvgTBConfig = {
+                    rows: $filter("notNull")($scope.myStats.breweries,'avg.value'),
+                    headers: [{
+                        caption: $translate('beer.data.brewery'),
+                        style: {width: '60%'},
+                        value: "{{context.breweries[row._id].name}}",
+                        onClick: function(row) {
+                            $location.path("/beer").search('brewery._id',row._id);
+                        }
+                    },{
+                        caption: $translate('stats.avg'),
+                        style: {width: '40%'},
+                        value: "{{row.avg.value}} ({{row.count}})"
+                    }],
+                    orderBy: 'avg.value',
+                    top: 3,
+                    bottom: 3
+                };
+
             }
     }]);
 
