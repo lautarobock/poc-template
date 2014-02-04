@@ -143,26 +143,25 @@ define([], function() {
             }
 
             function loadCharts() {
-                //double instantation
-                var orderBy = $filter('orderBy');
-
-                //Rating per month chart
-                var maxStyles = 9; //include others
-                var sumOthers = 0;
-                var stylesCount = [];
-                angular.forEach(orderBy($scope.myStats.styles,'-count'), function(style, index) {
-                    if ( index < maxStyles ) {
-                        stylesCount.push([style._id,style.count]);
-                    } else {
-                        sumOthers += style.count;
-                    }
-                });
-                if ( sumOthers > 0 ) {
-                    stylesCount.push(['Otros',sumOthers]);
-                }
 
                 //Style chart
-                $scope.styleChartConfig = {
+                var stylesCount = transformChartData($scope.myStats.styles, 9);
+                $scope.styleChartConfig = getBaseChart(stylesCount, function() {
+                    var style = $scope.styles[this.point.name] || {name:$translate('stats.others')};
+                    return '<span style="font-size: 10px">'+style.name+'</span><br/><b>'+Math.round(this.percentage)
+                                +'%</b> (' + this.y + ')';
+                });
+
+                var categoryCount = transformChartData($scope.myStats.categories, 9);
+                $scope.categoryChartConfig = getBaseChart(categoryCount, function() {
+                    var category = $scope.categories[this.point.name] || {name:$translate('stats.others')};
+                    return '<span style="font-size: 10px">'+category.name+'</span><br/><b>'+Math.round(this.percentage)
+                                +'%</b> (' + this.y + ')';
+                });                
+            }
+
+            function getBaseChart(data, formatter) {
+                return {
                     options: {
                         chart: {
                             reflow: false,
@@ -183,26 +182,35 @@ define([], function() {
                             }
                         },
                         tooltip: {
-                            // pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-                            // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>'
-                            formatter: function() {
-                                var style = $scope.styles[this.point.name] || {name:$translate('stats.others')};
-                                return '<span style="font-size: 10px">'+style.name+'</span><br/><b>'+Math.round(this.percentage)
-                                            +'%</b> (' + this.y + ')';
-                            }
+                            formatter: formatter
                         }
                     },
                     series: [{
                         type: 'pie',
                         name: $translate('stats.amount'),
-                        data: stylesCount
+                        data: data
                     }]
                 };
             }
 
-            function transformChartData(data, count) {
-                
 
+
+            function transformChartData(data, count) {
+                var orderBy = $filter('orderBy');
+                
+                var sumOthers = 0;
+                var result = [];
+                angular.forEach(orderBy(data,'-count'), function(style, index) {
+                    if ( index < count ) {
+                        result.push([style._id,style.count]);
+                    } else {
+                        sumOthers += style.count;
+                    }
+                });
+                if ( sumOthers > 0 ) {
+                    result.push([$translate('stats.others'),sumOthers]);
+                }
+                return result;
             }
 
             function loadTableData() {

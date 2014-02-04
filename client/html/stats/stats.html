@@ -36,9 +36,16 @@
         </div>
         <div class="col-md-4">
             <div class="panel panel-default"> 
-                <div class="panel-heading">Categorias</div>
+                <div class="panel-heading">
+                    Categorias
+                    <a ng-init="showCatTable=false" href="" ng-click="showCatTable=!showCatTable">
+                        <span ng-hide="showCatTable" class="glyphicon glyphicon-list pull-right"></span>
+                        <span ng-show="showCatTable" class="glyphicon glyphicon-stats pull-right"></span>
+                    </a>
+                </div>
                 <div class="panel-body">
-                    <div table-top-bottom context="context" config="catTBConfig"></div>
+                    <div ng-class="{hidden:!showCatTable}" table-top-bottom context="context" config="catTBConfig"></div>
+                    <highchart ng-class="{hidden:showCatTable}" config="categoryChartConfig"></highchart>
                 </div>
             </div>
         </div>
