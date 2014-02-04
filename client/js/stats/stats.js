@@ -247,8 +247,8 @@ define([], function() {
                                 // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>'
                                 formatter: function() {
                                     var style = $scope.styles[this.point.name] || {name:$translate('stats.others')};
-                                    return '<span style="font-size: 10px">'+style.name+'</span><br/>'
-                                                +this.series.name+': <b>'+this.y+'</b>';
+                                    return '<span style="font-size: 10px">'+style.name+'</span><br/><b>'+Math.round(this.percentage)
+                                                +'%</b> (' + this.y + ')';
                                 }
                             }
                         },
