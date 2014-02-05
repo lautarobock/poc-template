@@ -1,8 +1,9 @@
 <div main-content>
     <h1>{{'content.stats' | translate }}</h1>
     <hr>
-    <div>Cervezas tomadas: <b>{{myStats.count}}</b></div>
-    <div>Cervezas calificadas: <b>{{myStats.rated}}</b></div>
+    <div>Tomadas: <b>{{myStats.count}}</b></div>
+    <div>Calificaciones: <b>{{myStats.rated}}</b></div>
+    <div>Diferentes: <b>{{myStats.unique}}</b></div>
     <div>Cerveza con mas alcohol: <b>{{myStats.maxABV.name}} con {{myStats.maxABV.abv}}%</b></div>
     <div>Cerveza con menos alcohol: <b>{{myStats.minABV.name}} con {{myStats.minABV.abv}}%</b></div>
     <div>La cerveza con mejor rating: <b>{{myStats.maxScore.beer.name}} con {{myStats.maxScore.finalScore}} Pts</b></div>

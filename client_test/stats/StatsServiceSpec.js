@@ -23,6 +23,7 @@ define(["../DataHelper.js"], function(DataHelper) {
 			//Count
 			expect(myStats.count).toBe(238);
 			expect(myStats.rated).toBe(238-25);
+            expect(myStats.unique).toBe(234);
 			expect(myStats.breweries.length).toBe(137);
 			expect(myStats.styles.length).toBe(58);
 			expect(myStats.categories.length).toBe(21);

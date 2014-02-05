@@ -78,9 +78,12 @@
     exports.myStats = function(ratings) {
         // var breweriesIndex = {};
 
+        var uniqueTmp = {};
+
         var myStats = {
             count: ratings.length,
             rated: 0,
+            unique: 0,
             breweries: [],
             styles: [],
             categories: [],
@@ -92,6 +95,8 @@
             if ( rating.score ) {
                 myStats.rated++;
             }
+            
+            uniqueTmp[rating.beer._id] = (uniqueTmp[rating.beer._id]||0) + 1;
 
             //Breweries
             var index = util.Arrays.indexOf(myStats.breweries, compareItem(rating.beer.brewery));
@@ -140,6 +145,10 @@
             //Just count
             myStats.months[index].count ++;
         }
+
+        angular.forEach(uniqueTmp, function(value,key) {
+            myStats.unique++;
+        });
 
         angular.forEach(myStats.breweries, calculateAvg);
         angular.forEach(myStats.categories, calculateAvg);
