@@ -72,7 +72,11 @@ define(['../resources'], function() {
                     },{
                         field:'brewery.name',
                         caption: $translate('beer.data.brewery'),
-                        hidden: {xs: true,sm: true}
+                        hidden: {xs: true,sm: true},
+                        type: 'link',
+                        href: function(row) {
+                            return "#/beer?brewery._id=" + row.brewery._id;
+                        }
                     },{
                         field:'style.name',
                         caption: $translate('beer.data.style')
@@ -379,7 +383,7 @@ define(['../resources'], function() {
 	/*
 	 * Directives
 	 */
-	beer.directive("beerDetail", function() {
+	beer.directive("beerDetail", ['GoTo',function(GoTo) {
 		return {
 			restrict : 'A',
             scope : {
@@ -391,6 +395,14 @@ define(['../resources'], function() {
                 $scope.values = ['abv','ibu','og','fg'];
                 $scope.units = {
                     abv: '%'
+                };
+
+                $scope.openBrewery = function(brewery) {
+                    GoTo.brewery(brewery._id);
+                };
+
+                $scope.openStyle = function(style) {
+                    GoTo.style(style._id);
                 };
 
                 $scope.showValues = function(beer) {
@@ -406,7 +418,7 @@ define(['../resources'], function() {
             	}
             }
 		};
-	});
+	}]);
 
     beer.directive("beerPercentil", function() {
         return {

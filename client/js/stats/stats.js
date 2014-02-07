@@ -37,8 +37,8 @@ define([], function() {
     }])
 
     stats.controller("StatsController", 
-        ['$scope','Rating', 'StatsService', '$filter', 'Cache', '$translate', '$location', 'Brewery',
-        function($scope,Rating, StatsService, $filter, Cache, $translate,$location, Brewery) {
+        ['$scope','Rating', 'StatsService', '$filter', 'Cache', '$translate', '$location', 'Brewery', 'GoTo',
+        function($scope,Rating, StatsService, $filter, Cache, $translate,$location, Brewery, GoTo) {
             
             $scope.$watch("user", function(user) {
                 if ( user ) {
@@ -222,7 +222,8 @@ define([], function() {
                         style: {width: '60%'},
                         value: "{{context.styles[row._id].name}} ({{row._id}})",
                         onClick: function(row) {
-                            $location.path("/beer").search('style._id',row._id);
+                            // $location.path("/beer").search('style._id',row._id);
+                            GoTo.style(row._id);
                         }
                     },{
                         caption: $translate('stats.amount'),
@@ -241,7 +242,7 @@ define([], function() {
                         style: {width: '60%'},
                         value: "{{context.styles[row._id].name}} ({{row._id}})",
                         onClick: function(row) {
-                            $location.path("/beer").search('style._id',row._id);
+                            GoTo.style(row._id);
                         }
                     },{
                         caption: $translate('stats.avg'),
@@ -259,7 +260,8 @@ define([], function() {
                         caption: $translate('beer.data.style'),
                         style: {width: '60%'},
                         onClick: function(row) {
-                            $location.path("/beer").search('category._id',row._id);
+                            // $location.path("/beer").search('category._id',row._id);
+                            GoTo.category(row._id);
                         },
                         value: "{{context.categories[row._id].name}} ({{row._id}})"
                     },{
@@ -278,7 +280,7 @@ define([], function() {
                         caption: $translate('beer.data.style'),
                         style: {width: '60%'},
                         onClick: function(row) {
-                            $location.path("/beer").search('category._id',row._id);
+                            GoTo.category(row._id);
                         },
                         value: "{{context.categories[row._id].name}} ({{row._id}})"
                     },{
@@ -298,7 +300,7 @@ define([], function() {
                         style: {width: '60%'},
                         value: "{{context.breweries[row._id].name}}",
                         onClick: function(row) {
-                            $location.path("/beer").search('brewery._id',row._id);
+                            GoTo.brewery(row._id);
                         }
                     },{
                         caption: $translate('stats.amount'),
@@ -317,7 +319,7 @@ define([], function() {
                         style: {width: '60%'},
                         value: "{{context.breweries[row._id].name}}",
                         onClick: function(row) {
-                            $location.path("/beer").search('brewery._id',row._id);
+                            GoTo.brewery(row._id);
                         }
                     },{
                         caption: $translate('stats.avg'),

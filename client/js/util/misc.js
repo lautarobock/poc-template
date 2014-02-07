@@ -2,6 +2,23 @@ define([], function() {
 
 	var misc = angular.module("dl.misc", ['dl.resources', 'ui.bootstrap']);
 
+    misc.factory("GoTo", ['$location',function($location) {
+        return {
+            brewery: function(brewery_id) {
+                $location.$$search = {};
+                $location.path("/beer").search('brewery._id',brewery_id);
+            },
+            style: function(style_id) {
+                $location.$$search = {};
+                $location.path("/beer").search('style._id',style_id);
+            },
+            category: function(category_id) {
+                $location.$$search = {};
+                $location.path("/beer").search('category._id',category_id);
+            }
+        };
+    }]);
+
     misc.factory("Cache", function(Category, Style,$q) {
         var _categories = null;
         var _styles = null;
@@ -93,7 +110,7 @@ define([], function() {
                             return title;
                         },
                         text: function() {
-                            return text;
+                            return text; 
                         }
                     }
                 });

@@ -3,9 +3,13 @@ define(["util/directives","util/misc","util/mousetrap"], function() {
     var side = angular.module("dl.side", ['dl.directives','dl.misc','ng-mousetrap']);
 
     side.controller("RankingsController", 
-        ['$scope','Cache',
-        function($scope,Cache) {
+        ['$scope','Cache','GoTo',
+        function($scope,Cache, GoTo) {
             $scope.categories = Cache.categories();
+
+            $scope.openCategory = function(category) {
+                GoTo.category(category._id);
+            };
         }]);
 
     side.controller("SideSearchController", 
@@ -21,6 +25,7 @@ define(["util/directives","util/misc","util/mousetrap"], function() {
             });
 
             $scope.search = function(searchText) {
+                $location.$$search = {};
                 $location.path("/beer").search('searchCriteria',searchText);
             };
 

@@ -8,8 +8,8 @@
             {{ beer.score.avg || '-'}}
           </div>
           <div class="col-md-8">
-            <div><b>{{ 'beer.data.brewery' | translate }}</b>: {{ beer.brewery.name }}</div>
-            <div><b>{{ 'beer.data.style' | translate }}</b>: {{ beer.style.name }}</div>
+            <div><b>{{ 'beer.data.brewery' | translate }}</b>: <a href="" ng-click="openBrewery(beer.brewery)">{{ beer.brewery.name }}</a></div>
+            <div><b>{{ 'beer.data.style' | translate }}</b>: <a href="" ng-click="openStyle(beer.style)">{{ beer.style.name }}</a></div>
             <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
             <div><b>{{'beer.data.score.count'|translate}}</b>: {{ beer.score.count }}</div>
           </div>
