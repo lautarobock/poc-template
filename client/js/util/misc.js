@@ -1,6 +1,6 @@
 define([], function() {
 
-	var misc = angular.module("dl.misc", ['dl.resources']);
+	var misc = angular.module("dl.misc", ['dl.resources', 'ui.bootstrap']);
 
     misc.factory("Cache", function(Category, Style,$q) {
         var _categories = null;
@@ -79,6 +79,42 @@ define([], function() {
             isLg: function() {
                 return $window.document.width >= 1200;
             }
+        };
+    });
+
+    misc.factory("YesNo", function($modal) {
+        var obj = {
+            open : function (title, text, yes, no) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'misc/yes-no.html',
+                    controller: 'YesNoController',
+                    resolve: {
+                        title: function() {
+                            return title;
+                        },
+                        text: function() {
+                            return text;
+                        }
+                    }
+                });
+                modalInstance.result.then(yes);
+            }
+        };
+        return obj;
+    });
+
+
+    misc.controller("YesNoController", function($scope, $modalInstance, title, text) {
+
+        $scope.title = title;
+
+        $scope.text = text;
+
+        $scope.ok = function () {
+            $modalInstance.close();
+        };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
         };
     });
 

@@ -34,18 +34,7 @@ define(['../resources'], function() {
     
             $scope.dataHelper = {
                 getMyScore: function(beer) {
-                    // var sum = 0;
-                    // var count = null;
-                    // if ( !$scope.user ) return '-';
-                    // angular.forEach($scope.user.ratings, function(r) {
-                    //     if ( r.beer == beer._id ) {
-                    //         count = 0;
-                    //         angular.forEach(r.finalScore, function(s) {
-                    //             sum += s;
-                    //             count++;
-                    //         });
-                    //     }
-                    // });
+                    
                     var avg = RatingService.avgForBeer(beer);
                     if ( avg && avg >= 0 ) {
                         return parseFloat(avg.toFixed(1));
@@ -53,21 +42,6 @@ define(['../resources'], function() {
                         return avg;
                     }
 
-                    // if ( count == 0 ) {
-                    //     //Significa que la tome pero no la ranquie
-                    //     return -1;
-                    // } else if ( count != null ) {
-                    //     //si tiene cualquier otro valor es q tiene ranquint
-                    //     return parseFloat((sum/count).toFixed(1));
-                    // } else {
-                    //     //si esta null es que no la tome siquiera
-                    //     return null;
-                    // }
-                    // if ( count != 0 ) {
-                    //     return parseFloat((sum/count).toFixed(1));
-                    // } else {
-                    //     return null;
-                    // }
                 }
             };
 
@@ -328,8 +302,10 @@ define(['../resources'], function() {
 	}]);
 
 	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 'MainTitle','CellarService','RatingService',
-		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   MainTitle, CellarService, RatingService) {
+		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 
+                'MainTitle','CellarService','RatingService', 'YesNo',
+		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   
+            MainTitle, CellarService, RatingService, YesNo) {
 
 			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
                 $scope.ratings = Rating.getByBeer({beer_id:$scope.beer._id});
@@ -387,11 +363,14 @@ define(['../resources'], function() {
             };
 
             $scope.removeRating = function(rating) {
-                rating.$delete(function() {
-                    util.Arrays.remove($scope.ratings, rating);
-                    $scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true});
-                    RatingService.loadMyRatings();
+                YesNo.open("Eliminar Calificacion","¿Esta seguro que desea eliminar la calificacion?", function() {
+                    rating.$delete(function() {
+                        util.Arrays.remove($scope.ratings, rating);
+                        $scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true});
+                        RatingService.loadMyRatings();
+                    });
                 });
+                
             };
 
 	}]);
