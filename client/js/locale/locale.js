@@ -107,7 +107,8 @@ define([], function() {
                 'stats.amount': 'Cantidad',
                 'stats.avg': 'Promedio',
                 'stats.avg.help.style': 'Promedio de todas las calificaciones a cervezas del mismo estilo',
-                'stats.others': 'Otros'
+                'stats.others': 'Otros',
+                'stats.general': 'General'
             }
         };
 });

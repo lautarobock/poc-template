@@ -47,6 +47,26 @@ define([], function() {
             });
 
 
+            $scope.tabs = [{
+                name: 'general',
+                caption: $translate('stats.general')
+            },{
+                name: 'style',
+                caption: $translate('beer.data.style')
+            },{
+                name: 'category',
+                caption: $translate('beer.data.category')
+            },{
+                name: 'brewery',
+                caption: $translate('beer.data.brewery')
+            }];
+            $scope.tabSelected = $scope.tabs[0];
+
+            $scope.selectTab = function(tab) {
+                $scope.tabSelected = tab;
+            };
+
+
             function loadData() {
                 $scope.styles = {};
                 $scope.categories = {};
@@ -96,6 +116,8 @@ define([], function() {
 
                     loadCharts();
 
+                    loadTabs();
+
                     //Rating per month chart
                     var categories = [];
                     var values = [];
@@ -140,6 +162,26 @@ define([], function() {
                         }]
                     };
                 });
+            }
+
+            function loadTabs() {
+                $scope.tabStyleConfig = {
+                    collection: $scope.myStats.styles,
+                    name: $translate('beer.data.style')+'s',
+                    singular: $translate('beer.data.style'),
+                    filterColSpan: 6,
+                    orderBy: '_id',
+                    orderDir: "",
+                    pageSize: 25,
+                    emptyResultText: $translate('beer.search.emtpy'),
+                    headers: [{
+                        field:'_id',
+                        caption: 'Nombre'
+                    },{
+                        field:'count',
+                        caption: 'Cantidad'
+                    }]
+                };
             }
 
             function loadCharts() {
