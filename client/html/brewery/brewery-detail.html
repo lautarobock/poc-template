@@ -1,0 +1,26 @@
+<div main-content>
+  
+  <form class="form-horizontal">
+    <fieldset>
+      <div class="row">
+        <div class="col-md-6">
+          <h2>{{ brewery.name }}</h2>
+          <div ng-show="brewery.web"><b>{{ 'brewery.data.web' | translate }}</b>: <a href="{{ brewery.web }}" target="_blank">{{ brewery.web }}</a></div>
+        </div>
+        <div class="col-md-6" id="map200">
+          <div google-map draggable="true" center="map.center" zoom="map.zoom"></div>
+        </div>
+      </div>
+      <p></p>
+      <div class="well well-sm" ng-show="brewery.description">
+        <h4>{{ 'beer.data.description' | translate }}</h4>
+        <div style="white-space: pre-wrap;box-sizing: border-box;" ng-bind-html="brewery.description|enrich" ></div>
+      </div>
+    </fieldset>
+  </form>
+  <hr>
+  <gt-table config="configBeers" hide-search="true"></gt-table>
+</div>
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

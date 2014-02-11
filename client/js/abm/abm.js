@@ -123,7 +123,8 @@ define(["abm/templates"],function() {
                 canAdd: '=',
                 context: '&',
                 filterData: '=',
-                searchCriteria: '=?'
+                searchCriteria: '=?',
+                hideSearch: '=?'
             },
             templateUrl: abm.templateDir +'/abm.html',
             link : function(scope, element, attrs) {

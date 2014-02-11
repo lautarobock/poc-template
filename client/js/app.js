@@ -4,6 +4,7 @@ define("app", [
     "resources",
     "gplus",
     "beer/beer",
+    "brewery/brewery",
     "rating/rating",
     "cellar/cellar",
     "stats/stats",
@@ -21,10 +22,13 @@ define("app", [
         'ui.bootstrap',
         'pascalprecht.translate',
         'highcharts-ng',
+        'google-maps',
+        'ngGPlaces',
         'dl.menu',
         'dl.resources',
         'dl.gplus',
         'dl.beer',
+        'dl.brewery',
         'dl.rating',
         'dl.cellar',
         'dl.stats',
@@ -152,6 +156,9 @@ define("app", [
                 when('/beer/tag/:beer_id', {templateUrl: 'beer/beer-tag.html',   controller: 'BeerDetailController'}).
                 when('/beer/search_:filter', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
+
+                when('/brewery/detail/:brewery_id', {templateUrl: 'brewery/brewery-detail.html',   controller: 'BreweryDetailController'}).
+                when('/brewery', {templateUrl: 'brewery/brewery.html',   controller: 'BreweryController'}).
 
                 when('/cellar', {templateUrl: 'cellar/cellar.html',   controller: 'CellarController'}).
 

@@ -11,7 +11,9 @@
     "angular-bootstrap": "0.9.0",
     "angular-translate": "1.1.0",
     "highcharts.com": "v3.0.9",
-    "highcharts-ng": "0.0.4"
+    "highcharts-ng": "0.0.4",
+    "angular-google-maps": "1.0.10",
+    "angularjs-google-places": "0.1.0"
   },
   "resolutions": {
     "angular": "1.2.6"
