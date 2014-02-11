@@ -164,7 +164,8 @@ define([], function() {
                     var brewery = $scope.breweries[this.point.name] || {name:$translate('stats.others')};
                     return '<span style="font-size: 10px">'+brewery.name+'</span><br/><b>'+Math.round(this.percentage)
                                 +'%</b> (' + this.y + ')';
-                });      
+                });
+                $scope.breweriesChartConfig.options.plotOptions.pie.dataLabels.enabled = false;
             }
 
             function getBaseChart(data, formatter) {

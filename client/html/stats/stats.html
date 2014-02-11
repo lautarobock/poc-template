@@ -1,14 +1,14 @@
 <div main-content>
     <h1>{{'content.stats' | translate }}</h1>
     <hr>
-    <div>Tomadas: <b>{{myStats.count}}</b></div>
-    <div>Calificaciones: <b>{{myStats.rated}}</b></div>
-    <div>Diferentes: <b>{{myStats.unique}}</b></div>
+    <div>Cervezas Tomadas: <b>{{myStats.count}}</b></div>
+    <div>Calificaciones Realizadas: <b>{{myStats.rated}}</b></div>
+    <div>Cervezas Diferentes: <b>{{myStats.unique}}</b></div>
     <div>Cerveza con mas alcohol: <b>{{myStats.maxABV.name}} con {{myStats.maxABV.abv}}%</b></div>
     <div>Cerveza con menos alcohol: <b>{{myStats.minABV.name}} con {{myStats.minABV.abv}}%</b></div>
     <div>La cerveza con mejor rating: <b>{{myStats.maxScore.beer.name}} con {{myStats.maxScore.finalScore}} Pts</b></div>
     <div>La cerveza con peor rating: <b>{{myStats.minScore.beer.name}} con {{myStats.minScore.finalScore}} Pts</b></div>
-    <div>La cerveza con peor rating: <b>{{myStats.minScore.beer.name}} con {{myStats.minScore.finalScore}} Pts</b></div>
+    <div>Cantidad de cervecerias: <b>{{myStats.breweries.length}}</b></div>
 
     <!-- <div>La cerveceria con mas ratings: <b>{{myStats.maxBreweryCount.name}} con {{myStats.minScore.finalScore}} Pts</b></div> -->
     <hr/>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="panel-body">
                     <div ng-class="{hidden:!showBreweryTable}" table-top-bottom context="context" config="breweriesTBConfig"></div>
-                    <highchart ng-class="{showBreweryTable}" config="breweriesChartConfig"></highchart>
+                    <highchart ng-class="{hidden:showBreweryTable}" config="breweriesChartConfig"></highchart>
                 </div>
             </div>
         </div>
