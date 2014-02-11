@@ -8,7 +8,12 @@
           <div ng-show="brewery.web"><b>{{ 'brewery.data.web' | translate }}</b>: <a href="{{ brewery.web }}" target="_blank">{{ brewery.web }}</a></div>
         </div>
         <div class="col-md-6" id="map200">
-          <div google-map draggable="true" center="map.center" zoom="map.zoom"></div>
+          <div google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
+            <markers models="points" coords="'self'" icon="'icon'" click="'onClicked'"
+                        labelContent="'title'" labelAnchor="22 0" labelClass="marker-labels">
+                
+            </markers> 
+          </div>
         </div>
       </div>
       <p></p>

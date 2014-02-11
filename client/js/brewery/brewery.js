@@ -30,15 +30,42 @@ define(['../resources'], function() {
     brewery.controller("BreweryDetailController", 
                 ['$scope', 'Brewery','$routeParams', 'Rating', 'DLHelper', '$filter', 
                 'MainTitle','CellarService','RatingService', 'YesNo', 'Beer', '$translate', 'Responsive',
+                'ngGPlacesAPI',
         function( $scope,   Brewery,  $routeParams,   Rating,   DLHelper,   $filter, 
-            MainTitle, CellarService, RatingService, YesNo, Beer, $translate, Responsive) {
+            MainTitle, CellarService, RatingService, YesNo, Beer, $translate, Responsive,
+            ngGPlacesAPI) {
+
+            $scope.points = [{
+                latitude: 41.38623,
+                longitude: 2.15978999999993,
+                showWindow: false,
+                title: 'Este'
+            }];
+            //Map Section
             $scope.map = {
                 center: {
-                    latitude: 30,
-                    longitude: 45
+                    latitude: 41.38623,
+                    longitude: 2.15978999999993,
                 },
-                zoom: 8
+                zoom: 8,
+                events: {
+                    tilesloaded: function (map) {
+                        $scope.$apply(function () {
+                            $scope.myMap = map;
+                            $scope.$log.info('this is the map instance', map);
+                            ngGPlacesAPI.textSearch({latitude: 41.38623,longitude: 2.15978999999993, query:'BierCab'}).then(
+                                function (data) {
+                                    $scope.points = data;
+                                    console.log(data);
+                                    return data;
+                                }
+                            );
+                        });
+                    }
+                }
             };
+            
+
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 MainTitle.add($scope.brewery.name);
                 $scope.$on("$destroy", function() {
