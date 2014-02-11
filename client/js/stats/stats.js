@@ -157,7 +157,14 @@ define([], function() {
                     var category = $scope.categories[this.point.name] || {name:$translate('stats.others')};
                     return '<span style="font-size: 10px">'+category.name+'</span><br/><b>'+Math.round(this.percentage)
                                 +'%</b> (' + this.y + ')';
-                });                
+                });      
+                
+                var breweryCount = transformChartData($scope.myStats.breweries, 9);
+                $scope.breweriesChartConfig = getBaseChart(breweryCount, function() {
+                    var brewery = $scope.breweries[this.point.name] || {name:$translate('stats.others')};
+                    return '<span style="font-size: 10px">'+brewery.name+'</span><br/><b>'+Math.round(this.percentage)
+                                +'%</b> (' + this.y + ')';
+                });      
             }
 
             function getBaseChart(data, formatter) {

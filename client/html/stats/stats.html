@@ -52,9 +52,16 @@
         </div>
         <div class="col-md-4">
             <div class="panel panel-default"> 
-                <div class="panel-heading">Cervecerias</div>
+                <div class="panel-heading">
+                	Cervecerias
+                	<a ng-init="showBreweryTable=false" href="" ng-click="showBreweryTable=!showBreweryTable">
+                        <span ng-hide="showBreweryTable" class="glyphicon glyphicon-list pull-right"></span>
+                        <span ng-show="showBreweryTable" class="glyphicon glyphicon-stats pull-right"></span>
+                    </a>
+                </div>
                 <div class="panel-body">
-                    <div table-top-bottom context="context" config="breweriesTBConfig"></div>
+                    <div ng-class="{hidden:!showBreweryTable}" table-top-bottom context="context" config="breweriesTBConfig"></div>
+                    <highchart ng-class="{showBreweryTable}" config="breweriesChartConfig"></highchart>
                 </div>
             </div>
         </div>
