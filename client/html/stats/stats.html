@@ -23,7 +23,7 @@
             <div ng-include="'stats/stats-general.html'"></div>
         </div>
         <div ng-switch-default>
-            <gt-table style="margin-top: 4.8em;" config="tabStyleConfig"></gt-table>
+            <gt-table style="margin-top: 4.8em;" config="tabConfig[tabSelected.name]" context="context[tabSelected.name]"></gt-table>
         </div>
     </div>
 </div>

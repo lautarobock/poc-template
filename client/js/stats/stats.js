@@ -36,6 +36,10 @@ define([], function() {
         };
     }])
 
+    stats.run(['$templateCache',function($templateCache) {
+        $templateCache.put("stats-name.html",'<a href="" ng-click="header.onClick(row)">{{context()[row._id].name}}</a>');
+    }]);
+
     stats.controller("StatsController", 
         ['$scope','Rating', 'StatsService', '$filter', 'Cache', '$translate', '$location', 'Brewery', 'GoTo',
         function($scope,Rating, StatsService, $filter, Cache, $translate,$location, Brewery, GoTo) {
@@ -51,13 +55,13 @@ define([], function() {
                 name: 'general',
                 caption: $translate('stats.general')
             },{
-                name: 'style',
+                name: 'styles',
                 caption: $translate('beer.data.style')
             },{
-                name: 'category',
+                name: 'categories',
                 caption: $translate('beer.data.category')
             },{
-                name: 'brewery',
+                name: 'breweries',
                 caption: $translate('beer.data.brewery')
             }];
             $scope.tabSelected = $scope.tabs[0];
@@ -165,21 +169,85 @@ define([], function() {
             }
 
             function loadTabs() {
-                $scope.tabStyleConfig = {
+                $scope.tabConfig = {};
+                $scope.tabConfig.styles = {
                     collection: $scope.myStats.styles,
                     name: $translate('beer.data.style')+'s',
                     singular: $translate('beer.data.style'),
                     filterColSpan: 6,
-                    orderBy: '_id',
-                    orderDir: "",
+                    orderBy: 'count',
+                    orderDir: "-",
                     pageSize: 25,
                     emptyResultText: $translate('beer.search.emtpy'),
                     headers: [{
                         field:'_id',
-                        caption: 'Nombre'
+                        caption: 'ID'
+                    },{
+                        field:'name',
+                        type: 'link',
+                        caption: $translate('beer.data.name'),
+                        valueTemplateUrl: 'stats-name.html',
+                        onClick: function(row) {
+                            GoTo.style(row._id);
+                        }
+
                     },{
                         field:'count',
-                        caption: 'Cantidad'
+                        caption: $translate('stats.amount')
+                    },{
+                        field:'avg.value',
+                        caption: $translate('stats.avg')
+                    }]
+                };
+                $scope.tabConfig.categories = {
+                    collection: $scope.myStats.categories,
+                    name: $translate('beer.data.category')+'s',
+                    singular: $translate('beer.data.category'),
+                    filterColSpan: 6,
+                    orderBy: 'count',
+                    orderDir: "-",
+                    pageSize: 25,
+                    emptyResultText: $translate('beer.search.emtpy'),
+                    headers: [{
+                        field:'_id',
+                        caption: 'ID'
+                    },{
+                        field:'name',
+                        caption: $translate('beer.data.name'),
+                        valueTemplateUrl: 'stats-name.html',
+                        onClick: function(row) {
+                            GoTo.category(row._id);
+                        }
+                    },{
+                        field:'count',
+                        caption: $translate('stats.amount')
+                    },{
+                        field:'avg.value',
+                        caption: $translate('stats.avg')
+                    }]
+                };
+                $scope.tabConfig.breweries = {
+                    collection: $scope.myStats.breweries,
+                    name: $translate('beer.data.brewery')+'s',
+                    singular: $translate('beer.data.brewery'),
+                    filterColSpan: 6,
+                    orderBy: 'count',
+                    orderDir: "-",
+                    pageSize: 25,
+                    emptyResultText: $translate('beer.search.emtpy'),
+                    headers: [{
+                        field:'name',
+                        caption: $translate('beer.data.name'),
+                        valueTemplateUrl: 'stats-name.html',
+                        onClick: function(row) {
+                            GoTo.brewery(row._id);
+                        }
+                    },{
+                        field:'count',
+                        caption: $translate('stats.amount')
+                    },{
+                        field:'avg.value',
+                        caption: $translate('stats.avg')
                     }]
                 };
             }
