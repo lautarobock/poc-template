@@ -22,8 +22,6 @@ define("app", [
         'ui.bootstrap',
         'pascalprecht.translate',
         'highcharts-ng',
-        'google-maps',
-        'ngGPlaces',
         'dl.menu',
         'dl.resources',
         'dl.gplus',

@@ -1,4 +1,4 @@
-define([], function() {
+define(["rating/rating","resources"], function() {
 
     var rating = angular.module("dl.rating", ['dl.resources']);
 

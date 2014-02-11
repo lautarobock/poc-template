@@ -1,4 +1,4 @@
-define([], function() {
+define(["resources","util/misc"], function() {
 
     var stats = angular.module("dl.stats", ['dl.resources','dl.misc','pascalprecht.translate']);
 

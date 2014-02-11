@@ -1,6 +1,6 @@
 define(['../resources'], function() {
 
-    var brewery = angular.module("dl.brewery", ["dl.resources"]);
+    var brewery = angular.module("dl.brewery", ["dl.resources",'google-maps','ngGPlaces',]);
 
     brewery.controller("BreweryController", 
         ['$scope', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log', 'Responsive','RatingService',
