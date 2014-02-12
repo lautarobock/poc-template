@@ -35,39 +35,18 @@ define(['../resources'], function() {
             MainTitle, CellarService, RatingService, YesNo, Beer, $translate, Responsive,
             ngGPlacesAPI) {
 
-            $scope.points = [{
-                latitude: 41.38623,
-                longitude: 2.15978999999993,
-                showWindow: false,
-                title: 'Este'
-            }];
             //Map Section
             $scope.map = {
-                center: {
-                    latitude: 41.38623,
-                    longitude: 2.15978999999993,
-                },
-                zoom: 8,
-                events: {
-                    tilesloaded: function (map) {
-                        $scope.$apply(function () {
-                            $scope.myMap = map;
-                            $scope.$log.info('this is the map instance', map);
-                            ngGPlacesAPI.textSearch({latitude: 41.38623,longitude: 2.15978999999993, query:'BierCab'}).then(
-                                function (data) {
-                                    $scope.points = data;
-                                    console.log(data);
-                                    return data;
-                                }
-                            );
-                        });
-                    }
-                }
+                center: $scope.position.coords,
+                zoom: 14
             };
-            
-
+            $scope.points = [];
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 MainTitle.add($scope.brewery.name);
+                if ( $scope.brewery.location ) {
+                    $scope.map.center = angular.copy($scope.brewery.location);
+                    $scope.points.push($scope.brewery.location);    
+                }
                 $scope.$on("$destroy", function() {
                     MainTitle.clearAdd();
                 });
@@ -151,6 +130,16 @@ define(['../resources'], function() {
             MainTitle, CellarService, RatingService, YesNo, Beer, $translate, Responsive,
             ngGPlacesAPI) {
 
+            $scope.cancel = function() {
+                window.history.back();
+            };
+
+            $scope.save = function() {
+                $scope.brewery.$save(function() {
+                    window.history.back();
+                });
+            };
+
             $scope.points = [];
             //Map Section
             $scope.map = {
@@ -173,20 +162,20 @@ define(['../resources'], function() {
                         longitude: $scope.position.coords.longitude,
                         radius: '500', query:searchText}).then(
                             function (data) {
-                                var latlngbounds = new google.maps.LatLngBounds();
+                                // var latlngbounds = new google.maps.LatLngBounds();
                                 $scope.points = data;
                                 angular.forEach($scope.points, function(c) {
                                     c.latitude = c.geometry.location.d;
                                     c.longitude = c.geometry.location.e;
-                                    latlngbounds.extend(new google.maps.LatLng(
-                                            c.latitude,
-                                            c.longitude
-                                        ));
+                                    // latlngbounds.extend(new google.maps.LatLng(
+                                    //         c.latitude,
+                                    //         c.longitude
+                                    //     ));
                                 });
-                                $scope.map.center = {
-                                    latitude: latlngbounds.getCenter().d,
-                                    longitude: latlngbounds.getCenter().e
-                                }
+                                // $scope.map.center = {
+                                //     latitude: latlngbounds.getCenter().d,
+                                //     longitude: latlngbounds.getCenter().e
+                                // }
                                 console.log(data);
                                 return data;
                             },
@@ -197,10 +186,15 @@ define(['../resources'], function() {
                     );
                 }
             };
+
+            $scope.selectPoint = function(point) {
+                console.log("point", point);
+            };
             
 
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 MainTitle.add($scope.brewery.name);
+                $scope.points.push($scope.brewery.location);
                 $scope.$on("$destroy", function() {
                     MainTitle.clearAdd();
                 });
