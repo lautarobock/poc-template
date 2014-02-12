@@ -109,7 +109,8 @@ define([], function() {
                 'stats.avg.help.style': 'Promedio de todas las calificaciones a cervezas del mismo estilo',
                 'stats.others': 'Otros',
                 'stats.general': 'General',
-                'brewery.data.web': 'Web'
+                'brewery.data.web': 'Web',
+                'brewery.data.location': 'Ubicacion'
             }
         };
 });

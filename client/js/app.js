@@ -156,6 +156,7 @@ define("app", [
                 when('/beer', {templateUrl: 'beer/beer.html',   controller: 'BeerController'}).
 
                 when('/brewery/detail/:brewery_id', {templateUrl: 'brewery/brewery-detail.html',   controller: 'BreweryDetailController'}).
+                when('/brewery/edit/:brewery_id', {templateUrl: 'brewery/brewery-edit.html',   controller: 'BreweryEditController'}).
                 when('/brewery', {templateUrl: 'brewery/brewery.html',   controller: 'BreweryController'}).
 
                 when('/cellar', {templateUrl: 'cellar/cellar.html',   controller: 'CellarController'}).

@@ -1,0 +1,38 @@
+<div main-content>
+  
+  <form class="form-horizontal">
+    <fieldset>
+      <div class="form-group">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div dl-input-text id="breweryname" value="brewery.name" caption="{{'beer.data.name'|translate}}"></div>
+          </div>
+          <div class="form-group">
+            <div dl-input-text id="webpage" value="brewery.web" caption="{{'brewery.data.web'|translate}}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">  
+        <div class="well col-md-12">
+          <div class="col-md-6">
+            <label class="control-label">{{ 'brewery.data.location' | translate }}</label>
+            <input class="form-control input input-sm" ng-keyup="searchLocation($event,searchLocationText)" ng-model="searchLocationText">
+            <div ng-repeat="point in points">
+              {{point.name}} - {{point.formatted_address}}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div id="map200" class="" google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
+              <markers models="points" coords="'self'">
+                  
+              </markers> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

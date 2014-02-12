@@ -142,4 +142,68 @@ define(['../resources'], function() {
             };
 
     }]);
+
+    brewery.controller("BreweryEditController", 
+                ['$scope', 'Brewery','$routeParams', 'Rating', 'DLHelper', '$filter', 
+                'MainTitle','CellarService','RatingService', 'YesNo', 'Beer', '$translate', 'Responsive',
+                'ngGPlacesAPI',
+        function( $scope,   Brewery,  $routeParams,   Rating,   DLHelper,   $filter, 
+            MainTitle, CellarService, RatingService, YesNo, Beer, $translate, Responsive,
+            ngGPlacesAPI) {
+
+            $scope.points = [];
+            //Map Section
+            $scope.map = {
+                center: {
+                    latitude: 41.386597,
+                    longitude: 2.173906
+                },
+                zoom: 8,
+                events: {
+                    tilesloaded: function (map) {
+                        $scope.$apply(function () {
+                            $scope.myMap = map;
+                            $scope.$log.info('this is the map instance', map);
+                            // ngGPlacesAPI.textSearch({latitude: 41.386597,longitude: 2.173906,  query:'BierCab'}).then(
+                            //     function (data) {
+                            //         $scope.points = data;
+                            //         console.log(data);
+                            //         return data;
+                            //     }
+                            // );
+                        });
+                    }
+                }
+            };
+
+            $scope.searchLocation = function($event,searchText) {
+                if ( $event.keyCode == 13 ) {
+                    ngGPlacesAPI.textSearch({latitude: 41.386597,longitude: 2.173906, query:searchText}).then(
+                        function (data) {
+                            $scope.points = data;
+                            angular.forEach($scope.points, function(c) {
+                                c.latitude = c.geometry.location.d;
+                                c.longitude = c.geometry.location.e;
+                            });
+                            console.log(data);
+                            return data;
+                        },
+                        function(err) {
+                            $scope.points = [];
+                            console.log(err);
+                        }
+                    );
+                }
+            };
+            
+
+            $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
+                MainTitle.add($scope.brewery.name);
+                $scope.$on("$destroy", function() {
+                    MainTitle.clearAdd();
+                });
+                
+            });
+
+    }]);
 });
