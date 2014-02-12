@@ -47,6 +47,7 @@ define(['../resources'], function() {
                     $scope.map.center = angular.copy($scope.brewery.location);
                     $scope.points.push($scope.brewery.location);    
                 }
+
                 $scope.$on("$destroy", function() {
                     MainTitle.clearAdd();
                 });
@@ -140,19 +141,11 @@ define(['../resources'], function() {
                 });
             };
 
-            $scope.points = [];
             //Map Section
+            $scope.points = [];
             $scope.map = {
                 center: $scope.position.coords,
-                zoom: 12,
-                events: {
-                    tilesloaded: function (map) {
-                        $scope.$apply(function () {
-                            $scope.myMap = map;
-                            $scope.$log.info('this is the map instance', map);
-                        });
-                    }
-                }
+                zoom: 12
             };
 
             $scope.searchLocation = function($event,searchText) {
@@ -162,21 +155,12 @@ define(['../resources'], function() {
                         longitude: $scope.position.coords.longitude,
                         radius: '500', query:searchText}).then(
                             function (data) {
-                                // var latlngbounds = new google.maps.LatLngBounds();
                                 $scope.points = data;
                                 angular.forEach($scope.points, function(c) {
                                     c.latitude = c.geometry.location.d;
                                     c.longitude = c.geometry.location.e;
-                                    // latlngbounds.extend(new google.maps.LatLng(
-                                    //         c.latitude,
-                                    //         c.longitude
-                                    //     ));
                                 });
-                                // $scope.map.center = {
-                                //     latitude: latlngbounds.getCenter().d,
-                                //     longitude: latlngbounds.getCenter().e
-                                // }
-                                console.log(data);
+                                $scope.$log.debug("search result", data);
                                 return data;
                             },
                             function(err) {
@@ -189,6 +173,23 @@ define(['../resources'], function() {
 
             $scope.selectPoint = function(point) {
                 console.log("point", point);
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                        latLng: new google.maps.LatLng(
+                            point.geometry.location.d,
+                            point.geometry.location.e)
+                    }, 
+                    function(results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) {
+                    console.log("geocode", results);
+                  } else {
+                    console.log("Geocode was not successful for the following reason: " + status);
+                  }
+                });
+                // ngGPlacesAPI.placeDetails({reference:point.reference})
+                //     .then(function(details) {
+                //         console.log('details',details);
+                //     });
             };
             
 

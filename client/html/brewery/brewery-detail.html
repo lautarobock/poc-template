@@ -4,13 +4,19 @@
     <fieldset>
       <div class="row">
         <div class="col-md-6">
+          
           <h2>{{ brewery.name }}</h2>
+          
           <div ng-show="brewery.web"><b>{{ 'brewery.data.web' | translate }}</b>: <a href="{{ brewery.web }}" target="_blank">{{ brewery.web }}</a></div>
+
+          <div ng-show="brewery.location"><b>{{ 'brewery.data.location.address' | translate }}</b>: 
+            {{brewery.location.formatted_address}}
+          </div>
+
         </div>
         <div class="col-md-6" id="map200" ng-show="brewery.location">
           <div google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
             <markers models="points" coords="'self'"><!-- icon="'icon'"-->
-
             </markers> 
           </div>
         </div>

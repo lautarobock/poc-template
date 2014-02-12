@@ -280,7 +280,6 @@ define(["abm/templates"],function() {
                 if ( $scope.config().collection ) {
                     // $scope.rows = $scope.config().collection;
                     $scope.$watch("config().collection", function() {
-                        console.log("ACA");
                         $scope.rows = $scope.config().collection;
                     });
                 } else {

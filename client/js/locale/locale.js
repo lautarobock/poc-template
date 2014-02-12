@@ -110,7 +110,8 @@ define([], function() {
                 'stats.others': 'Otros',
                 'stats.general': 'General',
                 'brewery.data.web': 'Web',
-                'brewery.data.location': 'Ubicacion'
+                'brewery.data.location': 'Ubicacion',
+                'brewery.data.location.address': 'Direccion'
             }
         };
 });
