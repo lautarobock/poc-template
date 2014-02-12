@@ -44,6 +44,14 @@ define("app", [
         // },3000);
     });
     
+    app.run(['$rootScope',function($rootScope) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            if (position) {
+                $rootScope.position = position;
+            }
+        });
+    }]);
+
     app.run(
         ['$rootScope','$translate','MainTitle','$log',
             function(
