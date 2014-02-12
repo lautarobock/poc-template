@@ -3,7 +3,12 @@ var mongoose = require('mongoose');
 var mongoutil = require("./util/mongoutil.js");
 
 exports.findAll = function(req, res) {
-	model.Beer.find()
+    var filter = null;
+    if ( req.query.brewery ) {
+        filter = filter||{};
+        filter.brewery = req.query.brewery;
+    }
+	model.Beer.find(filter)
         .populate('style')
         .populate('styleByLabel')
         .populate('brewery')

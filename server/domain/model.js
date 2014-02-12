@@ -76,7 +76,8 @@ exports.Brewery = mongoose.model("Brewery",new Schema({
 	"_id": String,
     "name": String,
     "web": String
-},{ _id: false }));
+    //"location": String
+},{ _id: false, strict: false }));
 
 exports.StyleByLabel = mongoose.model("StyleByLabel",new Schema({
 	"_id": String,

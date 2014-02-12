@@ -95,3 +95,6 @@
 .dl-anchor {
 	cursor: pointer
 }
+
+#map400 .angular-google-map-container { height: 400px; }
+#map200 .angular-google-map-container { height: 200px; }

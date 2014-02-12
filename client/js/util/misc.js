@@ -1,4 +1,4 @@
-define([], function() {
+define(["resources"], function() {
 
 	var misc = angular.module("dl.misc", ['dl.resources', 'ui.bootstrap']);
 

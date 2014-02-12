@@ -1,0 +1,15 @@
+<div main-content>
+  <h1>{{'beer.data.brewery' | translate }}</h1>
+  <hr>
+  <gt-table
+          config="config"
+          context="dataHelper"
+          filter-data="filterData"
+          search-criteria="searchCriteria"
+          ></gt-table>
+  <hr/>
+</div>
+
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

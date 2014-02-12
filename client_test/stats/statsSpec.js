@@ -1,4 +1,4 @@
-define(["../DataHelper.js"], function(DataHelper) {
+define(["../DataHelper.js","stats/stats"], function(DataHelper) {
 
     describe("stats", function() {
 

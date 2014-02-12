@@ -1,0 +1,55 @@
+<div main-content>
+  
+  <form class="form-horizontal">
+    <fieldset>
+      <div class="form-group">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div dl-input-text id="breweryname" value="brewery.name" caption="{{'beer.data.name'|translate}}"></div>
+          </div>
+          <div class="form-group">
+            <div dl-input-text id="webpage" value="brewery.web" caption="{{'brewery.data.web'|translate}}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">  
+        <div class="well col-md-12">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ 'brewery.data.location' | translate }}</label>
+              <input class="form-control input input-sm" ng-keyup="searchLocation($event,searchLocationText)" ng-model="searchLocationText">
+            </div>
+            <div class="form-group">
+              <select ng-change="selectPoint(brewery.location)" ng-model="brewery.location" style="height: 130px;" class="form-control input input-sm" size="10"
+                ng-options="(point.name+' - '+point.formatted_address) for point in points"
+                >
+                <option value="">-- None --</option>
+                <!-- <option ng-model="selected" ng-change="selectPoint(selected)" ng-repeat="point in points">
+                  {{$index+1}}) {{point.name}} - {{point.formatted_address}}
+                </option> -->
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div id="map200" class="" google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
+              <markers fit="true" models="points" coords="'self'"><!-- icon="'icon'"-->
+
+              </markers> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <div class="col-lg-12">
+        <div class="pull-right">
+          <a class="btn btn-default" href="" ng-click="cancel()" >{{ 'form.cancel' | translate }}</a> 
+          <button type="button" class="btn btn-primary" ng-click="save()">{{ 'form.save' | translate }}</button> 
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

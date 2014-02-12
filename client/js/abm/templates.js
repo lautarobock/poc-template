@@ -49,9 +49,9 @@ define([], function() {  	angular.module("gt.abm.templates", []).run(["$template
     "            text-decoration: underline;\n" +
     "        }\n" +
     "    </style>\n" +
-    "    <div class=\"panel-body\" >\n" +
-    "        <div class=\"col-md-10\" style=\"padding-top: 5px;\">\n" +
-    "            <span ng-class=\"{invisible:loading}\">\n" +
+    "    <div class=\"panel-body\" ng-hide=\"hideSearch\">\n" +
+    "        <div class=\"col-md-10\" style=\"padding-top: 5px;\" >\n" +
+    "            <span ng-class=\"{invisible:loading}\" >\n" +
     "                <ng-pluralize count=\"(rows | textFilter:searchCriteria | advanced:filterData).length\"\n" +
     "                              when=\"{'0':'No se ha encontrado ningun resultado con su busqueda','one': '1 ' +config().singular+ ' encontrada','other':'{} '+config().name+' encontradas'}\"></ng-pluralize>\n" +
     "            </span>\n" +
@@ -63,7 +63,7 @@ define([], function() {  	angular.module("gt.abm.templates", []).run(["$template
     "        </div>\n" +
     "    </div>\n" +
     "    <!-- ADVANCED SEARCH -->\n" +
-    "    <div class=\"panel panel-default\" style=\"margin: 0 1em\">\n" +
+    "    <div class=\"panel panel-default\" style=\"margin: 0 1em\" ng-hide=\"hideSearch\">\n" +
     "        <div class=\"panel-body\">\n" +
     "            <div class=\"row\">\n" +
     "                <div class=\"col-sm-{{config().filterColSpan||'12'}}\" style=\"margin-bottom: 1em;\">\n" +
