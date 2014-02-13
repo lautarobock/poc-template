@@ -24,9 +24,6 @@
                 ng-options="(point.name+' - '+point.formatted_address) for point in points"
                 >
                 <option value="">-- None --</option>
-                <!-- <option ng-model="selected" ng-change="selectPoint(selected)" ng-repeat="point in points">
-                  {{$index+1}}) {{point.name}} - {{point.formatted_address}}
-                </option> -->
               </select>
             </div>
           </div>
@@ -35,7 +32,15 @@
               <markers fit="true" models="points" coords="'self'"><!-- icon="'icon'"-->
 
               </markers> 
+              <marker coords="marker.coords" icon="marker.icon">
+
+              </marker>
             </div>
+          </div>
+        </div>
+        <div class="col-sm-12 well">
+          <div ng-repeat="component in brewery.address_components">
+            <b>{{ ('brewery.data.location.address.' + component.types[0]) | translate }}</b>: {{ component.long_name }}
           </div>
         </div>
       </div>

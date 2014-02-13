@@ -37,9 +37,17 @@ define(['../resources'], function() {
 
             //Map Section
             $scope.map = {
-                center: $scope.position.coords,
+                center: {
+                    latitude:0,
+                    longitude:0
+                },
                 zoom: 14
             };
+
+            // $scope.$watch("position.coords", function(value) {
+            //     $scope.map.center = value;
+            // });
+
             $scope.points = [];
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 MainTitle.add($scope.brewery.name);
@@ -144,9 +152,21 @@ define(['../resources'], function() {
             //Map Section
             $scope.points = [];
             $scope.map = {
-                center: $scope.position.coords,
+                center: {
+                    latitude: 0,
+                    longitude: 0
+                },
                 zoom: 12
             };
+
+            $scope.marker = {
+                coords: {
+                    longitude: 0,
+                    latitude: 0
+                },
+                icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0000D9'
+            };
+            
 
             $scope.searchLocation = function($event,searchText) {
                 if ( $event.keyCode == 13 ) {
@@ -173,19 +193,34 @@ define(['../resources'], function() {
 
             $scope.selectPoint = function(point) {
                 console.log("point", point);
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({
-                        latLng: new google.maps.LatLng(
-                            point.geometry.location.d,
-                            point.geometry.location.e)
-                    }, 
-                    function(results, status) {
-                  if (status == google.maps.GeocoderStatus.OK) {
-                    console.log("geocode", results);
-                  } else {
-                    console.log("Geocode was not successful for the following reason: " + status);
-                  }
-                });
+                if ( point ) {
+                    $scope.marker.coords = {
+                        latitude: point.geometry.location.d,
+                        longitude: point.geometry.location.e
+                    };
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({
+                            latLng: new google.maps.LatLng(
+                                point.geometry.location.d,
+                                point.geometry.location.e)
+                        }, 
+                        function(results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                console.log("geocode", results);
+                                $scope.$apply(function() {
+                                    $scope.brewery.address_components = results[0].address_components;    
+                                });
+                            } else {
+                                console.log("Geocode was not successful for the following reason: " + status);
+                                $scope.$apply(function() {
+                                    $scope.brewery.address_components = [];    
+                                });
+                            }
+                    });    
+                } else {
+                    $scope.brewery.address_components = [];  
+                }
+                
                 // ngGPlacesAPI.placeDetails({reference:point.reference})
                 //     .then(function(details) {
                 //         console.log('details',details);
@@ -195,7 +230,13 @@ define(['../resources'], function() {
 
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 MainTitle.add($scope.brewery.name);
-                $scope.points.push($scope.brewery.location);
+                if ( $scope.brewery.location ) {
+                    $scope.points.push($scope.brewery.location);
+                } else {
+                    $scope.$watch("position.coords", function(value) {
+                        $scope.map.center = value;
+                    });
+                }
                 $scope.$on("$destroy", function() {
                     MainTitle.clearAdd();
                 });

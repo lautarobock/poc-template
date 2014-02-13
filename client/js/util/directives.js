@@ -69,8 +69,8 @@ define([], function() {
 
     directives.directive('secureAdmin', function() {
         return function(scope,element) {
-            scope.$watch("user", function(value, old) {
-                if ( value && value.isAdmin ) {
+            scope.$watch("user.isAdmin", function(value, old) {
+                if ( value ) {
                     element.removeClass('hidden');
                 } else {
                     element.addClass('hidden');

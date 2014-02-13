@@ -12,6 +12,9 @@
           <div ng-show="brewery.location"><b>{{ 'brewery.data.location.address' | translate }}</b>: 
             {{brewery.location.formatted_address}}
           </div>
+          <div ng-repeat="component in brewery.address_components">
+            <b>{{ ('brewery.data.location.address.' + component.types[0]) | translate }}</b>: {{ component.long_name }}
+          </div>
 
         </div>
         <div class="col-md-6" id="map200" ng-show="brewery.location">
@@ -25,6 +28,12 @@
       <div class="well well-sm" ng-show="brewery.description">
         <h4>{{ 'beer.data.description' | translate }}</h4>
         <div style="white-space: pre-wrap;box-sizing: border-box;" ng-bind-html="brewery.description|enrich" ></div>
+      </div>
+      <div class="pull-right"> 
+        <a secure-admin class="btn btn-info" href="#/brewery/edit/{{brewery._id}}" >
+          <span class="glyphicon glyphicon-edit"></span>
+          {{ 'form.edit' | translate }}
+        </a>  
       </div>
     </fieldset>
   </form>

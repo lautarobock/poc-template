@@ -9,11 +9,6 @@ exports.User = mongoose.model("User",new Schema({
     creationDate: Date,
     lastLoginDate: Date,
     isAdmin: Boolean
-  //   ,
-  //   ratings: [{
-  //   	beer: {type: String, ref: 'Beer'},
-		// finalScore: [Number]
-  //   }]
 }));
 
 exports.Rating = mongoose.model("Rating", new Schema({
@@ -76,7 +71,8 @@ exports.Brewery = mongoose.model("Brewery",new Schema({
 	"_id": String,
     "name": String,
     "web": String
-    //"location": String
+    //"location": Object
+    //address_components: Object
 },{ _id: false, strict: false }));
 
 exports.StyleByLabel = mongoose.model("StyleByLabel",new Schema({

@@ -6,7 +6,8 @@ define(["resources"], function() {
         return {
             brewery: function(brewery_id) {
                 $location.$$search = {};
-                $location.path("/beer").search('brewery._id',brewery_id);
+                // $location.path("/beer").search('brewery._id',brewery_id);
+                $location.path("/brewery/detail/"+brewery_id);
             },
             style: function(style_id) {
                 $location.$$search = {};
