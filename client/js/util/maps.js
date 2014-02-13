@@ -121,7 +121,16 @@ define([], function() {
 
     maps.directive("dlMap", function() {
         return {
-            
+            restrict: 'AE',
+            replace: false,
+            scope : {
+                map: '=',
+                heightId: '@'
+            },
+            template: '<div google-map id="{{heightId}}" draggable="true" center="map.center" zoom="map.zoom">'
+                + '<markers fit="true" models="map.points" coords="\'self\'"></markers> '
+                + '<marker coords="map.marker.coords" icon="map.marker.icon" options="map.marker.options"></marker>'
+                + '</div>'
         };
     });
 
