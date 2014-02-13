@@ -22,6 +22,12 @@ define(['../resources'], function() {
                         type: 'link',
                         class: function() {return "dl-font-bold";},
                         href: function(row) {return '#/brewery/detail/' + row._id;}
+                    },{
+                        field:'locality',
+                        caption: $translate('brewery.data.location.address.locality')
+                    },{
+                        field:'country',
+                        caption: $translate('brewery.data.location.address.country')
                     }
                 ]
             };

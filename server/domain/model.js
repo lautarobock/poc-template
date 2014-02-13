@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var util = require('../../client/js/util/util.js');
 
 
 exports.User = mongoose.model("User",new Schema({
@@ -67,13 +68,46 @@ exports.Beer = mongoose.model("Beer", new Schema({
 
 },{ _id: false }));
 
-exports.Brewery = mongoose.model("Brewery",new Schema({
-	"_id": String,
+var berwerySchema = new Schema({
+    "_id": String,
     "name": String,
-    "web": String
-    //"location": Object
-    //address_components: Object
-},{ _id: false, strict: false }));
+    "web": String,
+    //location: Object
+    address_components: [{
+        long_name : String,
+        short_name : String,
+        types : [String]
+    }]
+},{ _id: false, 
+    strict: false,  
+    toObject: {virtuals: true},
+    toJSON: {virtuals: true}
+});
+
+function addVitualAddressComponent(schema, virtual) {
+    schema.virtual(virtual).get(function() {
+        if ( this.address_components ) {
+            var indexOf = util.Arrays.indexOf(this.address_components, function(item) {
+                var index = util.Arrays.indexOf(item.types, function(type) {
+                    return type == virtual ? 0 : -1;
+                });
+                return index != -1 ? 0 : -1;
+            });
+            if ( indexOf != -1 ) {
+                return this.address_components[indexOf].long_name;    
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    });    
+}
+
+addVitualAddressComponent(berwerySchema,'locality');
+addVitualAddressComponent(berwerySchema,'country');
+
+exports.Brewery = mongoose.model("Brewery",berwerySchema);
 
 exports.StyleByLabel = mongoose.model("StyleByLabel",new Schema({
 	"_id": String,

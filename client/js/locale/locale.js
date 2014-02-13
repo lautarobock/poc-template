@@ -115,9 +115,10 @@ define([], function() {
                 'brewery.data.location.address.street_number': 'Numero',
                 'brewery.data.location.address.route': 'Calle',
                 'brewery.data.location.address.locality': 'Localidad',
-                'brewery.data.location.address.administrative_area_level_1': 'Area administrativa nivel 1',
-                'brewery.data.location.address.administrative_area_level_2': 'Area administrativa nivel 2',
-                'brewery.data.location.address.administrative_area_level_3': 'Area administrativa nivel 3',
+                'brewery.data.location.address.neighborhood': 'Barrio',
+                'brewery.data.location.address.administrative_area_level_1': 'Area nivel 1',
+                'brewery.data.location.address.administrative_area_level_2': 'Area nivel 2',
+                'brewery.data.location.address.administrative_area_level_3': 'Area nivel 3',
                 'brewery.data.location.address.country': 'Pais',
                 'brewery.data.location.address.postal_code': 'Codigo Postal',
                 'brewery.data.location.address.postal_town': 'Localidad postal'
