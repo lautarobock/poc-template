@@ -1,10 +1,10 @@
-define(['../resources'], function() {
+define(['../resources','util/maps'], function() {
 
-    var brewery = angular.module("dl.brewery", ["dl.resources",'google-maps','ngGPlaces',]);
+    var brewery = angular.module("dl.brewery", ["dl.resources",'google-maps','dl.maps']);
 
     brewery.controller("BreweryController", 
-        ['$scope', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log', 'Responsive','RatingService',
-        function($scope, $translate, DLHelper, Brewery,$location,Cache, $log, Responsive,RatingService) {
+        ['$scope', '$translate', 'Brewery', 'Responsive',
+        function($scope, $translate, Brewery, Responsive) {
 
             $scope.config = {
                 data: Brewery,
@@ -34,32 +34,17 @@ define(['../resources'], function() {
     }]);
 
     brewery.controller("BreweryDetailController", 
-                ['$scope', 'Brewery','$routeParams', 'Rating', 'DLHelper', '$filter', 
-                'MainTitle','CellarService','RatingService', 'YesNo', 'Beer', '$translate', 'Responsive',
-                'ngGPlacesAPI',
-        function( $scope,   Brewery,  $routeParams,   Rating,   DLHelper,   $filter, 
-            MainTitle, CellarService, RatingService, YesNo, Beer, $translate, Responsive,
-            ngGPlacesAPI) {
+                ['$scope', 'Brewery','$routeParams', 'DLHelper', 'MainTitle', 'Beer', '$translate', 'Responsive', 'MapFactory',
+        function( $scope,   Brewery,  $routeParams,  DLHelper, MainTitle,  Beer, $translate, Responsive, MapFactory) {
 
-            //Map Section
-            $scope.map = {
-                center: {
-                    latitude:0,
-                    longitude:0
-                },
-                zoom: 14
-            };
+            $scope.map = MapFactory.map(0,0,14);
 
-            // $scope.$watch("position.coords", function(value) {
-            //     $scope.map.center = value;
-            // });
-
-            $scope.points = [];
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
+                
                 MainTitle.add($scope.brewery.name);
                 if ( $scope.brewery.location ) {
-                    $scope.map.center = angular.copy($scope.brewery.location);
-                    $scope.points.push($scope.brewery.location);    
+                    $scope.map.centerAt(angular.copy($scope.brewery.location));
+                    $scope.map.addPoint($scope.brewery.location);    
                 }
 
                 $scope.$on("$destroy", function() {
@@ -138,12 +123,8 @@ define(['../resources'], function() {
     }]);
 
     brewery.controller("BreweryEditController", 
-                ['$scope', 'Brewery','$routeParams', 'Rating', 'DLHelper', '$filter', 
-                'MainTitle','CellarService','RatingService', 'YesNo', 'Beer', '$translate', 'Responsive',
-                'ngGPlacesAPI',
-        function( $scope,   Brewery,  $routeParams,   Rating,   DLHelper,   $filter, 
-            MainTitle, CellarService, RatingService, YesNo, Beer, $translate, Responsive,
-            ngGPlacesAPI) {
+                ['$scope', 'Brewery','$routeParams', 'MainTitle', 'MapFactory', 'MapSearch', 'MapHelper',
+        function( $scope, Brewery, $routeParams, MainTitle, MapFactory, MapSearch, MapHelper) {
 
             $scope.cancel = function() {
                 window.history.back();
@@ -156,93 +137,57 @@ define(['../resources'], function() {
             };
 
             //Map Section
-            $scope.points = [];
-            $scope.map = {
-                center: {
-                    latitude: 0,
-                    longitude: 0
-                },
-                zoom: 12
-            };
-
-            $scope.marker = {
-                coords: {
-                    longitude: 0,
-                    latitude: 0
-                },
-                icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|0000D9'
-            };
-            
+            $scope.map = MapFactory.map();
 
             $scope.searchLocation = function($event,searchText) {
                 if ( $event.keyCode == 13 ) {
-                    ngGPlacesAPI.textSearch({
-                        latitude: $scope.position.coords.latitude,
-                        longitude: $scope.position.coords.longitude,
-                        radius: '500', query:searchText}).then(
-                            function (data) {
-                                $scope.points = data;
-                                angular.forEach($scope.points, function(c) {
-                                    c.latitude = c.geometry.location.d;
-                                    c.longitude = c.geometry.location.e;
-                                });
-                                $scope.$log.debug("search result", data);
-                                return data;
-                            },
-                            function(err) {
-                                $scope.points = [];
-                                console.log(err);
-                            }
-                    );
+                    MapSearch.textSearch(searchText, function(data) {
+                            $scope.map.points = data;
+                        }
+                    )
                 }
             };
 
             $scope.selectPoint = function(point) {
-                console.log("point", point);
+                $scope.$log.debug("point", point);
                 if ( point ) {
-                    $scope.marker.coords = {
-                        latitude: point.geometry.location.d,
-                        longitude: point.geometry.location.e
-                    };
+
+                    $scope.map.showMarkerAt(MapHelper.geo2latLng(point))
+
                     var geocoder = new google.maps.Geocoder();
-                    geocoder.geocode({
-                            latLng: new google.maps.LatLng(
-                                point.geometry.location.d,
-                                point.geometry.location.e)
-                        }, 
+                    geocoder.geocode({latLng: point.geometry.location}, 
                         function(results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
-                                console.log("geocode", results);
+                                $scope.$log.debug("geocode", results);
                                 $scope.$apply(function() {
                                     $scope.brewery.address_components = results[0].address_components;    
                                 });
                             } else {
-                                console.log("Geocode was not successful for the following reason: " + status);
+                                $scope.$log.error("Geocode was not successful for the following reason: " + status);
                                 $scope.$apply(function() {
                                     $scope.brewery.address_components = [];    
                                 });
                             }
                     });    
                 } else {
+                    $scope.map.hideMarker();
                     $scope.brewery.address_components = [];  
                 }
                 
-                // ngGPlacesAPI.placeDetails({reference:point.reference})
-                //     .then(function(details) {
-                //         console.log('details',details);
-                //     });
             };
             
 
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 MainTitle.add($scope.brewery.name);
+                
                 if ( $scope.brewery.location ) {
-                    $scope.points.push($scope.brewery.location);
+                    $scope.map.addPoint($scope.brewery.location);
                 } else {
                     $scope.$watch("position.coords", function(value) {
-                        $scope.map.center = value;
+                        $scope.map.centerAt(value);
                     });
                 }
+
                 $scope.$on("$destroy", function() {
                     MainTitle.clearAdd();
                 });

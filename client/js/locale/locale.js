@@ -114,6 +114,8 @@ define([], function() {
                 'brewery.data.location.address': 'Direccion',
                 'brewery.data.location.address.street_number': 'Numero',
                 'brewery.data.location.address.route': 'Calle',
+                'brewery.data.location.address.establishment': 'Establecimiento',
+                'brewery.data.location.address.sublocality': 'Sub-localidad',
                 'brewery.data.location.address.locality': 'Localidad',
                 'brewery.data.location.address.neighborhood': 'Barrio',
                 'brewery.data.location.address.administrative_area_level_1': 'Area nivel 1',
