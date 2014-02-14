@@ -19,6 +19,9 @@ define([], function() {
         }
     });
 
+    /**
+     * @see http://stackoverflow.com/questions/8248077/google-maps-v3-standard-icon-shadow-names-equiv-of-g-default-icon-in-v2
+     */
     maps.factory("MapIcon", function() {
         var baseUrl = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|'
         return {
@@ -33,6 +36,9 @@ define([], function() {
             },
             custom: function(color) {
                 return baseUrl + color;
+            },
+            bar: function() {
+                return "http://icons.iconarchive.com/icons/benbackman/one-piece/32/Barrel-Beer-icon.png"
             }
         };
     });
@@ -46,15 +52,15 @@ define([], function() {
                     return target;
                 } else {
                     return {
-                        latitude: source.geometry.location.d,
-                        longitude: source.geometry.location.e
+                        latitude: parseFloat(source.geometry.location.d),
+                        longitude: parseFloat(source.geometry.location.e)
                     };
                 }
             }
         };
     });
 
-    maps.factory("MapSearch", ['ngGPlacesAPI',function(ngGPlacesAPI) {
+    maps.factory("MapSearch", ['ngGPlacesAPI','MapIcon','MapHelper',function(ngGPlacesAPI,MapIcon,MapHelper) {
         return {
             textSearch: function(text, onSuccess,onError) {
                 ngGPlacesAPI.textSearch({
@@ -64,8 +70,8 @@ define([], function() {
                     query:text}).then(
                         function (data) {
                             angular.forEach(data, function(c) {
-                                c.latitude = c.geometry.location.d;
-                                c.longitude = c.geometry.location.e;
+                                MapHelper.geo2latLng(c,c);
+                                c.icon = null;
                             });
                             onSuccess(data);
                             return data;
@@ -80,25 +86,28 @@ define([], function() {
 
     maps.factory("MapFactory", ['MapIcon',function(MapIcon) {
         return {
-            marker: function(lat, lng, visible, icon) {
+            marker: function(opt) {
+                opt = opt || {};
                 return {
                     coords: {
-                        longitude: lat||0,
-                        latitude: lng||0
+                        longitude: opt.lat||0,
+                        latitude: opt.lng||0
                     },
                     options: {
-                        visible: visible||false
+                        visible: opt.visible||false
                     },
-                    icon: icon||MapIcon.blue()
+                    icon: opt.icon||MapIcon.blue()
                 };
             },
-            map: function(lat, lng, zoom) {
+            map: function(opt) {
+                opt = opt || {};
                 return {
                     center: {
-                        latitude: lat||0,
-                        longitude: lng||0
+                        latitude: opt.lat||0,
+                        longitude: opt.lng||0
                     },
-                    zoom: zoom||12,
+                    zoom: opt.zoom||12,
+                    fit: opt.fit,
                     points: [],
                     addPoint: function(point)  {
                         this.points.push(point);
@@ -106,7 +115,7 @@ define([], function() {
                     centerAt: function(point) {
                         this.center = point;
                     },
-                    marker: this.marker(),
+                    marker: opt.marker || this.marker(),
                     showMarkerAt: function(coords) {
                         this.marker.coords = coords;
                         this.marker.options.visible = true;
@@ -122,15 +131,14 @@ define([], function() {
     maps.directive("dlMap", function() {
         return {
             restrict: 'AE',
-            replace: true,
+            replace: false,
             scope : {
-                map: '=',
-                heightId: '@'
+                map: '='
             },
-            template: '<div><div google-map id="map200" draggable="true" center="map.center" zoom="map.zoom">'
-                + '<markers fit="true" models="map.points" coords="\'self\'"></markers> '
+            template: '<div google-map draggable="true" center="map.center" zoom="map.zoom">'
+                + '<markers fit="map.fit" models="map.points" coords="\'self\'" icon="\'icon\'"></markers> '
                 + '<marker coords="map.marker.coords" icon="map.marker.icon" options="map.marker.options"></marker>'
-                + '</div></div>'
+                + '</div>'
         };
     });
 

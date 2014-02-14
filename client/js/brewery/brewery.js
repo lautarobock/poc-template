@@ -1,6 +1,6 @@
-define(['../resources','util/maps'], function() {
+define(['../resources','util/maps','util/misc'], function() {
 
-    var brewery = angular.module("dl.brewery", ["dl.resources",'google-maps','dl.maps']);
+    var brewery = angular.module("dl.brewery", ["dl.resources",'google-maps','dl.maps','ngRoute','dl.misc']);
 
     brewery.controller("BreweryController", 
         ['$scope', '$translate', 'Brewery', 'Responsive',
@@ -37,7 +37,7 @@ define(['../resources','util/maps'], function() {
                 ['$scope', 'Brewery','$routeParams', 'DLHelper', 'MainTitle', 'Beer', '$translate', 'Responsive', 'MapFactory',
         function( $scope,   Brewery,  $routeParams,  DLHelper, MainTitle,  Beer, $translate, Responsive, MapFactory) {
 
-            $scope.map = MapFactory.map(0,0,14);
+            $scope.map = MapFactory.map({zoom:14});
 
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 
@@ -123,8 +123,8 @@ define(['../resources','util/maps'], function() {
     }]);
 
     brewery.controller("BreweryEditController", 
-                ['$scope', 'Brewery','$routeParams', 'MainTitle', 'MapFactory', 'MapSearch', 'MapHelper',
-        function( $scope, Brewery, $routeParams, MainTitle, MapFactory, MapSearch, MapHelper) {
+                ['$scope', 'Brewery','$routeParams', 'MainTitle', 'MapFactory', 'MapSearch', 'MapHelper', 'MapIcon',
+        function( $scope, Brewery, $routeParams, MainTitle, MapFactory, MapSearch, MapHelper, MapIcon) {
 
             $scope.cancel = function() {
                 window.history.back();
@@ -137,25 +137,34 @@ define(['../resources','util/maps'], function() {
             };
 
             //Map Section
-            $scope.map = MapFactory.map();
+            $scope.map = MapFactory.map({
+                fit:true
+            });
 
             $scope.searchLocation = function($event,searchText) {
                 if ( $event.keyCode == 13 ) {
                     MapSearch.textSearch(searchText, function(data) {
-                            $scope.map.points = data;
-                        }
-                    )
+                        $scope.map.points = data;
+                    })
                 }
             };
 
+            $scope.$watch("brewery.location", function(value, old) {
+                if ( old ) {
+                    old.icon = null;
+                }
+                if ( value ) {
+                    value.icon = MapIcon.bar();    
+                }
+                $scope.selectPoint(value);
+            });
+
             $scope.selectPoint = function(point) {
-                $scope.$log.debug("point", point);
+                $scope.$log.info("point", point);
                 if ( point ) {
-
-                    $scope.map.showMarkerAt(MapHelper.geo2latLng(point))
-
+                    // var deferred = $q.defer();
                     var geocoder = new google.maps.Geocoder();
-                    geocoder.geocode({latLng: point.geometry.location}, 
+                    geocoder.geocode({latLng: new google.maps.LatLng(point.latitude, point.longitude)}, 
                         function(results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 $scope.$log.debug("geocode", results);
@@ -170,16 +179,16 @@ define(['../resources','util/maps'], function() {
                             }
                     });    
                 } else {
-                    $scope.map.hideMarker();
                     $scope.brewery.address_components = [];  
                 }
                 
             };
             
-
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 MainTitle.add($scope.brewery.name);
-                
+                $scope.$on("$destroy", function() {
+                    MainTitle.clearAdd();
+                });
                 if ( $scope.brewery.location ) {
                     $scope.map.addPoint($scope.brewery.location);
                 } else {
@@ -187,11 +196,6 @@ define(['../resources','util/maps'], function() {
                         $scope.map.centerAt(value);
                     });
                 }
-
-                $scope.$on("$destroy", function() {
-                    MainTitle.clearAdd();
-                });
-                
             });
 
     }]);

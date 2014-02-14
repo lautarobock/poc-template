@@ -17,11 +17,12 @@
           </div>
 
         </div>
-        <div class="col-md-6" id="map200" ng-show="brewery.location">
-          <div google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
-            <markers models="map.points" coords="'self'"><!-- icon="'icon'"-->
+        <div class="col-md-6" ng-show="brewery.location">
+          <!-- <div id="map200" google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
+            <markers models="map.points" coords="'self'" icon="'icon'">
             </markers> 
-          </div>
+          </div> -->
+          <div dl-map map="map" id="map200"></div>
         </div>
       </div>
       <p></p>

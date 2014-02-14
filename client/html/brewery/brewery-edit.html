@@ -20,7 +20,8 @@
               <input class="form-control input input-sm" ng-keyup="searchLocation($event,searchLocationText)" ng-model="searchLocationText">
             </div>
             <div class="form-group">
-              <select ng-change="selectPoint(brewery.location)" ng-model="brewery.location" style="height: 130px;" class="form-control input input-sm" size="10"
+              <!-- ng-change="selectPoint(brewery.location)" -->
+              <select  ng-model="brewery.location" style="height: 130px;" class="form-control input input-sm" size="10"
                 ng-options="(point.name+' - '+point.formatted_address) for point in map.points"
                 >
                 <option value="">-- None --</option>
@@ -28,11 +29,7 @@
             </div>
           </div>
           <div class="col-md-6">
-            <!-- <div google-map id="map200" draggable="true" center="map.center" zoom="map.zoom">
-              <markers fit="true" models="map.points" coords="'self'"></markers> 
-              <marker coords="map.marker.coords" icon="map.marker.icon" options="map.marker.options"></marker>
-            </div> -->
-            <div dl-map map="map" height-id="map200"></div>
+            <div dl-map map="map" id="map200"></div>
           </div>
         </div>
         <div class="col-sm-12 well">
