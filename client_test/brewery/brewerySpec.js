@@ -64,12 +64,13 @@ define(["brewery/brewery"], function(DataHelper) {
                 maps: {
                     Geocoder: function() {
                         this.geocode = function(params, cb) {
-                            setTimeout(function() {
-                                cb([{
-                                    address_components: {}
-                                }],"OK");    
-                            },0)
-                            
+                            cb([{
+                                address_components: [{
+                                    long_name: "Nombre Largo",
+                                    types: []
+                                }]
+                            }],"OK");    
+                        
                         };
                     },
                     GeocoderStatus: {
@@ -88,15 +89,16 @@ define(["brewery/brewery"], function(DataHelper) {
                 };
                 return brewery;
             });
-            // spyOn(google.maps,'Geocoder').andCallFake(function() {
 
-            // });
-            
             var $scope = $rootScope.$new();
 
             var breweryEditController = $controller("BreweryEditController", {$scope: $scope});
 
             $scope.selectPoint({latitude: 1,longitude:1});
+
+            $rootScope.$digest();
+
+            expect($scope.brewery.address_components.length).toBe(1);
 
         }));
     });

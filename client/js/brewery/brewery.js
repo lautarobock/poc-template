@@ -162,22 +162,14 @@ define(['../resources','util/maps','util/misc'], function() {
             $scope.selectPoint = function(point) {
                 $scope.$log.info("point", point);
                 if ( point ) {
-                    // var deferred = $q.defer();
-                    var geocoder = new google.maps.Geocoder();
-                    geocoder.geocode({latLng: new google.maps.LatLng(point.latitude, point.longitude)}, 
-                        function(results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                $scope.$log.debug("geocode", results);
-                                $scope.$apply(function() {
-                                    $scope.brewery.address_components = results[0].address_components;    
-                                });
-                            } else {
-                                $scope.$log.error("Geocode was not successful for the following reason: " + status);
-                                $scope.$apply(function() {
-                                    $scope.brewery.address_components = [];    
-                                });
-                            }
-                    });    
+                    MapSearch.geocode(point).then(function(results) {
+                            $scope.$log.debug("geocode", results);
+                            $scope.brewery.address_components = results[0].address_components;
+                        }, function(cause) {
+                            $scope.$log.error("Geocode was not successful for the following reason: " + status);
+                            $scope.brewery.address_components = [];    
+                        }
+                    );
                 } else {
                     $scope.brewery.address_components = [];  
                 }

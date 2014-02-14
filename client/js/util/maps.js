@@ -60,8 +60,26 @@ define([], function() {
         };
     });
 
-    maps.factory("MapSearch", ['ngGPlacesAPI','MapIcon','MapHelper',function(ngGPlacesAPI,MapIcon,MapHelper) {
+    maps.factory("MapSearch", 
+        ['ngGPlacesAPI','MapIcon','MapHelper', '$q',
+        function(ngGPlacesAPI,MapIcon,MapHelper, $q) {
         return {
+            /**
+             * @param point {latitude: Float, longitude: Float}
+            */
+            geocode: function (point) {
+                var deferred = $q.defer();
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({latLng: new google.maps.LatLng(point.latitude, point.longitude)}, 
+                    function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            deferred.resolve(results);
+                        } else {
+                            deferred.reject(status);
+                        }
+                });
+                return deferred.promise;
+            },
             textSearch: function(text, onSuccess,onError) {
                 ngGPlacesAPI.textSearch({
                     latitude: myPosition.coords.latitude,
