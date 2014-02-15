@@ -5,8 +5,10 @@ define([], function() {
     var RADIUS = 500;
 
     var myPosition = {
-        latitude: 0,
-        longitude: 0
+        coords: {
+            latitude: 0,
+            longitude: 0
+        }
     };
 
     maps.run(function() {
@@ -119,29 +121,41 @@ define([], function() {
             },
             map: function(opt) {
                 opt = opt || {};
-                return {
+                var map = {
                     center: {
-                        latitude: opt.lat||0,
-                        longitude: opt.lng||0
+                        latitude: opt.lat || 0,
+                        longitude: opt.lng || 0
                     },
-                    zoom: opt.zoom||12,
+                    zoom: opt.zoom || 12,
                     fit: opt.fit,
                     points: [],
-                    addPoint: function(point)  {
+                    setPoints: function (points) {
+                        angular.forEach(points, function (p) {
+                            p.onClick = function () {
+                                if (map.pointSelected) map.pointSelected(p);
+                            }
+                        });
+                        this.points = points;
+                    },
+                    addPoint: function (point) {
+                        point.onClick = function () {
+                            if (map.pointSelected) map.pointSelected(point);
+                        }
                         this.points.push(point);
                     },
-                    centerAt: function(point) {
+                    centerAt: function (point) {
                         this.center = point;
                     },
                     marker: opt.marker || this.marker(),
-                    showMarkerAt: function(coords) {
+                    showMarkerAt: function (coords) {
                         this.marker.coords = coords;
                         this.marker.options.visible = true;
                     },
-                    hideMarker: function() {
-                        this.marker.options.visible = false; 
+                    hideMarker: function () {
+                        this.marker.options.visible = false;
                     }
-                }
+                };
+                return  map
             }
         };
     }]);
@@ -154,7 +168,7 @@ define([], function() {
                 map: '='
             },
             template: '<div google-map draggable="true" center="map.center" zoom="map.zoom">'
-                + '<markers fit="map.fit" models="map.points" coords="\'self\'" icon="\'icon\'"></markers> '
+                + '<markers fit="map.fit" models="map.points" coords="\'self\'" icon="\'icon\'" click="\'onClick\'"></markers> '
                 + '<marker coords="map.marker.coords" icon="map.marker.icon" options="map.marker.options"></marker>'
                 + '</div>'
         };

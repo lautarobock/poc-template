@@ -96,5 +96,6 @@
 	cursor: pointer
 }
 
+#mapRating .angular-google-map-container { height: 160px; }
 #map400 .angular-google-map-container { height: 400px; }
 #map200 .angular-google-map-container { height: 200px; }

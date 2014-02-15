@@ -5,10 +5,25 @@ define(["rating/rating","resources"], function() {
 
 
     rating.controller("RatingEditController", [
-        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 'DLHelper', 'RatingService',
-        function($scope, $routeParams, Rating, $location, Beer, $translate, DLHelper,RatingService) {
+        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 'DLHelper', 'RatingService','MapFactory', 'MapSearch', 'MapHelper', 'MapIcon',
+        function($scope, $routeParams, Rating, $location, Beer, $translate, DLHelper,RatingService, MapFactory, MapSearch, MapHelper, MapIcon) {
 
             $scope.initialScore = null;
+
+            //Map Section
+            $scope.map = MapFactory.map({
+                fit:true
+            });
+
+            $scope.searchLocation = function($event,searchText) {
+                if ( $event.keyCode == 13 ) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    MapSearch.textSearch(searchText, function(data) {
+                        $scope.map.points = data;
+                    })
+                }
+            };
 
             $scope.$watch("user._id", function(user_id) {
                 if ( user_id ) {
@@ -107,7 +122,7 @@ define(["rating/rating","resources"], function() {
                 expiration: false
             };
             
-            $scope.open = function($event, type) {
+            $scope.openDate = function($event, type) {
                 $event.preventDefault();
                 $event.stopPropagation();
 
