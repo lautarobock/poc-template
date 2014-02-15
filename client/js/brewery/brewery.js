@@ -123,8 +123,8 @@ define(['../resources','util/maps','util/misc'], function() {
     }]);
 
     brewery.controller("BreweryEditController", 
-                ['$scope', 'Brewery','$routeParams', 'MainTitle', 'MapFactory', 'MapSearch', 'MapHelper', 'MapIcon',
-        function( $scope, Brewery, $routeParams, MainTitle, MapFactory, MapSearch, MapHelper, MapIcon) {
+                ['$scope', 'Brewery','$routeParams', 'MainTitle', 'MapFactory', 'MapSearch', 'MapHelper', 'MapIcon','$timeout',
+        function( $scope, Brewery, $routeParams, MainTitle, MapFactory, MapSearch, MapHelper, MapIcon, $timeout) {
 
             $scope.cancel = function() {
                 window.history.back();
@@ -140,13 +140,21 @@ define(['../resources','util/maps','util/misc'], function() {
             $scope.map = MapFactory.map({
                 fit:true
             });
-            $scope.map.pointSelected = function(p) {
-                $scope.brewery.location = p;
-                $scope.$apply();
-            };
+//            $scope.map.pointSelected = function(p) {
+//                $scope.brewery.location = p;
+//                $scope.$apply();
+//            };
+            $scope.map.onClick().then(function(point) {
+//                $scope.brewery.location = point;
+            },function(point) {
+//                $scope.brewery.location = point;
+            },function(point) {
+                $scope.brewery.location = point;
+            });
 
             $scope.searchLocation = function($event,searchText) {
                 if ( $event.keyCode == 13 ) {
+                    $scope.map.fit = true;
                     MapSearch.textSearch(searchText, function(data) {
 //                        angular.forEach(data, function(d) {
 //                            d.onClick = function() {
@@ -156,6 +164,9 @@ define(['../resources','util/maps','util/misc'], function() {
 //                            };
 //                        });
                         $scope.map.setPoints(data);
+                        $timeout(function() {
+                            $scope.map.fit = false;
+                        },100)
                     })
                 }
             };

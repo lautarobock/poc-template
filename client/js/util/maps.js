@@ -104,7 +104,7 @@ define([], function() {
         };
     }]);
 
-    maps.factory("MapFactory", ['MapIcon',function(MapIcon) {
+    maps.factory("MapFactory", ['MapIcon','$q',function(MapIcon, $q) {
         return {
             marker: function(opt) {
                 opt = opt || {};
@@ -121,10 +121,14 @@ define([], function() {
             },
             map: function(opt) {
                 opt = opt || {};
+                var deferred = $q.defer();
                 var map = {
                     center: {
                         latitude: opt.lat || 0,
                         longitude: opt.lng || 0
+                    },
+                    onClick: function() {
+                        return deferred.promise;
                     },
                     zoom: opt.zoom || 12,
                     fit: opt.fit,
@@ -132,14 +136,16 @@ define([], function() {
                     setPoints: function (points) {
                         angular.forEach(points, function (p) {
                             p.onClick = function () {
-                                if (map.pointSelected) map.pointSelected(p);
+//                                if (map.pointSelected) map.pointSelected(p);
+                                deferred.notify(p);
                             }
                         });
                         this.points = points;
                     },
                     addPoint: function (point) {
                         point.onClick = function () {
-                            if (map.pointSelected) map.pointSelected(point);
+//                            if (map.pointSelected) map.pointSelected(point);
+                            deferred.notify(point);
                         }
                         this.points.push(point);
                     },
