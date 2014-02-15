@@ -65,6 +65,8 @@
               {{'rating.vintage'|translate}}:
               <b>{{ rating.bottled | date:'yyyy' }}</b>
             </span>
+            <span style="color: black;" class="glyphicon glyphicon-flash"></span>
+            {{rating.location.formatted_address}}
           </div>
           <div collapse="!rating.score">
             {{ 'rating.data.appearance' | translate }}: <b>{{ rating.score.appearance }}/3</b>

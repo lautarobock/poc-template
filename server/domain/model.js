@@ -31,7 +31,7 @@ exports.Rating = mongoose.model("Rating", new Schema({
 	place: String,
 	creationDate: Date,
 	updateDate: Date
-}));
+}, {strict: false}));
 
 exports.Beer = mongoose.model("Beer", new Schema({
 	_id: String,

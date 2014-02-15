@@ -406,6 +406,7 @@ define(['../resources'], function() {
                 };
 
                 $scope.showValues = function(beer) {
+                    if ( !beer ) return false;
                     var show = false;
                     angular.forEach($scope.values, function(v) {
                         show = show || beer[v];

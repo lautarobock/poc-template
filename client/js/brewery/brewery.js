@@ -140,10 +140,7 @@ define(['../resources','util/maps','util/misc'], function() {
             $scope.map = MapFactory.map({
                 fit:true
             });
-//            $scope.map.pointSelected = function(p) {
-//                $scope.brewery.location = p;
-//                $scope.$apply();
-//            };
+
             $scope.map.onClick().then(function(point) {
 //                $scope.brewery.location = point;
             },function(point) {
@@ -156,13 +153,6 @@ define(['../resources','util/maps','util/misc'], function() {
                 if ( $event.keyCode == 13 ) {
                     $scope.map.fit = true;
                     MapSearch.textSearch(searchText, function(data) {
-//                        angular.forEach(data, function(d) {
-//                            d.onClick = function() {
-////                                $scope.selectPoint(d);
-//                                $scope.brewery.location = d;
-////                                $scope.$apply();
-//                            };
-//                        });
                         $scope.map.setPoints(data);
                         $timeout(function() {
                             $scope.map.fit = false;
@@ -204,12 +194,6 @@ define(['../resources','util/maps','util/misc'], function() {
                     MainTitle.clearAdd();
                 });
                 if ( $scope.brewery.location ) {
-//                    var d = $scope.brewery.location;
-//                    d.onClick = function() {
-////                        $scope.selectPoint(d);
-//                        $scope.brewery.location = d;
-////                        $scope.$apply();
-//                    };
                     $scope.map.addPoint($scope.brewery.location);
                 } else {
                     $scope.$watch("position.coords", function(value) {

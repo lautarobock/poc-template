@@ -14,13 +14,35 @@ define(["rating/rating","resources"], function() {
             $scope.map = MapFactory.map({
                 fit:true
             });
+            $scope.map.onClick().then(function(point) {
+//                $scope.brewery.location = point;
+            },function(point) {
+//                $scope.brewery.location = point;
+            },function(point) {
+                $scope.rating.location = point;
+            });
 
+            $scope.selectPoint = function(point) {
+                $scope.$log.info("point", point);
+                if ( point ) {
+                    MapSearch.geocode(point).then(function(results) {
+                            $scope.$log.debug("geocode", results);
+                            $scope.rating.address_components = results[0].address_components;
+                        }, function(cause) {
+                            $scope.$log.error("Geocode was not successful for the following reason: " + status);
+                            $scope.rating.address_components = [];
+                        }
+                    );
+                } else {
+                    $scope.rating.address_components = [];
+                }
+            };
             $scope.searchLocation = function($event,searchText) {
                 if ( $event.keyCode == 13 ) {
                     $event.preventDefault();
                     $event.stopPropagation();
                     MapSearch.textSearch(searchText, function(data) {
-                        $scope.map.points = data;
+                        $scope.map.setPoints(data);
                     })
                 }
             };
@@ -32,6 +54,13 @@ define(["rating/rating","resources"], function() {
                         $scope.rating = Rating.get({_id: $routeParams.rating_id}, function() {
                             $scope.initialScore = $scope.rating.finalScore;
                             loadBeer();
+                            if ( $scope.rating.location ) {
+                                $scope.map.addPoint($scope.rating.location);
+                            } else {
+                                $scope.$watch("position.coords", function(value) {
+                                    $scope.map.centerAt(value);
+                                });
+                            }
                         });
                     } else {
                         $scope.rating = new Rating();
@@ -40,6 +69,15 @@ define(["rating/rating","resources"], function() {
                         $scope.rating.date = new Date();
                         loadBeer();
                     }
+                    $scope.$watch("rating.location", function(value, old) {
+                        if ( old ) {
+                            old.icon = null;
+                        }
+                        if ( value ) {
+                            value.icon = MapIcon.bar();
+                        }
+                        $scope.selectPoint(value);
+                    });
                 }
             });
 
