@@ -41,7 +41,7 @@
   <form class="form-horizontal">
     <h3>{{'beer.data.score.count'|translate}}</h3>
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat="rating in ratings">
+        <li class="list-group-item" ng-repeat="rating in ratings | orderBy:'-date'">
           <div>
             <span class="badge" style="float: left;margin-right: 1em;" ng-class="ratingScoreClass(rating.finalScore)">
               <span ng-show="rating.score">{{ rating.finalScore }}</span>

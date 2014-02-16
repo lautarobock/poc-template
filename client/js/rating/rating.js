@@ -5,19 +5,18 @@ define(["rating/rating","resources"], function() {
 
 
     rating.controller("RatingEditController", [
-        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 'DLHelper', 'RatingService','MapFactory', 'MapSearch', 'MapHelper', 'MapIcon',
-        function($scope, $routeParams, Rating, $location, Beer, $translate, DLHelper,RatingService, MapFactory, MapSearch, MapHelper, MapIcon) {
+        '$scope', '$routeParams', 'Rating', '$location', 'Beer', '$translate', 
+        'DLHelper', 'RatingService','MapFactory', 'MapSearch', 'MapHelper', 'MapIcon', '$timeout',
+        function($scope, $routeParams, Rating, $location, Beer, $translate, 
+            DLHelper,RatingService, MapFactory, MapSearch, MapHelper, MapIcon, $timeout) {
 
             $scope.initialScore = null;
 
             //Map Section
-            $scope.map = MapFactory.map({
-                fit:true
-            });
+            $scope.map = MapFactory.map();
+            
             $scope.map.onClick().then(function(point) {
-//                $scope.brewery.location = point;
             },function(point) {
-//                $scope.brewery.location = point;
             },function(point) {
                 $scope.rating.location = point;
             });
@@ -26,10 +25,8 @@ define(["rating/rating","resources"], function() {
                 $scope.$log.info("point", point);
                 if ( point ) {
                     MapSearch.geocode(point).then(function(results) {
-                            $scope.$log.debug("geocode", results);
                             $scope.rating.address_components = results[0].address_components;
                         }, function(cause) {
-                            $scope.$log.error("Geocode was not successful for the following reason: " + status);
                             $scope.rating.address_components = [];
                         }
                     );
@@ -41,8 +38,12 @@ define(["rating/rating","resources"], function() {
                 if ( $event.keyCode == 13 ) {
                     $event.preventDefault();
                     $event.stopPropagation();
+                    $scope.map.fit = true;
                     MapSearch.textSearch(searchText, function(data) {
                         $scope.map.setPoints(data);
+                        $timeout(function () {
+                            $scope.map.fit = false;
+                        },100);
                     })
                 }
             };
@@ -56,6 +57,7 @@ define(["rating/rating","resources"], function() {
                             loadBeer();
                             if ( $scope.rating.location ) {
                                 $scope.map.addPoint($scope.rating.location);
+                                $scope.map.centerAt(angular.copy($scope.rating.location));
                             } else {
                                 $scope.$watch("position.coords", function(value) {
                                     $scope.map.centerAt(value);
