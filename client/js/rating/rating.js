@@ -258,6 +258,9 @@ define(["rating/rating","resources"], function() {
                             format: function(value) {
                                 return $filter('date')(value,'dd-MM-yyyy');
                             }
+                        },{
+                            field:'location.name',
+                            caption: $translate('brewery.data.location')
                         }
                     ]
                 };

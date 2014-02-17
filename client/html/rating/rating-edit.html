@@ -61,15 +61,8 @@
               </label>
               <input class="form-control input-sm" ng-keydown="searchLocation($event,searchLocationText)" ng-model="searchLocationText">
           </div>
-          <!--<div class="form-group">-->
-              <!--<label class="control-label">{{ 'brewery.data.location' | translate }}</label>-->
-              <!--<div class="input-group">-->
-                  <!--<input class="form-control input input-sm" ng-keyup="searchLocation($event,searchLocationText)" ng-model="searchLocationText">-->
-              <!--</div>-->
-          <!--</div>-->
-          
           <div class="well" style="margin-top: 2px;margin-bottom:2px;padding:0.5em">
-            <b>{{ 'brewery.data.location.address' | translate }}</b>: {{ rating.location.formatted_address }}
+            <b>{{ 'brewery.data.location.address' | translate }}</b>: {{ rating.location.name }} - {{ rating.location.formatted_address }}
           </div>
           <div dl-map map="map" id="mapRating" style="margin-top: 2px"></div>
       </div>
