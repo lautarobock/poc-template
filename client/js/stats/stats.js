@@ -1,6 +1,6 @@
-define(["resources","util/misc"], function() {
+define(["resources","util/misc", "util/maps"], function() {
 
-    var stats = angular.module("dl.stats", ['dl.resources','dl.misc','pascalprecht.translate']);
+    var stats = angular.module("dl.stats", ['dl.resources','dl.misc','pascalprecht.translate','dl.maps']);
 
     /*
     - Genenral
@@ -42,7 +42,8 @@ define(["resources","util/misc"], function() {
 
     stats.controller("StatsController", 
         ['$scope','Rating', 'StatsService', '$filter', 'Cache', '$translate', '$location', 'Brewery', 'GoTo',
-        function($scope,Rating, StatsService, $filter, Cache, $translate,$location, Brewery, GoTo) {
+        'MapFactory',
+        function($scope,Rating, StatsService, $filter, Cache, $translate,$location, Brewery, GoTo,MapFactory) {
             
             $scope.$watch("user", function(user) {
                 if ( user ) {
@@ -63,6 +64,9 @@ define(["resources","util/misc"], function() {
             },{
                 name: 'breweries',
                 caption: $translate('beer.data.brewery')
+            },{
+                name: 'map',
+                caption: $translate('general.map')
             }];
             $scope.tabSelected = $scope.tabs[0];
 
@@ -121,6 +125,8 @@ define(["resources","util/misc"], function() {
                     loadCharts();
 
                     loadTabs();
+
+                    loadMap(ratings);
 
                     //Rating per month chart
                     var categories = [];
@@ -449,6 +455,16 @@ define(["resources","util/misc"], function() {
                     bottom: 3
                 };
 
+            }
+
+            function loadMap(ratings) {
+                $scope.map = MapFactory.map({fit:true});
+                angular.forEach(ratings, function(rating) {
+                    if ( rating.location ) {
+                        $scope.map.addPoint(rating.location);
+                    }
+                });
+                // $scope.map.setPoints()
             }
     }]);
 

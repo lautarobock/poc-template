@@ -76,7 +76,7 @@ define(["rating/rating","resources"], function() {
                             old.icon = null;
                         }
                         if ( value ) {
-                            value.icon = MapIcon.bar();
+                            value.icon = MapIcon.beer();
                         }
                         $scope.selectPoint(value);
                     });
@@ -172,39 +172,6 @@ define(["rating/rating","resources"], function() {
             $scope.save = function() {
 
                 $scope.rating.$save(function(rating) {
-                    // //Esto deberia hacerlo en el servidor y luego de el $save deberia volver a cargar el 
-                    // //usuario, nada mas.
-                    // var result = util.Arrays.filter($scope.user.ratings, function(item) {
-                    //     return item.beer == rating.beer ? 0 : -1;
-                    // });
-                    // if ( rating.finalScore ) {
-                    //     if ( result.length != 0 ) {
-                    //         //Esto quiere decir q esta editando y que tenia un valor antes (lo elimino)
-                    //         if ( $scope.initialScore ) {
-                    //             util.Arrays.remove(result[0].finalScore,$scope.initialScore);
-                    //         }
-                    //         //Ahora ya puedo agregar el valor
-                    //         result[0].finalScore.push(rating.finalScore);
-                    //     } else {
-                    //         $scope.user.ratings.push({
-                    //             beer: rating.beer,
-                    //             finalScore: [rating.finalScore]
-                    //         });    
-                    //     }
-                    //     $scope.user.$save(function() {
-                    //         window.history.back();
-                    //     });
-                    // } else if ( result.length == 0 ) {
-                    //     $scope.user.ratings.push({
-                    //         beer: rating.beer,
-                    //         finalScore: []
-                    //     });
-                    //     $scope.user.$save(function() {
-                    //         window.history.back();
-                    //     });
-                    // } else {
-                    //     window.history.back();    
-                    // }
                     RatingService.loadMyRatings();
                     window.history.back();
                 });

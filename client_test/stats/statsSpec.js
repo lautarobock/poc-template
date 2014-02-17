@@ -2,6 +2,16 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
 
     describe("stats", function() {
 
+        // beforeEach(function() {
+        //     //Mock google maps modules
+        //     var dummy1 = angular.module('google-maps', []);
+
+        //     var placesDummy = angular.module('ngGPlaces', []);
+        //     placesDummy.factory("ngGPlacesAPI", function() {
+        //         return {};
+        //     });
+        // });
+
         beforeEach(angular.mock.module('dl.stats'));
 
         it("Should load stats", inject(function($controller, $rootScope, Cache, Brewery, Rating, $filter) {

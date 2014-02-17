@@ -22,6 +22,9 @@
         <div ng-switch-when="general">
             <div ng-include="'stats/stats-general.html'"></div>
         </div>
+        <div ng-switch-when="map">
+            <div ng-include="'stats/stats-map.html'"></div>
+        </div>
         <div ng-switch-default>
             <gt-table style="margin-top: 4.8em;" config="tabConfig[tabSelected.name]" context="context[tabSelected.name]"></gt-table>
         </div>

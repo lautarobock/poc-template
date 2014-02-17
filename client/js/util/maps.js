@@ -39,6 +39,9 @@ define([], function() {
             custom: function(color) {
                 return baseUrl + color;
             },
+            beer: function() {
+                return "http://icons.iconarchive.com/icons/dapino/beach/32/beer-icon.png";
+            },
             bar: function() {
                 return "http://icons.iconarchive.com/icons/benbackman/one-piece/32/Barrel-Beer-icon.png"
             }
