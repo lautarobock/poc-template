@@ -459,9 +459,10 @@ define(["resources","util/misc", "util/maps"], function() {
 
             function loadMap(ratings) {
                 $scope.map = MapFactory.map({
-                    fit:true,
-                    clusterOptions:{maxZoom: 20},
-                    doCluster: true
+                    fit:true
+                    // ,
+                    // clusterOptions:{maxZoom: 20},
+                    // doCluster: true
                 });
                 // $timeout(function() {
                 //     $scope.map.fit = true;
