@@ -9,7 +9,7 @@
           
           <div ng-show="brewery.web"><b>{{ 'brewery.data.web' | translate }}</b>: <a href="{{ brewery.web }}" target="_blank">{{ brewery.web }}</a></div>
 
-          <div ng-show="brewery.location"><b>{{ 'brewery.data.location.address' | translate }}</b>: 
+          <div ng-show="brewery.location.latitude"><b>{{ 'brewery.data.location.address' | translate }}</b>: 
             {{brewery.location.formatted_address}}
           </div>
           <div ng-repeat="component in brewery.address_components">
@@ -17,7 +17,7 @@
           </div>
 
         </div>
-        <div class="col-md-6" ng-show="brewery.location">
+        <div class="col-md-6" ng-show="brewery.location.latitude">
           <!-- <div id="map200" google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
             <markers models="map.points" coords="'self'" icon="'icon'">
             </markers> 
