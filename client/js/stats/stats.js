@@ -459,21 +459,13 @@ define(["resources","util/misc", "util/maps"], function() {
 
             function loadMap(ratings) {
                 $scope.map = MapFactory.map({
-                    fit:true
-                    // ,
-                    // clusterOptions:{maxZoom: 20},
-                    // doCluster: true
+                    fit:true,
+                    clusterOptions:{maxZoom: 20},
+                    doCluster: true
                 });
-                // $timeout(function() {
-                //     $scope.map.fit = true;
-                //     $timeout(function() {
-                //         $scope.map.fit = false;
-                //     },200);
-                // },200);
-                var list = [];
-                angular.forEach(ratings, function(rating) {    
+                angular.forEach(ratings, function(rating) {
                     if ( rating.location ) {
-                        list.push({
+                        $scope.map.addPoint({
                             latitude: rating.location.latitude,
                             longitude: rating.location.longitude,
                             name: rating.location.name,
@@ -484,7 +476,6 @@ define(["resources","util/misc", "util/maps"], function() {
                         });
                     }
                 });
-                $scope.map.setPoints(list);
             }
     }]);
 

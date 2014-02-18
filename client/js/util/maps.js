@@ -133,30 +133,29 @@ define([], function() {
                     onClick: function() {
                         return deferred.promise;
                     },
-                    doCluster: opt.doCluster || false,
-                    clusterOptions: opt.clusterOptions || {},
                     zoom: opt.zoom || 12,
                     fit: opt.fit,
                     points: [],
                     setPoints: function (points) {
                         angular.forEach(points, function (p) {
                             p.onClick = function () {
+//                                if (map.pointSelected) map.pointSelected(p);
                                 deferred.notify(p);
-                            };
+                            }
                         });
                         this.points = points;
                     },
                     addPoint: function (point) {
                         point.onClick = function () {
+//                            if (map.pointSelected) map.pointSelected(point);
                             deferred.notify(point);
-                        };
+                        }
                         this.points.push(point);
                     },
                     centerAt: function (point) {
                         this.center = point;
                     },
                     marker: opt.marker || this.marker(),
-                    coords: opt.coords || 'self',
                     showMarkerAt: function (coords) {
                         this.marker.coords = coords;
                         this.marker.options.visible = true;
@@ -173,15 +172,12 @@ define([], function() {
     maps.directive("dlMap", function() {
         return {
             restrict: 'AE',
-            transclude: true,
             replace: false,
             scope : {
                 map: '='
             },
             template: '<div google-map draggable="true" center="map.center" zoom="map.zoom">'
-                + '<markers doCluster="map.doCluster" clusterOptions="map.clusterOptions" fit="map.fit" models="map.points" coords="map.coords" icon="\'icon\'" click="\'onClick\'" >'
-                + '<span ng-transclude></span>'
-                + '</markers> '
+                + '<markers fit="map.fit" models="map.points" coords="\'self\'" icon="\'icon\'" click="\'onClick\'"></markers> '
                 + '<marker coords="map.marker.coords" icon="map.marker.icon" options="map.marker.options"></marker>'
                 + '</div>'
         };
