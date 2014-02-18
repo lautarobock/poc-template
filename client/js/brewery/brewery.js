@@ -42,7 +42,7 @@ define(['../resources','util/maps','util/misc'], function() {
             $scope.brewery = Brewery.get({_id: $routeParams.brewery_id}, function() {
                 
                 MainTitle.add($scope.brewery.name);
-                if ( $scope.brewery.location ) {
+                if ( $scope.brewery.location && $scope.brewery.location.latitude ) {
                     $scope.map.centerAt(angular.copy($scope.brewery.location));
                     $scope.map.addPoint($scope.brewery.location);    
                 }
@@ -193,7 +193,7 @@ define(['../resources','util/maps','util/misc'], function() {
                 $scope.$on("$destroy", function() {
                     MainTitle.clearAdd();
                 });
-                if ( $scope.brewery.location ) {
+                if ( $scope.brewery.location && $scope.brewery.location.latitude ) {
                     $scope.map.addPoint($scope.brewery.location);
                 } else {
                     $scope.$watch("position.coords", function(value) {
