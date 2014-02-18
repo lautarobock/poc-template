@@ -42,8 +42,8 @@ define(["resources","util/misc", "util/maps"], function() {
 
     stats.controller("StatsController", 
         ['$scope','Rating', 'StatsService', '$filter', 'Cache', '$translate', '$location', 'Brewery', 'GoTo',
-        'MapFactory',
-        function($scope,Rating, StatsService, $filter, Cache, $translate,$location, Brewery, GoTo,MapFactory) {
+        'MapFactory', '$timeout',
+        function($scope,Rating, StatsService, $filter, Cache, $translate,$location, Brewery, GoTo,MapFactory,$timeout) {
             
             $scope.$watch("user", function(user) {
                 if ( user ) {
@@ -459,10 +459,13 @@ define(["resources","util/misc", "util/maps"], function() {
 
             function loadMap(ratings) {
                 $scope.map = MapFactory.map({
-                    fit:true,
+                    fit:false,
                     clusterOptions:{maxZoom: 20},
                     doCluster: true
                 });
+                $timeout(function() {
+                    $scope.map.fit = true;
+                },200);
                 angular.forEach(ratings, function(rating) {
                     if ( rating.location ) {
                         $scope.map.addPoint({
