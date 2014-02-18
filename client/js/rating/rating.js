@@ -55,7 +55,7 @@ define(["rating/rating","resources"], function() {
                         $scope.rating = Rating.get({_id: $routeParams.rating_id}, function() {
                             $scope.initialScore = $scope.rating.finalScore;
                             loadBeer();
-                            if ( $scope.rating.location.latitude ) {
+                            if ( $scope.rating.location && $scope.rating.location.latitude ) {
                                 $scope.map.addPoint($scope.rating.location);
                                 $scope.map.centerAt(angular.copy($scope.rating.location));
                             } else {

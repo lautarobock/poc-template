@@ -471,7 +471,7 @@ define(["resources","util/misc", "util/maps"], function() {
                 // },200);
                 var list = [];
                 angular.forEach(ratings, function(rating) {    
-                    if ( rating.location.latitude ) {
+                    if ( rating.location && rating.location.latitude ) {
                         list.push({
                             latitude: rating.location.latitude,
                             longitude: rating.location.longitude,
