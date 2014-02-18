@@ -30,8 +30,45 @@ exports.Rating = mongoose.model("Rating", new Schema({
 	date: Date,
 	place: String,
 	creationDate: Date,
-	updateDate: Date
-}, {strict: false}));
+	updateDate: Date,
+    location: {
+        formatted_address: String,
+        geometry: {
+            location : {
+                d : Number,
+                e : Number
+            },
+            viewport: {
+                ta : {
+                    d : Number,
+                    b : Number
+                },
+                ga : {
+                    b : Number,
+                    d : Number
+                }
+            }
+        },
+        html_attributions: [String],
+        icon: String,
+        id: String,
+        name: String,
+        // opening_hours: {},
+        reference: String,
+        types: [String],
+        vicinity: String,
+        latitude: Number,
+        longitude: Number
+
+    },
+    address_components: [{
+        long_name : String,
+        short_name : String,
+        types : [String]
+    }]
+}, {
+    // strict: false
+}));
 
 exports.Beer = mongoose.model("Beer", new Schema({
 	_id: String,
@@ -72,14 +109,43 @@ var berwerySchema = new Schema({
     "_id": String,
     "name": String,
     "web": String,
-    //location: Object
+    location: {
+        formatted_address: String,
+        geometry: {
+            location : {
+                d : Number,
+                e : Number
+            },
+            viewport: {
+                ta : {
+                    d : Number,
+                    b : Number
+                },
+                ga : {
+                    b : Number,
+                    d : Number
+                }
+            }
+        },
+        html_attributions: [String],
+        icon: String,
+        id: String,
+        name: String,
+        // opening_hours: {},
+        reference: String,
+        types: [String],
+        vicinity: String,
+        latitude: Number,
+        longitude: Number
+
+    },
     address_components: [{
         long_name : String,
         short_name : String,
         types : [String]
     }]
 },{ _id: false, 
-    strict: false,  
+    // strict: false,  
     toObject: {virtuals: true},
     toJSON: {virtuals: true}
 });
