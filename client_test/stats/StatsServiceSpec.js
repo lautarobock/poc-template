@@ -64,6 +64,10 @@ define(["../DataHelper.js"], function(DataHelper) {
             expect(myStats.months[1]._id).toBe('2012_12');
             expect(myStats.months[1].count).toBe(36);
 
+            // expect(myStats.locations.length).toBe(1);
+            // expect(myStats.locations[0].count).toBe(2);
+            // expect(myStats.locations[0].location.id).toBe("fa0c810999a431f2edcc64785dc2970c28e74394");
+
 		}));
 
 	});

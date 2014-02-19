@@ -458,32 +458,52 @@ define(["resources","util/misc", "util/maps"], function() {
             }
 
             function loadMap(ratings) {
+
+                $scope.changeSource = function() {
+                    var list = [];
+                    angular.forEach(ratings, function(rating) { 
+                        if ( $scope.conf.pointsSource == "rating" ) {
+                            if ( rating.location && rating.location.latitude ) {
+                                list.push({
+                                    latitude: rating.location.latitude,
+                                    longitude: rating.location.longitude,
+                                    name: rating.location.name,
+                                    icon: rating.location.icon,
+                                    beer: rating.beer.name,
+                                    popup: rating.beer.name + " - " + rating.location.name,
+                                    _id: rating._id
+                                });
+                            }    
+                        } else {
+                            var brewery = $scope.breweries[rating.beer.brewery];
+                            if ( brewery.location && brewery.location.latitude ) {
+                                list.push({
+                                    latitude: brewery.location.latitude,
+                                    longitude: brewery.location.longitude,
+                                    name: brewery.location.name,
+                                    icon: brewery.location.icon,
+                                    beer: brewery.name,
+                                    popup: brewery.name + " - " + brewery.location.name,
+                                    _id: brewery._id
+                                });
+                            }
+                        }
+                    });
+                    $scope.map.setPoints(list);
+                };
+
+                $scope.conf = {
+                    pointsSource: "rating"
+                };
+
                 $scope.map = MapFactory.map({
                     fit:true,
-                    clusterOptions:{maxZoom: 20},
+                    clusterOptions:{},
                     doCluster: true
                 });
-                // $timeout(function() {
-                //     $scope.map.fit = true;
-                //     $timeout(function() {
-                //         $scope.map.fit = false;
-                //     },200);
-                // },200);
-                var list = [];
-                angular.forEach(ratings, function(rating) {    
-                    if ( rating.location && rating.location.latitude ) {
-                        list.push({
-                            latitude: rating.location.latitude,
-                            longitude: rating.location.longitude,
-                            name: rating.location.name,
-                            icon: rating.location.icon,
-                            beer: rating.beer.name,
-                            popup: rating.beer.name + " - " + rating.location.name,
-                            _id: rating._id
-                        });
-                    }
-                });
-                $scope.map.setPoints(list);
+
+                $scope.changeSource();
+                
             }
     }]);
 

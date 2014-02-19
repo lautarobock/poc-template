@@ -43,7 +43,26 @@ define([], function() {
 			    "updateDate": "2014-01-07T17:37:43.717Z",
 			    "user": "52c663bcf52ea90200000002",
 			    "finalScore": 39,
-			    "score": {
+				"location" : {
+					"formatted_address" : "Plaça de Sant Pere, 9, 08003 Barcelona, España",
+					"geometry" : {
+						"location" : {
+							"d" : 41.3892461,
+							"e" : 2.179312799999934
+						}
+					},
+					"html_attributions" : [ ],
+					"icon" : "http://icons.iconarchive.com/icons/dapino/beach/32/beer-icon.png",
+					"id" : "fa0c810999a431f2edcc64785dc2970c28e74394",
+					"name" : "Plaça de Sant Pere, 9",
+					"reference" : "CqQBnAAAALM8hWj2yS7yLVHjGiNJqk6k2QZBzQxNW9_W4w_hIRhCeseEZakwYioDdQjfhnD0UH3gEd6CT7JwjfgC4_ZanKz-Z-aUrfo2Dd75TBAEZVvBTuK4QZMyRsHWtxg8A84LonuueVDHxzn-u0tjYUEkJs4tynrwDQ6lxvve5Bt4wd9rrHIxJux6nvDSj-A4DWgxtRWP-AG8aIyi1OhDGQwtYO8SECMDLC8sfI1LYU9k4POjMp4aFHidiPE3JycLGQd2LCpAraA3uSDM",
+					"types" : [
+						"street_address"
+					],
+					"latitude" : 41.3892461,
+					"longitude" : 2.179312799999934
+				},
+				"score": {
 			      "appearance": 3,
 			      "aroma": 9,
 			      "flavor": 15,
@@ -97,6 +116,25 @@ define([], function() {
 			    "updateDate": "2014-01-17T12:15:52.343Z",
 			    "user": "52c663bcf52ea90200000002",
 			    "finalScore": 42,
+				"location" : {
+					"formatted_address" : "Plaça de Sant Pere, 9, 08003 Barcelona, España",
+					"geometry" : {
+						"location" : {
+							"d" : 41.3892461,
+							"e" : 2.179312799999934
+						}
+					},
+					"html_attributions" : [ ],
+					"icon" : "http://icons.iconarchive.com/icons/dapino/beach/32/beer-icon.png",
+					"id" : "fa0c810999a431f2edcc64785dc2970c28e74394",
+					"name" : "Plaça de Sant Pere, 9",
+					"reference" : "CqQBnAAAALM8hWj2yS7yLVHjGiNJqk6k2QZBzQxNW9_W4w_hIRhCeseEZakwYioDdQjfhnD0UH3gEd6CT7JwjfgC4_ZanKz-Z-aUrfo2Dd75TBAEZVvBTuK4QZMyRsHWtxg8A84LonuueVDHxzn-u0tjYUEkJs4tynrwDQ6lxvve5Bt4wd9rrHIxJux6nvDSj-A4DWgxtRWP-AG8aIyi1OhDGQwtYO8SECMDLC8sfI1LYU9k4POjMp4aFHidiPE3JycLGQd2LCpAraA3uSDM",
+					"types" : [
+						"street_address"
+					],
+					"latitude" : 41.3892461,
+					"longitude" : 2.179312799999934
+				},
 			    "score": {
 			      "appearance": 2,
 			      "aroma": 10,

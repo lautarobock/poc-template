@@ -5,5 +5,9 @@
         		<span style="color:black" ng-non-bindable>{{beer}} <br/> {{'brewery.data.location'|translate}}: {{name}}</span>
         	</windows>
         </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" ng-change="changeSource()" ng-model="conf.pointsSource" btn-radio="'rating'">{{'menu.me.califications'|translate}}</button>
+            <button type="button" class="btn btn-primary" ng-change="changeSource()" ng-model="conf.pointsSource" btn-radio="'brewery'">{{'beer.data.brewery'|translate}}s</button>
+        </div>
     </div>
 </div>
