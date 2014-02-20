@@ -178,7 +178,7 @@ define([], function() {
             scope : {
                 map: '='
             },
-            template: '<div google-map draggable="true" center="map.center" zoom="map.zoom">'
+            template: '<div google-map draggable="true" events="map.events" center="map.center" zoom="map.zoom">'
                 + '<markers doCluster="map.doCluster" clusterOptions="map.clusterOptions" fit="map.fit" models="map.points" coords="map.coords" icon="\'icon\'" click="\'onClick\'" >'
                 + '<span ng-transclude></span>'
                 + '</markers> '

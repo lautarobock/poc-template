@@ -499,7 +499,14 @@ define(["resources","util/misc", "util/maps"], function() {
                 $scope.map = MapFactory.map({
                     fit:true,
                     clusterOptions:{},
-                    doCluster: true
+                    doCluster: true,
+                    events: {
+                        tilesloaded: function(map) {
+                            $scope.$apply(function() {
+                                $scope._map = map;
+                            });
+                        }
+                    }
                 });
 
                 $scope.changeSource();
