@@ -91,6 +91,7 @@ exports.Beer = mongoose.model("Beer", new Schema({
 	og: Number,
 	fg: Number,
     srm: Number,
+    pictureUrl: String,
 	brewery: {type: String, ref: 'Brewery'},
 	description: String,
 	creationDate: Date,

@@ -7,12 +7,17 @@
           <div tooltip="{{ 'beer.data.score.help' | translate }}" class="col-md-1 well well-sm dl-score-detail" ng-class="scoreClass(beer.score.avg)">
             {{ beer.score.avg || '-'}}
           </div>
-          <div class="col-md-8">
+          <div class="col-md-7">
             <div><b>{{ 'beer.data.brewery' | translate }}</b>: <a href="" ng-click="openBrewery(beer.brewery)">{{ beer.brewery.name }}</a></div>
             <div ng-show="beer.brewery.country"><b>{{ 'brewery.data.location' | translate }}</b>: {{ beer.brewery.locality }}, {{ beer.brewery.country }}</div>
             <div><b>{{ 'beer.data.style' | translate }}</b>: <a href="" ng-click="openStyle(beer.style)">{{ beer.style.name }}</a></div>
             <div ng-show="beer.styleByLabel"><b>{{ 'beer.data.styleByLabel' | translate }}</b>: {{ beer.styleByLabel.name }}</div>
             <div><b>{{'beer.data.score.count'|translate}}</b>: {{ beer.score.count }}</div>
+          </div>
+          <div class="col-md-3" style="overflow: hidden;" >
+            <div style="width: 200px; height: 100px;">
+              <img style="margin: 0 0 1em 0; " height="100%" ng-src="{{beer.pictureUrl}}"></img>
+            </div>
           </div>
         </div>
         <div class="col-md-12">
