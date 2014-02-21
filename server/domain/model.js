@@ -12,6 +12,42 @@ exports.User = mongoose.model("User",new Schema({
     isAdmin: Boolean
 }));
 
+var LocationSchema = {
+    formatted_address: String,
+    geometry: {
+        location : {
+            d : Number,
+            e : Number
+        },
+        viewport: {
+            ta : {
+                d : Number,
+                b : Number
+            },
+            ga : {
+                b : Number,
+                d : Number
+            }
+        }
+    },
+    html_attributions: [String],
+    icon: String,
+    id: String,
+    name: String,
+    // opening_hours: {},
+    reference: String,
+    types: [String],
+    vicinity: String,
+    latitude: Number,
+    longitude: Number
+};
+
+var AddressSchema = {
+    long_name : String,
+    short_name : String,
+    types : [String]
+};
+
 exports.Rating = mongoose.model("Rating", new Schema({
 	beer: {type: String, ref: 'Beer'},
 	user: {type: String, ref: 'User'},
@@ -31,41 +67,8 @@ exports.Rating = mongoose.model("Rating", new Schema({
 	place: String,
 	creationDate: Date,
 	updateDate: Date,
-    location: {
-        formatted_address: String,
-        geometry: {
-            location : {
-                d : Number,
-                e : Number
-            },
-            viewport: {
-                ta : {
-                    d : Number,
-                    b : Number
-                },
-                ga : {
-                    b : Number,
-                    d : Number
-                }
-            }
-        },
-        html_attributions: [String],
-        icon: String,
-        id: String,
-        name: String,
-        // opening_hours: {},
-        reference: String,
-        types: [String],
-        vicinity: String,
-        latitude: Number,
-        longitude: Number
-
-    },
-    address_components: [{
-        long_name : String,
-        short_name : String,
-        types : [String]
-    }]
+    location: LocationSchema,
+    address_components: [AddressSchema]
 }, {
     // strict: false
 }));
@@ -109,41 +112,8 @@ var berwerySchema = new Schema({
     "_id": String,
     "name": String,
     "web": String,
-    location: {
-        formatted_address: String,
-        geometry: {
-            location : {
-                d : Number,
-                e : Number
-            },
-            viewport: {
-                ta : {
-                    d : Number,
-                    b : Number
-                },
-                ga : {
-                    b : Number,
-                    d : Number
-                }
-            }
-        },
-        html_attributions: [String],
-        icon: String,
-        id: String,
-        name: String,
-        // opening_hours: {},
-        reference: String,
-        types: [String],
-        vicinity: String,
-        latitude: Number,
-        longitude: Number
-
-    },
-    address_components: [{
-        long_name : String,
-        short_name : String,
-        types : [String]
-    }]
+    location: LocationSchema,
+    address_components: [AddressSchema]
 },{ _id: false, 
     // strict: false,  
     toObject: {virtuals: true},

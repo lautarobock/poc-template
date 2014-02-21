@@ -125,6 +125,13 @@
                 }
             }
             return -1;  
+        },
+        cross: function(array1, array2) {
+            return this.filter(array1, function(item1) {
+                return exports.Arrays.filter(array2, function(item2) {
+                    return item1 == item2 ? 0 : -1;
+                }).length != 0 ? 0 : -1;
+            });
         }
     };
 

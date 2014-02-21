@@ -2,6 +2,29 @@ define(['../resources','util/maps','util/misc'], function() {
 
     var brewery = angular.module("dl.brewery", ["dl.resources",'google-maps','dl.maps','ngRoute','dl.misc']);
 
+
+
+    brewery.filter("validComponent", function() {
+        return function(rows, location) {
+            if ( !location ) return rows;
+            var result=[];
+            var insert = false;
+            angular.forEach(rows, function(r) {
+                if ( !insert && util.Arrays.cross(r.types, location.types).length != 0 ) {
+                    insert = true;
+                }
+                if ( insert ) {
+                    result.push(r);
+                }
+            });
+            if ( result.length == 0 ) {
+                return rows;
+            } else {
+                return result;
+            }
+        };
+    });
+
     brewery.controller("BreweryController", 
         ['$scope', '$translate', 'Brewery', 'Responsive',
         function($scope, $translate, Brewery, Responsive) {

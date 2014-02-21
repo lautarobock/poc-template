@@ -12,7 +12,7 @@
           <div ng-show="brewery.location.latitude"><b>{{ 'brewery.data.location.address' | translate }}</b>: 
             {{brewery.location.formatted_address}}
           </div>
-          <div ng-repeat="component in brewery.address_components">
+          <div ng-repeat="component in brewery.address_components | validComponent:brewery.location">
             <b>{{ ('brewery.data.location.address.' + component.types[0]) | translate }}</b>: {{ component.long_name }}
           </div>
 
