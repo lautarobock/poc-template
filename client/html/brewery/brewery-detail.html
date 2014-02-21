@@ -3,26 +3,24 @@
   <form class="form-horizontal">
     <fieldset>
       <div class="row">
-        <div class="col-md-6">
-          
+        <div class="col-md-6" style=" height: 60px; ">
           <h2>{{ brewery.name }}</h2>
-          
-          <div ng-show="brewery.web"><b>{{ 'brewery.data.web' | translate }}</b>: <a href="{{ brewery.web }}" target="_blank">{{ brewery.web }}</a></div>
-
+        </div>
+        <div class="col-md-6" style=" height: 60px; ">
+          <div ng-show="brewery.web" style="top: 32px; position: absolute; "><b>{{ 'brewery.data.web' | translate }}</b>: <a href="{{ brewery.web }}" target="_blank">{{ brewery.web }}</a></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6" style="overflow: hidden;" >
+          <div style="width: 300px; height: 200px">
+            <img style="margin: 0 0 1em 0; " height="100%" ng-src="{{brewery.pictureUrl}}"></img>
+          </div>
+        </div>
+        <div class="col-md-6" ng-show="brewery.location.latitude">
+          <div dl-map map="map" id="map200"></div>
           <div ng-show="brewery.location.latitude"><b>{{ 'brewery.data.location.address' | translate }}</b>: 
             {{brewery.location.formatted_address}}
           </div>
-          <div ng-repeat="component in brewery.address_components | validComponent:brewery.location">
-            <b>{{ ('brewery.data.location.address.' + component.types[0]) | translate }}</b>: {{ component.long_name }}
-          </div>
-
-        </div>
-        <div class="col-md-6" ng-show="brewery.location.latitude">
-          <!-- <div id="map200" google-map events="map.events" draggable="true" center="map.center" zoom="map.zoom">
-            <markers models="map.points" coords="'self'" icon="'icon'">
-            </markers> 
-          </div> -->
-          <div dl-map map="map" id="map200"></div>
         </div>
       </div>
       <p></p>

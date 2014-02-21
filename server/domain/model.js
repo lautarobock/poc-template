@@ -69,8 +69,6 @@ exports.Rating = mongoose.model("Rating", new Schema({
 	updateDate: Date,
     location: LocationSchema,
     address_components: [AddressSchema]
-}, {
-    // strict: false
 }));
 
 exports.Beer = mongoose.model("Beer", new Schema({
@@ -109,13 +107,13 @@ exports.Beer = mongoose.model("Beer", new Schema({
 },{ _id: false }));
 
 var berwerySchema = new Schema({
-    "_id": String,
-    "name": String,
-    "web": String,
+    _id: String,
+    name: String,
+    web: String,
+    pictureUrl: String,
     location: LocationSchema,
     address_components: [AddressSchema]
 },{ _id: false, 
-    // strict: false,  
     toObject: {virtuals: true},
     toJSON: {virtuals: true}
 });

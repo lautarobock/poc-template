@@ -124,7 +124,8 @@ define([], function() {
                 'brewery.data.location.address.administrative_area_level_3': 'Area nivel 3',
                 'brewery.data.location.address.country': 'Pais',
                 'brewery.data.location.address.postal_code': 'Codigo Postal',
-                'brewery.data.location.address.postal_town': 'Localidad postal'
+                'brewery.data.location.address.postal_town': 'Localidad postal',
+                'brewery.data.pictureUrl': 'Direccion de la imagen'
             }
         };
 });

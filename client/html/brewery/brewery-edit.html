@@ -10,6 +10,9 @@
           <div class="form-group">
             <div dl-input-text id="webpage" value="brewery.web" caption="{{'brewery.data.web'|translate}}"></div>
           </div>
+          <div class="form-group">
+            <div dl-input-text id="pictureUrl" value="brewery.pictureUrl" caption="{{'brewery.data.pictureUrl'|translate}}"></div>
+          </div>
         </div>
       </div>
       <div class="form-group">  
@@ -20,7 +23,6 @@
               <input class="form-control input input-sm" ng-keyup="searchLocation($event,searchLocationText)" ng-model="searchLocationText">
             </div>
             <div class="form-group">
-              <!-- ng-change="selectPoint(brewery.location)" -->
               <select  ng-model="brewery.location" style="height: 130px;" class="form-control input input-sm" size="10"
                 ng-options="(point.name+' - '+point.formatted_address) for point in map.points"
                 >
