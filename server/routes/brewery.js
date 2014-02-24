@@ -1,5 +1,6 @@
 var model = require('../domain/model.js');
 var mongoose = require('mongoose');
+var activity = require("./activity.js");
 
 
 exports.save = function(req, res) {
@@ -8,6 +9,10 @@ exports.save = function(req, res) {
     var now = new Date();
 
     var brewery = req.body;
+
+    var isNew = false;
+    if ( !brewery.creationDate ) isNew = true;
+
 
     if ( !brewery.creationDate ) brewery.creationDate = new Date();
     brewery.updateDate = new Date();
@@ -32,6 +37,15 @@ exports.save = function(req, res) {
 
 
     model.Brewery.findByIdAndUpdate(id,brewery,{upsert:true}).exec(function(err,results) {
+        var user = {
+            _id: req.session.user_id,
+            name: req.session.user_name
+        }
+        if ( isNew ) {
+            activity.newBrewery(user, results);
+        } else {
+            activity.updateBrewery(user, results);
+        }
         res.send(results);
     });
 };
