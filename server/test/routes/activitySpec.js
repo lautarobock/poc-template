@@ -18,6 +18,15 @@ describe("activity.js", function() {
         name: "Lautaro Cozzani"
     };
 
+    var rating = {
+        beer: beer,
+        finalScore: 30
+    };
+
+    var ratingNoCal = {
+        beer: beer
+    };
+
     it("Should create activity for a new Beer", function(done) {
 
         spyOn(model.Activity, 'create');
@@ -83,6 +92,114 @@ describe("activity.js", function() {
             type: activity.UPDATE,
             model: activity.BREWERY,
             text: '<b>Lautaro Cozzani</b> ha editado los datos de la cerveceria <a href="#/brewery/detail/Rochefort">Braserie Rochefort</a>',
+            date: jasmine.any(Date)
+        }, jasmine.any(Function));
+
+        done();
+
+    });
+
+    it("Should create activity for a new User", function(done) {
+
+        spyOn(model.Activity, 'create');
+
+        activity.newUser(user,user);
+
+        expect(model.Activity.create).toHaveBeenCalledWith({
+            user: user._id,
+            type: activity.CREATE,
+            model: activity.USER,
+            text: '<b>Lautaro Cozzani</b> se ha incorporado a la comunidad de BirrasQueHeTomado.com.ar',
+            date: jasmine.any(Date)
+        }, jasmine.any(Function));
+
+        done();
+
+    });
+
+    it("Should create activity for a new Rating with calification", function(done) {
+
+        spyOn(model.Activity, 'create');
+
+        activity.newRating(user,rating);
+
+        expect(model.Activity.create).toHaveBeenCalledWith({
+            user: user._id,
+            type: activity.CREATE,
+            model: activity.RATING,
+            text: '<b>Lautaro Cozzani</b> ha calificado la cerveza <a href="#/beer/detail/Rochefort10-1389632051597">Rochefort 10</a> con un 30',
+            date: jasmine.any(Date)
+        }, jasmine.any(Function));
+
+        done();
+
+    });
+
+    it("Should create activity for a modified Rating with calification", function(done) {
+
+        spyOn(model.Activity, 'create');
+
+        activity.updateRating(user,rating);
+
+        expect(model.Activity.create).toHaveBeenCalledWith({
+            user: user._id,
+            type: activity.UPDATE,
+            model: activity.RATING,
+            text: '<b>Lautaro Cozzani</b> ha modificado la calificacion de la cerveza <a href="#/beer/detail/Rochefort10-1389632051597">Rochefort 10</a> con un 30',
+            date: jasmine.any(Date)
+        }, jasmine.any(Function));
+
+        done();
+
+    });
+
+    it("Should create activity for a new Rating without calification", function(done) {
+
+        spyOn(model.Activity, 'create');
+
+        activity.newRating(user,ratingNoCal);
+
+        expect(model.Activity.create).toHaveBeenCalledWith({
+            user: user._id,
+            type: activity.CREATE,
+            model: activity.RATING,
+            text: '<b>Lautaro Cozzani</b> ha tomado la cerveza <a href="#/beer/detail/Rochefort10-1389632051597">Rochefort 10</a>',
+            date: jasmine.any(Date)
+        }, jasmine.any(Function));
+
+        done();
+
+    });
+
+    it("Should create activity for a modified Rating without calification", function(done) {
+
+        spyOn(model.Activity, 'create');
+
+        activity.updateRating(user,ratingNoCal);
+
+        expect(model.Activity.create).toHaveBeenCalledWith({
+            user: user._id,
+            type: activity.UPDATE,
+            model: activity.RATING,
+            text: '<b>Lautaro Cozzani</b> ha modificado la calificacion de la cerveza <a href="#/beer/detail/Rochefort10-1389632051597">Rochefort 10</a>',
+            date: jasmine.any(Date)
+        }, jasmine.any(Function));
+
+        done();
+
+    });
+
+    it("Should create activity for remove Rating", function(done) {
+
+        spyOn(model.Activity, 'create');
+
+        activity.removeRating(user,rating);
+
+        expect(model.Activity.create).toHaveBeenCalledWith({
+            user: user._id,
+            type: activity.REMOVE,
+            model: activity.RATING,
+            text: '<b>Lautaro Cozzani</b> ha eliminado una calificacion de la cerveza <a href="#/beer/detail/Rochefort10-1389632051597">Rochefort 10</a>',
             date: jasmine.any(Date)
         }, jasmine.any(Function));
 

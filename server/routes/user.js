@@ -1,4 +1,5 @@
 var model = require('../domain/model.js');
+var activity = require("./activity.js");
 
 function buildNewUser(google_id, name, email) {
     var user = new model.User();
@@ -29,6 +30,10 @@ exports.getForLogin = function(req, res){
         } else {
             var newUser = buildNewUser(req.params.google_id,req.query.name, req.query.email);
             model.User.create(newUser,function(err,newuser) {
+                activity.newUser({
+                    _id: newuser._id,
+                    name: newuser.name
+                });
                 var s = req.session;
                 s.user_id = newuser._id;
                 s.user_name = newuser.name;

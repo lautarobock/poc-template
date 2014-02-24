@@ -2,6 +2,7 @@ var model = require('../domain/model.js');
 var mongoose = require('mongoose');
 var mongoutil = require("./util/mongoutil.js");
 var async = require("async");
+var activity = require("./activity.js");
 
 exports.findAll = function(req, res) {
 	var query = model.Rating.find({user:req.session.user_id});
@@ -16,6 +17,13 @@ exports.remove =  function(req, res) {
 	model.Rating.findByIdAndRemove(req.params.id,function(err,results) {
     	model.Beer.findOne({_id: results.beer}).exec(function (err,beer) {
 			exports.updateRating(beer, function() {
+				var user = {
+		            _id: req.session.user_id,
+		            name: req.session.user_name
+		        }
+	            activity.removeRating(user, {
+	            	beer:beer
+	            });
 				res.send(results);
 			});
 		});	
@@ -25,23 +33,35 @@ exports.remove =  function(req, res) {
 
 exports.save = function(req, res) {
 	console.log("INFO","save rating");
+	var isNew = false;
 	if ( !req.body._id ) {
+		isNew = true;
 		req.body.creationDate = new Date();
 	}
 	req.body.updateDate = new Date();
     delete req.body._id;
     var id = new mongoose.Types.ObjectId(req.params.id);
 	model.Rating.findByIdAndUpdate(id,req.body,{upsert:true}).exec(function(err,results) {
-		// if ( req.body.finalScore ) {
-			//Si le puse score, recalculo el avg de la birra y luego todos los percentiles.
-			model.Beer.findOne({_id: req.body.beer}).exec(function (err,beer) {
-				exports.updateRating(beer, function() {
-					res.send(results);
-				});
-			});	
-		// } else {
-		// 	res.send(results);
-		// }
+		model.Beer.findOne({_id: req.body.beer}).exec(function (err,beer) {
+			exports.updateRating(beer, function() {
+				var user = {
+		            _id: req.session.user_id,
+		            name: req.session.user_name
+		        }
+		        if ( isNew ) {
+		            activity.newRating(user, {
+		            	beer:beer,
+		            	finalScore: req.body.finalScore
+		            });
+		        } else {
+		            activity.updateRating(user, {
+		            	beer:beer,
+		            	finalScore: req.body.finalScore
+		            });
+		        }
+				res.send(results);
+			});
+		});
     });	
 };
 

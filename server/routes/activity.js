@@ -40,6 +40,30 @@ textStrategies[BREWERY+UPDATE] = function(user, brewery) {
     return util.format('<b>%s</b> ha editado los datos de la cerveceria <a href="#/brewery/detail/%s">%s</a>',user.name, brewery._id, brewery.name);
 };
 
+textStrategies[USER+CREATE] = function(user) {
+    return util.format('<b>%s</b> se ha incorporado a la comunidad de BirrasQueHeTomado.com.ar',user.name);
+};
+
+textStrategies[RATING+CREATE] = function(user, rating) {
+    if ( rating.finalScore ) {
+        return util.format('<b>%s</b> ha calificado la cerveza <a href="#/beer/detail/%s">%s</a> con un %s',user.name, rating.beer._id, rating.beer.name,rating.finalScore);    
+    } else {
+        return util.format('<b>%s</b> ha tomado la cerveza <a href="#/beer/detail/%s">%s</a>',user.name, rating.beer._id, rating.beer.name);
+    }    
+};
+
+textStrategies[RATING+UPDATE] = function(user, rating) {
+    if ( rating.finalScore ) {
+        return util.format('<b>%s</b> ha modificado la calificacion de la cerveza <a href="#/beer/detail/%s">%s</a> con un %s',user.name, rating.beer._id, rating.beer.name,rating.finalScore);    
+    } else {
+        return util.format('<b>%s</b> ha modificado la calificacion de la cerveza <a href="#/beer/detail/%s">%s</a>',user.name, rating.beer._id, rating.beer.name);
+    }    
+};
+
+textStrategies[RATING+REMOVE] = function(user, rating) {
+    return util.format('<b>%s</b> ha eliminado una calificacion de la cerveza <a href="#/beer/detail/%s">%s</a>',user.name, rating.beer._id, rating.beer.name);
+};
+
 
 function addFunction(m,t) {
     exports[t+m] = function(user, context) {
