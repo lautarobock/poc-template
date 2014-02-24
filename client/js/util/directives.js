@@ -147,6 +147,12 @@ define([], function() {
         }
     }]);
 
+    directives.filter("formatDate", ['$filter',function($filter) {
+        return function(date) {
+            return util.formatDate(date,$filter('date'))
+        };
+    }]);
+
 
 	return directives;
 });

@@ -2,7 +2,7 @@
   <h1>{{'menu.activity' | translate }}</h1>
   <hr>
   <div ng-repeat="activity in activities | orderBy:'-date'">
-    {{activity.date|date:'dd-MM-yyyy'}} - <span ng-bind-html="activity.text"></span> 
+    {{activity.date|formatDate}} - <span ng-bind-html="activity.text"></span> 
   </div>
 </div>
 
