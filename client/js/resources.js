@@ -8,7 +8,7 @@ define([],function() {
         return $resource("/api/login/by_google/:google_id", {}, {});
     });
 
-    var services = ['User','Style','StyleByLabel','Beer','Brewery', 'Category'];
+    var services = ['User','Style','StyleByLabel','Beer','Brewery', 'Category','Activity'];
     angular.forEach(services,function(s) {
         res.factory(s,function($resource, $rootScope) {
             var params = function() {

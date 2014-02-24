@@ -7,6 +7,7 @@ define("app", [
     "brewery/brewery",
     "rating/rating",
     "cellar/cellar",
+    "activity/activity",
     "stats/stats",
     "side/side",
     "util/directives",
@@ -29,6 +30,7 @@ define("app", [
         'dl.brewery',
         'dl.rating',
         'dl.cellar',
+        'dl.activity',
         'dl.stats',
         'dl.side',
         'dl.directives',
@@ -187,6 +189,7 @@ define("app", [
                 when('/rating/edit/:rating_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/detail/:rating_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
                 
+                when('/activity', {templateUrl: 'activity/activity.html', controller: 'ActivityController'}).
 
                 otherwise({redirectTo: '/beer'});
 

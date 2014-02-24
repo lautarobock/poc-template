@@ -189,3 +189,11 @@ exports.Cellar = mongoose.model("Cellar",new Schema({
     "amount": Number,
     "date": Date
 },{ _id: false }));
+
+exports.Activity = mongoose.model("Activity", new Schema({
+    user: {type:String, ref: 'User'},
+    type: String,
+    model: String,
+    text: String,
+    date: Date
+}, { capped: { size: 1024*16, max: 100 } } ));

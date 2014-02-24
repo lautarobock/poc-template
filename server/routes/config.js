@@ -5,6 +5,7 @@ var ratingService = require("./rating");
 var styleService = require("./style");
 var cellarService = require("./cellar");
 var breweryService = require("./brewery");
+var activityService = require("./activity");
 
 /**
  * Filtro para detectar qeu haya un usuario logueado
@@ -91,6 +92,9 @@ exports.createRoutes = function(app) {
 
     //Special for raging by beer
     app.get('/api/Rating/byBeer', require("./rating").getByBeer);
+
+    //Special for activity
+    app.get('/api/Activity', activityService.findAll);
 
     app.delete('/api/Cellar',userFilter, cellarService.clearZeros);
 

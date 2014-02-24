@@ -7,6 +7,7 @@ define([], function() {
                 'menu.loading': 'Cargando',
                 'menu.title.desktop': 'Birras que he tomado',
                 'menu.title.mobile': 'B.Q.H.T.',
+                'menu.activity': 'Actividad',
                 'content.myBeers': 'He Tomado',
                 'content.beers': 'Mejores birras',
                 'content.ratings': 'Las que he tomado',

@@ -1,5 +1,6 @@
 var model = require('../domain/model.js');
 var mongoose = require('mongoose');
+var activity = require("./activity.js");
 
 exports.findAll = function(req, res) {
     var filter = null;
@@ -19,9 +20,11 @@ exports.findAll = function(req, res) {
 
 exports.save = function(req, res) {
     delete req.body._id;
+    var isNew = false;
     var now = new Date();
     req.body.updateDate = now;
     if ( !req.body.version || req.body.version.length == 0 ) {
+        isNew = true;
         req.body.version = [{
             number: 1,
             user_id: req.session.user_id,
@@ -43,6 +46,15 @@ exports.save = function(req, res) {
     req.body.category = req.body.style.substr(0,2);
     model.Beer.findByIdAndUpdate(req.params.id,req.body,{upsert:true})
         .exec(function(err,results) {
+            var user = {
+                _id: req.session.user_id,
+                name: req.session.user_name
+            }
+            if ( isNew ) {
+                activity.newBeer(user, results);
+            } else {
+                activity.updateBeer(user, results);
+            }
             res.send(results);
         }
     );
