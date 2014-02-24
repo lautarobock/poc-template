@@ -71,6 +71,13 @@ exports.Rating = mongoose.model("Rating", new Schema({
     address_components: [AddressSchema]
 }));
 
+var VersionSchema = {
+    number: Number,
+    user_id: String,
+    timeStamp: Date,
+    user_name: String
+};
+
 exports.Beer = mongoose.model("Beer", new Schema({
 	_id: String,
 	name: String,
@@ -98,12 +105,7 @@ exports.Beer = mongoose.model("Beer", new Schema({
 	updateDate: Date,
 	createdBy: {type:String, ref: 'User'},
 	owners: [{type:String, ref: 'User'}],
-    version: [{
-        number: Number,
-        user_id: String,
-        timeStamp: Date,
-        user_name: String
-    }]
+    version: [VersionSchema]
 
 },{ _id: false }));
 
@@ -112,8 +114,12 @@ var berwerySchema = new Schema({
     name: String,
     web: String,
     pictureUrl: String,
+    creationDate: Date,
+    updateDate: Date,
+    createdBy: {type:String, ref: 'User'},
     location: LocationSchema,
-    address_components: [AddressSchema]
+    address_components: [AddressSchema],
+    version: [VersionSchema]
 },{ _id: false, 
     toObject: {virtuals: true},
     toJSON: {virtuals: true}

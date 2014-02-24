@@ -1,6 +1,5 @@
 var model = require('../domain/model.js');
 var mongoose = require('mongoose');
-var mongoutil = require("./util/mongoutil.js");
 
 exports.findAll = function(req, res) {
     var filter = null;

@@ -4,6 +4,7 @@ var beerService = require("./beer");
 var ratingService = require("./rating");
 var styleService = require("./style");
 var cellarService = require("./cellar");
+var breweryService = require("./brewery");
 
 /**
  * Filtro para detectar qeu haya un usuario logueado
@@ -33,7 +34,11 @@ function userFilter(req,res,next){
 
 var services = [{
     name: "Brewery",
-    customId: true
+    customId: true,
+    security: {save: [userFilter]},
+    process: function(rest) {
+        rest.save = breweryService.save;
+    }
 },{
     name: "Rating",
     security: {findAll:[userFilter]},
