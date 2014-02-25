@@ -10,174 +10,250 @@ define(['../resources'], function() {
         ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log', 'Responsive','RatingService',
         function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache, $log, Responsive,RatingService) {
 
-            function sortScore(beer) {
-                if ( beer.score ) {
-                    return beer.score.avg || 0;    
-                }
-                return 0;
-            }
-            function sortScoreStyle(beer) {
-                if ( beer.score ) {
-                    return beer.score.style || 0;    
-                }
-                return 0;   
-            }
-            function sortOverall(beer) {
-                if ( beer.score ) {
-                    return beer.score.overall || 0;    
-                }
-                return 0;   
-            }
-            function sortMyScore(beer) {
-                return $scope.dataHelper.getMyScore(beer)||0;
-            }
-    
-            $scope.dataHelper = {
-                getMyScore: function(beer) {
-                    
-                    var avg = RatingService.avgForBeer(beer);
-                    if ( avg && avg >= 0 ) {
-                        return parseFloat(avg.toFixed(1));
-                    } else {
-                        return avg;
-                    }
+            $scope.beers = Beer;
 
-                }
+            $scope.sort = {
+                initial: '-score.overall -score.avg'
             };
 
-            $scope.config = {
-                data: Beer,
-                name: $translate('beer.data.beer')+'s',
-                singular: $translate('beer.data.beer'),
-                filterLabel: $translate('side.search'),
-                filterColSpan: 6,
-                filterOrder: ['brewery._id','style._id', 'category._id'],
-                orderBy: 'score.avg',
-                orderDir: "-",
-                pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
-                sort: [sortOverall,sortScore],
-                showIndex: true,
-                emptyResultText: $translate('beer.search.emtpy'),
-                headers: [{
-                        field:'score.position',
-                        caption: '#',
-                        tooltip: $translate('beer.data.position'),
-                        hidden: {xs: true,sm: true}
-                    },{
-                        field:'name',
-                        caption: $translate('beer.data.beer'),
-                        type: 'link',
-                        class: function() {return "dl-font-bold";},
-                        href: function(row) {return '#/beer/detail/' + row._id;}
-                    },{
-                        field:'brewery.name',
-                        caption: $translate('beer.data.brewery'),
-                        hidden: {xs: true,sm: true},
-                        type: 'link',
-                        href: function(row) {
-                            return "#/beer?brewery._id=" + row.brewery._id;
+            $scope.headers = [{
+                    field:'score.position',
+                    caption: '#',
+                    tooltip: $translate('beer.data.position'),
+                    hidden: {xs: true,sm: true}
+                },{
+                    field: 'name',
+                    caption: $translate('beer.data.beer'),
+                    template:   '<a href="#/beer/detail/{{$model._id}}">' +
+                                    '<b>{{$model.name}}</b>' +
+                                '</a>'
+                },{
+                    field:'brewery.name',
+                    caption: $translate('beer.data.brewery'),
+                    hidden: {xs: true,sm: true},
+                    template:   '<a href="#/beer?brewery._id={{$model.brewery._id}}"' +
+                                    '<b>{{$model.brewery.name}}</b>' +
+                                '</a>'
+                },{
+                    field:'style.name',
+                    caption: $translate('beer.data.style')
+                },{
+                    field:'category.name',
+                    caption: $translate('beer.data.category'),
+                    hidden: {xs: true,sm: true}
+                },{
+                    field:'score.avg',
+                    sort: ['score.overall', 'score.avg'],
+                    caption: $translate('beer.data.score'),
+                    width: '7em',
+                    tooltip: $translate('beer.data.score.help'),
+                    template: '<span class="{{header.class($model)}}">{{$model.score.avg}}</span>',
+                    class: function(beer) {
+                        if ( beer.score ) {
+                            return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
+                        } else {
+                            return 'badge';
                         }
-                    },{
-                        field:'style.name',
-                        caption: $translate('beer.data.style')
-                    },{
-                        field:'category.name',
-                        caption: $translate('beer.data.category'),
-                        hidden: {xs: true,sm: true}
-                    },{
-                        field:'score.avg',
-                        caption: $translate('beer.data.score'),
-                        width: '7em',
-                        tooltip: $translate('beer.data.score.help'),
-                        class: function(beer) {
-                            if ( beer.score ) {
-                                return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
-                            } else {
-                                return 'badge';
-                            }
-                        },
-                        sort: [sortOverall,sortScore]
-                    },{
-                        field:'score',
-                        caption: 'G / S',
-                        width: '9em',
-                        headerStyle: {'text-align': 'center','min-width': '9em'},
-                        tooltip: $translate('beer.data.score.gs.help'),
-                        valueTemplateUrl: 'score.html',
-                        sort: sortScoreStyle
-                    },{
-                        field:'score.count',
-                        caption: $translate('beer.data.score.count.short'),
-                        tooltip: $translate('beer.data.score.count.help'),
-                        hidden: {xs: true,sm: true}
-                    },{
-                        field:'score.myScore',
-                        caption: $translate('beer.data.score.my'),
-                        tooltip: $translate('beer.data.score.my.help'),
-                        valueTemplateUrl: 'beer/list/my-score.html',
-                        class: function(beer) {
-                            var s = $scope.dataHelper.getMyScore(beer);
-                            if ( s ) {
-                                return 'badge alert-' + DLHelper.colorByScore(s);        
-                            } else {
-                                return 'badge';
-                            }
-                        },
-                        sort: sortMyScore
                     }
-                ]
-            };
+                },{
+                    field:'score',
+                    caption: 'G / S',
+                    width: '9em',
+                    headerStyle: {'text-align': 'center','min-width': '9em'},
+                    tooltip: $translate('beer.data.score.gs.help'),
+                    template: '<span beer-percentil="$model.score"></span>'
+                },{
+                    field:'score.count',
+                    caption: $translate('beer.data.score.count.short'),
+                    tooltip: $translate('beer.data.score.count.help'),
+                    hidden: {xs: true,sm: true}
+                // },{
+                //     field:'score.myScore',
+                //     caption: $translate('beer.data.score.my'),
+                //     tooltip: $translate('beer.data.score.my.help'),
+                //     valueTemplateUrl: 'beer/list/my-score.html',
+                //     class: function(beer) {
+                //         // var s = $scope.dataHelper.getMyScore(beer);
+                //         // if ( s ) {
+                //         //     return 'badge alert-' + DLHelper.colorByScore(s);        
+                //         // } else {
+                //         //     return 'badge';
+                //         // }
+                //     }
+                //     // ,
+                //     // sort: sortMyScore
+                }
+            ];
+
+
+            // function sortScore(beer) {
+            //     if ( beer.score ) {
+            //         return beer.score.avg || 0;    
+            //     }
+            //     return 0;
+            // }
+            // function sortScoreStyle(beer) {
+            //     if ( beer.score ) {
+            //         return beer.score.style || 0;    
+            //     }
+            //     return 0;   
+            // }
+            // function sortOverall(beer) {
+            //     if ( beer.score ) {
+            //         return beer.score.overall || 0;    
+            //     }
+            //     return 0;   
+            // }
+            // function sortMyScore(beer) {
+            //     return $scope.dataHelper.getMyScore(beer)||0;
+            // }
+    
+            // $scope.dataHelper = {
+            //     getMyScore: function(beer) {
+                    
+            //         var avg = RatingService.avgForBeer(beer);
+            //         if ( avg && avg >= 0 ) {
+            //             return parseFloat(avg.toFixed(1));
+            //         } else {
+            //             return avg;
+            //         }
+
+            //     }
+            // };
+
+            // $scope.config = {
+            //     data: Beer,
+            //     name: $translate('beer.data.beer')+'s',
+            //     singular: $translate('beer.data.beer'),
+            //     filterLabel: $translate('side.search'),
+            //     filterColSpan: 6,
+            //     filterOrder: ['brewery._id','style._id', 'category._id'],
+            //     orderBy: 'score.avg',
+            //     orderDir: "-",
+            //     pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
+            //     sort: [sortOverall,sortScore],
+            //     showIndex: true,
+            //     emptyResultText: $translate('beer.search.emtpy'),
+            //     headers: [{
+            //             field:'score.position',
+            //             caption: '#',
+            //             tooltip: $translate('beer.data.position'),
+            //             hidden: {xs: true,sm: true}
+            //         },{
+            //             field:'name',
+            //             caption: $translate('beer.data.beer'),
+            //             type: 'link',
+            //             class: function() {return "dl-font-bold";},
+            //             href: function(row) {return '#/beer/detail/' + row._id;}
+            //         },{
+            //             field:'brewery.name',
+            //             caption: $translate('beer.data.brewery'),
+            //             hidden: {xs: true,sm: true},
+            //             type: 'link',
+            //             href: function(row) {
+            //                 return "#/beer?brewery._id=" + row.brewery._id;
+            //             }
+            //         },{
+            //             field:'style.name',
+            //             caption: $translate('beer.data.style')
+            //         },{
+            //             field:'category.name',
+            //             caption: $translate('beer.data.category'),
+            //             hidden: {xs: true,sm: true}
+            //         },{
+            //             field:'score.avg',
+            //             caption: $translate('beer.data.score'),
+            //             width: '7em',
+            //             tooltip: $translate('beer.data.score.help'),
+            //             class: function(beer) {
+            //                 if ( beer.score ) {
+            //                     return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
+            //                 } else {
+            //                     return 'badge';
+            //                 }
+            //             },
+            //             sort: [sortOverall,sortScore]
+            //         },{
+            //             field:'score',
+            //             caption: 'G / S',
+            //             width: '9em',
+            //             headerStyle: {'text-align': 'center','min-width': '9em'},
+            //             tooltip: $translate('beer.data.score.gs.help'),
+            //             valueTemplateUrl: 'score.html',
+            //             sort: sortScoreStyle
+            //         },{
+            //             field:'score.count',
+            //             caption: $translate('beer.data.score.count.short'),
+            //             tooltip: $translate('beer.data.score.count.help'),
+            //             hidden: {xs: true,sm: true}
+            //         },{
+            //             field:'score.myScore',
+            //             caption: $translate('beer.data.score.my'),
+            //             tooltip: $translate('beer.data.score.my.help'),
+            //             valueTemplateUrl: 'beer/list/my-score.html',
+            //             class: function(beer) {
+            //                 var s = $scope.dataHelper.getMyScore(beer);
+            //                 if ( s ) {
+            //                     return 'badge alert-' + DLHelper.colorByScore(s);        
+            //                 } else {
+            //                     return 'badge';
+            //                 }
+            //             },
+            //             sort: sortMyScore
+            //         }
+            //     ]
+            // };
 
             
-            $scope.filterData = {};
-            $scope.filterData['style._id'] = {
-                caption: $translate('beer.data.style'),
-                type: 'combo',
-                groupBy: function(value) {
-                    return value.category._id + '-' + value.category.name;
-                },
-                comparator: 'equal',
-                getLabel: function(value) {
-                    return value.name + ' (' + value._id.toUpperCase() + ')';
-                },
-                valueKey: '_id',
-                ignoreCase: false,
-                data: Cache.styles(),
-                orderBy: '_id'
-            };
-            $scope.filterData['category._id'] = {
-                caption: $translate('beer.data.category'),
-                type: 'combo',
-                comparator: 'equal',
-                getLabel: function(value) {
-                    return value.name + ' (' + value._id + ')';
-                },
-                valueKey: '_id',
-                ignoreCase: false,
-                data: Cache.categories(),
-                orderBy: '_id'
-            };
-            $scope.filterData['brewery._id'] = {
-                caption: $translate('beer.data.brewery'),
-                type: 'combo',
-                comparator: 'equal',
-                getLabel: function(value) {
-                    return value.name;
-                },
-                valueKey: '_id',
-                ignoreCase: false,
-                data: Brewery.query(),
-                orderBy: 'name'
-            };
+            // $scope.filterData = {};
+            // $scope.filterData['style._id'] = {
+            //     caption: $translate('beer.data.style'),
+            //     type: 'combo',
+            //     groupBy: function(value) {
+            //         return value.category._id + '-' + value.category.name;
+            //     },
+            //     comparator: 'equal',
+            //     getLabel: function(value) {
+            //         return value.name + ' (' + value._id.toUpperCase() + ')';
+            //     },
+            //     valueKey: '_id',
+            //     ignoreCase: false,
+            //     data: Cache.styles(),
+            //     orderBy: '_id'
+            // };
+            // $scope.filterData['category._id'] = {
+            //     caption: $translate('beer.data.category'),
+            //     type: 'combo',
+            //     comparator: 'equal',
+            //     getLabel: function(value) {
+            //         return value.name + ' (' + value._id + ')';
+            //     },
+            //     valueKey: '_id',
+            //     ignoreCase: false,
+            //     data: Cache.categories(),
+            //     orderBy: '_id'
+            // };
+            // $scope.filterData['brewery._id'] = {
+            //     caption: $translate('beer.data.brewery'),
+            //     type: 'combo',
+            //     comparator: 'equal',
+            //     getLabel: function(value) {
+            //         return value.name;
+            //     },
+            //     valueKey: '_id',
+            //     ignoreCase: false,
+            //     data: Brewery.query(),
+            //     orderBy: 'name'
+            // };
 
-            angular.forEach($scope.filterData,function(f,key){
-                if ( $location.$$search[key] ) {
-                    $scope.filterData[key].value = $location.$$search[key];
-                }
-            });
-            if ( $location.$$search.searchCriteria ) {
-                $scope.searchCriteria = $location.search().searchCriteria;
-            }
+            // angular.forEach($scope.filterData,function(f,key){
+            //     if ( $location.$$search[key] ) {
+            //         $scope.filterData[key].value = $location.$$search[key];
+            //     }
+            // });
+            // if ( $location.$$search.searchCriteria ) {
+            //     $scope.searchCriteria = $location.search().searchCriteria;
+            // }
 
         }]);
 

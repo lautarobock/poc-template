@@ -1,12 +1,13 @@
 <div main-content>
   <h1>{{'content.beers' | translate }}</h1>
   <hr>
-  <gt-table
+  <!-- <gt-table
           config="config"
           context="dataHelper"
           filter-data="filterData"
           search-criteria="searchCriteria"
-          ></gt-table>
+          ></gt-table> -->
+  <listview listview-data="beers" listview-sort="sort" listview-header="headers"></listview>
   <hr/>
   <a class="btn btn-success btn-sm" href="#/beer/new" secure>
     <span class="glyphicon glyphicon-plus"></span> Agregar Cerveza

@@ -8,7 +8,11 @@ exports.findAll = function(req, res) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
+    console.log("SORT",req.query.sort);
 	model.Beer.find(filter)
+        .limit(req.query.limit)
+        .skip(req.query.skip)
+        .sort(req.query.sort)
         .populate('style')
         .populate('styleByLabel')
         .populate('brewery')
