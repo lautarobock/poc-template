@@ -3,8 +3,9 @@ define(['../resources'], function() {
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
     beer.run(['$templateCache',function($templateCache) {
-        $templateCache.put("score.html",'<span beer-percentil="getValue(row,header)"></span>');
+        $templateCache.put("score.html",'<span beer-percentil="$model.score"></span>');
     }]);
+    
 
 	beer.controller("BeerController", 
         ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log', 'Responsive','RatingService',
@@ -59,29 +60,37 @@ define(['../resources'], function() {
                     field:'score',
                     caption: 'G / S',
                     width: '9em',
-                    headerStyle: {'text-align': 'center','min-width': '9em'},
+                    style: {'text-align': 'center','min-width': '9em'},
                     tooltip: $translate('beer.data.score.gs.help'),
-                    template: '<span beer-percentil="$model.score"></span>'
+                    templateUrl: 'score.html'
                 },{
                     field:'score.count',
                     caption: $translate('beer.data.score.count.short'),
                     tooltip: $translate('beer.data.score.count.help'),
                     hidden: {xs: true,sm: true}
-                // },{
-                //     field:'score.myScore',
-                //     caption: $translate('beer.data.score.my'),
-                //     tooltip: $translate('beer.data.score.my.help'),
-                //     valueTemplateUrl: 'beer/list/my-score.html',
-                //     class: function(beer) {
-                //         // var s = $scope.dataHelper.getMyScore(beer);
-                //         // if ( s ) {
-                //         //     return 'badge alert-' + DLHelper.colorByScore(s);        
-                //         // } else {
-                //         //     return 'badge';
-                //         // }
-                //     }
-                //     // ,
-                //     // sort: sortMyScore
+                },{
+                    field:'score.myScore',
+                    caption: $translate('beer.data.score.my'),
+                    tooltip: $translate('beer.data.score.my.help'),
+                    templateUrl: 'beer/list/my-score.html',
+                    getMyScore: function(beer) {
+                    
+                        var avg = RatingService.avgForBeer(beer);
+                        if ( avg && avg >= 0 ) {
+                            return parseFloat(avg.toFixed(1));
+                        } else {
+                            return avg;
+                        }
+
+                    },
+                    class: function(header, beer) {
+                        var s = header.getMyScore(beer);
+                        if ( s ) {
+                            return 'badge alert-' + DLHelper.colorByScore(s);        
+                        } else {
+                            return 'badge';
+                        }
+                    }
                 }
             ];
 

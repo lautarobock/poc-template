@@ -96,6 +96,9 @@ exports.createRoutes = function(app) {
     //Special for activity
     app.get('/api/Activity', activityService.findAll);
 
+    //Special for count filtered beer.
+    app.get('/api/Beer/count', beerService.count);
+
     app.delete('/api/Cellar',userFilter, cellarService.clearZeros);
 
     for( var i=0; i<services.length; i++ ) {

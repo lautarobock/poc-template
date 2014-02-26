@@ -11,7 +11,7 @@
         <table class="table table-striped table-hover" >
             <thead>
                 <tr>
-                    <th ng-repeat="header in listviewHeader">
+                    <th ng-repeat="header in listviewHeader" ng-style="getStyle(header)">
                         <span tooltip="{{header.tooltip}}" tooltip-append-to-body="true">
                             {{header.caption}}
                         </span> <!-- <span ng-class="sort.orderStyle[header.field]"></span> -->
@@ -21,11 +21,15 @@
             <tbody>
                 <tr ng-repeat="$model in models">
                     <td ng-repeat="header in listviewHeader">
-                        <span ng-bind-html="getValue(header,$model)"></span>
+                        <span ng-if="header.templateUrl"> 
+                            <ng-include src="header.templateUrl"></ng-include>
+                        </span>
+                        <span ng-if="!header.templateUrl" ng-bind-html="getValue(header,$model)"></span>
                     </td>
                 </tr>
             </tbody>
         </table>
+        Total: {{totalItems}}
         <!-- <div class="container">
             <pagination boundary-links="true" total-items="totalItems" items-per-page="pageSize()" page="page" max-size="10" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
             <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*pageSize() + 1}} - <span ng-hide="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{page*pageSize()}}</span><span ng-show="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{(actualPage}}</span> de {{(rows | textFilter:searchCriteria | advanced:filterData).length}}</div>

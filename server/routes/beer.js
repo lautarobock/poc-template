@@ -2,14 +2,27 @@ var model = require('../domain/model.js');
 var mongoose = require('mongoose');
 var activity = require("./activity.js");
 
+exports.count = function(req, res) {
+    var filter = null;
+    if ( req.query.brewery ) {
+        filter = filter||{};
+        filter.brewery = req.query.brewery;
+    }
+    console.log(filter);
+    model.Beer.count(filter)
+        .exec(function(err,results) {
+            console.log(results);
+            res.send({count:results});
+    });    
+};
+
 exports.findAll = function(req, res) {
     var filter = null;
     if ( req.query.brewery ) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
-    console.log("SORT",req.query.sort);
-	model.Beer.find(filter)
+    model.Beer.find(filter)
         .limit(req.query.limit)
         .skip(req.query.skip)
         .sort(req.query.sort)

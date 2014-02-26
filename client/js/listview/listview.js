@@ -14,12 +14,10 @@ define([], function() {
                 listviewSort: '=?'
             },
             controller: function($scope, $interpolate, $compile) {
-                
-                var PAGE_SIZE = 10;
-                if ( $scope.listviewConfig ) {
-                    PAGE_SIZE = $scope.listviewConfig.pageSize || 10;    
-                }
-                
+                $scope.listviewConfig = $scope.listviewConfig || {};
+
+                var PAGE_SIZE = $scope.listviewConfig.pageSize || 10;    
+
                 var page = 1;
 
                 var query = {
@@ -32,7 +30,13 @@ define([], function() {
                     query.sort = $scope.listviewHeader[0].field;
                 }
 
-                $scope.models = $scope.listviewData.query(query);
+                if ( !$scope.listviewConfig.notQueryOnLoad ) {
+                    $scope.models = $scope.listviewData.query(query);
+                    $scope.listviewData.count(query, function(value) {
+                        $scope.totalItems = value.count;
+                    });
+                }
+                
 
 
                 $scope.getValue = function(header, $model) {
@@ -45,6 +49,14 @@ define([], function() {
                     } else {
                         return $interpolate('{{$model.'+header.field+'}}')({$model:$model, header: header});
                     }
+                };
+
+                $scope.getStyle = function(header) {
+                    var style = header.style || {};
+                    if ( header.width ) {
+                        style.width = header.width;
+                    }
+                    return style;
                 };
             }
 
