@@ -2,13 +2,24 @@ var model = require('../domain/model.js');
 var mongoose = require('mongoose');
 var activity = require("./activity.js");
 
+function processFilter(filter) {
+    if ( filter && filter.searchCriteria ) {
+        filter.$or = [
+            {name: {"$regex": filter.searchCriteria,"$options": 'i'}},
+            {brewery: {"$regex": filter.searchCriteria,"$options": 'i'}}
+        ];
+        delete filter.searchCriteria;
+    }
+    return filter;
+}
+
 exports.count = function(req, res) {
-    var filter = req.query.filter;
+    var filter = processFilter(req.query.filter);
     if ( req.query.brewery ) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
-    
+    console.log("filter(count)", JSON.stringify(filter));
     model.Beer.count(filter)
         .exec(function(err,results) {
             res.send({count:results});
@@ -16,13 +27,13 @@ exports.count = function(req, res) {
 };
 
 exports.findAll = function(req, res) {
-    var filter = req.query.filter;
+    var filter = processFilter(req.query.filter);
 
     if ( req.query.brewery ) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
-    console.log("filter",filter);
+    console.log("filter",JSON.stringify(filter));
     model.Beer.find(filter)
         .limit(req.query.limit)
         .skip(req.query.skip)

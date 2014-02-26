@@ -15,7 +15,7 @@ define(["resources"], function() {
             },
             category: function(category_id) {
                 $location.$$search = {};
-                $location.path("/beer").search('category._id',category_id);
+                $location.path("/beer").search('[category][_id]',category_id);
             }
         };
     }]);

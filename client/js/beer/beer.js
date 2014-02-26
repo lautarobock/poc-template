@@ -18,9 +18,12 @@ define(['../resources'], function() {
             };
 
             $scope.config = {
-                pageSize:10,
-                filterOrder: ['[style][_id]'],
-                filterColSpan: 6
+                pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 10,
+                filterOrder: ['[brewery][_id]', '[style][_id]', '[category][_id]'],
+                filterColSpan: 6,
+                plural: $translate('beer.data.beer')+'s',
+                singular: $translate('beer.data.beer'),
+                searchCriteriaLabel: $translate('side.search')
             };
 
             $scope.headers = [{
@@ -38,7 +41,7 @@ define(['../resources'], function() {
                     field:'brewery.name',
                     caption: $translate('beer.data.brewery'),
                     hidden: {xs: true,sm: true},
-                    template:   '<a href="#/beer?brewery._id={{$model.brewery._id}}"' +
+                    template:   '<a href="#/beer?[brewery][_id]={{$model.brewery._id}}"' +
                                     '<b>{{$model.brewery.name}}</b>' +
                                 '</a>'
                 },{
@@ -77,6 +80,7 @@ define(['../resources'], function() {
                 },{
                     field:'score.myScore',
                     caption: $translate('beer.data.score.my'),
+                    width: '5em',
                     tooltip: $translate('beer.data.score.my.help'),
                     templateUrl: 'beer/list/my-score.html',
                     getMyScore: function(beer) {
@@ -101,7 +105,6 @@ define(['../resources'], function() {
             ];
             
             $scope.filterData = {};
-
             $scope.filterData['[style][_id]'] = {
                 caption: $translate('beer.data.style'),
                 type: 'combo',
@@ -118,49 +121,44 @@ define(['../resources'], function() {
                 orderBy: '_id'
             };
 
+            $scope.filterData['[category][_id]'] = {
+                caption: $translate('beer.data.category'),
+                type: 'combo',
+                comparator: 'equal',
+                getLabel: function(value) {
+                    return value.name + ' (' + value._id + ')';
+                },
+                valueKey: '_id',
+                ignoreCase: false,
+                data: Cache.categories(),
+                orderBy: '_id'
+            };
+            $scope.filterData['[brewery][_id]'] = {
+                caption: $translate('beer.data.brewery'),
+                type: 'combo',
+                comparator: 'equal',
+                getLabel: function(value) {
+                    return value.name;
+                },
+                valueKey: '_id',
+                ignoreCase: false,
+                data: Brewery.query(),
+                orderBy: 'name'
+            };
+
             angular.forEach($scope.filterData,function(f,key){
                 if ( $location.$$search[key] ) {
                     $scope.filterData[key].value = $location.$$search[key];
                 }
             });
             if ( $location.$$search.searchCriteria ) {
-                $scope.searchCriteria = $location.search().searchCriteria;
+                $scope.config.searchCriteria = $location.search().searchCriteria;
             }
-            
-            // $scope.filterData['category._id'] = {
-            //     caption: $translate('beer.data.category'),
-            //     type: 'combo',
-            //     comparator: 'equal',
-            //     getLabel: function(value) {
-            //         return value.name + ' (' + value._id + ')';
-            //     },
-            //     valueKey: '_id',
-            //     ignoreCase: false,
-            //     data: Cache.categories(),
-            //     orderBy: '_id'
-            // };
-            // $scope.filterData['brewery._id'] = {
-            //     caption: $translate('beer.data.brewery'),
-            //     type: 'combo',
-            //     comparator: 'equal',
-            //     getLabel: function(value) {
-            //         return value.name;
-            //     },
-            //     valueKey: '_id',
-            //     ignoreCase: false,
-            //     data: Brewery.query(),
-            //     orderBy: 'name'
-            // };
+
 
             // $scope.config = {
             //     data: Beer,
-            //     name: $translate('beer.data.beer')+'s',
-            //     singular: $translate('beer.data.beer'),
-            //     filterLabel: $translate('side.search'),
-            //     filterColSpan: 6,
             //     filterOrder: ['brewery._id','style._id', 'category._id'],
-            //     orderBy: 'score.avg',
-            //     orderDir: "-",
             //     pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
             //     sort: [sortOverall,sortScore],
             //     showIndex: true,

@@ -8,7 +8,7 @@
             id="{{filterName}}_id" 
             ng-model="filter.value"></select>
         <span class="input-group-btn">
-            <button ng-click="filter.value='';search()" class="btn btn-default btn-sm" type="button">
+            <button ng-click="clearFilter(filter,filterName)" class="btn btn-default btn-sm" type="button">
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
         </span>

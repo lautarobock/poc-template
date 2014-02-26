@@ -17,6 +17,12 @@ define([], function() {
             controller: function($scope, $interpolate, $timeout) {
                 $scope.listviewConfig = $scope.listviewConfig || {};
 
+                $scope.pluralization = {
+                    '0':'No se ha encontrado ningun resultado con su busqueda',
+                    'one': '1 ' +($scope.listviewConfig.singular||'')+ ' encontrada',
+                    'other':'{} '+($scope.listviewConfig.plural||'')+' encontradas'
+                };
+
                 //Pagination
                 $scope.pagination = {
                     pageSize:$scope.listviewConfig.pageSize || 10,
@@ -30,35 +36,44 @@ define([], function() {
                 };
 
                 //Search
-                $scope.searchCriteria = '';
+                //SearchCriteria will be change for advanced text filter
+                $scope.searchCriteria = $scope.listviewConfig.searchCriteria || '';
                 var activeTimeout = null;
                 $scope.search = function() {
                     if ( activeTimeout ) $timeout.cancel(activeTimeout);
                     activeTimeout = $timeout(function() {
-                        if ( $scope.searchCriteria ) {
-                            query["filter[name][$regex]"] = $scope.searchCriteria;
-                            query["filter[name][$options]"] = "i";    
-                        }
-                        var filters = [];
-                        angular.forEach($scope.listviewFilter,function(filter,field) {
-                            if (filter.type != 'list' && filter.value || (filter.type == 'list' && filter.value && filter.value.length != 0) ) {
-                                // var f = fixedFilters[filter.comparator](field,filter.value,filter.ignoreCase,filter.type);
-                                // filters.push(f);
-                                query["filter"+field] = filter.value;
-                            }
-                        });
-                        
-                        reloadCount();
-                        reload();
+                        searchWithFilters();
                     },500);
                 };
+
+                function searchWithFilters() {
+                    if ( $scope.searchCriteria ) {
+                        query["filter[searchCriteria]"] = $scope.searchCriteria;
+                    }
+                    var filters = [];
+                    angular.forEach($scope.listviewFilter,function(filter,field) {
+                        if (filter.type != 'list' && filter.value || (filter.type == 'list' && filter.value && filter.value.length != 0) ) {
+                            query["filter"+field] = filter.value;
+                        }
+                    });
+                    
+                    reloadCount();
+                    reload();
+                }
+
                 $scope.clearSearch = function() {
                     $scope.searchCriteria = ""
-                    delete query["filter[name][$regex]"];
-                    delete query["filter[name][$options]"];
+                    delete query["filter[searchCriteria]"];
+                    // delete query["filter[name][$options]"];
                     reloadCount();
                     reload();
                 };
+                $scope.clearFilter = function(filter,filterName) {
+                    filter.value='';
+                    delete query["filter"+filterName];
+                    reloadCount();
+                    reload();
+                }
                 
 
                 if ( $scope.listviewSort && $scope.listviewSort.initial ) {
@@ -74,8 +89,9 @@ define([], function() {
                 
                 $scope.$watch("pagination.page", function(page, old) {
                     if ( page && old ) {
-                        query.skip = $scope.pagination.pageSize * ($scope.pagination.page-1);
-                        reload(); 
+                        // query.skip = $scope.pagination.pageSize * ($scope.pagination.page-1);
+                        // reload(); 
+                        searchWithFilters();
                     }
                 });
 
