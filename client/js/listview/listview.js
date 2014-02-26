@@ -11,7 +11,8 @@ define([], function() {
                 listviewData: '=',
                 listviewHeader: '=',
                 listviewConfig: '=?',
-                listviewSort: '=?'
+                listviewSort: '=?',
+                listviewFilter: '=?'
             },
             controller: function($scope, $interpolate, $timeout) {
                 $scope.listviewConfig = $scope.listviewConfig || {};
@@ -104,6 +105,10 @@ define([], function() {
                 $scope.getPageCount = function(length) {
                     var pageSize = $scope.pagination.pageSize;
                     return Math.ceil(length/pageSize);
+                };
+
+                $scope.urlTemplate = function(filter) {
+                    return 'listview/listview-filter-' + filter.type + ".html";
                 };
             }
 

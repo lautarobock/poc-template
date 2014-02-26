@@ -7,7 +7,12 @@
           filter-data="filterData"
           search-criteria="searchCriteria"
           ></gt-table> -->
-  <listview listview-data="beers" listview-sort="sort" listview-config="{pageSize:10}" listview-header="headers"></listview>
+  <listview 
+      listview-data="beers" 
+      listview-sort="sort" 
+      listview-config="config" 
+      listview-filter="filterData"
+      listview-header="headers"></listview>
   <hr/>
   <a class="btn btn-success btn-sm" href="#/beer/new" secure>
     <span class="glyphicon glyphicon-plus"></span> Agregar Cerveza

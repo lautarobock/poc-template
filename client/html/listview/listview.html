@@ -2,7 +2,7 @@
     <div class="panel panel-default" style="margin: 1em">
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-12" style="margin-bottom: 1em;">
+                <div class="col-sm-{{listviewConfig.filterColSpan||'12'}}" style="margin-bottom: 1em;">
                     <label for="filter.name">{{listviewConfig.filterLabel||'Busqueda'}}</label>
                     <div class="input-group" style="width: 100%">
                         <input ng-change="search()" type="text" id="filter.name"  class="form-control input-sm" ng-model="searchCriteria"/>
@@ -13,7 +13,7 @@
                         </span>
                     </div>
                 </div>
-                <div ng-repeat="_value in config().filterOrder" ng-init="filterName=_value; filter=filterData[_value]">
+                <div ng-repeat="_value in listviewConfig.filterOrder" ng-init="filterName=_value; filter=listviewFilter[_value]">
                     <ng-include src="urlTemplate(filter)"></ng-include>
                 </div>
             </div>
