@@ -39,6 +39,7 @@ define([], function() {
                 //SearchCriteria will be change for advanced text filter
                 $scope.searchCriteria = $scope.listviewConfig.searchCriteria || '';
                 var activeTimeout = null;
+                
                 $scope.search = function() {
                     if ( activeTimeout ) $timeout.cancel(activeTimeout);
                     activeTimeout = $timeout(function() {
@@ -68,6 +69,7 @@ define([], function() {
                     reloadCount();
                     reload();
                 };
+
                 $scope.clearFilter = function(filter,filterName) {
                     filter.value='';
                     delete query["filter"+filterName];
@@ -83,14 +85,11 @@ define([], function() {
                 }
 
                 if ( !$scope.listviewConfig.notQueryOnLoad ) {
-                    // $scope.models = $scope.listviewData.query(query);
                     reloadCount();
                 }
                 
                 $scope.$watch("pagination.page", function(page, old) {
                     if ( page && old ) {
-                        // query.skip = $scope.pagination.pageSize * ($scope.pagination.page-1);
-                        // reload(); 
                         searchWithFilters();
                     }
                 });
@@ -111,11 +110,9 @@ define([], function() {
 
                 $scope.getValue = function(header, $model) {
                     if ( header.templateUrl ) {
-
                     } else if ( header.template ) {
                         return $interpolate(header.template)({$model:$model, header: header});
                     } else if ( header.value instanceof Function ) {
-
                     } else {
                         return $interpolate('{{$model.'+header.field+'}}')({$model:$model, header: header});
                     }
@@ -141,5 +138,51 @@ define([], function() {
 
         };
     });
+
+    function sortData(startField, startAsc, startSort) {
+            var data = {
+                sort: startSort,
+                asc: startAsc,
+                field: startField,
+                orderStyle:{},
+                orderBy: function() {
+                    if ( this.sort ) {
+                        return this.sort;
+                    } else  {
+                        return this.field; 
+                    }
+                },
+                reverse: function() {
+                    return this.asc || this.asc == '-';
+                },
+                resort: function(field, sort) {
+                    if ( field == this.field) {
+                        if (this.asc == '-' ) {
+                            this.asc = '';
+                            this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
+                        } else {
+                            this.asc = '-';
+                            this.orderStyle[field] = 'glyphicon glyphicon-chevron-down';
+                        }
+                    } else {
+                        angular.forEach(this.orderStyle, function(style ,key) {
+                            data.orderStyle[key] = '';
+                        });
+                        this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
+                        this.sort = sort;
+                        this.field = field;
+                        this.asc = '';
+                    }
+                }
+            };
+            if ( startAsc == '-') {
+                data.orderStyle[startField] = 'glyphicon glyphicon-chevron-down';
+            } else {
+                data.orderStyle[startField] = 'glyphicon glyphicon-chevron-up';
+            }
+
+            return data;
+        };
+    }
 
 });
