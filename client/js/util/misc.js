@@ -11,7 +11,7 @@ define(["resources"], function() {
             },
             style: function(style_id) {
                 $location.$$search = {};
-                $location.path("/beer").search('style._id',style_id);
+                $location.path("/beer").search('[style][_id]',style_id);
             },
             category: function(category_id) {
                 $location.$$search = {};

@@ -35,8 +35,19 @@ define([], function() {
                 $scope.search = function() {
                     if ( activeTimeout ) $timeout.cancel(activeTimeout);
                     activeTimeout = $timeout(function() {
-                        query["filter[name][$regex]"] = $scope.searchCriteria;
-                        query["filter[name][$options]"] = "i";
+                        if ( $scope.searchCriteria ) {
+                            query["filter[name][$regex]"] = $scope.searchCriteria;
+                            query["filter[name][$options]"] = "i";    
+                        }
+                        var filters = [];
+                        angular.forEach($scope.listviewFilter,function(filter,field) {
+                            if (filter.type != 'list' && filter.value || (filter.type == 'list' && filter.value && filter.value.length != 0) ) {
+                                // var f = fixedFilters[filter.comparator](field,filter.value,filter.ignoreCase,filter.type);
+                                // filters.push(f);
+                                query["filter"+field] = filter.value;
+                            }
+                        });
+                        
                         reloadCount();
                         reload();
                     },500);

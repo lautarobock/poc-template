@@ -19,7 +19,7 @@ define(['../resources'], function() {
 
             $scope.config = {
                 pageSize:10,
-                filterOrder: ['style._id'],
+                filterOrder: ['[style][_id]'],
                 filterColSpan: 6
             };
 
@@ -102,7 +102,7 @@ define(['../resources'], function() {
             
             $scope.filterData = {};
 
-            $scope.filterData['style._id'] = {
+            $scope.filterData['[style][_id]'] = {
                 caption: $translate('beer.data.style'),
                 type: 'combo',
                 groupBy: function(value) {
@@ -117,6 +117,16 @@ define(['../resources'], function() {
                 data: Cache.styles(),
                 orderBy: '_id'
             };
+
+            angular.forEach($scope.filterData,function(f,key){
+                if ( $location.$$search[key] ) {
+                    $scope.filterData[key].value = $location.$$search[key];
+                }
+            });
+            if ( $location.$$search.searchCriteria ) {
+                $scope.searchCriteria = $location.search().searchCriteria;
+            }
+            
             // $scope.filterData['category._id'] = {
             //     caption: $translate('beer.data.category'),
             //     type: 'combo',

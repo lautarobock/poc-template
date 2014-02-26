@@ -11,7 +11,6 @@ exports.count = function(req, res) {
     
     model.Beer.count(filter)
         .exec(function(err,results) {
-            console.log(results);
             res.send({count:results});
     });    
 };
@@ -23,7 +22,7 @@ exports.findAll = function(req, res) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
-
+    console.log("filter",filter);
     model.Beer.find(filter)
         .limit(req.query.limit)
         .skip(req.query.skip)
