@@ -1,8 +1,28 @@
 <div class="panel panel-default">
+    <div class="panel panel-default" style="margin: 1em">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12" style="margin-bottom: 1em;">
+                    <label for="filter.name">{{listviewConfig.filterLabel||'Busqueda'}}</label>
+                    <div class="input-group" style="width: 100%">
+                        <input ng-change="search()" type="text" id="filter.name"  class="form-control input-sm" ng-model="searchCriteria"/>
+                        <span class="input-group-btn">
+                            <button ng-disabled="searchCriteria==''"  ng-click="clearSearch()" class="btn btn-default btn-sm" type="button">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div ng-repeat="_value in config().filterOrder" ng-init="filterName=_value; filter=filterData[_value]">
+                    <ng-include src="urlTemplate(filter)"></ng-include>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel-body" ng-show="loading">
         <center><span class="glyphicon glyphicon-refresh"></span></center>
     </div>
-    <div class="panel-body" ng-hide="loading">
+    <div class="panel-body" ng-show="(pagination.totalItems == 0) && !loading">
         <div class="alert alert-info" >
             {{emptyResultText}}
         </div>
@@ -29,10 +49,9 @@
                 </tr>
             </tbody>
         </table>
-        Total: {{totalItems}}
-        <!-- <div class="container">
-            <pagination boundary-links="true" total-items="totalItems" items-per-page="pageSize()" page="page" max-size="10" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-            <div style="white-space: pre-wrap;box-sizing: border-box;">{{(page-1)*pageSize() + 1}} - <span ng-hide="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{page*pageSize()}}</span><span ng-show="page == getPageCount((rows | textFilter:searchCriteria | advanced:filterData).length)">{{(actualPage}}</span> de {{(rows | textFilter:searchCriteria | advanced:filterData).length}}</div>
-        </div> -->
+        <div class="container" style="margin-bottom:1em">
+            <pagination boundary-links="true" total-items="pagination.totalItems" items-per-page="pagination.pageSize" page="pagination.page" max-size="10" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+            <div style="white-space: pre-wrap;box-sizing: border-box;">{{(pagination.page-1)*pagination.pageSize + 1}} - <span ng-hide="pagination.page == getPageCount(pagination.totalItems)">{{pagination.page*pagination.pageSize}}</span><span ng-show="pagination.page == getPageCount(pagination.totalItems)">{{pagination.totalItems}}</span> de {{pagination.totalItems}}</div>
+        </div>
     </div>
 </div>

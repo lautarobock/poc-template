@@ -3,12 +3,12 @@ var mongoose = require('mongoose');
 var activity = require("./activity.js");
 
 exports.count = function(req, res) {
-    var filter = null;
+    var filter = req.query.filter;
     if ( req.query.brewery ) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
-    console.log(filter);
+    
     model.Beer.count(filter)
         .exec(function(err,results) {
             console.log(results);
@@ -17,11 +17,13 @@ exports.count = function(req, res) {
 };
 
 exports.findAll = function(req, res) {
-    var filter = null;
+    var filter = req.query.filter;
+
     if ( req.query.brewery ) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
+
     model.Beer.find(filter)
         .limit(req.query.limit)
         .skip(req.query.skip)

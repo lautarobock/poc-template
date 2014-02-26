@@ -14,7 +14,7 @@ define(['../resources'], function() {
             $scope.beers = Beer;
 
             $scope.sort = {
-                initial: '-score.overall -score.avg'
+                initial: '-score.overall -score.avg score.position'
             };
 
             $scope.headers = [{

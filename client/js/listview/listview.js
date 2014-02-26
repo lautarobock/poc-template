@@ -13,17 +13,42 @@ define([], function() {
                 listviewConfig: '=?',
                 listviewSort: '=?'
             },
-            controller: function($scope, $interpolate, $compile) {
+            controller: function($scope, $interpolate, $timeout) {
                 $scope.listviewConfig = $scope.listviewConfig || {};
 
-                var PAGE_SIZE = $scope.listviewConfig.pageSize || 10;    
-
-                var page = 1;
-
-                var query = {
-                    limit: PAGE_SIZE,
-                    skip: PAGE_SIZE * (page-1)
+                //Pagination
+                $scope.pagination = {
+                    pageSize:$scope.listviewConfig.pageSize || 10,
+                    page: 1
                 };
+
+                //Query Object
+                var query = {
+                    limit: $scope.pagination.pageSize,
+                    skip: $scope.pagination.pageSize * ($scope.pagination.page-1)
+                };
+
+                //Search
+                $scope.searchCriteria = '';
+                var activeTimeout = null;
+                $scope.search = function() {
+                    if ( activeTimeout ) $timeout.cancel(activeTimeout);
+                    activeTimeout = $timeout(function() {
+                        query["filter[name][$regex]"] = $scope.searchCriteria;
+                        query["filter[name][$options]"] = "i";
+                        reloadCount();
+                        reload();
+                    },500);
+                };
+                $scope.clearSearch = function() {
+                    $scope.searchCriteria = ""
+                    delete query["filter[name][$regex]"];
+                    delete query["filter[name][$options]"];
+                    reloadCount();
+                    reload();
+                };
+                
+
                 if ( $scope.listviewSort && $scope.listviewSort.initial ) {
                     query.sort = $scope.listviewSort.initial;
                 } else {
@@ -31,12 +56,29 @@ define([], function() {
                 }
 
                 if ( !$scope.listviewConfig.notQueryOnLoad ) {
-                    $scope.models = $scope.listviewData.query(query);
-                    $scope.listviewData.count(query, function(value) {
-                        $scope.totalItems = value.count;
-                    });
+                    // $scope.models = $scope.listviewData.query(query);
+                    reloadCount();
                 }
                 
+                $scope.$watch("pagination.page", function(page, old) {
+                    if ( page && old ) {
+                        query.skip = $scope.pagination.pageSize * ($scope.pagination.page-1);
+                        reload(); 
+                    }
+                });
+
+                function reload() {
+                    $scope.loading = true;
+                    $scope.models = $scope.listviewData.query(query, function() {
+                        $scope.loading = false;
+                    });
+                }
+
+                function reloadCount() {
+                    $scope.listviewData.count(query, function(value) {
+                        $scope.pagination.totalItems = value.count;
+                    });
+                }
 
 
                 $scope.getValue = function(header, $model) {
@@ -57,6 +99,11 @@ define([], function() {
                         style.width = header.width;
                     }
                     return style;
+                };
+
+                $scope.getPageCount = function(length) {
+                    var pageSize = $scope.pagination.pageSize;
+                    return Math.ceil(length/pageSize);
                 };
             }
 
