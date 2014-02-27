@@ -4,13 +4,13 @@
   <form class="bs-example form-horizontal">
     <fieldset>
       <legend>{{ 'beer.form.general' | translate }}</legend>
-      <div class="form-group">
-        <div class="col-lg-6" dl-input-text id="beername" value="beer.name" caption="{{'beer.data.name'|translate}}"></div>
-        <div class="col-lg-6">
+      <div class="form-group" >
+        <div class="col-lg-6" ng-class="errorClass('name')" dl-input-text id="beername" value="beer.name" caption="{{'beer.data.name'|translate}}"></div>
+        <div class="col-lg-6" >
           <label for="brewery" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.brewery.help' | translate }}">
             {{ 'beer.data.brewery' | translate }}
           </label>
-          <div class="input-group">
+          <div class="input-group" ng-class="errorClass('brewery')">
             <input typeahead="brewery._id as brewery.name for brewery in breweries | filter:$viewValue | orderBy:'name'" class="form-control" type="text" ng-model="beer.brewery" typeahead-editable="false" typeahead-input-formatter="formatBrewerySelection($model,breweries)" placeholder="Comience a escribir para buscar" >
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button" ng-click="openNewBrewery()">
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-6">
+        <div class="col-lg-6" ng-class="errorClass('style')">
           <label for="style" class="control-label" tooltip-placement="right" tooltip="{{ 'beer.data.style.help' | translate }}">
             {{ 'beer.data.style' | translate }}
           </label>
@@ -88,7 +88,7 @@
       </div>
     </div>
   </form>
-
+  <alert ng-repeat="(key,value) in error" type="'danger'">{{value}}</alert>
 </div>
 <div side-bar>
   <div ng-include="'side/side.html'"></div>

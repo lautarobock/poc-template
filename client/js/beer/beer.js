@@ -280,21 +280,63 @@ define(['../resources'], function() {
 				});
 			};
 
+            $scope.blurBrewery = function(value) {
+                console.log(value)
+                if ( !$scope.beer.brewery ) {
+
+                }
+            };
+
+            $scope.error = {};
+
+            function validate() {
+                var valid = true;
+
+                if ( !$scope.beer.name ) {
+                    valid = false;
+                    $scope.error.name = 'Debe ingresar un nombre para la cerveza';
+                } else {
+                    delete $scope.error.name;
+                }
+
+                if ( !$scope.beer.brewery ) {
+                    valid = false;
+                    $scope.error.brewery = 'Debe seleccionar una cerveceria de la lista';
+                } else {
+                    delete $scope.error.brewery;
+                }
+
+                if ( !$scope.beer.style ) {
+                    valid = false;
+                    $scope.error.style = 'Debe seleccionar una estilo BJCP';
+                } else {
+                    delete $scope.error.style;
+                }
+
+                return valid;
+            }
+
+            $scope.errorClass = function(field) {
+                return $scope.error[field] ? 'has-error' : '';
+            }
+
 			//Save
 			$scope.save = function() {
-				if ( !$scope.beer._id ) {
-					$scope.beer._id = $scope.beer.name.replace(/[^a-z0-9]/ig, '') + "-" + new Date().getTime();
-				}
-				$scope.beer.$save(function(beer) {
-					$location.path('/beer/detail/' + beer._id);
-				},function(err) {
-                    if ( err.status == 401 ) {
-                        console.log("Operacion no autorizada",err);    
-                    } else {
-                        console.log("Error",err);    
+                if ( validate() ) {
+                    if ( !$scope.beer._id ) {
+                        $scope.beer._id = $scope.beer.name.replace(/[^a-z0-9]/ig, '') + "-" + new Date().getTime();
                     }
-                    
-                });
+                    $scope.beer.$save(function(beer) {
+                        $location.path('/beer/detail/' + beer._id);
+                    },function(err) {
+                        if ( err.status == 401 ) {
+                            console.log("Operacion no autorizada",err);    
+                        } else {
+                            console.log("Error",err);    
+                        }
+                        
+                    });    
+                }
 			};
 
             $scope.formatBrewerySelection = function(brewery_id, breweries) {
