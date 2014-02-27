@@ -87,7 +87,8 @@
             breweries: [],
             styles: [],
             categories: [],
-            months: []
+            months: [],
+            countries: []
         };
 
         for( var i=0; i<ratings.length; i++ ) {
@@ -134,6 +135,18 @@
                 myStats.categories[index].avg.count++;
             }
 
+            //country
+            index = util.Arrays.indexOf(myStats.countries, compareItem(rating.country));
+            if ( index == -1 ) {
+                myStats.countries.push(createCountAvg(rating.country));
+                index = myStats.countries.length - 1;
+            }
+            myStats.countries[index].count ++;
+            if ( rating.finalScore ) {
+                myStats.countries[index].avg.sum += rating.finalScore;
+                myStats.countries[index].avg.count++;
+            }
+
             //By Month (_id:'aaaa_mm')
             var date = new Date(rating.date);
             var month = (date.getYear()+1900) + '_' + util.pad(date.getMonth()+1,2);
@@ -153,6 +166,7 @@
         angular.forEach(myStats.breweries, calculateAvg);
         angular.forEach(myStats.categories, calculateAvg);
         angular.forEach(myStats.styles, calculateAvg);
+        angular.forEach(myStats.countries, calculateAvg);
 
         return myStats;
     }

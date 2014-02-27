@@ -43,6 +43,8 @@ define([], function() {
 			    "updateDate": "2014-01-07T17:37:43.717Z",
 			    "user": "52c663bcf52ea90200000002",
 			    "finalScore": 39,
+			    "country": "España",
+			    "locality": "Barcelona",
 				"location" : {
 					"formatted_address" : "Plaça de Sant Pere, 9, 08003 Barcelona, España",
 					"geometry" : {
@@ -116,6 +118,8 @@ define([], function() {
 			    "updateDate": "2014-01-17T12:15:52.343Z",
 			    "user": "52c663bcf52ea90200000002",
 			    "finalScore": 42,
+			    "country": "España",
+			    "locality": "Barcelona",
 				"location" : {
 					"formatted_address" : "Plaça de Sant Pere, 9, 08003 Barcelona, España",
 					"geometry" : {
@@ -181,6 +185,8 @@ define([], function() {
 			    "updateDate": "2014-01-11T14:28:30.706Z",
 			    "user": "52c663bcf52ea90200000002",
 			    "finalScore": 44,
+			    "country": "Argentina",
+			    "locality": "Buenos Aires",
 			    "score": {
 			      "appearance": 3,
 			      "aroma": 11,

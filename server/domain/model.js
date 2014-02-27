@@ -48,28 +48,36 @@ var AddressSchema = {
     types : [String]
 };
 
-exports.Rating = mongoose.model("Rating", new Schema({
-	beer: {type: String, ref: 'Beer'},
-	user: {type: String, ref: 'User'},
-	score: {
-		aroma: Number,
-		appearance: Number,
-		flavor: Number,
-		mouthfeel: Number,
-		overall: Number
-	},
-	finalScore: {type: Number, default: null},
-	comments: String,
-	bottled: Date,
-	expiration: Date,
-	mode: String,
-	date: Date,
-	place: String,
-	creationDate: Date,
-	updateDate: Date,
+var ratingSchema = new Schema({
+    beer: {type: String, ref: 'Beer'},
+    user: {type: String, ref: 'User'},
+    score: {
+        aroma: Number,
+        appearance: Number,
+        flavor: Number,
+        mouthfeel: Number,
+        overall: Number
+    },
+    finalScore: {type: Number, default: null},
+    comments: String,
+    bottled: Date,
+    expiration: Date,
+    mode: String,
+    date: Date,
+    place: String,
+    creationDate: Date,
+    updateDate: Date,
     location: LocationSchema,
     address_components: [AddressSchema]
-}));
+},{
+    toObject: {virtuals: true},
+    toJSON: {virtuals: true}
+});
+
+exports.Rating = mongoose.model("Rating", ratingSchema);
+
+addVitualAddressComponent(ratingSchema,'locality');
+addVitualAddressComponent(ratingSchema,'country');
 
 var VersionSchema = {
     number: Number,
@@ -144,6 +152,7 @@ function addVitualAddressComponent(schema, virtual) {
         }
     });    
 }
+
 
 addVitualAddressComponent(berwerySchema,'locality');
 addVitualAddressComponent(berwerySchema,'country');
