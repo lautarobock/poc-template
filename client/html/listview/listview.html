@@ -1,17 +1,26 @@
 <div class="panel panel-default">
-    <div class="panel-body">
+    <div class="panel-body" style="padding-bottom: 0;">
         <div class="row">
-            <div class="col-md-8"  >
-                <span ng-class="{invisible:loading}" >
-                    <ng-pluralize count="pagination.totalItems" when="pluralization"></ng-pluralize>
-                </span>
+            <div class="col-md-6"  >
+                <div class="well well-sm" style="padding: 7px;">
+                    <ng-pluralize ng-hide="loading" count="pagination.totalItems" when="pluralization"></ng-pluralize>
+                    <span ng-show="loading" class="glyphicon glyphicon-refresh"></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm" ng-model="pagination.pageSize" btn-radio="10">10</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-model="pagination.pageSize" btn-radio="25">25</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-model="pagination.pageSize" btn-radio="50">50</button>
+                    <!-- <button type="button" class="btn btn-default btn-sm" ng-model="pagination.pageSize" btn-radio="100">100</button> -->
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="col-md-2" style="font-size: 21px;">
                     <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
                 </div>
                 <div class="col-md-10">
-                    <select class="form-control input-sm" ng-model="query.sort">
+                    <select class="form-control input-sm" ng-model="query.sort" ><!-- style="background-color: #272b30; color: #c8c8c8;" -->
                       <option ng-repeat="sort in listviewSort.combo" value="{{ sort.sort }}">
                         {{ sort.label }}
                       </option>
@@ -20,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-default" style="margin: 0 1em 1em 1em">
+    <div  class="panel panel-default" style="margin: 0 1em 1em 1em">
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-{{listviewConfig.filterColSpan||'12'}}" style="margin-bottom: 1em;">

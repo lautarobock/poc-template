@@ -11,11 +11,11 @@ define(["resources"], function() {
             },
             style: function(style_id) {
                 $location.$$search = {};
-                $location.path("/beer").search('[style][_id]',style_id);
+                $location.path("/beer").search('[style]',style_id);
             },
             category: function(category_id) {
                 $location.$$search = {};
-                $location.path("/beer").search('[category][_id]',category_id);
+                $location.path("/beer").search('[category]',category_id);
             }
         };
     }]);

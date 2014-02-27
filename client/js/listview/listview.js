@@ -63,6 +63,8 @@ define([], function() {
 
                     if ( $scope.searchCriteria ) {
                         query["filter[searchCriteria]"] = $scope.searchCriteria;
+                    } else {
+                        delete query["filter[searchCriteria]"];
                     }
                     var filters = [];
                     angular.forEach($scope.listviewFilter,function(filter,field) {
@@ -99,10 +101,17 @@ define([], function() {
                     query.sort = $scope.listviewHeader[0].field;
                 }
 
-                if ( !$scope.listviewConfig.notQueryOnLoad ) {
-                    reloadCount();
-                }
-                
+                // if ( !$scope.listviewConfig.notQueryOnLoad ) {
+                //     reloadCount();
+                // }
+                $scope.$watch("pagination.pageSize", function(page, old) {
+                    if ( page && old ) {
+                        $scope.pagination.page = 1;
+                        query.skip = 0;
+                        query.limit = $scope.pagination.pageSize,
+                        searchWithFilters();
+                    }
+                });
                 $scope.$watch("pagination.page", function(page, old) {
                     if ( page && old ) {
                         query.skip = $scope.pagination.pageSize * ($scope.pagination.page-1);

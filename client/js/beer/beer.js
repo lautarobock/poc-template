@@ -25,6 +25,9 @@ define(['../resources'], function() {
                     label: 'Mejores por categoria',
                     sort: '-score.category category -score.style -score.avb score.position'
                 },{
+                    label: 'Por cerveceria',
+                    sort: 'brewery score.position'
+                },{
                     label: 'Por nombre',
                     sort: 'name score.position'
                 }]
@@ -32,7 +35,7 @@ define(['../resources'], function() {
 
             $scope.config = {
                 pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 10,
-                filterOrder: ['[brewery][_id]', '[style][_id]', '[category][_id]'],
+                filterOrder: ['[brewery]', '[style]', '[category]'],
                 filterColSpan: 6,
                 plural: $translate('beer.data.beer')+'s',
                 singular: $translate('beer.data.beer'),
@@ -54,7 +57,7 @@ define(['../resources'], function() {
                     field:'brewery.name',
                     caption: $translate('beer.data.brewery'),
                     hidden: {xs: true,sm: true},
-                    template:   '<a href="#/beer?[brewery][_id]={{$model.brewery._id}}"' +
+                    template:   '<a href="#/beer?[brewery]={{$model.brewery._id}}"' +
                                     '<b>{{$model.brewery.name}}</b>' +
                                 '</a>'
                 },{
@@ -70,7 +73,7 @@ define(['../resources'], function() {
                     caption: $translate('beer.data.score'),
                     width: '7em',
                     tooltip: $translate('beer.data.score.help'),
-                    template: '<span class="{{header.class($model)}}">{{$model.score.avg}}</span>',
+                    template: '<span class="{{header.class($model)}}">{{$model.score.avg||"-"}}</span>',
                     class: function(beer) {
                         if ( beer.score ) {
                             return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
@@ -118,7 +121,7 @@ define(['../resources'], function() {
             ];
             
             $scope.filterData = {};
-            $scope.filterData['[style][_id]'] = {
+            $scope.filterData['[style]'] = {
                 caption: $translate('beer.data.style'),
                 type: 'combo',
                 groupBy: function(value) {
@@ -134,7 +137,7 @@ define(['../resources'], function() {
                 orderBy: '_id'
             };
 
-            $scope.filterData['[category][_id]'] = {
+            $scope.filterData['[category]'] = {
                 caption: $translate('beer.data.category'),
                 type: 'combo',
                 comparator: 'equal',
@@ -146,7 +149,7 @@ define(['../resources'], function() {
                 data: Cache.categories(),
                 orderBy: '_id'
             };
-            $scope.filterData['[brewery][_id]'] = {
+            $scope.filterData['[brewery]'] = {
                 caption: $translate('beer.data.brewery'),
                 type: 'combo',
                 comparator: 'equal',
