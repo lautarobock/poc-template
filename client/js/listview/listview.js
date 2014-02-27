@@ -48,7 +48,6 @@ define([], function() {
                 $scope.query = query;
 
                 //Search
-                //SearchCriteria will be change for advanced text filter
                 $scope.searchCriteria = $scope.listviewConfig.searchCriteria || '';
                 var activeTimeout = null;
                 
