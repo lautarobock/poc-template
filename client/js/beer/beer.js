@@ -176,23 +176,8 @@ define(['../resources'], function() {
 
 
             // $scope.config = {
-            //     data: Beer,
-            //     filterOrder: ['brewery._id','style._id', 'category._id'],
-            //     pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
-            //     sort: [sortOverall,sortScore],
-            //     showIndex: true,
-            //     emptyResultText: $translate('beer.search.emtpy'),
-            //     headers: []
+            //     emptyResultText: $translate('beer.search.emtpy')
             // };
-
-            // angular.forEach($scope.filterData,function(f,key){
-            //     if ( $location.$$search[key] ) {
-            //         $scope.filterData[key].value = $location.$$search[key];
-            //     }
-            // });
-            // if ( $location.$$search.searchCriteria ) {
-            //     $scope.searchCriteria = $location.search().searchCriteria;
-            // }
 
         }]);
 
@@ -408,9 +393,7 @@ define(['../resources'], function() {
             controller: function($scope, DLHelper) {
 
                 $scope.values = ['abv','ibu','og','fg'];
-                $scope.units = {
-                    abv: '%'
-                };
+                $scope.units = { abv: '%' };
 
                 $scope.openBrewery = function(brewery) {
                     GoTo.brewery(brewery._id);

@@ -1,14 +1,14 @@
 <div main-content>
     <h1>{{'content.stats' | translate }}</h1>
     <hr>
-    <div>Cervezas Tomadas: <b>{{myStats.count}}</b></div>
-    <div>Calificaciones Realizadas: <b>{{myStats.rated}}</b></div>
-    <div>Cervezas Diferentes: <b>{{myStats.unique}}</b></div>
-    <div>Cerveza con mas alcohol: <b>{{myStats.maxABV.name}} con {{myStats.maxABV.abv}}%</b></div>
-    <div>Cerveza con menos alcohol: <b>{{myStats.minABV.name}} con {{myStats.minABV.abv}}%</b></div>
-    <div>La cerveza con mejor rating: <b>{{myStats.maxScore.beer.name}} con {{myStats.maxScore.finalScore}} Pts</b></div>
-    <div>La cerveza con peor rating: <b>{{myStats.minScore.beer.name}} con {{myStats.minScore.finalScore}} Pts</b></div>
-    <div>Cantidad de cervecerias: <b>{{myStats.breweries.length}}</b></div>
+    <div>{{'stats.drunksBeer'|translate}}: <b>{{myStats.count}}</b></div>
+    <div>{{'stats.califications'|translate}}: <b>{{myStats.rated}}</b></div>
+    <div>{{'stats.uniqueBeers'|translate}}: <b>{{myStats.unique}}</b></div>
+    <div>{{'stats.strongestBeer'|translate}}: <b>{{myStats.maxABV.name}} {{'general.with'|translate}} {{myStats.maxABV.abv}}%</b></div>
+    <div>{{'stats.weakerBeer'|translate}}: <b>{{myStats.minABV.name}} {{'general.with'|translate}} {{myStats.minABV.abv}}%</b></div>
+    <div>{{'stats.topRating'|translate}}: <b>{{myStats.maxScore.beer.name}} {{'general.with'|translate}} {{myStats.maxScore.finalScore}} Pts</b></div>
+    <div>{{'stats.worstRating'|translate}}: <b>{{myStats.minScore.beer.name}} {{'general.with'|translate}} {{myStats.minScore.finalScore}} Pts</b></div>
+    <div>{{'stats.brewery.amount'|translate}}: <b>{{myStats.breweries.length}}</b></div>
 
     <hr/>
     <div class="col-md-12">

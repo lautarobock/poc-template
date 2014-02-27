@@ -9,7 +9,7 @@
     <div class="col-md-4">
         <div class="panel panel-default" > 
             <div class="panel-heading">
-                Estilos
+                {{'beer.data.style'|translate}}
                 <a ng-init="showStyleTable=false" href="" ng-click="showStyleTable=!showStyleTable">
                     <span ng-hide="showStyleTable" class="glyphicon glyphicon-list pull-right"></span>
                     <span ng-show="showStyleTable" class="glyphicon glyphicon-stats pull-right"></span>
@@ -24,7 +24,7 @@
     <div class="col-md-4">
         <div class="panel panel-default"> 
             <div class="panel-heading">
-                Categorias
+                {{'beer.data.category'|translate}}s
                 <a ng-init="showCatTable=false" href="" ng-click="showCatTable=!showCatTable">
                     <span ng-hide="showCatTable" class="glyphicon glyphicon-list pull-right"></span>
                     <span ng-show="showCatTable" class="glyphicon glyphicon-stats pull-right"></span>
@@ -39,7 +39,7 @@
     <div class="col-md-4">
         <div class="panel panel-default"> 
             <div class="panel-heading">
-            	Cervecerias
+            	{{'content.breweries'|translate}}
             	<a ng-init="showBreweryTable=false" href="" ng-click="showBreweryTable=!showBreweryTable">
                     <span ng-hide="showBreweryTable" class="glyphicon glyphicon-list pull-right"></span>
                     <span ng-show="showBreweryTable" class="glyphicon glyphicon-stats pull-right"></span>
@@ -55,7 +55,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="panel panel-default"> 
-            <div class="panel-heading">Estilos</div>
+            <div class="panel-heading">{{'beer.data.style'|translate}}</div>
             <div class="panel-body">
                 <div table-top-bottom context="context" config="styleAvgTBConfig"></div>
             </div>
@@ -63,7 +63,7 @@
     </div>
     <div class="col-md-4">
         <div class="panel panel-default"> 
-            <div class="panel-heading">Categorias</div>
+            <div class="panel-heading">{{'beer.data.category'|translate}}s</div>
             <div class="panel-body">
                 <div table-top-bottom context="context" config="catAvgTBConfig"></div>
             </div>
@@ -71,7 +71,7 @@
     </div>
     <div class="col-md-4">
         <div class="panel panel-default"> 
-            <div class="panel-heading">Cervecerias</div>
+            <div class="panel-heading">{{'content.breweries'|translate}}</div>
             <div class="panel-body">
                 <div table-top-bottom context="context" config="breweriesAvgTBConfig"></div>
             </div>

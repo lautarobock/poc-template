@@ -131,7 +131,20 @@ define(["resources","util/misc", "util/maps"], function() {
                     //Rating per month chart
                     var categories = [];
                     var values = [];
-                    var monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio', 'Julio', 'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+                    var monthNames = [
+                        $translate('month.january'),
+                        $translate('month.february'),
+                        $translate('month.march'),
+                        $translate('month.april'),
+                        $translate('month.may'),
+                        $translate('month.june'),
+                        $translate('month.july'),
+                        $translate('month.august'),
+                        $translate('month.september'),
+                        $translate('month.october'),
+                        $translate('month.november'),
+                        $translate('month.december')
+                    ];
                     angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
                         var year = month._id.split("_")[0];
                         var monthValue = parseInt(month._id.split("_")[1]);
@@ -146,7 +159,7 @@ define(["resources","util/misc", "util/maps"], function() {
                                 type: 'column'
                             },
                             title: {
-                                text: 'Cervezas por mes'
+                                text: $translate('stats.chart.beerPerMonth')
                             }
                         },
                         xAxis: {
