@@ -2,6 +2,17 @@ define([], function() {
 
     var listview = angular.module("gt.listview", []);
 
+    /**
+    * listviewSort: {
+                    combo: [{label:String, sort:String}],
+                    fields: {
+                        name: String, //Mandatory
+                        asc: String, //String using to asc order. If not, use +{{name}}
+                        desc: String //String using to desc order. If not, use -{{name}}
+                    } 
+                }
+    */
+
     listview.directive("listview", function() {
         return {
             restrict : 'EA',
@@ -34,6 +45,7 @@ define([], function() {
                     limit: $scope.pagination.pageSize,
                     skip: $scope.pagination.pageSize * ($scope.pagination.page-1)
                 };
+                $scope.query = query;
 
                 //Search
                 //SearchCriteria will be change for advanced text filter
@@ -48,6 +60,7 @@ define([], function() {
                 };
 
                 function searchWithFilters() {
+
                     if ( $scope.searchCriteria ) {
                         query["filter[searchCriteria]"] = $scope.searchCriteria;
                     }
@@ -78,8 +91,10 @@ define([], function() {
                 }
                 
 
-                if ( $scope.listviewSort && $scope.listviewSort.initial ) {
-                    query.sort = $scope.listviewSort.initial;
+                if ( $scope.listviewSort 
+                        && $scope.listviewSort.combo
+                        && $scope.listviewSort.combo.length != 0 ) {
+                    query.sort = $scope.listviewSort.combo[0].sort;
                 } else {
                     query.sort = $scope.listviewHeader[0].field;
                 }
@@ -90,6 +105,14 @@ define([], function() {
                 
                 $scope.$watch("pagination.page", function(page, old) {
                     if ( page && old ) {
+                        query.skip = $scope.pagination.pageSize * ($scope.pagination.page-1);
+                        searchWithFilters();
+                    }
+                });
+                $scope.$watch("query.sort", function(sort, old) {
+                    if ( sort && old ) {
+                        $scope.pagination.page = 1;
+                        query.skip = 0;
                         searchWithFilters();
                     }
                 });
@@ -139,50 +162,50 @@ define([], function() {
         };
     });
 
-    function sortData(startField, startAsc, startSort) {
-            var data = {
-                sort: startSort,
-                asc: startAsc,
-                field: startField,
-                orderStyle:{},
-                orderBy: function() {
-                    if ( this.sort ) {
-                        return this.sort;
-                    } else  {
-                        return this.field; 
-                    }
-                },
-                reverse: function() {
-                    return this.asc || this.asc == '-';
-                },
-                resort: function(field, sort) {
-                    if ( field == this.field) {
-                        if (this.asc == '-' ) {
-                            this.asc = '';
-                            this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
-                        } else {
-                            this.asc = '-';
-                            this.orderStyle[field] = 'glyphicon glyphicon-chevron-down';
-                        }
-                    } else {
-                        angular.forEach(this.orderStyle, function(style ,key) {
-                            data.orderStyle[key] = '';
-                        });
-                        this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
-                        this.sort = sort;
-                        this.field = field;
-                        this.asc = '';
-                    }
-                }
-            };
-            if ( startAsc == '-') {
-                data.orderStyle[startField] = 'glyphicon glyphicon-chevron-down';
-            } else {
-                data.orderStyle[startField] = 'glyphicon glyphicon-chevron-up';
-            }
+    // function sortData(startField, startAsc, startSort) {
+    //         var data = {
+    //             sort: startSort,
+    //             asc: startAsc,
+    //             field: startField,
+    //             orderStyle:{},
+    //             orderBy: function() {
+    //                 if ( this.sort ) {
+    //                     return this.sort;
+    //                 } else  {
+    //                     return this.field; 
+    //                 }
+    //             },
+    //             reverse: function() {
+    //                 return this.asc || this.asc == '-';
+    //             },
+    //             resort: function(field, sort) {
+    //                 if ( field == this.field) {
+    //                     if (this.asc == '-' ) {
+    //                         this.asc = '';
+    //                         this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
+    //                     } else {
+    //                         this.asc = '-';
+    //                         this.orderStyle[field] = 'glyphicon glyphicon-chevron-down';
+    //                     }
+    //                 } else {
+    //                     angular.forEach(this.orderStyle, function(style ,key) {
+    //                         data.orderStyle[key] = '';
+    //                     });
+    //                     this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
+    //                     this.sort = sort;
+    //                     this.field = field;
+    //                     this.asc = '';
+    //                 }
+    //             }
+    //         };
+    //         if ( startAsc == '-') {
+    //             data.orderStyle[startField] = 'glyphicon glyphicon-chevron-down';
+    //         } else {
+    //             data.orderStyle[startField] = 'glyphicon glyphicon-chevron-up';
+    //         }
 
-            return data;
-        };
-    }
+    //         return data;
+    //     };
+    // }
 
 });

@@ -1,12 +1,26 @@
 <div class="panel panel-default">
     <div class="panel-body">
-        <div class="col-md-10" style="padding-top: 5px;" >
-            <span ng-class="{invisible:loading}" >
-                <ng-pluralize count="pagination.totalItems" when="pluralization"></ng-pluralize>
-            </span>
+        <div class="row">
+            <div class="col-md-8"  >
+                <span ng-class="{invisible:loading}" >
+                    <ng-pluralize count="pagination.totalItems" when="pluralization"></ng-pluralize>
+                </span>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-2" style="font-size: 21px;">
+                    <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </div>
+                <div class="col-md-10">
+                    <select class="form-control input-sm" ng-model="query.sort">
+                      <option ng-repeat="sort in listviewSort.combo" value="{{ sort.sort }}">
+                        {{ sort.label }}
+                      </option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="panel panel-default" style="margin: 1em">
+    <div class="panel panel-default" style="margin: 0 1em 1em 1em">
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-{{listviewConfig.filterColSpan||'12'}}" style="margin-bottom: 1em;">
@@ -57,8 +71,8 @@
             </tbody>
         </table>
         <hr/>
-        <div class="container" style="margin-bottom:1em">
-            <pagination boundary-links="true" total-items="pagination.totalItems" items-per-page="pagination.pageSize" page="pagination.page" max-size="10" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+        <div style="margin:1em">
+            <pagination boundary-links="true" total-items="pagination.totalItems" items-per-page="pagination.pageSize" page="pagination.page" max-size="15" class="pagination-small" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
             <div style="white-space: pre-wrap;box-sizing: border-box;">{{(pagination.page-1)*pagination.pageSize + 1}} - <span ng-hide="pagination.page == getPageCount(pagination.totalItems)">{{pagination.page*pagination.pageSize}}</span><span ng-show="pagination.page == getPageCount(pagination.totalItems)">{{pagination.totalItems}}</span> de {{pagination.totalItems}}</div>
         </div>
     </div>
