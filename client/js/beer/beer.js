@@ -287,7 +287,14 @@ define(['../resources'], function() {
 				}
 				$scope.beer.$save(function(beer) {
 					$location.path('/beer/detail/' + beer._id);
-				});
+				},function(err) {
+                    if ( err.status == 401 ) {
+                        console.log("Operacion no autorizada",err);    
+                    } else {
+                        console.log("Error",err);    
+                    }
+                    
+                });
 			};
 
             $scope.formatBrewerySelection = function(brewery_id, breweries) {
