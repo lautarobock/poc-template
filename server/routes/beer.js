@@ -2,13 +2,42 @@ var model = require('../domain/model.js');
 var mongoose = require('mongoose');
 var activity = require("./activity.js");
 
-exports.findAll = function(req, res) {
-    var filter = null;
+function processFilter(filter) {
+    if ( filter && filter.searchCriteria ) {
+        filter.$or = [
+            {name: {"$regex": filter.searchCriteria,"$options": 'i'}},
+            {brewery: {"$regex": filter.searchCriteria,"$options": 'i'}}
+        ];
+        delete filter.searchCriteria;
+    }
+    return filter;
+}
+
+exports.count = function(req, res) {
+    var filter = processFilter(req.query.filter);
     if ( req.query.brewery ) {
         filter = filter||{};
         filter.brewery = req.query.brewery;
     }
-	model.Beer.find(filter)
+    console.log("filter(count)", JSON.stringify(filter));
+    model.Beer.count(filter)
+        .exec(function(err,results) {
+            res.send({count:results});
+    });    
+};
+
+exports.findAll = function(req, res) {
+    var filter = processFilter(req.query.filter);
+
+    if ( req.query.brewery ) {
+        filter = filter||{};
+        filter.brewery = req.query.brewery;
+    }
+    console.log("filter",JSON.stringify(filter));
+    model.Beer.find(filter)
+        .limit(req.query.limit)
+        .skip(req.query.skip)
+        .sort(req.query.sort)
         .populate('style')
         .populate('styleByLabel')
         .populate('brewery')

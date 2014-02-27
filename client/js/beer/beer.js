@@ -3,134 +3,125 @@ define(['../resources'], function() {
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
     beer.run(['$templateCache',function($templateCache) {
-        $templateCache.put("score.html",'<span beer-percentil="getValue(row,header)"></span>');
+        $templateCache.put("score.html",'<span beer-percentil="$model.score"></span>');
     }]);
+    
 
 	beer.controller("BeerController", 
         ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log', 'Responsive','RatingService',
         function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache, $log, Responsive,RatingService) {
 
-            function sortScore(beer) {
-                if ( beer.score ) {
-                    return beer.score.avg || 0;    
-                }
-                return 0;
-            }
-            function sortScoreStyle(beer) {
-                if ( beer.score ) {
-                    return beer.score.style || 0;    
-                }
-                return 0;   
-            }
-            function sortOverall(beer) {
-                if ( beer.score ) {
-                    return beer.score.overall || 0;    
-                }
-                return 0;   
-            }
-            function sortMyScore(beer) {
-                return $scope.dataHelper.getMyScore(beer)||0;
-            }
-    
-            $scope.dataHelper = {
-                getMyScore: function(beer) {
-                    
-                    var avg = RatingService.avgForBeer(beer);
-                    if ( avg && avg >= 0 ) {
-                        return parseFloat(avg.toFixed(1));
-                    } else {
-                        return avg;
-                    }
+            $scope.beers = Beer;
 
-                }
+            $scope.sort = {
+                // initial: '-score.overall -score.avg score.position',
+                combo: [{
+                    label: 'Mejores calificaciones',
+                    sort: '-score.overall -score.avg score.position'
+                },{
+                    label: 'Mejores por estilo',
+                    sort: '-score.style style -score.category -score.avb score.position'
+                },{
+                    label: 'Mejores por categoria',
+                    sort: '-score.category category -score.style -score.avb score.position'
+                },{
+                    label: 'Por cerveceria',
+                    sort: 'brewery score.position'
+                },{
+                    label: 'Por nombre',
+                    sort: 'name score.position'
+                }]
             };
 
             $scope.config = {
-                data: Beer,
-                name: $translate('beer.data.beer')+'s',
-                singular: $translate('beer.data.beer'),
-                filterLabel: $translate('side.search'),
+                pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 10,
+                filterOrder: ['[brewery]', '[style]', '[category]'],
                 filterColSpan: 6,
-                filterOrder: ['brewery._id','style._id', 'category._id'],
-                orderBy: 'score.avg',
-                orderDir: "-",
-                pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
-                sort: [sortOverall,sortScore],
-                showIndex: true,
-                emptyResultText: $translate('beer.search.emtpy'),
-                headers: [{
-                        field:'score.position',
-                        caption: '#',
-                        tooltip: $translate('beer.data.position'),
-                        hidden: {xs: true,sm: true}
-                    },{
-                        field:'name',
-                        caption: $translate('beer.data.beer'),
-                        type: 'link',
-                        class: function() {return "dl-font-bold";},
-                        href: function(row) {return '#/beer/detail/' + row._id;}
-                    },{
-                        field:'brewery.name',
-                        caption: $translate('beer.data.brewery'),
-                        hidden: {xs: true,sm: true},
-                        type: 'link',
-                        href: function(row) {
-                            return "#/beer?brewery._id=" + row.brewery._id;
-                        }
-                    },{
-                        field:'style.name',
-                        caption: $translate('beer.data.style')
-                    },{
-                        field:'category.name',
-                        caption: $translate('beer.data.category'),
-                        hidden: {xs: true,sm: true}
-                    },{
-                        field:'score.avg',
-                        caption: $translate('beer.data.score'),
-                        width: '7em',
-                        tooltip: $translate('beer.data.score.help'),
-                        class: function(beer) {
-                            if ( beer.score ) {
-                                return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
-                            } else {
-                                return 'badge';
-                            }
-                        },
-                        sort: [sortOverall,sortScore]
-                    },{
-                        field:'score',
-                        caption: 'G / S',
-                        width: '9em',
-                        headerStyle: {'text-align': 'center','min-width': '9em'},
-                        tooltip: $translate('beer.data.score.gs.help'),
-                        valueTemplateUrl: 'score.html',
-                        sort: sortScoreStyle
-                    },{
-                        field:'score.count',
-                        caption: $translate('beer.data.score.count.short'),
-                        tooltip: $translate('beer.data.score.count.help'),
-                        hidden: {xs: true,sm: true}
-                    },{
-                        field:'score.myScore',
-                        caption: $translate('beer.data.score.my'),
-                        tooltip: $translate('beer.data.score.my.help'),
-                        valueTemplateUrl: 'beer/list/my-score.html',
-                        class: function(beer) {
-                            var s = $scope.dataHelper.getMyScore(beer);
-                            if ( s ) {
-                                return 'badge alert-' + DLHelper.colorByScore(s);        
-                            } else {
-                                return 'badge';
-                            }
-                        },
-                        sort: sortMyScore
-                    }
-                ]
+                plural: $translate('beer.data.beer')+'s',
+                singular: $translate('beer.data.beer'),
+                searchCriteriaLabel: $translate('side.search')
             };
 
+            $scope.headers = [{
+                    field:'score.position',
+                    caption: '#',
+                    tooltip: $translate('beer.data.position'),
+                    hidden: {xs: true,sm: true}
+                },{
+                    field: 'name',
+                    caption: $translate('beer.data.beer'),
+                    template:   '<a href="#/beer/detail/{{$model._id}}">' +
+                                    '<b>{{$model.name}}</b>' +
+                                '</a>'
+                },{
+                    field:'brewery.name',
+                    caption: $translate('beer.data.brewery'),
+                    hidden: {xs: true,sm: true},
+                    template:   '<a href="#/beer?[brewery]={{$model.brewery._id}}"' +
+                                    '<b>{{$model.brewery.name}}</b>' +
+                                '</a>'
+                },{
+                    field:'style.name',
+                    caption: $translate('beer.data.style')
+                },{
+                    field:'category.name',
+                    caption: $translate('beer.data.category'),
+                    hidden: {xs: true,sm: true}
+                },{
+                    field:'score.avg',
+                    sort: ['score.overall', 'score.avg'],
+                    caption: $translate('beer.data.score'),
+                    width: '7em',
+                    tooltip: $translate('beer.data.score.help'),
+                    template: '<span class="{{header.class($model)}}">{{$model.score.avg||"-"}}</span>',
+                    class: function(beer) {
+                        if ( beer.score ) {
+                            return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
+                        } else {
+                            return 'badge';
+                        }
+                    }
+                },{
+                    field:'score',
+                    caption: 'G / S',
+                    width: '9em',
+                    style: {'text-align': 'center','min-width': '9em'},
+                    tooltip: $translate('beer.data.score.gs.help'),
+                    templateUrl: 'score.html'
+                },{
+                    field:'score.count',
+                    caption: $translate('beer.data.score.count.short'),
+                    tooltip: $translate('beer.data.score.count.help'),
+                    hidden: {xs: true,sm: true}
+                },{
+                    field:'score.myScore',
+                    caption: $translate('beer.data.score.my'),
+                    width: '5em',
+                    tooltip: $translate('beer.data.score.my.help'),
+                    templateUrl: 'beer/list/my-score.html',
+                    getMyScore: function(beer) {
+                    
+                        var avg = RatingService.avgForBeer(beer);
+                        if ( avg && avg >= 0 ) {
+                            return parseFloat(avg.toFixed(1));
+                        } else {
+                            return avg;
+                        }
+
+                    },
+                    class: function(header, beer) {
+                        var s = header.getMyScore(beer);
+                        if ( s ) {
+                            return 'badge alert-' + DLHelper.colorByScore(s);        
+                        } else {
+                            return 'badge';
+                        }
+                    }
+                }
+            ];
             
             $scope.filterData = {};
-            $scope.filterData['style._id'] = {
+            $scope.filterData['[style]'] = {
                 caption: $translate('beer.data.style'),
                 type: 'combo',
                 groupBy: function(value) {
@@ -145,7 +136,8 @@ define(['../resources'], function() {
                 data: Cache.styles(),
                 orderBy: '_id'
             };
-            $scope.filterData['category._id'] = {
+
+            $scope.filterData['[category]'] = {
                 caption: $translate('beer.data.category'),
                 type: 'combo',
                 comparator: 'equal',
@@ -157,7 +149,7 @@ define(['../resources'], function() {
                 data: Cache.categories(),
                 orderBy: '_id'
             };
-            $scope.filterData['brewery._id'] = {
+            $scope.filterData['[brewery]'] = {
                 caption: $translate('beer.data.brewery'),
                 type: 'combo',
                 comparator: 'equal',
@@ -176,8 +168,28 @@ define(['../resources'], function() {
                 }
             });
             if ( $location.$$search.searchCriteria ) {
-                $scope.searchCriteria = $location.search().searchCriteria;
+                $scope.config.searchCriteria = $location.search().searchCriteria;
             }
+
+
+            // $scope.config = {
+            //     data: Beer,
+            //     filterOrder: ['brewery._id','style._id', 'category._id'],
+            //     pageSize: Responsive.isXs() || Responsive.isSm() ? 10 : 25,
+            //     sort: [sortOverall,sortScore],
+            //     showIndex: true,
+            //     emptyResultText: $translate('beer.search.emtpy'),
+            //     headers: []
+            // };
+
+            // angular.forEach($scope.filterData,function(f,key){
+            //     if ( $location.$$search[key] ) {
+            //         $scope.filterData[key].value = $location.$$search[key];
+            //     }
+            // });
+            // if ( $location.$$search.searchCriteria ) {
+            //     $scope.searchCriteria = $location.search().searchCriteria;
+            // }
 
         }]);
 
