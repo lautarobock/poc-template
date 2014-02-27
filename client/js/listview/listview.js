@@ -101,30 +101,30 @@ define([], function() {
                     query.sort = $scope.listviewHeader[0].field;
                 }
 
-                // if ( !$scope.listviewConfig.notQueryOnLoad ) {
-                //     reloadCount();
-                // }
-                $scope.$watch("pagination.pageSize", function(page, old) {
-                    if ( page && old ) {
-                        $scope.pagination.page = 1;
-                        query.skip = 0;
-                        query.limit = $scope.pagination.pageSize,
-                        searchWithFilters();
-                    }
-                });
+                $scope.changePageSize = function() {
+                    $scope.pagination.page = 1;
+                    query.skip = 0;
+                    query.limit = $scope.pagination.pageSize,
+                    searchWithFilters(); 
+                };
                 $scope.$watch("pagination.page", function(page, old) {
                     if ( page && old ) {
                         query.skip = $scope.pagination.pageSize * ($scope.pagination.page-1);
                         searchWithFilters();
                     }
                 });
-                $scope.$watch("query.sort", function(sort, old) {
-                    if ( sort && old ) {
-                        $scope.pagination.page = 1;
-                        query.skip = 0;
-                        searchWithFilters();
-                    }
-                });
+                $scope.changeSort = function() {
+                    $scope.pagination.page = 1;
+                    query.skip = 0;
+                    searchWithFilters();
+                };
+                // $scope.$watch("query.sort", function(sort, old) {
+                //     if ( sort && old ) {
+                //         $scope.pagination.page = 1;
+                //         query.skip = 0;
+                //         searchWithFilters();
+                //     }
+                // });
 
                 function reload() {
                     $scope.loading = true;
