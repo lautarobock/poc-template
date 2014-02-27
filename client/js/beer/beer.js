@@ -3,7 +3,10 @@ define(['../resources'], function() {
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
     beer.run(['$templateCache',function($templateCache) {
-        $templateCache.put("score.html",'<span beer-percentil="$model.score"></span>');
+        //new for server side listview
+        $templateCache.put("listview-score.html",'<span beer-percentil="$model.score"></span>');
+        //legacy for califications page
+        $templateCache.put("score.html",'<span beer-percentil="getValue(row,header)"></span>');
     }]);
     
 
@@ -87,7 +90,7 @@ define(['../resources'], function() {
                     width: '9em',
                     style: {'text-align': 'center','min-width': '9em'},
                     tooltip: $translate('beer.data.score.gs.help'),
-                    templateUrl: 'score.html'
+                    templateUrl: 'listview-score.html'
                 },{
                     field:'score.count',
                     caption: $translate('beer.data.score.count.short'),
