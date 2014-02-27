@@ -67,6 +67,9 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
             expect($scope.breweriesTBConfig.rows).toBe($scope.myStats.breweries);
             expect($scope.breweriesAvgTBConfig.rows).toEqual(notNull($scope.myStats.breweries,'avg.value'));
 
+            expect($scope.countryTBConfig.rows).toBe($scope.myStats.countries);
+            expect($scope.countryAvgTBConfig.rows).toEqual(notNull($scope.myStats.countries,'avg.value'));
+
             //Charts
             //Cantidad por estilo
             expect($scope.styleChartConfig.series[0].data.length).toBe(10);
@@ -79,6 +82,11 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
             expect($scope.categoryChartConfig.series[0].data[0]).toEqual(['18',66]);
             expect($scope.categoryChartConfig.series[0].data[8]).toEqual(['05',7]);
             expect($scope.categoryChartConfig.series[0].data[9]).toEqual(['stats.others',52]);
+
+            //Cantidad por pais
+            expect($scope.countryChartConfig.series[0].data.length).toBe(3);
+            expect($scope.countryChartConfig.series[0].data[0]).toEqual(['España',235]);
+            // expect($scope.countryChartConfig.series[0].data[1]).toEqual(['Argentina',1]);
             
 
             //Cervezas por mes

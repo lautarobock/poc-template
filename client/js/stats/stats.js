@@ -295,6 +295,13 @@ define(["resources","util/misc", "util/maps"], function() {
                                 +'%</b> (' + this.y + ')';
                 });
                 $scope.breweriesChartConfig.options.plotOptions.pie.dataLabels.enabled = false;
+
+                var countryCount = transformChartData($scope.myStats.countries, 9);
+                $scope.countryChartConfig = getBaseChart(countryCount, function() {
+                    var country = this.point.name || $translate('stats.others');
+                    return '<span style="font-size: 10px">'+country+'</span><br/><b>'+Math.round(this.percentage)
+                                +'%</b> (' + this.y + ')';
+                });      
             }
 
             function getBaseChart(data, formatter) {
@@ -458,6 +465,45 @@ define(["resources","util/misc", "util/maps"], function() {
                         onClick: function(row) {
                             GoTo.brewery(row._id);
                         }
+                    },{
+                        caption: $translate('stats.avg'),
+                        style: {width: '40%'},
+                        value: "{{row.avg.value}} ({{row.count}})"
+                    }],
+                    orderBy: 'avg.value',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.countryTBConfig = {
+                    rows: $scope.myStats.countries,
+                    headers: [{
+                        caption: $translate('beer.data.country'),
+                        style: {width: '60%'},
+                        // onClick: function(row) {
+                        //     // $location.path("/beer").search('category._id',row._id);
+                        //     GoTo.category(row._id);
+                        // },
+                        value: "{{row._id}}"
+                    },{
+                        caption: $translate('stats.amount'),
+                        style: {width: '40%'},
+                        value: "{{row.count}}"
+                    }],
+                    orderBy: 'count',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.countryAvgTBConfig = {
+                    rows: $filter("notNull")($scope.myStats.countries,'avg.value'),
+                    headers: [{
+                        caption: $translate('beer.data.country'),
+                        style: {width: '60%'},
+                        // onClick: function(row) {
+                        //     GoTo.category(row._id);
+                        // },
+                        value: "{{row._id}}"
                     },{
                         caption: $translate('stats.avg'),
                         style: {width: '40%'},
