@@ -34,6 +34,9 @@ require("mongoose").connect(process.env.MONGOLAB_URI);
 
 require("./routes/config").createRoutes(app);
 
+
+require("./routes/ceo/ceo").configure(app);
+
 // var model = require("./domain/model");
 // var rating = require("./routes/rating");
 
