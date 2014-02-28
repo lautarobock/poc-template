@@ -84,8 +84,8 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
             expect($scope.categoryChartConfig.series[0].data[9]).toEqual(['stats.others',52]);
 
             //Cantidad por pais
-            expect($scope.countryChartConfig.series[0].data.length).toBe(3);
-            expect($scope.countryChartConfig.series[0].data[0]).toEqual(['España',235]);
+            expect($scope.countryChartConfig.series[0].data.length).toBe(2);
+            expect($scope.countryChartConfig.series[0].data[0]).toEqual(['España',2]);
             // expect($scope.countryChartConfig.series[0].data[1]).toEqual(['Argentina',1]);
             
 

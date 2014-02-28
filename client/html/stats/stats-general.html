@@ -6,7 +6,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default" > 
             <div class="panel-heading">
                 {{'beer.data.style'|translate}}
@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default"> 
             <div class="panel-heading">
                 {{'beer.data.category'|translate}}s
@@ -36,11 +36,13 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+</div>
+<div class="row">
+    <div class="col-md-6">
         <div class="panel panel-default"> 
             <div class="panel-heading">
-            	{{'content.breweries'|translate}}
-            	<a ng-init="showBreweryTable=false" href="" ng-click="showBreweryTable=!showBreweryTable">
+                {{'content.breweries'|translate}}
+                <a ng-init="showBreweryTable=false" href="" ng-click="showBreweryTable=!showBreweryTable">
                     <span ng-hide="showBreweryTable" class="glyphicon glyphicon-list pull-right"></span>
                     <span ng-show="showBreweryTable" class="glyphicon glyphicon-stats pull-right"></span>
                 </a>
@@ -51,9 +53,24 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="panel panel-default"> 
+            <div class="panel-heading">
+                {{'stats.drunkIn'|translate}}
+                <a ng-init="showCountryTable=false" href="" ng-click="showCountryTable=!showCountryTable">
+                    <span ng-hide="showCountryTable" class="glyphicon glyphicon-list pull-right"></span>
+                    <span ng-show="showCountryTable" class="glyphicon glyphicon-stats pull-right"></span>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div ng-class="{hidden:!showCountryTable}" table-top-bottom context="context" config="countryTBConfig"></div>
+                <highchart ng-class="{hidden:showCountryTable}" config="countryChartConfig"></highchart>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default"> 
             <div class="panel-heading">{{'beer.data.style'|translate}}</div>
             <div class="panel-body">
@@ -61,7 +78,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default"> 
             <div class="panel-heading">{{'beer.data.category'|translate}}s</div>
             <div class="panel-body">
@@ -69,11 +86,21 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+</div>
+<div class="row">
+    <div class="col-md-6">
         <div class="panel panel-default"> 
             <div class="panel-heading">{{'content.breweries'|translate}}</div>
             <div class="panel-body">
                 <div table-top-bottom context="context" config="breweriesAvgTBConfig"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default"> 
+            <div class="panel-heading">{{'stats.drunkIn'|translate}}</div>
+            <div class="panel-body">
+                <div table-top-bottom context="context" config="countryAvgTBConfig"></div>
             </div>
         </div>
     </div>

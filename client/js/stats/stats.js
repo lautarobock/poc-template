@@ -65,6 +65,9 @@ define(["resources","util/misc", "util/maps"], function() {
                 name: 'breweries',
                 caption: $translate('beer.data.brewery')
             },{
+                name: 'countries',
+                caption: $translate('stats.drunkIn')
+            },{
                 name: 'map',
                 caption: $translate('general.map')
             }];
@@ -269,6 +272,31 @@ define(["resources","util/misc", "util/maps"], function() {
                         caption: $translate('stats.avg')
                     }]
                 };
+                console.log($scope.myStats.countries)
+                $scope.tabConfig.countries = {
+                    collection: $scope.myStats.countries,
+                    name: $translate('brewery.data.locations'),
+                    singular: $translate('brewery.data.location'),
+                    filterColSpan: 6,
+                    orderBy: 'count',
+                    orderDir: "-",
+                    pageSize: 25,
+                    emptyResultText: $translate('beer.search.emtpy'),
+                    headers: [{
+                        field:'_id',
+                        caption: $translate('brewery.data.location.address.country')
+                        // ,
+                        // onClick: function(row) {
+                        //     GoTo.brewery(row._id);
+                        // }
+                    },{
+                        field:'count',
+                        caption: $translate('stats.amount')
+                    },{
+                        field:'avg.value',
+                        caption: $translate('stats.avg')
+                    }]
+                };
             }
 
             function loadCharts() {
@@ -302,6 +330,7 @@ define(["resources","util/misc", "util/maps"], function() {
                     return '<span style="font-size: 10px">'+country+'</span><br/><b>'+Math.round(this.percentage)
                                 +'%</b> (' + this.y + ')';
                 });      
+                $scope.countryChartConfig.options.plotOptions.pie.dataLabels.enabled = false;
             }
 
             function getBaseChart(data, formatter) {
@@ -478,7 +507,7 @@ define(["resources","util/misc", "util/maps"], function() {
                 $scope.countryTBConfig = {
                     rows: $scope.myStats.countries,
                     headers: [{
-                        caption: $translate('beer.data.country'),
+                        caption: $translate('brewery.data.location.address.country'),
                         style: {width: '60%'},
                         // onClick: function(row) {
                         //     // $location.path("/beer").search('category._id',row._id);
@@ -498,7 +527,7 @@ define(["resources","util/misc", "util/maps"], function() {
                 $scope.countryAvgTBConfig = {
                     rows: $filter("notNull")($scope.myStats.countries,'avg.value'),
                     headers: [{
-                        caption: $translate('beer.data.country'),
+                        caption: $translate('brewery.data.location.address.country'),
                         style: {width: '60%'},
                         // onClick: function(row) {
                         //     GoTo.category(row._id);

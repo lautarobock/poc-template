@@ -64,7 +64,7 @@ define(["../DataHelper.js"], function(DataHelper) {
             expect(myStats.months[1]._id).toBe('2012_12');
             expect(myStats.months[1].count).toBe(36);
 
-            expect(myStats.countries.length).toBe(3);
+            expect(myStats.countries.length).toBe(2);
             expect(myStats.countries[0].count).toBe(2);
             expect(myStats.countries[0]._id).toBe("España");
             expect(myStats.countries[0].avg.value).toBe(40.5);

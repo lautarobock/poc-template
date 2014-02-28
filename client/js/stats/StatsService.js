@@ -136,16 +136,19 @@
             }
 
             //country
-            index = util.Arrays.indexOf(myStats.countries, compareItem(rating.country));
-            if ( index == -1 ) {
-                myStats.countries.push(createCountAvg(rating.country));
-                index = myStats.countries.length - 1;
+            if ( rating.country ) {
+                index = util.Arrays.indexOf(myStats.countries, compareItem(rating.country));
+                if ( index == -1 ) {
+                    myStats.countries.push(createCountAvg(rating.country));
+                    index = myStats.countries.length - 1;
+                }
+                myStats.countries[index].count ++;
+                if ( rating.finalScore ) {
+                    myStats.countries[index].avg.sum += rating.finalScore;
+                    myStats.countries[index].avg.count++;
+                }    
             }
-            myStats.countries[index].count ++;
-            if ( rating.finalScore ) {
-                myStats.countries[index].avg.sum += rating.finalScore;
-                myStats.countries[index].avg.count++;
-            }
+            
 
             //By Month (_id:'aaaa_mm')
             var date = new Date(rating.date);
