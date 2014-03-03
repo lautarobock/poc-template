@@ -1,8 +1,9 @@
-define([], function() {
+(function() {
 
-    var listview = angular.module("gt.listview", []);
+    var listview = angular.module("gt.listview", ['gt.listview.tpls']);
 
     /**
+    * Doc
     * listviewSort: {
                     combo: [{label:String, sort:String}],
                     fields: {
@@ -25,7 +26,7 @@ define([], function() {
                 listviewSort: '=?',
                 listviewFilter: '=?'
             },
-            controller: function($scope, $interpolate, $timeout) {
+            controller: ['$scope', '$interpolate', '$timeout',function($scope, $interpolate, $timeout) {
                 $scope.listviewConfig = $scope.listviewConfig || {};
 
                 $scope.pluralization = {
@@ -166,55 +167,9 @@ define([], function() {
                 $scope.urlTemplate = function(filter) {
                     return 'listview/listview-filter-' + filter.type + ".html";
                 };
-            }
+            }]
 
         };
     });
 
-    // function sortData(startField, startAsc, startSort) {
-    //         var data = {
-    //             sort: startSort,
-    //             asc: startAsc,
-    //             field: startField,
-    //             orderStyle:{},
-    //             orderBy: function() {
-    //                 if ( this.sort ) {
-    //                     return this.sort;
-    //                 } else  {
-    //                     return this.field; 
-    //                 }
-    //             },
-    //             reverse: function() {
-    //                 return this.asc || this.asc == '-';
-    //             },
-    //             resort: function(field, sort) {
-    //                 if ( field == this.field) {
-    //                     if (this.asc == '-' ) {
-    //                         this.asc = '';
-    //                         this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
-    //                     } else {
-    //                         this.asc = '-';
-    //                         this.orderStyle[field] = 'glyphicon glyphicon-chevron-down';
-    //                     }
-    //                 } else {
-    //                     angular.forEach(this.orderStyle, function(style ,key) {
-    //                         data.orderStyle[key] = '';
-    //                     });
-    //                     this.orderStyle[field] = 'glyphicon glyphicon-chevron-up';
-    //                     this.sort = sort;
-    //                     this.field = field;
-    //                     this.asc = '';
-    //                 }
-    //             }
-    //         };
-    //         if ( startAsc == '-') {
-    //             data.orderStyle[startField] = 'glyphicon glyphicon-chevron-down';
-    //         } else {
-    //             data.orderStyle[startField] = 'glyphicon glyphicon-chevron-up';
-    //         }
-
-    //         return data;
-    //     };
-    // }
-
-});
+})();

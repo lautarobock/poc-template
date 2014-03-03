@@ -10,7 +10,6 @@ define("app", [
     "activity/activity",
     "stats/stats",
     "side/side",
-    "listview/listview",
     "util/directives",
     "util/misc",
     "abm/abm",

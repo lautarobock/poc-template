@@ -14,7 +14,8 @@
     "highcharts-ng": "0.0.4",
     "angular-google-maps": "1.0.10",
     "angularjs-google-places": "0.1.0",
-    "angularjs-google-places-fork": "git://github.com/lautarobock/angularjs-google-places.git"
+    "angularjs-google-places-fork": "git://github.com/lautarobock/angularjs-google-places.git",
+    "lautarobock-ng-util": ">=0"
   },
   "resolutions": {
     "angular": "1.2.6"
