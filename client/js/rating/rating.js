@@ -182,9 +182,16 @@ define(["rating/rating","resources"], function() {
         }]);
 
     rating.controller("RatingBeerController", [
-        '$scope', 'Rating','$filter', '$translate','DLHelper', 'Responsive','RatingService',
-        function($scope,Rating,$filter,$translate,DLHelper,Responsive, RatingService) {
+        '$scope', 'Rating','$filter', '$translate','DLHelper', 'Responsive','RatingService', 'Cache',
+        function($scope,Rating,$filter,$translate,DLHelper,Responsive, RatingService,Cache) {
             
+            $scope.styles = {};
+            Cache.styles(function(styles) {
+                angular.forEach(styles, function(style) {
+                    $scope.styles[style._id] = style;
+                });
+            });
+
             // $scope.$watch("user._id", function(user_id) {
             //     if ( user_id ) {
             //         loadData();
@@ -206,6 +213,17 @@ define(["rating/rating","resources"], function() {
                             caption: 'Cerveza',
                             type: 'link',
                             href: function(row) {return '#/beer/detail/' + row.beer._id;}
+                        },{
+                            field: 'beer.style',
+                            caption: 'Estilo',
+                            title: function(rating) {
+                                return rating ? $scope.styles[rating.beer.style].name : null;
+
+                            },
+                            format: function(value) {
+                                
+                                return value.toUpperCase();
+                            }
                         },{
                             field:'score.appearance',
                             caption: $translate('rating.data.appearance.short'),
@@ -255,6 +273,7 @@ define(["rating/rating","resources"], function() {
                         },{
                             field:'date',
                             caption: 'Fecha',
+                            width: '7em',
                             format: function(value) {
                                 return $filter('date')(value,'dd-MM-yyyy');
                             }

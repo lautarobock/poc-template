@@ -50,8 +50,16 @@ define(["resources"], function() {
         };
     }]);
 
-    cellar.controller("CellarController", ['$scope','CellarService','Cellar','$translate','$filter', 'DLHelper',
-        function($scope,CellarService,Cellar,$translate,$filter,DLHelper) {
+    cellar.controller("CellarController", ['$scope','CellarService','Cellar','$translate','$filter', 'DLHelper', 'Cache',
+        function($scope,CellarService,Cellar,$translate,$filter,DLHelper, Cache) {
+
+            $scope.styles = {};
+            Cache.styles(function(styles) {
+                angular.forEach(styles, function(style) {
+                    $scope.styles[style._id] = style;
+                });
+            });
+
             $scope.config = {
                 data: Cellar,
                 collection: Cellar.query({populate:true}, function(cellars) {
@@ -74,6 +82,15 @@ define(["resources"], function() {
                             if ( cellar.amount == 0 ) {
                                 return 'dl-line-through';
                             }
+                        }
+                    },{
+                        field: 'beer.style',
+                        caption: 'Estilo',
+                        title: function(rating) {
+                            return rating ? $scope.styles[rating.beer.style].name : null;
+                        },
+                        format: function(value) {
+                            return value.toUpperCase();
                         }
                     },{
                         field:'beer.score.avg',
