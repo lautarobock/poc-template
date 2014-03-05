@@ -111,7 +111,7 @@ define([], function() {  	angular.module("gt.abm.templates", []).run(["$template
     "            </thead>\n" +
     "            <tbody>\n" +
     "                <tr ng-init=\"value=copy(row)\" ng-repeat=\"row in rows | orderBy:sort.orderBy():sort.reverse() | textFilter:searchCriteria | advanced:filterData | pageFilter:page:pageSize() \">\n" +
-    "                    <td ng-repeat=\"header in config().headers\" ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}>\n" +
+    "                    <td ng-repeat=\"header in config().headers\" ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm} title=\"{{header.title(row)}}\">\n" +
     "                        <ng-include src=\"valueTemplate(row,header)\"></ng-include>\n" +
     "                    </td>\n" +
     "                    <!-- BUTTONS -->\n" +

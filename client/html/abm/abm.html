@@ -70,7 +70,7 @@
             </thead>
             <tbody>
                 <tr ng-init="value=copy(row)" ng-repeat="row in rows | orderBy:sort.orderBy():sort.reverse() | textFilter:searchCriteria | advanced:filterData | pageFilter:page:pageSize() ">
-                    <td ng-repeat="header in config().headers" ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm}>
+                    <td ng-repeat="header in config().headers" ng-class={'hidden-xs':header.hidden.xs,'hidden-sm':header.hidden.sm} title="{{header.title(row)}}">
                         <ng-include src="valueTemplate(row,header)"></ng-include>
                     </td>
                     <!-- BUTTONS -->
