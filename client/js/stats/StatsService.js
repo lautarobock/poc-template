@@ -88,13 +88,27 @@
             styles: [],
             categories: [],
             months: [],
-            countries: []
+            countries: [],
+            firstInDate: null,
+            lastInDate: null
         };
 
         for( var i=0; i<ratings.length; i++ ) {
             var rating = ratings[i];
             if ( rating.score ) {
                 myStats.rated++;
+            }
+
+            if ( !myStats.firstInDate ) {
+                myStats.firstInDate = new Date(rating.date);
+            } else {
+                myStats.firstInDate = new Date(Math.min(new Date(rating.date).getTime(), myStats.firstInDate.getTime()));
+            }
+
+            if ( !myStats.lastInDate ) {
+                myStats.lastInDate = new Date(rating.date);
+            } else {
+                myStats.lastInDate = new Date(Math.max(new Date(rating.date).getTime(), myStats.lastInDate.getTime()));
             }
             
             uniqueTmp[rating.beer._id] = (uniqueTmp[rating.beer._id]||0) + 1;
@@ -170,6 +184,13 @@
         angular.forEach(myStats.categories, calculateAvg);
         angular.forEach(myStats.styles, calculateAvg);
         angular.forEach(myStats.countries, calculateAvg);
+
+        if ( myStats.firstInDate && myStats.lastInDate ) {
+            //le sumo un dia para poder dias enteros
+            var diff =  (1000*60*60*24) + myStats.lastInDate.getTime() - myStats.firstInDate.getTime();
+            diff = diff / (1000*60*60*24);
+            myStats.avgByDay = myStats.count / diff;
+        }
 
         return myStats;
     }

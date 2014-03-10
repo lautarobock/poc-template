@@ -27,6 +27,9 @@ define(["../DataHelper.js"], function(DataHelper) {
 			expect(myStats.breweries.length).toBe(137);
 			expect(myStats.styles.length).toBe(58);
 			expect(myStats.categories.length).toBe(21);
+            expect(myStats.firstInDate).toBeDefined();
+            expect(myStats.lastInDate).toBeDefined();
+            expect(myStats.avgByDay).toBeDefined();
             
             var orderBy = $filter("orderBy");
             var limitTo = $filter("limitTo");

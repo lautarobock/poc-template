@@ -124,6 +124,7 @@ define([], function() {
                 'stats.country.amount': 'Cantidad de paises',
                 'stats.countries': 'Paises',
                 'stats.drunkIn': 'Tomadas en',
+                'stats.avgByDay': 'Promedio diario',
                 'general.with': 'con',
                 'brewery.data.web': 'Web',
                 'brewery.data.location': 'Ubicacion',
