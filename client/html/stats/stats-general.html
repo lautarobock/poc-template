@@ -69,6 +69,25 @@
         </div>
     </div>
 </div>
+<!-- Location Row -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default"> 
+            <div class="panel-heading">
+                {{'stats.drunkInLocation'|translate}}
+                <a ng-init="showLocationTable=false" href="" ng-click="showLocationTable=!showLocationTable">
+                    <span ng-hide="showLocationTable" class="glyphicon glyphicon-list pull-right"></span>
+                    <span ng-show="showLocationTable" class="glyphicon glyphicon-stats pull-right"></span>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div ng-class="{hidden:!showLocationTable}" table-top-bottom context="context" config="locationTBConfig"></div>
+                <highchart ng-class="{hidden:showLocationTable}" config="locationChartConfig"></highchart>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Location Row -->
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-default"> 
@@ -101,6 +120,16 @@
             <div class="panel-heading">{{'stats.drunkIn'|translate}}</div>
             <div class="panel-body">
                 <div table-top-bottom context="context" config="countryAvgTBConfig"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default"> 
+            <div class="panel-heading">{{'stats.drunkInLocation'|translate}}</div>
+            <div class="panel-body">
+                <div table-top-bottom context="context" config="locationAvgTBConfig"></div>
             </div>
         </div>
     </div>

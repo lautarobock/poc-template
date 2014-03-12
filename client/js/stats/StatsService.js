@@ -89,6 +89,7 @@
             categories: [],
             months: [],
             countries: [],
+            locations:[],
             firstInDate: null,
             lastInDate: null
         };
@@ -162,6 +163,23 @@
                     myStats.countries[index].avg.count++;
                 }    
             }
+
+            //Location
+            if ( rating.location && rating.location.name ) {
+                index = util.Arrays.indexOf(myStats.locations, compareItem(rating.location.name));
+                if ( index == -1 ) {
+                    var countAvg = createCountAvg(rating.location.name);
+                    // countAvg.name = rating.location.formatted_address;
+                    countAvg.location = rating.location;
+                    myStats.locations.push(countAvg);
+                    index = myStats.locations.length - 1;
+                }
+                myStats.locations[index].count++;
+                if ( rating.finalScore ) {
+                    myStats.locations[index].avg.sum += rating.finalScore;
+                    myStats.locations[index].avg.count++;
+                }
+            }
             
 
             //By Month (_id:'aaaa_mm')
@@ -184,6 +202,7 @@
         angular.forEach(myStats.categories, calculateAvg);
         angular.forEach(myStats.styles, calculateAvg);
         angular.forEach(myStats.countries, calculateAvg);
+        angular.forEach(myStats.locations, calculateAvg);
 
         if ( myStats.firstInDate && myStats.lastInDate ) {
             //le sumo un dia para poder dias enteros

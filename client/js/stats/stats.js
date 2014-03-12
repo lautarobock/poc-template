@@ -68,6 +68,9 @@ define(["resources","util/misc", "util/maps"], function() {
                 name: 'countries',
                 caption: $translate('stats.drunkIn')
             },{
+                name: 'locations',
+                caption: $translate('stats.drunkInLocation')
+            },{
                 name: 'map',
                 caption: $translate('general.map')
             }];
@@ -272,7 +275,7 @@ define(["resources","util/misc", "util/maps"], function() {
                         caption: $translate('stats.avg')
                     }]
                 };
-                console.log($scope.myStats.countries)
+                //Countries
                 $scope.tabConfig.countries = {
                     collection: $scope.myStats.countries,
                     name: $translate('brewery.data.locations'),
@@ -297,6 +300,30 @@ define(["resources","util/misc", "util/maps"], function() {
                         caption: $translate('stats.avg')
                     }]
                 };
+                //Locations
+                $scope.tabConfig.locations = {
+                    collection: $scope.myStats.locations,
+                    name: $translate('brewery.data.locations'),
+                    singular: $translate('brewery.data.location'),
+                    filterColSpan: 6,
+                    orderBy: 'count',
+                    orderDir: "-",
+                    pageSize: 25,
+                    emptyResultText: $translate('beer.search.emtpy'),
+                    headers: [{
+                    //     field:'_id',
+                    //     caption: $translate('brewery.data.location')
+                    // },{
+                        field:'location.name',
+                        caption: $translate('brewery.data.location')
+                    },{
+                        field:'count',
+                        caption: $translate('stats.amount')
+                    },{
+                        field:'avg.value',
+                        caption: $translate('stats.avg')
+                    }]
+                };
             }
 
             function loadCharts() {
@@ -309,6 +336,7 @@ define(["resources","util/misc", "util/maps"], function() {
                                 +'%</b> (' + this.y + ')';
                 });
 
+                //Category
                 var categoryCount = transformChartData($scope.myStats.categories, 9);
                 $scope.categoryChartConfig = getBaseChart(categoryCount, function() {
                     var category = $scope.categories[this.point.name] || {name:$translate('stats.others')};
@@ -316,6 +344,7 @@ define(["resources","util/misc", "util/maps"], function() {
                                 +'%</b> (' + this.y + ')';
                 });      
                 
+                //Brewery
                 var breweryCount = transformChartData($scope.myStats.breweries, 9);
                 $scope.breweriesChartConfig = getBaseChart(breweryCount, function() {
                     var brewery = $scope.breweries[this.point.name] || {name:$translate('stats.others')};
@@ -324,6 +353,7 @@ define(["resources","util/misc", "util/maps"], function() {
                 });
                 $scope.breweriesChartConfig.options.plotOptions.pie.dataLabels.enabled = false;
 
+                //Country
                 var countryCount = transformChartData($scope.myStats.countries, 9);
                 $scope.countryChartConfig = getBaseChart(countryCount, function() {
                     var country = this.point.name || $translate('stats.others');
@@ -331,6 +361,15 @@ define(["resources","util/misc", "util/maps"], function() {
                                 +'%</b> (' + this.y + ')';
                 });      
                 $scope.countryChartConfig.options.plotOptions.pie.dataLabels.enabled = false;
+
+                //Location
+                var locationCount = transformChartData($scope.myStats.locations, 9);
+                $scope.locationChartConfig = getBaseChart(locationCount, function() {
+                    var location = this.point.name || $translate('stats.others');
+                    return '<span style="font-size: 10px">'+location+'</span><br/><b>'+Math.round(this.percentage)
+                                +'%</b> (' + this.y + ')';
+                });
+                $scope.locationChartConfig.options.plotOptions.pie.dataLabels.enabled = false;
             }
 
             function getBaseChart(data, formatter) {
@@ -373,11 +412,11 @@ define(["resources","util/misc", "util/maps"], function() {
                 
                 var sumOthers = 0;
                 var result = [];
-                angular.forEach(orderBy(data,'-count'), function(style, index) {
+                angular.forEach(orderBy(data,'-count'), function(value, index) {
                     if ( index < count ) {
-                        result.push([style._id,style.count]);
+                        result.push([value._id,value.count]);
                     } else {
-                        sumOthers += style.count;
+                        sumOthers += value.count;
                     }
                 });
                 if ( sumOthers > 0 ) {
@@ -504,6 +543,7 @@ define(["resources","util/misc", "util/maps"], function() {
                     bottom: 3
                 };
 
+                //Country
                 $scope.countryTBConfig = {
                     rows: $scope.myStats.countries,
                     headers: [{
@@ -533,6 +573,39 @@ define(["resources","util/misc", "util/maps"], function() {
                         //     GoTo.category(row._id);
                         // },
                         value: "{{row._id}}"
+                    },{
+                        caption: $translate('stats.avg'),
+                        style: {width: '40%'},
+                        value: "{{row.avg.value}} ({{row.count}})"
+                    }],
+                    orderBy: 'avg.value',
+                    top: 3,
+                    bottom: 3
+                };
+
+                //Location
+                $scope.locationTBConfig = {
+                    rows: $scope.myStats.locations,
+                    headers: [{
+                        caption: $translate('stats.drunkInLocation'),
+                        style: {width: '60%'},
+                        value: "{{row.location.name}}"
+                    },{
+                        caption: $translate('stats.amount'),
+                        style: {width: '40%'},
+                        value: "{{row.count}}"
+                    }],
+                    orderBy: 'count',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.locationAvgTBConfig = {
+                    rows: $filter("notNull")($scope.myStats.locations,'avg.value'),
+                    headers: [{
+                        caption: $translate('stats.drunkInLocation'),
+                        style: {width: '60%'},
+                        value: "{{row.location.name}}"
                     },{
                         caption: $translate('stats.avg'),
                         style: {width: '40%'},

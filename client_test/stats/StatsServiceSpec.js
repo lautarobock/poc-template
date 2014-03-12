@@ -76,6 +76,14 @@ define(["../DataHelper.js"], function(DataHelper) {
             expect(myStats.countries[1]._id).toBe("Argentina");
             expect(myStats.countries[1].avg.value).toBe(44);
 
+            expect(myStats.locations).toBeDefined();
+            expect(myStats.locations[0].count).toBe(2);
+            expect(myStats.locations[0]._id).toBe("Plaça de Sant Pere, 9");
+            // expect(myStats.locations[0].name).toBe("Plaça de Sant Pere, 9, 08003 Barcelona, España");
+            expect(myStats.locations[0].location.formatted_address).toBe("Plaça de Sant Pere, 9, 08003 Barcelona, España");
+            expect(myStats.locations[0].avg.value).toBe(40.5);
+
+
 		}));
 
 	});

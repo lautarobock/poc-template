@@ -86,7 +86,10 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
             //Cantidad por pais
             expect($scope.countryChartConfig.series[0].data.length).toBe(2);
             expect($scope.countryChartConfig.series[0].data[0]).toEqual(['España',2]);
-            // expect($scope.countryChartConfig.series[0].data[1]).toEqual(['Argentina',1]);
+
+            //Cantidad por location (google)
+            expect($scope.locationChartConfig.series[0].data.length).toBe(1);
+            expect($scope.locationChartConfig.series[0].data[0]).toEqual(['Plaça de Sant Pere, 9',2]);
             
 
             //Cervezas por mes

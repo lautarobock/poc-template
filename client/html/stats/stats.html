@@ -28,7 +28,7 @@
             <div ng-include="'stats/stats-map.html'"></div>
         </div>
         <div ng-switch-default>
-            <gt-table style="margin-top: 4.8em;" config="tabConfig[tabSelected.name]" context="context[tabSelected.name]"></gt-table>
+            <gt-table can-edit="false" style="margin-top: 4.8em;" config="tabConfig[tabSelected.name]" context="context[tabSelected.name]"></gt-table>
         </div>
     </div>
 </div>
