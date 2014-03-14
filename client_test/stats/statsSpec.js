@@ -102,7 +102,7 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
             expect($scope.locationChartConfig.series[0].data[0]).toEqual(['Plaça de Sant Pere, 9',2]);
 
             //Cantidad por origen de la cerveza
-            expect($scope.originChartConfig.series[0].data.length).toBe(14);
+            expect($scope.originChartConfig.series[0].data.length).toBe(10);
             expect($scope.originChartConfig.series[0].data[0]).toEqual(['Bélgica',89]);
             
 
