@@ -52,13 +52,13 @@ define([], function() {
         return {
             geo2latLng: function(source, target) {
                 if ( target ) {
-                    target.latitude = source.geometry.location.d;
-                    target.longitude = source.geometry.location.e;
+                    target.latitude = source.geometry.location.d || source.geometry.location.lat();
+                    target.longitude = source.geometry.location.e || source.geometry.location.lng();
                     return target;
                 } else {
                     return {
-                        latitude: parseFloat(source.geometry.location.d),
-                        longitude: parseFloat(source.geometry.location.e)
+                        latitude: parseFloat(source.geometry.location.d || source.geometry.location.lat()),
+                        longitude: parseFloat(source.geometry.location.e || source.geometry.location.lng())
                     };
                 }
             }

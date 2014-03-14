@@ -71,6 +71,9 @@ define(["resources","util/misc", "util/maps"], function() {
                 name: 'locations',
                 caption: $translate('stats.drunkInLocation')
             },{
+                name: 'origin',
+                caption: $translate('stats.origin')
+            },{
                 name: 'map',
                 caption: $translate('general.map')
             }];
@@ -97,100 +100,103 @@ define(["resources","util/misc", "util/maps"], function() {
                     });
                 });
                 Brewery.query(function(breweries) {
-                   angular.forEach(breweries, function(brewery) {
+                    angular.forEach(breweries, function(brewery) {
                         $scope.breweries[brewery._id] = brewery;
-                    }); 
-                });
-                Rating.query(function(ratings) {
-                    $scope.myStats = {};
-
-                    if ( ratings.length == 0 ) return;
-
-                    $scope.myStats = StatsService.myStats(ratings);
-                    var orderBy = $filter('orderBy');
-                    var filter = $filter('filter');
-                    function abvDefined(rating) {
-                        return rating.beer.abv;
-                    }
-                    function sortABV(rating) {
-                        return rating.beer.abv || 0;
-                    }
-                    function sortOverall(rating) {
-                        return rating.finalScore || 0;
-                    }
-                    function scoreDefined(rating) {
-                        return rating.finalScore;
-                    }
-                    $scope.myStats.maxABV = orderBy(ratings,sortABV,true)[0].beer;
-                    $scope.myStats.minABV = orderBy(filter(ratings,abvDefined),sortABV,false)[0].beer;
-                    $scope.myStats.maxScore = orderBy(ratings,sortOverall,true)[0];
-                    $scope.myStats.minScore = orderBy(filter(ratings,scoreDefined),sortOverall,false)[0];
-
-                    loadTableData();
-
-                    loadCharts();
-
-                    loadTabs();
-
-                    loadMap(ratings);
-
-                    //Rating per month chart
-                    var categories = [];
-                    var values = [];
-                    var monthNames = [
-                        $translate('month.january'),
-                        $translate('month.february'),
-                        $translate('month.march'),
-                        $translate('month.april'),
-                        $translate('month.may'),
-                        $translate('month.june'),
-                        $translate('month.july'),
-                        $translate('month.august'),
-                        $translate('month.september'),
-                        $translate('month.october'),
-                        $translate('month.november'),
-                        $translate('month.december')
-                    ];
-                    angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
-                        var year = month._id.split("_")[0];
-                        var monthValue = parseInt(month._id.split("_")[1]);
-                        categories.push(monthNames[monthValue-1] + ' ' + year);
-                        values.push(month.count);
                     });
-
-
-                    $scope.beersPerMonth = {
-                        options: {
-                            chart: {
-                                type: 'column'
-                            },
-                            title: {
-                                text: $translate('stats.chart.beerPerMonth')
-                            }
-                        },
-                        xAxis: {
-                            categories: categories
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: $translate('stats.amount')
-                            }
-                        },
-                        tooltip: {
-                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                            footerFormat: '</table>',
-                            shared: true,
-                            useHTML: true
-                        },
-                        series: [{
-                            name: $translate('beer.data.beer')+'s',
-                            data: values
-                        }]
-                    };
+                    loadRatings();
                 });
+                function loadRatings() {
+                    Rating.query(function(ratings) {
+                        $scope.myStats = {};
+
+                        if ( ratings.length == 0 ) return;
+
+                        $scope.myStats = StatsService.myStats(ratings, $scope.breweries);
+                        var orderBy = $filter('orderBy');
+                        var filter = $filter('filter');
+                        function abvDefined(rating) {
+                            return rating.beer.abv;
+                        }
+                        function sortABV(rating) {
+                            return rating.beer.abv || 0;
+                        }
+                        function sortOverall(rating) {
+                            return rating.finalScore || 0;
+                        }
+                        function scoreDefined(rating) {
+                            return rating.finalScore;
+                        }
+                        $scope.myStats.maxABV = orderBy(ratings,sortABV,true)[0].beer;
+                        $scope.myStats.minABV = orderBy(filter(ratings,abvDefined),sortABV,false)[0].beer;
+                        $scope.myStats.maxScore = orderBy(ratings,sortOverall,true)[0];
+                        $scope.myStats.minScore = orderBy(filter(ratings,scoreDefined),sortOverall,false)[0];
+
+                        loadTableData();
+
+                        loadCharts();
+
+                        loadTabs();
+
+                        loadMap(ratings);
+
+                        //Rating per month chart
+                        var categories = [];
+                        var values = [];
+                        var monthNames = [
+                            $translate('month.january'),
+                            $translate('month.february'),
+                            $translate('month.march'),
+                            $translate('month.april'),
+                            $translate('month.may'),
+                            $translate('month.june'),
+                            $translate('month.july'),
+                            $translate('month.august'),
+                            $translate('month.september'),
+                            $translate('month.october'),
+                            $translate('month.november'),
+                            $translate('month.december')
+                        ];
+                        angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
+                            var year = month._id.split("_")[0];
+                            var monthValue = parseInt(month._id.split("_")[1]);
+                            categories.push(monthNames[monthValue-1] + ' ' + year);
+                            values.push(month.count);
+                        });
+
+
+                        $scope.beersPerMonth = {
+                            options: {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: $translate('stats.chart.beerPerMonth')
+                                }
+                            },
+                            xAxis: {
+                                categories: categories
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: $translate('stats.amount')
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            series: [{
+                                name: $translate('beer.data.beer')+'s',
+                                data: values
+                            }]
+                        };
+                    });
+                }
             }
 
             function loadTabs() {
@@ -288,10 +294,6 @@ define(["resources","util/misc", "util/maps"], function() {
                     headers: [{
                         field:'_id',
                         caption: $translate('brewery.data.location.address.country')
-                        // ,
-                        // onClick: function(row) {
-                        //     GoTo.brewery(row._id);
-                        // }
                     },{
                         field:'count',
                         caption: $translate('stats.amount')
@@ -311,11 +313,29 @@ define(["resources","util/misc", "util/maps"], function() {
                     pageSize: 25,
                     emptyResultText: $translate('beer.search.emtpy'),
                     headers: [{
-                    //     field:'_id',
-                    //     caption: $translate('brewery.data.location')
-                    // },{
                         field:'location.name',
                         caption: $translate('brewery.data.location')
+                    },{
+                        field:'count',
+                        caption: $translate('stats.amount')
+                    },{
+                        field:'avg.value',
+                        caption: $translate('stats.avg')
+                    }]
+                };
+                //Origin
+                $scope.tabConfig.origin = {
+                    collection: $scope.myStats.origin,
+                    name: $translate('brewery.data.locations'),
+                    singular: $translate('brewery.data.location'),
+                    filterColSpan: 6,
+                    orderBy: 'count',
+                    orderDir: "-",
+                    pageSize: 25,
+                    emptyResultText: $translate('beer.search.emtpy'),
+                    headers: [{
+                        field:'_id',
+                        caption: $translate('stats.origin')
                     },{
                         field:'count',
                         caption: $translate('stats.amount')
@@ -370,6 +390,14 @@ define(["resources","util/misc", "util/maps"], function() {
                                 +'%</b> (' + this.y + ')';
                 });
                 $scope.locationChartConfig.options.plotOptions.pie.dataLabels.enabled = false;
+
+                //Origen de la cerveza
+                var originCount = transformChartData($scope.myStats.origin, 9);
+                $scope.originChartConfig = getBaseChart(originCount, function() {
+                    var origin = this.point.name || $translate('stats.others');
+                    return '<span style="font-size: 10px">'+origin+'</span><br/><b>'+Math.round(this.percentage)
+                                +'%</b> (' + this.y + ')';
+                });
             }
 
             function getBaseChart(data, formatter) {
@@ -549,10 +577,6 @@ define(["resources","util/misc", "util/maps"], function() {
                     headers: [{
                         caption: $translate('brewery.data.location.address.country'),
                         style: {width: '60%'},
-                        // onClick: function(row) {
-                        //     // $location.path("/beer").search('category._id',row._id);
-                        //     GoTo.category(row._id);
-                        // },
                         value: "{{row._id}}"
                     },{
                         caption: $translate('stats.amount'),
@@ -606,6 +630,39 @@ define(["resources","util/misc", "util/maps"], function() {
                         caption: $translate('stats.drunkInLocation'),
                         style: {width: '60%'},
                         value: "{{row.location.name}}"
+                    },{
+                        caption: $translate('stats.avg'),
+                        style: {width: '40%'},
+                        value: "{{row.avg.value}} ({{row.count}})"
+                    }],
+                    orderBy: 'avg.value',
+                    top: 3,
+                    bottom: 3
+                };
+
+                //Origin
+                $scope.originTBConfig = {
+                    rows: $scope.myStats.origin,
+                    headers: [{
+                        caption: $translate('stats.origin'),
+                        style: {width: '60%'},
+                        value: "{{row._id}}"
+                    },{
+                        caption: $translate('stats.amount'),
+                        style: {width: '40%'},
+                        value: "{{row.count}}"
+                    }],
+                    orderBy: 'count',
+                    top: 3,
+                    bottom: 3
+                };
+
+                $scope.originAvgTBConfig = {
+                    rows: $filter("notNull")($scope.myStats.origin,'avg.value'),
+                    headers: [{
+                        caption: $translate('stats.origin'),
+                        style: {width: '60%'},
+                        value: "{{row._id}}"
                     },{
                         caption: $translate('stats.avg'),
                         style: {width: '40%'},

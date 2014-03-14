@@ -75,7 +75,7 @@
         }
     }    
 
-    exports.myStats = function(ratings) {
+    exports.myStats = function(ratings, breweriesMap) {
         // var breweriesIndex = {};
 
         var uniqueTmp = {};
@@ -90,6 +90,7 @@
             months: [],
             countries: [],
             locations:[],
+            origin: [],
             firstInDate: null,
             lastInDate: null
         };
@@ -169,7 +170,6 @@
                 index = util.Arrays.indexOf(myStats.locations, compareItem(rating.location.name));
                 if ( index == -1 ) {
                     var countAvg = createCountAvg(rating.location.name);
-                    // countAvg.name = rating.location.formatted_address;
                     countAvg.location = rating.location;
                     myStats.locations.push(countAvg);
                     index = myStats.locations.length - 1;
@@ -178,6 +178,23 @@
                 if ( rating.finalScore ) {
                     myStats.locations[index].avg.sum += rating.finalScore;
                     myStats.locations[index].avg.count++;
+                }
+            }
+
+            //Origin of beer
+            var brewery = breweriesMap[rating.beer.brewery];
+            if ( brewery && brewery.country ) {
+                index = util.Arrays.indexOf(myStats.origin, compareItem(brewery.country));
+                if ( index == -1 ) {
+                    var countAvg = createCountAvg(brewery.country);
+                    // countAvg.location = rating.location;
+                    myStats.origin.push(countAvg);
+                    index = myStats.origin.length - 1;
+                }
+                myStats.origin[index].count++;
+                if ( rating.finalScore ) {
+                    myStats.origin[index].avg.sum += rating.finalScore;
+                    myStats.origin[index].avg.count++;
                 }
             }
             
@@ -203,6 +220,8 @@
         angular.forEach(myStats.styles, calculateAvg);
         angular.forEach(myStats.countries, calculateAvg);
         angular.forEach(myStats.locations, calculateAvg);
+        angular.forEach(myStats.origin, calculateAvg);
+
 
         if ( myStats.firstInDate && myStats.lastInDate ) {
             //le sumo un dia para poder dias enteros

@@ -18,7 +18,12 @@ define(["../DataHelper.js"], function(DataHelper) {
 	describe("StatsService", function() {
 
 		it("Should calculate stats", inject(function($filter) {
-			var myStats = StatsService.myStats(DataHelper.ratings);
+
+            var breweriesMap = {};
+            for ( var i=0; i<DataHelper.breweries.length; i++) {
+                breweriesMap[DataHelper.breweries[i]._id] = DataHelper.breweries[i];
+            }
+			var myStats = StatsService.myStats(DataHelper.ratings, breweriesMap);
 
 			//Count
 			expect(myStats.count).toBe(238);
@@ -82,6 +87,13 @@ define(["../DataHelper.js"], function(DataHelper) {
             // expect(myStats.locations[0].name).toBe("Plaça de Sant Pere, 9, 08003 Barcelona, España");
             expect(myStats.locations[0].location.formatted_address).toBe("Plaça de Sant Pere, 9, 08003 Barcelona, España");
             expect(myStats.locations[0].avg.value).toBe(40.5);
+
+            //orogin of rated beer
+            expect(myStats.origin).toBeDefined();
+            expect(myStats.origin.length).toBe(14);
+            expect(myStats.origin[0].count).toBe(2);
+            expect(myStats.origin[0]._id).toBe("Dinamarca");
+            expect(myStats.origin[0].avg.value).toBe(24);
 
 
 		}));

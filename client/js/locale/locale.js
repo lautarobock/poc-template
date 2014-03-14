@@ -126,6 +126,7 @@ define([], function() {
                 'stats.drunkIn': 'Tomadas en (Paises)',
                 'stats.drunkInLocation': 'Tomadas en (Ubicacion)',
                 'stats.avgByDay': 'Promedio diario',
+                'stats.origin': 'Origien de la cerveza',
                 'general.with': 'con',
                 'brewery.data.web': 'Web',
                 'brewery.data.location': 'Ubicacion',
