@@ -56,15 +56,15 @@
     <div class="col-md-6">
         <div class="panel panel-default"> 
             <div class="panel-heading">
-                {{'stats.drunkIn'|translate}}
-                <a ng-init="showCountryTable=false" href="" ng-click="showCountryTable=!showCountryTable">
-                    <span ng-hide="showCountryTable" class="glyphicon glyphicon-list pull-right"></span>
-                    <span ng-show="showCountryTable" class="glyphicon glyphicon-stats pull-right"></span>
+                {{'stats.origin'|translate}}
+                <a ng-init="showOriginTable=false" href="" ng-click="showOriginTable=!showOriginTable">
+                    <span ng-hide="showOriginTable" class="glyphicon glyphicon-list pull-right"></span>
+                    <span ng-show="showOriginTable" class="glyphicon glyphicon-stats pull-right"></span>
                 </a>
             </div>
             <div class="panel-body">
-                <div ng-class="{hidden:!showCountryTable}" table-top-bottom context="context" config="countryTBConfig"></div>
-                <highchart ng-class="{hidden:showCountryTable}" config="countryChartConfig"></highchart>
+                <div ng-class="{hidden:!showOriginTable}" table-top-bottom context="context" config="originTBConfig"></div>
+                <highchart ng-class="{hidden:showOriginTable}" config="originChartConfig"></highchart>
             </div>
         </div>
     </div>
@@ -83,6 +83,21 @@
             <div class="panel-body">
                 <div ng-class="{hidden:!showLocationTable}" table-top-bottom context="context" config="locationTBConfig"></div>
                 <highchart ng-class="{hidden:showLocationTable}" config="locationChartConfig"></highchart>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default"> 
+            <div class="panel-heading">
+                {{'stats.drunkIn'|translate}}
+                <a ng-init="showCountryTable=false" href="" ng-click="showCountryTable=!showCountryTable">
+                    <span ng-hide="showCountryTable" class="glyphicon glyphicon-list pull-right"></span>
+                    <span ng-show="showCountryTable" class="glyphicon glyphicon-stats pull-right"></span>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div ng-class="{hidden:!showCountryTable}" table-top-bottom context="context" config="countryTBConfig"></div>
+                <highchart ng-class="{hidden:showCountryTable}" config="countryChartConfig"></highchart>
             </div>
         </div>
     </div>
@@ -117,9 +132,9 @@
     </div>
     <div class="col-md-6">
         <div class="panel panel-default"> 
-            <div class="panel-heading">{{'stats.drunkIn'|translate}}</div>
+            <div class="panel-heading">{{'stats.origin'|translate}}</div>
             <div class="panel-body">
-                <div table-top-bottom context="context" config="countryAvgTBConfig"></div>
+                <div table-top-bottom context="context" config="originAvgTBConfig"></div>
             </div>
         </div>
     </div>
@@ -130,6 +145,14 @@
             <div class="panel-heading">{{'stats.drunkInLocation'|translate}}</div>
             <div class="panel-body">
                 <div table-top-bottom context="context" config="locationAvgTBConfig"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default"> 
+            <div class="panel-heading">{{'stats.drunkIn'|translate}}</div>
+            <div class="panel-body">
+                <div table-top-bottom context="context" config="countryAvgTBConfig"></div>
             </div>
         </div>
     </div>

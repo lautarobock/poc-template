@@ -27,7 +27,17 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
             });
             // spyOn(Brewery, 'query').andReturn([{_id:'brew1', name:'Brewery 1'}]);
             spyOn(Brewery, 'query').andCallFake(function(cb) {
-                cb([{_id:'brew1', name:'Brewery 1'}]);
+                // cb([{_id:'brew1', name:'Brewery 1'},
+                //     {
+                //         _id: 'AndersonValleyBrewingCompany',
+                //         name: "Anderson Valley Brewing Company",
+                //         country: "Estados Unidos"
+                //     },{
+                //         "_id": "BrewDog",
+                //         "name": "BrewDog",
+                //         "country": "Reino Unido"
+                //     }]);
+                cb(DataHelper.breweries);
             });
             // spyOn(Rating, 'query').andReturn([{_id:'rating1'}]);
             spyOn(Rating, 'query').andCallFake(function(cb) {
@@ -45,7 +55,7 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
 
             expect($scope.styles['style1'].name).toBe('Style 1');
             expect($scope.categories['cat1'].name).toBe('Cat 1');
-            expect($scope.breweries['brew1'].name).toBe('Brewery 1');
+            expect($scope.breweries['Mikkeller'].name).toBe('Mikkeller');
             expect($scope.myStats).toBeDefined();
             expect($scope.myStats.maxABV.name).toBe('Schloss Eggenberg Samichlaus Classic');
             expect($scope.myStats.minABV.name).toBe('Lindemans Pêcheresse');
@@ -90,6 +100,10 @@ define(["../DataHelper.js","stats/stats"], function(DataHelper) {
             //Cantidad por location (google)
             expect($scope.locationChartConfig.series[0].data.length).toBe(1);
             expect($scope.locationChartConfig.series[0].data[0]).toEqual(['Plaça de Sant Pere, 9',2]);
+
+            //Cantidad por origen de la cerveza
+            expect($scope.originChartConfig.series[0].data.length).toBe(14);
+            expect($scope.originChartConfig.series[0].data[0]).toEqual(['Bélgica',89]);
             
 
             //Cervezas por mes
