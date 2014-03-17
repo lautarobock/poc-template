@@ -1,0 +1,23 @@
+<div main-content>
+    <h1>{{'content.stats' | translate }}</h1>
+    <hr>
+    <div>{{'stats.drunksBeer'|translate}}: <b>{{myStats.count}}</b></div>
+    <div>{{'stats.califications'|translate}}: <b>{{myStats.rated}}</b></div>
+    <div>{{'stats.uniqueBeers'|translate}}: <b>{{myStats.unique}}</b></div>
+    <div>{{'stats.strongestBeer'|translate}}: <b>{{myStats.maxABV.name}} {{'general.with'|translate}} {{myStats.maxABV.abv}}%</b></div>
+    <div>{{'stats.weakerBeer'|translate}}: <b>{{myStats.minABV.name}} {{'general.with'|translate}} {{myStats.minABV.abv}}%</b></div>
+    <div>{{'stats.topRating'|translate}}: <b>{{myStats.maxScore.beer.name}} {{'general.with'|translate}} {{myStats.maxScore.finalScore}} Pts</b></div>
+    <div>{{'stats.worstRating'|translate}}: <b>{{myStats.minScore.beer.name}} {{'general.with'|translate}} {{myStats.minScore.finalScore}} Pts</b></div>
+    <div>{{'stats.brewery.amount'|translate}}: <b>{{myStats.breweries.length}}</b></div>
+    <div>{{'stats.country.amount'|translate}}: <b>{{myStats.countries.length}}</b></div>
+    <div>{{'stats.avgByDay'|translate}}: <b>{{myStats.avgByDay | number:3}}</b></div>
+
+    <hr/>
+    <div class="col-md-12" >
+        <div d3-bars bar-height="30" bar-padding="1" bar-data="data" style="border: 5px solid"></div>
+    </div>
+</div>
+
+<div side-bar>
+  <div ng-include="'side/side.html'"></div>
+</div>

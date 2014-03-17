@@ -1,44 +1,78 @@
-define(["resources","util/misc", "util/maps"], function() {
+define(["resources","util/misc", "util/maps", "util/d3"], function() {
 
-    var stats = angular.module("dl.stats", ['dl.resources','dl.misc','pascalprecht.translate','dl.maps']);
+    var stats = angular.module("dl.stats", ['dl.resources','dl.misc','pascalprecht.translate','dl.maps','dl.d3']);
 
-    /*
-    - Genenral
-     - Cantidad de Tomadas
-     - Cantidad puntuada
-     - Cantidad de cervecerias
-     - Cantidad de Esilos
-     - Cantidad de categorias
-     - Con mas %. Top 3 & Bottom 3
-     - Con mas ptos. Top 3 & Bottom 3
-     - Con max IBUS. Top 3 & Bottom 3
-    - Por cantidad
-     - Por mes, 12 meses.
-     - Por estilo. (3 estilos + otros)
-     - Por categoria. (3 cat + otros)
-     - Por cerveceria. (3 cerv + otros)
-    - Por Puntaje
-     - Por mes, 12 meses.
-     - Por estilo. (3 estilos + otros)
-     - Por categoria. (3 cat + otros)
-     - Por cerveceria. (3 cerv + otros)
+    stats.controller("StatsD3Controller", function($scope,StatsService,$filter,Rating,Cache,Brewery,$translate) {
 
-    */
-
-    stats.filter("notNull",['$interpolate', function($interpolate) {
-        return function(list, field) {
-            var result = [];
-            angular.forEach(list, function(v) {
-                var value = $interpolate("{{v."+field+"}}")({v:v});
-                if ( value ) result.push(v);
+        $scope.styles = {};
+        $scope.categories = {};
+        $scope.breweries = {};
+        $scope.context = $scope;
+        Cache.styles(function(styles) {
+            angular.forEach(styles, function(style) {
+                $scope.styles[style._id] = style;
             });
-            return result;
-        };
-    }])
+        });
+        Cache.categories(function(cats) {
+            angular.forEach(cats, function(cat) {
+                $scope.categories[cat._id] = cat;
+            });
+        });
+        Brewery.query(function(breweries) {
+            angular.forEach(breweries, function(brewery) {
+                $scope.breweries[brewery._id] = brewery;
+            });
+        });
 
-    stats.run(['$templateCache',function($templateCache) {
-        $templateCache.put("stats-name.html",'<a href="" ng-click="header.onClick(row)">{{context()[row._id].name}}</a>');
-    }]);
+        $scope.data = [];
+
+        Rating.query(function(ratings) {
+            $scope.myStats = StatsService.myStats(ratings, $scope.breweries);
+            var orderBy = $filter('orderBy');
+            var filter = $filter('filter');
+            function abvDefined(rating) {
+                return rating.beer.abv;
+            }
+            function sortABV(rating) {
+                return rating.beer.abv || 0;
+            }
+            function sortOverall(rating) {
+                return rating.finalScore || 0;
+            }
+            function scoreDefined(rating) {
+                return rating.finalScore;
+            }
+            $scope.myStats.maxABV = orderBy(ratings,sortABV,true)[0].beer;
+            $scope.myStats.minABV = orderBy(filter(ratings,abvDefined),sortABV,false)[0].beer;
+            $scope.myStats.maxScore = orderBy(ratings,sortOverall,true)[0];
+            $scope.myStats.minScore = orderBy(filter(ratings,scoreDefined),sortOverall,false)[0];
+
+            var monthNames = [
+                $translate('month.january'),
+                $translate('month.february'),
+                $translate('month.march'),
+                $translate('month.april'),
+                $translate('month.may'),
+                $translate('month.june'),
+                $translate('month.july'),
+                $translate('month.august'),
+                $translate('month.september'),
+                $translate('month.october'),
+                $translate('month.november'),
+                $translate('month.december')
+            ];
+
+            angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
+                var year = month._id.split("_")[0];
+                var monthValue = parseInt(month._id.split("_")[1]);
+                $scope.data.push({
+                    name: monthNames[monthValue-1] + ' ' + year,
+                    value: month.count
+                });
+            });
+        });
+        
+    });
 
     stats.controller("StatsController", 
         ['$scope','Rating', 'StatsService', '$filter', 'Cache', '$translate', '$location', 'Brewery', 'GoTo',
@@ -754,7 +788,22 @@ define(["resources","util/misc", "util/maps"], function() {
 
     stats.factory("StatsService", function() {
         return StatsService;
-    })
+    });
+
+    stats.filter("notNull",['$interpolate', function($interpolate) {
+        return function(list, field) {
+            var result = [];
+            angular.forEach(list, function(v) {
+                var value = $interpolate("{{v."+field+"}}")({v:v});
+                if ( value ) result.push(v);
+            });
+            return result;
+        };
+    }])
+
+    stats.run(['$templateCache',function($templateCache) {
+        $templateCache.put("stats-name.html",'<a href="" ng-click="header.onClick(row)">{{context()[row._id].name}}</a>');
+    }]);
 
     return stats;
 });

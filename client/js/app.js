@@ -174,6 +174,8 @@ define("app", [
 
                 when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
 
+                when('/statsd3', {templateUrl: 'stats/statsd3.html',   controller: 'StatsD3Controller'}).
+
                 when('/rating', {
                     templateUrl: 'rating/rating.html',   
                     controller: 'RatingBeerController'
