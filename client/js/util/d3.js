@@ -13,16 +13,21 @@ define([], function() {
         return {
             restrict: 'EA',
             scope: {
-                data: '=barData'
+                data: '=d3BarsData',
+                config: '=d3BarsConfig'
             },
             link: function(scope, ele, attrs) {
+                // console.log("config", scope);
                 var margin = parseInt(attrs.margin) || 20,
-                    barHeight = parseInt(attrs.barHeight) || 20,
-                    barPadding = parseInt(attrs.barPadding) || 5;
+                    barHeight = parseInt(scope.config.bars.thickness) || 20,
+                    barPadding = parseInt(scope.config.bars.padding) || 5;
 
                 var svg = d3Service.select(ele[0])
                     .append('svg')
-                    .style('width', '100%');
+                    .style('border-radius','1em')
+                    .style('padding','1em')
+                    .style('width', '100%')
+                    .style('background', 'white');
 
                 // Browser onresize event
                 window.onresize = function() {
@@ -48,11 +53,11 @@ define([], function() {
                     if (!data) return;
 
                     // setup variables
-                    var width = d3.select(ele[0]).node().offsetWidth - margin,
+                    var width = d3.select(ele[0]).node().offsetWidth - margin -8,
                         // calculate the height
                         height = data.length * (barHeight),
                         // Use the category20() scale function for multicolor support
-                        color = d3.scale.category20();
+                        color = scope.config.bars.color || d3.scale.category20b();
                         // our xScale
 
                     
@@ -61,7 +66,7 @@ define([], function() {
 
                     x.domain([0, d3.max(data, function(d) { return d.value; })]);
 
-                    console.log("height", height);
+                    // console.log("height", height);
                     svg.attr("height", height);
 
                     var bar = svg.selectAll("g")

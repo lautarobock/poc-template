@@ -24,7 +24,16 @@ define(["resources","util/misc", "util/maps", "util/d3"], function() {
             });
         });
 
-        $scope.data = [];
+        $scope.byMonthData = [];
+        $scope.byMonthConfig = {
+            bars: {
+                thickness: 30,
+                padding: 1,
+                color: function() { 
+                    return 'steelblue';
+                }
+            }
+        };
 
         Rating.query(function(ratings) {
             $scope.myStats = StatsService.myStats(ratings, $scope.breweries);
@@ -65,7 +74,7 @@ define(["resources","util/misc", "util/maps", "util/d3"], function() {
             angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
                 var year = month._id.split("_")[0];
                 var monthValue = parseInt(month._id.split("_")[1]);
-                $scope.data.push({
+                $scope.byMonthData.push({
                     name: monthNames[monthValue-1] + ' ' + year,
                     value: month.count
                 });
