@@ -24,6 +24,21 @@ define(["resources","util/misc", "util/maps", "util/d3"], function() {
             });
         });
 
+        var monthNames = [
+            $translate('month.january'),
+            $translate('month.february'),
+            $translate('month.march'),
+            $translate('month.april'),
+            $translate('month.may'),
+            $translate('month.june'),
+            $translate('month.july'),
+            $translate('month.august'),
+            $translate('month.september'),
+            $translate('month.october'),
+            $translate('month.november'),
+            $translate('month.december')
+        ];
+
         $scope.byMonthData = [];
         $scope.byMonthConfig = {
             bars: {
@@ -31,6 +46,16 @@ define(["resources","util/misc", "util/maps", "util/d3"], function() {
                 padding: 1,
                 color: function() { 
                     return 'steelblue';
+                }
+            },
+            data: {
+                value: function(month) {
+                    return month.count;
+                },
+                text: function(month) {
+                    var year = month._id.split("_")[0];
+                    var monthValue = parseInt(month._id.split("_")[1]);
+                    return monthNames[monthValue-1] + ' ' + year + ' (' + month.count + ')';
                 }
             }
         };
@@ -56,29 +81,7 @@ define(["resources","util/misc", "util/maps", "util/d3"], function() {
             $scope.myStats.maxScore = orderBy(ratings,sortOverall,true)[0];
             $scope.myStats.minScore = orderBy(filter(ratings,scoreDefined),sortOverall,false)[0];
 
-            var monthNames = [
-                $translate('month.january'),
-                $translate('month.february'),
-                $translate('month.march'),
-                $translate('month.april'),
-                $translate('month.may'),
-                $translate('month.june'),
-                $translate('month.july'),
-                $translate('month.august'),
-                $translate('month.september'),
-                $translate('month.october'),
-                $translate('month.november'),
-                $translate('month.december')
-            ];
-
-            angular.forEach(orderBy($scope.myStats.months,'_id'), function(month) {
-                var year = month._id.split("_")[0];
-                var monthValue = parseInt(month._id.split("_")[1]);
-                $scope.byMonthData.push({
-                    name: monthNames[monthValue-1] + ' ' + year,
-                    value: month.count
-                });
-            });
+            $scope.byMonthData = orderBy($scope.myStats.months,'_id');
         });
         
     });

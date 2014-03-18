@@ -60,11 +60,15 @@ define([], function() {
                         color = scope.config.bars.color || d3.scale.category20b();
                         // our xScale
 
+                    var getValue = scope.config.data.value;
+
+                    var getText = scope.config.data.text;
+
                     
                     var x = d3.scale.linear()
                         .range([0, width]);
 
-                    x.domain([0, d3.max(data, function(d) { return d.value; })]);
+                    x.domain([0, d3.max(data, function(d) { return getValue(d); })]);
 
                     // console.log("height", height);
                     svg.attr("height", height);
@@ -75,9 +79,9 @@ define([], function() {
                     .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
 
                     bar.append("rect")
-                    .attr("fill",function(d) { return color(d.value); })
+                    .attr("fill",function(d) { return color(getValue(d)); })
                     .attr("width", function(d) {
-                        return x(d.value); 
+                        return x(getValue(d)); 
                     })
                     .attr("height", barHeight - (barPadding*2));
 
@@ -86,13 +90,11 @@ define([], function() {
                     .attr("font", "10px sans-serif")
                     .attr("text-anchor","end")
                     .attr("x", function(d,i) {
-                        return x(d.value) - 5; 
+                        return x(getValue(d)) - 5; 
                     })
                     .attr("y", barHeight / 2 - (barPadding))
                     .attr("dy", ".35em")
-                    .text(function(d) { 
-                        return d.name + ' (' + d.value + ')'; 
-                    });
+                    .text(getText);
                 }
             }
         };
