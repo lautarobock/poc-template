@@ -99,3 +99,12 @@
 #mapRating .angular-google-map-container { height: 140px; }
 #map400 .angular-google-map-container { height: 400px; }
 #map200 .angular-google-map-container { height: 200px; }
+
+/* Styles for d3 Charts */
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}

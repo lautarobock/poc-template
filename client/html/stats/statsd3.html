@@ -1,6 +1,7 @@
-<div main-content>
+<!-- <div main-content> -->
+<div class="col-md-12">
     <h1>{{'content.stats' | translate }}</h1>
-    <hr>
+    <!-- <hr>
     <div>{{'stats.drunksBeer'|translate}}: <b>{{myStats.count}}</b></div>
     <div>{{'stats.califications'|translate}}: <b>{{myStats.rated}}</b></div>
     <div>{{'stats.uniqueBeers'|translate}}: <b>{{myStats.unique}}</b></div>
@@ -10,14 +11,17 @@
     <div>{{'stats.worstRating'|translate}}: <b>{{myStats.minScore.beer.name}} {{'general.with'|translate}} {{myStats.minScore.finalScore}} Pts</b></div>
     <div>{{'stats.brewery.amount'|translate}}: <b>{{myStats.breweries.length}}</b></div>
     <div>{{'stats.country.amount'|translate}}: <b>{{myStats.countries.length}}</b></div>
-    <div>{{'stats.avgByDay'|translate}}: <b>{{myStats.avgByDay | number:3}}</b></div>
+    <div>{{'stats.avgByDay'|translate}}: <b>{{myStats.avgByDay | number:3}}</b></div> -->
 
     <hr/>
     <div class="col-md-12" >
-        <div d3-bars d3-bars-config="byMonthConfig" d3-bars-data="byMonthData"></div>
+        <div class="chart" style="height:400px" d3-bars d3-bars-config="byMonthConfig" d3-bars-data="byMonthData"></div>
+    </div>
+    <div class="col-md-12" >
+        <div class="chart" style="height:300px" d3-bars d3-bars-config="byMonthConfigV" d3-bars-data="byMonthData"></div>
     </div>
 </div>
 
-<div side-bar>
+<!-- <div side-bar>
   <div ng-include="'side/side.html'"></div>
-</div>
+</div> -->

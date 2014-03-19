@@ -42,8 +42,9 @@ define(["resources","util/misc", "util/maps", "util/d3"], function() {
         $scope.byMonthData = [];
         $scope.byMonthConfig = {
             bars: {
-                thickness: 30,
+                // thickness: 30,
                 padding: 1,
+                vertical: false,
                 color: function() { 
                     return 'steelblue';
                 }
@@ -53,9 +54,37 @@ define(["resources","util/misc", "util/maps", "util/d3"], function() {
                     return month.count;
                 },
                 text: function(month) {
-                    var year = month._id.split("_")[0];
-                    var monthValue = parseInt(month._id.split("_")[1]);
-                    return monthNames[monthValue-1] + ' ' + year + ' (' + month.count + ')';
+                    return month.count;
+                },
+                key: function(month) {
+                    // var year = month._id.split("_")[0];
+                    // var monthValue = parseInt(month._id.split("_")[1]);
+                    // return monthNames[monthValue-1] + ' ' + year;
+                    return month._id;
+                }
+            }
+        };
+        $scope.byMonthConfigV = {
+            bars: {
+                // thickness: 30,
+                padding: 1,
+                vertical: true,
+                color: function() { 
+                    return 'steelblue';
+                }
+            },
+            data: {
+                value: function(month) {
+                    return month.count;
+                },
+                text: function(month) {
+                    return month.count;
+                },
+                key: function(month) {
+                    // var year = month._id.split("_")[0];
+                    // var monthValue = parseInt(month._id.split("_")[1]);
+                    // return monthNames[monthValue-1] + ' ' + year;
+                    return month._id;
                 }
             }
         };
