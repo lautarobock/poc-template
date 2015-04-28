@@ -12,7 +12,7 @@ define(["resources"], function() {
                 var f = util.Arrays.filter(cellars, function(item) {
                     return item.beer == beer._id ? 0 : -1;
                 });
-                if ( f.length != 0 ) {
+                if ( f.length !== 0 ) {
                     return f[0].amount;
                 } else {
                     return '-';
@@ -22,7 +22,7 @@ define(["resources"], function() {
                 var f = util.Arrays.filter(cellars, function(item) {
                     return item.beer == beer._id ? 0 : -1;
                 });
-                if ( f.length == 0 ) {
+                if ( f.length === 0 ) {
                     var cellar = new Cellar();
                     cellar._id = beer.name.replace(/[^a-z0-9]/ig, '') + new Date().getTime();
                     cellar.beer = beer._id;
@@ -33,19 +33,19 @@ define(["resources"], function() {
                     });
                 } else {
                     f[0].amount++;
-                    f[0].$save()
+                    f[0].$save();
                 }
-                
+
             },
             decBeer: function(beer) {
                 var f = util.Arrays.filter(cellars, function(item) {
                     return item.beer == beer._id ? 0 : -1;
                 });
-                if ( f.length != 0 ) {
+                if ( f.length !== 0 ) {
                     f[0].amount--;
-                    f[0].$save()
+                    f[0].$save();
                 }
-                
+
             }
         };
     }]);
@@ -99,7 +99,7 @@ define(["resources"], function() {
                         tooltip: $translate('beer.data.score.help'),
                         class: function(cellar) {
                             if ( cellar.beer.score ) {
-                                return 'badge alert-' + DLHelper.colorByScore(cellar.beer.score.avg);        
+                                return 'badge alert-' + DLHelper.colorByScore(cellar.beer.score.avg);
                             } else {
                                 return 'badge';
                             }
@@ -134,7 +134,7 @@ define(["resources"], function() {
                     });
                 });
             }
-    
+
     }]);
 
 

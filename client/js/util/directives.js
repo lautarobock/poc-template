@@ -4,12 +4,12 @@ define([], function() {
 
     directives.run(['$templateCache',function($templateCache) {
         $templateCache.put("input-text.html",
-            '<label tooltip="{{dlTooltip}}" tooltip-placement="right" for="{{id}}" class="control-label">{{caption}}</label>' + 
+            '<label tooltip="{{dlTooltip}}" tooltip-placement="right" for="{{id}}" class="control-label">{{caption}}</label>' +
             '<input focus-on="{{id}}" type="text" ng-model="value" class="form-control" id="{{id}}" placeholder="{{placeholder}}">'
         );
-        
+
         $templateCache.put("input-numeric.html",
-            '<label tooltip="{{dlTooltip}}" tooltip-placement="right" for="{{id}}" class="control-label">{{caption}}</label>' + 
+            '<label tooltip="{{dlTooltip}}" tooltip-placement="right" for="{{id}}" class="control-label">{{caption}}</label>' +
             '<input type="number" step="{{step}}" ng-model="value" class="form-control" id="{{id}}" placeholder="{{placeholder}}">'
         );
     }]);
@@ -50,7 +50,7 @@ define([], function() {
                     element.removeClass('hidden');
                 } else {
                     element.addClass('hidden');
-                }    
+                }
             });
         };
     });
@@ -62,7 +62,7 @@ define([], function() {
                     element.addClass('hidden');
                 } else {
                     element.removeClass('hidden');
-                }    
+                }
             });
         };
     });
@@ -74,7 +74,7 @@ define([], function() {
                     element.removeClass('hidden');
                 } else {
                     element.addClass('hidden');
-                }    
+                }
             });
         };
     });
@@ -96,10 +96,10 @@ define([], function() {
             replace: true,
             template: '<a not-logged href="javascript:googleSignIn()">{{caption}}</a>',
             link: function(scope, element) {
-                scope.caption = element.attr("caption") || "Registrarse";   
+                scope.caption = element.attr("caption") || "Registrarse";
             }
         };
-    });    
+    });
 
 
     directives.directive('dlIcon', function() {
@@ -144,14 +144,36 @@ define([], function() {
             $timeout(function (){
                 $rootScope.$broadcast('focusOn', name);
             },100);
-        }
+        };
     }]);
 
     directives.filter("formatDate", ['$filter',function($filter) {
         return function(date) {
-            return util.formatDate(date,$filter('date'))
+            return util.formatDate(date,$filter('date'));
         };
     }]);
+
+	directives.directive('dateDiff', function() {
+		return {
+			restrict : 'EA',
+			scope : {
+				from: '=',
+				to: '='
+			},
+			template: '<span>{{value}}</span>',
+			controller: function($scope) {
+
+				$scope.$watch("from + to",function() {
+					if ( $scope.from && $scope.to ) {
+						$scope.value = util.dateDiff($scope.from, $scope.to);
+					} else {
+						$scope.value = '';
+					}
+				});
+
+			}
+		};
+	});
 
 
 	return directives;

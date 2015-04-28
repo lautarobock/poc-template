@@ -3,12 +3,12 @@ define([],function() {
     var res = angular.module("dl.resources", ['ngResource']);
 
     var path = "api/"
-    
+
     res.factory("Login", function($resource) {
         return $resource("/api/login/by_google/:google_id", {}, {});
     });
 
-    var services = ['User','Style','StyleByLabel','Brewery', 'Category','Activity'];
+    var services = ['User','Style','StyleByLabel','Brewery', 'Category','Activity','VintageCellar'];
     angular.forEach(services,function(s) {
         res.factory(s,function($resource, $rootScope) {
             var params = function() {

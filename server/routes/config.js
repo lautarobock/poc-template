@@ -6,6 +6,7 @@ var styleService = require("./style");
 var cellarService = require("./cellar");
 var breweryService = require("./brewery");
 var activityService = require("./activity");
+var vintageCellar = require("./vintage");
 
 /**
  * Filtro para detectar qeu haya un usuario logueado
@@ -26,7 +27,7 @@ function userFilter(req,res,next){
                 console.log("null");
                 res.send(401,{error:'Operacion no autorizada'});
             }
-        });   
+        });
     } else {
         console.log("null");
         res.send(401,{error:'Operacion no autorizada'});
@@ -76,6 +77,17 @@ var services = [{
     name: "Cellar",
     customId: true
 },{
+    name: "VintageCellar",
+    customId: true,
+    security: {
+        save:[userFilter],
+        findAll:[userFilter]
+    },
+    process: function(rest) {
+        rest.save = vintageCellar.save;
+        rest.findAll = vintageCellar.findAll;
+    }
+},{
     name: "Beer",
     customId: true,
     security: {save:[userFilter]},
@@ -109,7 +121,6 @@ exports.createRoutes = function(app) {
         } else {
             rest.createAndBind(services[i].name, services[i].customId, app, 'api/', services[i].security);
         }
-        
+
     }
 }
-

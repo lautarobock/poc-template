@@ -1,5 +1,5 @@
 define(['../resources'], function() {
-	
+
 	var beer = angular.module("dl.beer", ["dl.resources"]);
 
     beer.run(['$templateCache',function($templateCache) {
@@ -8,9 +8,9 @@ define(['../resources'], function() {
         //legacy for califications page
         $templateCache.put("score.html",'<span beer-percentil="getValue(row,header)"></span>');
     }]);
-    
 
-	beer.controller("BeerController", 
+
+	beer.controller("BeerController",
         ['$scope', 'Beer', '$translate', 'DLHelper', 'Brewery','$location','Cache', '$log', 'Responsive','RatingService',
         function($scope, Beer, $translate, DLHelper, Brewery,$location,Cache, $log, Responsive,RatingService) {
 
@@ -79,7 +79,7 @@ define(['../resources'], function() {
                     template: '<span class="{{header.class($model)}}">{{$model.score.avg||"-"}}</span>',
                     class: function(beer) {
                         if ( beer.score ) {
-                            return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);        
+                            return 'badge alert-' + DLHelper.colorByScore(beer.score.avg);
                         } else {
                             return 'badge';
                         }
@@ -103,7 +103,7 @@ define(['../resources'], function() {
                     tooltip: $translate('beer.data.score.my.help'),
                     templateUrl: 'beer/list/my-score.html',
                     getMyScore: function(beer) {
-                    
+
                         var avg = RatingService.avgForBeer(beer);
                         if ( avg && avg >= 0 ) {
                             return parseFloat(avg.toFixed(1));
@@ -115,14 +115,14 @@ define(['../resources'], function() {
                     class: function(header, beer) {
                         var s = header.getMyScore(beer);
                         if ( s ) {
-                            return 'badge alert-' + DLHelper.colorByScore(s);        
+                            return 'badge alert-' + DLHelper.colorByScore(s);
                         } else {
                             return 'badge';
                         }
                     }
                 }
             ];
-            
+
             $scope.filterData = {};
             $scope.filterData['[style]'] = {
                 caption: $translate('beer.data.style'),
@@ -202,13 +202,13 @@ define(['../resources'], function() {
 		};
 	});
 
-    beer.factory("BeerEditControllerResolve", 
+    beer.factory("BeerEditControllerResolve",
             ['Cache', 'StyleByLabel', 'Brewery', '$q',
             function(Cache, StyleByLabel, Brewery, $q) {
         return function() {
             var p = $q.all([
-                Cache.styles().$promise, 
-                StyleByLabel.query().$promise, 
+                Cache.styles().$promise,
+                StyleByLabel.query().$promise,
                 Brewery.query().$promise,
                 Cache.categories().$promise]);
             return p;
@@ -217,13 +217,13 @@ define(['../resources'], function() {
 
 	beer.controller("BeerEditController", [
                 '$scope', 'Brewery', 'StyleByLabel',
-                '$location', '$modal', 
+                '$location', '$modal',
                 '$rootScope', '$timeout', '$q',
                 'MainTitle', 'focus','combosData','beer','$translate',
-		function( 
+		function(
                 $scope, Brewery, StyleByLabel,
-                $location,   $modal,   
-                $rootScope,   $timeout,   $q,  
+                $location,   $modal,
+                $rootScope,   $timeout,   $q,
                 MainTitle,   focus, combosData, beer, $translate) {
 
             $scope.$log.debug("BEER",beer);
@@ -249,13 +249,13 @@ define(['../resources'], function() {
 
 				modalInstance.result.then(function (brewery) {
 				  	brewery._id = brewery.name.replace(/[^a-z0-9]/ig, '');
-				  	
+
 				  	brewery.$save(function(saved) {
 						$scope.breweries = Brewery.query(function() {
 							$timeout(function() {
 								$scope.beer.brewery = saved._id;
 							},100);
-							
+
 						});
 					});
 
@@ -330,12 +330,12 @@ define(['../resources'], function() {
                         $location.path('/beer/detail/' + beer._id);
                     },function(err) {
                         if ( err.status == 401 ) {
-                            console.log("Operacion no autorizada",err);    
+                            console.log("Operacion no autorizada",err);
                         } else {
-                            console.log("Error",err);    
+                            console.log("Error",err);
                         }
-                        
-                    });    
+
+                    });
                 }
 			};
 
@@ -354,10 +354,10 @@ define(['../resources'], function() {
 
 	}]);
 
-	beer.controller("BeerDetailController", 
-		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter', 
+	beer.controller("BeerDetailController",
+		        ['$scope', 'Beer','$routeParams', 'Rating', 'DLHelper', '$filter',
                 'MainTitle','CellarService','RatingService', 'YesNo',
-		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,   
+		function( $scope,   Beer,  $routeParams,   Rating,   DLHelper,   $filter,
             MainTitle, CellarService, RatingService, YesNo) {
 
 			$scope.beer = Beer.get({_id: $routeParams.beer_id, populate:true}, function() {
@@ -386,7 +386,7 @@ define(['../resources'], function() {
                     }
                     if ( anos > 1 ) {
                         var resp = 'Embotellada en ' + dateFormat(rating.bottled,'dd/MM/yyyy') + ' tomada con ' + Math.floor(anos) + ' años';
-                        if ( rest != 0 ) {
+                        if ( rest !== 0 ) {
                              resp += 'y ' + rest + ' meses';
                         }
                         return resp;
@@ -411,7 +411,7 @@ define(['../resources'], function() {
             };
 
             $scope.embed = function(beer) {
-                return '<iframe src="http://www.birrasquehetomado.com.ar/html/tag.html#/beer/tag/' + beer._id + 
+                return '<iframe src="http://www.birrasquehetomado.com.ar/html/tag.html#/beer/tag/' + beer._id +
                 '" width="400" height="200" scrolling="no" frameborder="0"></iframe>'
             };
 
@@ -423,7 +423,7 @@ define(['../resources'], function() {
                         RatingService.loadMyRatings();
                     });
                 });
-                
+
             };
 
 	}]);

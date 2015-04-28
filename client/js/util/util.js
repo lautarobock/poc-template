@@ -1,5 +1,5 @@
 (function(exports) {
-    
+
     function DiffHelper() {
         var ready;
         var result;
@@ -35,7 +35,7 @@
                     }
                     this.compare(obj1,obj2,i,parent||p);
                 }
-                
+
             }
         };
 
@@ -64,7 +64,7 @@
                 }
                 if ( !fail ) {
                     result.push(diff[i]);
-                }    
+                }
             }
         };
 
@@ -105,8 +105,8 @@
                 if ( index !== -1 ) {
                     array.splice(index,1);
                 }
-                return index;       
-            }            
+                return index;
+            }
         },
         filter: function(array, comparator) {
             var result = [];
@@ -124,7 +124,7 @@
                     return i;
                 }
             }
-            return -1;  
+            return -1;
         },
         cross: function(array1, array2) {
             return this.filter(array1, function(item1) {
@@ -175,6 +175,65 @@
             }
         }
 
+    };
+
+    exports.dateDiff = function(from, to) {
+        from = new Date(from);
+        to = new Date(to);
+        var time = from.getTime() - to.getTime();
+
+        var response = '';
+        if ( time > 0 ) {
+            //Pasado
+            response += 'Hace ';
+        } else if ( time < 0 ) {
+            //Futuro
+            response += 'Dentro de ';
+            time = -time;
+        } else {
+            return 'Este mismo momento';
+        }
+
+        var SECOND = 1000;
+        var MINUTE = SECOND * 60;
+        var HOUR = MINUTE * 60;
+        var DAY = HOUR * 24;
+        var MONTH = DAY * 30;
+        var YEAR = DAY * 365;
+
+
+        var years = Math.floor(time / YEAR);
+        var yearRest = time % YEAR;
+        var months = Math.floor(yearRest / MONTH);
+        var monthRest = yearRest % MONTH;
+        var days = Math.floor(monthRest / DAY);
+
+        if ( years === 0 && months ===1 && days === 1) {
+            response+= ' 1 mes y ' + ' 1 dia.';
+        } else if ( years === 0 && months ===1 && days !== 1) {
+            response+= ' 1 mes y ' + days + ' dias.';
+        } else if ( years === 0 && months !==0 ) {
+            response+= months + ' meses y ' + days + ' dias.';
+        } else if ( years === 0 && months ===0 && days === 1) {
+            response+= ' 1 dia.';
+        } else if ( years === 0 && months ===0 && days === 0) {
+            return 'Hoy';
+        } else if ( years === 0 && months ===0 && days !== 1) {
+            response+= days + ' dias.';
+        } else if ( years !== 1 && months === 1) {
+            response+= years + ' años y ' + ' 1  mes.';
+        } else if ( years !== 1 && months > 1) {
+            response+= years + ' años y ' + months + ' meses.';
+        } else if ( years === 1 && months === 1) {
+            response+= ' 1 año y 1 mes.';
+        } else if ( years === 1 && months > 1) {
+            response+= ' 1 año y ' + months + ' meses.';
+        } else if ( years > 1 ){
+            response+= years + ' años.';
+        } else if ( years === 1 ){
+            response+= ' 1 año.';
+        }
+        return response;
     };
 
     exports.pad = function(value,zeros) {

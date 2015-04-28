@@ -128,7 +128,7 @@ var berwerySchema = new Schema({
     location: LocationSchema,
     address_components: [AddressSchema],
     version: [VersionSchema]
-},{ _id: false, 
+},{ _id: false,
     toObject: {virtuals: true},
     toJSON: {virtuals: true}
 });
@@ -143,14 +143,14 @@ function addVitualAddressComponent(schema, virtual) {
                 return index != -1 ? 0 : -1;
             });
             if ( indexOf != -1 ) {
-                return this.address_components[indexOf].long_name;    
+                return this.address_components[indexOf].long_name;
             } else {
                 return null;
             }
         } else {
             return null;
         }
-    });    
+    });
 }
 
 
@@ -198,6 +198,32 @@ exports.Cellar = mongoose.model("Cellar",new Schema({
     "amount": Number,
     "date": Date
 },{ _id: false }));
+
+var InexactDate = {
+    "date": Date,
+    "exact": Boolean
+};
+
+exports.VintageCellar = mongoose.model('VintageCellar', new Schema({
+    "_id": String,
+    "user": {type:String, ref: 'User'},
+    "beer": {type:String, ref: 'Beer'},
+    "title": String,
+    "left": Number,
+    "bottling": InexactDate,
+    "expiration": InexactDate,
+    "entry": InexactDate,
+    "windowStart": Date,
+    "windowEnd": Date,
+    "expectation": String,
+    "drinkings": [{
+        "plannedDate": Date,
+        "drunkDate": Date,
+        "expectation": String,
+        "rating": {type:String, ref: 'Rating'},
+        "drunk": Boolean
+    }]
+}));
 
 exports.Activity = mongoose.model("Activity", new Schema({
     user: {type:String, ref: 'User'},

@@ -1,7 +1,6 @@
 var model = require('../domain/model.js');
 var mongoose = require('mongoose');
 var mongoutil = require("./util/mongoutil.js");
-var async = require("async");
 
 exports.save = function(req, res) {
     delete req.body._id;
@@ -19,7 +18,7 @@ exports.findAll = function(req, res) {
     }
     query.exec(function(err,results) {
         res.send(results);
-    });    
+    });
 };
 
 exports.clearZeros = function(req, res) {

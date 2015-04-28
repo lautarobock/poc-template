@@ -7,6 +7,7 @@ define("app", [
     "brewery/brewery",
     "rating/rating",
     "cellar/cellar",
+    "vintage/vintage",
     "activity/activity",
     "stats/stats",
     "side/side",
@@ -30,6 +31,7 @@ define("app", [
         'dl.brewery',
         'dl.rating',
         'dl.cellar',
+        'dl.vintage',
         'dl.activity',
         'dl.stats',
         'dl.side',
@@ -43,10 +45,10 @@ define("app", [
     //Esto esta aca porque este .js se carga en forma asincronica
     angular.element(document).ready(function() {
         // setTimeout(function() {
-            angular.bootstrap(document, ['app']);    
+            angular.bootstrap(document, ['app']);
         // },3000);
     });
-    
+
     app.run(['$rootScope',function($rootScope) {
         navigator.geolocation.getCurrentPosition(function(position) {
             if (position) {
@@ -76,8 +78,8 @@ define("app", [
     app.run(
         ['$rootScope','Login','evaluateAuthResult','User', '$log', 'CellarService', 'RatingService',
             function(
-                    $rootScope, 
-                    Login, 
+                    $rootScope,
+                    Login,
                     evaluateAuthResult,
                     User,
                     $log,
@@ -96,8 +98,8 @@ define("app", [
                 } else if ( googleUser ) {
                     $rootScope.googleUser = googleUser;
                     Login.get({
-                            google_id:googleUser.id, 
-                            name:googleUser.name, 
+                            google_id:googleUser.id,
+                            name:googleUser.name,
                             email: googleUser.email
                         }, function(user) {
                             $rootScope.user = User.get({_id: user._id}, function(user) {
@@ -112,7 +114,7 @@ define("app", [
                 }
             });
         });
-        
+
     }]);
 
 
@@ -120,7 +122,7 @@ define("app", [
     app.config(['$logProvider',function($logProvider) {
         $logProvider.debugEnabled(false);
     }]);
- 
+
     app.config(['abmProvider',function(abmProvider) {
         // abmProvider.setTemplateDir('template');
     }]);
@@ -132,12 +134,12 @@ define("app", [
         $translateProvider.preferredLanguage('es');
 
         //Configure Routes
-        $routeProvider.            
+        $routeProvider.
                 when('/beer/new', {
-                    templateUrl: 'beer/beer-edit.html',   
+                    templateUrl: 'beer/beer-edit.html',
                     controller: 'BeerEditController',
                     resolve: {
-                        combosData: ['BeerEditControllerResolve', 
+                        combosData: ['BeerEditControllerResolve',
                             function(BeerEditControllerResolve) {
                                 return BeerEditControllerResolve();
                             }
@@ -148,10 +150,10 @@ define("app", [
                     }
                 }).
                 when('/beer/edit/:beer_id', {
-                    templateUrl: 'beer/beer-edit.html',   
+                    templateUrl: 'beer/beer-edit.html',
                     controller: 'BeerEditController',
                     resolve: {
-                        combosData: ['BeerEditControllerResolve', 
+                        combosData: ['BeerEditControllerResolve',
                             function(BeerEditControllerResolve) {
                                 return BeerEditControllerResolve();
                             }
@@ -172,12 +174,55 @@ define("app", [
 
                 when('/cellar', {templateUrl: 'cellar/cellar.html',   controller: 'CellarController'}).
 
+                when('/vintage', {templateUrl: 'vintage/vintage.html',   controller: 'VintageController'}).
+                when('/vintage/new', {
+                    templateUrl: 'vintage/vintage-edit.html',
+                    controller: 'VintageEditController',
+                    resolve: {
+                        combosData: [
+                            'VintageEditControllerResolve',
+                            function(VintageEditControllerResolve) {
+                                return VintageEditControllerResolve();
+                            }
+                        ],
+                        vintage: ['VintageCellar', function(VintageCellar) {
+                            var vintage = new VintageCellar();
+                            vintage.left = 0;
+                            vintage.entry = {
+                                date: new Date()
+                            };
+                            return vintage;
+                        }]
+                    }
+                }).
+                when('/vintage/edit/:vintage_id', {
+                    templateUrl: 'vintage/vintage-edit.html',
+                    controller: 'VintageEditController',
+                    resolve: {
+                        combosData: [
+                        'VintageEditControllerResolve',
+                            function(VintageEditControllerResolve) {
+                                return VintageEditControllerResolve();
+                            }
+                        ],
+                        vintage: [
+                            'VintageCellar',
+                            '$route',
+                            function(VintageCellar, $route) {
+                                return VintageCellar.get({
+                                    _id: $route.current.params.vintage_id
+                                }).$promise;
+                            }
+                        ]
+                    }
+                }).
+
                 when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
 
                 when('/statsd3', {templateUrl: 'stats/statsd3.html',   controller: 'StatsD3Controller'}).
 
                 when('/rating', {
-                    templateUrl: 'rating/rating.html',   
+                    templateUrl: 'rating/rating.html',
                     controller: 'RatingBeerController'
                     // ,
                     // resolve: {
@@ -191,7 +236,7 @@ define("app", [
                 when('/rating/new', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/edit/:rating_id', {templateUrl: 'rating/rating-edit.html',   controller: 'RatingEditController'}).
                 when('/rating/detail/:rating_id', {templateUrl: 'rating/rating-detail.html',   controller: 'RatingDetailController'}).
-                
+
                 when('/activity', {templateUrl: 'activity/activity.html', controller: 'ActivityController'}).
 
                 otherwise({redirectTo: '/beer'});
@@ -251,7 +296,7 @@ define("app", [
     });
 
     app.config(['$httpProvider',function($httpProvider) {
-        $httpProvider.interceptors.push('httpInterceptor');    
+        $httpProvider.interceptors.push('httpInterceptor');
     }]);
-    
+
 });
