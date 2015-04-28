@@ -1,0 +1,199 @@
+<div main-content>
+    <h2 ng-show="vintage._id">{{ beer.name }}</h2>
+    <h2 ng-hide="vintage._id">{{ 'vintage.new' | translate }}</h2>
+    <form class="bs-example form-horizontal ">
+        <fieldset>
+            <legend>{{ 'beer.form.general' | translate }}</legend>
+            <div class="form-group" >
+                <div class="col-lg-6" ng-class="errorClass('beer')">
+                    <label for="beer" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.beer.help' | translate }}">
+                        {{ 'beer.data.beer' | translate }}
+                    </label>
+                    <input
+                        typeahead="beer._id as beer.name for beer in beers | filter:$viewValue | orderBy:'name'"
+                        class="form-control"
+                        type="text"
+                        ng-model="vintage.beer"
+                        typeahead-editable="false"
+                        typeahead-on-select="onSelectBeer($item)"
+                        typeahead-wait-ms="500"
+                        typeahead-input-formatter="formatBeerSelection($model,beers)"
+                        placeholder="Comience a escribir para buscar"/>
+                </div>
+                <div class="col-lg-6" ng-class="errorClass('title')" dl-input-text id="vintagetitle" value="vintage.title" caption="{{'vintage.data.title'|translate}}"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-3" ng-class="errorClass('bottling')">
+                    <label for="bottling" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.bottling.help' | translate }}">
+                        {{ 'vintage.data.bottling' | translate }}
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="vintage.bottling.exact">
+                        </span>
+                        <input type="text" id="bottling" readonly="true" class="form-control" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="vintage.bottling.date" is-open="opened.bottling" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="openDate($event,'bottling')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="control-label" style="height: 30px;"></label>
+                    <div date-diff from="now" to="vintage.bottling.date"></div>
+                </div>
+                <div class="col-lg-3">
+                    <label for="expiration" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.expiration.help' | translate }}">
+                        {{ 'vintage.data.expiration' | translate }}
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="vintage.expiration.exact">
+                        </span>
+                        <input type="text" id="expiration" readonly="true" class="form-control" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="vintage.expiration.date" is-open="opened.expiration" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="openDate($event,'expiration')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="control-label" style="height: 30px;"></label>
+                    <div date-diff from="now" to="vintage.expiration.date"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-3" ng-class="errorClass('entry')">
+                    <label for="entry" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.entry.help' | translate }}">
+                        {{ 'vintage.data.entry' | translate }}
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="vintage.entry.exact">
+                        </span>
+                        <input type="text" id="entry" readonly="true" class="form-control" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="vintage.entry.date" is-open="opened.entry" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="openDate($event,'entry')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="control-label" style="height: 30px;"></label>
+                    <div date-diff from="now" to="vintage.entry.date"></div>
+                </div>
+                <div class="col-lg-6" ng-class="errorClass('left')" dl-input-number id="vintageleft" value="vintage.left" caption="{{'vintage.left.title'|translate}}"></div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{ 'vintage.form.vintageData' | translate }}</legend>
+            <div class="form-group">
+                <div class="col-lg-3" ng-class="errorClass('windowStart')">
+                    <label for="bottling" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.windowStart.help' | translate }}">
+                        {{ 'vintage.data.windowStart' | translate }}
+                    </label>
+                    <div class="input-group">
+                        <input type="text" id="windowStart" readonly="true" class="form-control" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="vintage.windowStart" is-open="opened.windowStart" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="openDate($event,'windowStart')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="control-label" style="height: 30px;"></label>
+                    <div date-diff from="now" to="vintage.windowStart"></div>
+                </div>
+                <div class="col-lg-3" ng-class="errorClass('windowEnd')">
+                    <label for="bottling" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.windowEnd.help' | translate }}">
+                        {{ 'vintage.data.windowEnd' | translate }}
+                    </label>
+                    <div class="input-group">
+                        <input type="text" id="windowEnd" readonly="true" class="form-control" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="vintage.windowEnd" is-open="opened.windowEnd" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="openDate($event,'windowEnd')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="control-label" style="height: 30px;"></label>
+                    <div date-diff from="now" to="vintage.windowEnd"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <label for="expectation" class="control-label">{{ 'vintage.data.expectation' | translate }}</label>
+                    <div>
+                        <textarea class="form-control" rows="5" ng-model="vintage.expectation" id="expectation"></textarea>
+                        <span class="help-block">{{ 'vintage.data.expectation.help' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <button ng-click="addDrinking()" type="button" class="btn btn-success">Programar una fecha</button>
+        <form class="form-horizontal">
+            <h3>{{ 'vintage.data.drinkins' | translate }}</h3>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="drinking in vintage.drinkings | orderBy:'plannedDate'">
+                    <div>
+                        <span class="pull-right" secure>
+                            <a href="" ng-click="removeDrinking(drinking)">
+                                <span class="glyphicon glyphicon-remove"/>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-3" ng-class="errorClass('plannedDate')">
+                            <label for="bottling" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.plannedDate.help' | translate }}">
+                                {{ 'vintage.data.plannedDate' | translate }}
+                            </label>
+                            <div class="input-group">
+                                <input type="text" id="plannedDate" readonly="true" class="form-control" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="drinking.plannedDate" is-open="drinkingPlannedOpen[$index]" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="openDrinkingPlannedOpen($event,$index)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="control-label" style="height: 30px;"></label>
+                            <div date-diff from="now" to="drinking.plannedDate"></div>
+                        </div>
+                        <div class="col-lg-3" ng-class="errorClass('drunkDate')">
+                            <label for="bottling" class="control-label" tooltip-placement="right" tooltip="{{ 'vintage.data.drunkDate.help' | translate }}">
+                                <span ng-hide="drinking.drunk">{{ 'vintage.data.drunkDateNot' | translate }}</span>
+                                <span ng-show="drinking.drunk">{{ 'vintage.data.drunkDate' | translate }}</span>
+                            </label>
+                            <div class="checkbox" ng-hide="drinking.drunk">
+                                <label>
+                                    <input type="checkbox" ng-model="drinking.drunk">
+                                </label>
+                            </div>
+                            <div class="input-group" ng-show="drinking.drunk">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" ng-model="drinking.drunk">
+                                </span>
+                                <input type="text" id="drunkDate" readonly="true" class="form-control" show-button-bar="false" show-weeks="false" datepicker-popup="dd/MM/yyyy" ng-model="drinking.drunkDate" is-open="drinkingDrunkOpen[$index]" ng-required="true" close-text="{{ 'popup.close' | translate }}" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="drinkingDrunkOpen($event,$index)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="control-label" style="height: 30px;"></label>
+                            <div date-diff from="now" to="drinking.drunkDate"></div>
+                        </div>
+                    </div>
+                    <textarea class="form-control" rows="5" ng-model="drinking.expectation" id="drinkingexpectation"></textarea>
+                </li>
+            </ul>
+        </form>
+        <div class="form-group">
+            <div class="col-lg-12">
+                <div class="pull-right">
+                    <a class="btn btn-default" href="#/beer" >{{ 'form.cancel' | translate }}</a>
+                    <button type="submit" class="btn btn-primary" ng-click="save()">{{ 'form.save' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <alert ng-repeat="(key,value) in error" type="'danger'">{{value}}</alert>
+</div>
+<div side-bar>
+    <div ng-include="'side/side.html'"></div>
+</div>
