@@ -172,7 +172,8 @@ define([], function() {
                 'vintage.data.drinkins': 'A tomar en',
                 'vintage.data.plannedDate': 'Fecha planeada',
                 'vintage.data.drunkDateNot': 'Ya tomada',
-                'vintage.data.drunkDate': 'Tomada en fecha'
+                'vintage.data.drunkDate': 'Tomada en fecha',
+                'vintage.menu': 'Bodega Vintage'
             }
         };
 });

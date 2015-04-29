@@ -13,6 +13,9 @@ define([], function() {
         mousetrap('g c', $rootScope, function() {
             $location.url("cellar");
         });
+        mousetrap('g v', $rootScope, function() {
+            $location.url("vintage");
+        });
         mousetrap('g s', $rootScope, function() {
             $location.url("stats");
         });
@@ -24,11 +27,11 @@ define([], function() {
             replace: true,
             templateUrl: 'menu/menu.html',
             controller: function($scope) {
-                
+
                 $scope.isCollapsed = true;
-                
+
                 $scope.toogleMenu = function() {
-                    $scope.isCollapsed = !$scope.isCollapsed;            
+                    $scope.isCollapsed = !$scope.isCollapsed;
                 }
 
             }

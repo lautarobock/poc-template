@@ -216,6 +216,27 @@ define("app", [
                         ]
                     }
                 }).
+                when('/vintage/detail/:vintage_id', {
+                    templateUrl: 'vintage/vintage-edit.html',
+                    controller: 'VintageEditController',
+                    resolve: {
+                        combosData: [
+                        'VintageEditControllerResolve',
+                        function(VintageEditControllerResolve) {
+                            return VintageEditControllerResolve();
+                        }
+                        ],
+                        vintage: [
+                            'VintageCellar',
+                            '$route',
+                            function(VintageCellar, $route) {
+                                return VintageCellar.get({
+                                    _id: $route.current.params.vintage_id
+                                }).$promise;
+                            }
+                        ]
+                    }
+                }).
 
                 when('/stats', {templateUrl: 'stats/stats.html',   controller: 'StatsController'}).
 

@@ -30,7 +30,7 @@ define(["resources"], function() {
                 field:'title',
                 caption: $translate('beer.data.beer'),
                 type: 'link',
-                href: function(row) {return '#/beer/detail/' + row.beer._id;},
+                href: function(row) {return '#/vintage/detail/' + row._id;},
                 class: function(cellar) {
                     if ( cellar.amount === 0 ) {
                         return 'dl-line-through';
