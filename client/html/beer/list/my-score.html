@@ -1,5 +1,0 @@
-<span ng-class="header.class(header,$model)">
-	<!-- Deprecated -->
-	<span ng-hide="header.getMyScore($model)==-1">{{ header.getMyScore($model) || '-' }}</span>
-	<span style="color:orange" tooltip="{{'beer.drunk' | translate}}" ng-show="header.getMyScore($model)==-1" class="glyphicon glyphicon-ok"></span>
-</span>

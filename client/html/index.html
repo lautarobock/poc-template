@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
   <head>
         <title>{{mainTitle()}}</title>
         <!-- <link rel="stylesheet" type="text/css" href="css/topcoat-mobile-light.css"> -->
@@ -19,107 +19,36 @@
         <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css"></link> -->
         <!-- Theme: http://bootswatch.com/slate/ -->
 
-        
+
         <link rel="stylesheet" href="../css/bootstrap.slate.min.css">
         <link rel="stylesheet" href="../css/style.css"></link>
-
-        <!-- https://github.com/evilstreak/markdown-js/tree/master/test/features -->        
-        <script src="../lib/markdown/markdown.min.js"></script>
-        <!-- http://craig.is/killing/mice -->
-        <!-- <script src="../lib/mousetrap/mousetrap.min.js"></script> -->
         <script src="../lib/angular/angular.min.js"></script>
         <script src="../lib/angular-route/angular-route.min.js"></script>
         <script src="../lib/angular-resource/angular-resource.min.js"></script>
-        <script src="../lib/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="../lib/angular-bootstrap/ui-bootstrap.min.js"></script>
         <script src="../lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <script src="../lib/angular-translate/angular-translate.min.js"></script>
-        <script src="../lib/lautarobock-ng-util/dist/lautarobock-ng-util.min.js"></script>
-        <script src="../lib/highcharts.com/js/adapters/standalone-framework.src.js"></script>
-        <script src="../lib/highcharts.com/js/highcharts.src.js"></script>
-        <!--<script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>-->
-        <script src="../lib/highcharts-ng/dist/highcharts-ng.min.js"></script>
-        <script src="../lib/d3/d3.min.js"></script>
-        <script src="../lib/underscore/underscore-min.js"></script>
-        <script src="../lib/angular-google-maps/dist/angular-google-maps.min.js"></script>
-        <script src="../lib/angularjs-google-places-fork/dist/angularjs-google-places.min.js"></script>
-        <script src="../js/util/util.js"></script>
-        <script src="../js/stats/StatsService.js"></script>
-        <script data-main="../js/app" src="../lib/requirejs/require.js"></script>
+        <!-- App -->
+        <script src="../js/app.js"></script>
+        <script src="../js/template/template.js"></script>
 
-       
+
+
   </head>
   <body style="margin-top: 100px; " >
-    <div loading>{{'menu.loading'|translate}}</div>
-    <div main-menu></div>
-
     <div class="container" style="width:90%">
       <div class="row">
         <div ng-view></div>
       </div>
-        
+
       <hr>
-      
+
       <footer>
         <div class="row">
           <div class="col-lg-12">
-            <p>Todos los derechos reservados para mi :)</p>
           </div>
         </div>
       </footer>
 
     </div><!-- /.container -->
-
-
-
-    <script type="text/javascript">
-
-        (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/plusone.js?onload=onLoadSuccess';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        })();
-
-        var google_client_id = '85681441773-v06bveckr9sig8k5aqtpbi19a1ogq511.apps.googleusercontent.com';
-        var google_scope = ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'];
-
-        //Registrar nuevo usuario
-        function googleSignIn() {
-            gapi.auth.authorize({
-                client_id: google_client_id,
-                scope: google_scope,
-                immediate:false
-            },
-            cb);
-        }
-
-        //Acceder con usuario existente
-        function googleLogIn() {
-            gapi.auth.authorize({
-                client_id: google_client_id,
-                scope: google_scope,
-                immediate:true
-            },
-            cb);
-        }
-
-        function onLoadSuccess() {
-          googleLogIn()   
-        }
-
-        function cb(authResult) {
-            function waitForNg() {
-                // console.log("Try");
-                var $scope = angular.element(document.body).scope();
-                if ( !$scope ) {
-                    setTimeout(waitForNg,500);
-                } else {
-                    $scope.$emit('g+login', authResult);
-                }
-            }
-            waitForNg();
-        }
-    </script>    
   </body>
-  
 </html>

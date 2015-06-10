@@ -9,32 +9,20 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'client/lib/markdown/markdown.min.js',
       // 'client/lib/mousetrap/mousetrap.min.js',
       'client/lib/angular/angular.min.js',
       'client/lib/angular-route/angular-route.min.js',
       'client/lib/angular-resource/angular-resource.min.js',
-      'client/lib/angular-sanitize/angular-sanitize.min.js',
       'client/lib/angular-mocks/angular-mocks.js',
       'client/lib/angular-bootstrap/ui-bootstrap.min.js',
       'client/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
-      'client/lib/angular-translate/angular-translate.min.js',
-      'client/lib/highcharts.com/js/adapters/standalone-framework.src.js',
-      'client/lib/highcharts.com/js/highcharts.src.js',
-      'client/lib/highcharts-ng/dist/highcharts-ng.min.js',
-      // 'client/lib/underscore/underscore-min.js',
-      // 'client/lib/angular-google-maps/dist/angular-google-maps.min.js',
-      // 'client/lib/angularjs-google-places-fork/dist/angularjs-google-places.min.js',
-      'client/js/util/util.js',
-      'client/js/stats/StatsService.js',
       // 'client/js/app.js',
       'client_test/test-main.js',
-      {pattern: 'client_test/DataHelper.js', included: false},
       {pattern: 'client_test/**/*Spec.js', included: false},
       {pattern: 'client/js/**/*.js', included: false},
       {pattern: 'client/lib/mousetrap/mousetrap.min.js', included: false}
