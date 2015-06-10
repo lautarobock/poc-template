@@ -11,26 +11,29 @@
 
     });
 
-    app.config(function ($routeProvider) {
+    app.config(function ($stateProvider, $urlRouterProvider) {
 
+        $urlRouterProvider.otherwise('package');
         //Configure Routes
-        $routeProvider
-            .when('/package', {
+        $stateProvider
+            .state('package', {
+                url: '/package',
                 templateUrl: 'package/package.html',
                 controller: 'PackageController',
                 controllerAs: 'ctrl'
             })
-            .when('/package/:Id', {
-                templateUrl: 'package/package-edit.html',
+            .state('package-detail', {
+                url: '/package/:Id',
+                templateUrl: 'package/package-detail.html',
                 controller: 'PackageEditController',
                 controllerAs: 'ctrl'
             })
-            .when('/template', {
-                templateUrl: 'template/template.html',
-                controller: 'TemplateController',
-                controllerAs: 'ctrl'
-            })
-            .otherwise({redirectTo: '/package'});
+        //     .when('/template', {
+        //         templateUrl: 'template/template.html',
+        //         controller: 'TemplateController',
+        //         controllerAs: 'ctrl'
+        //     })
+        //     .otherwise({redirectTo: '/package'});
 
     });
 })();
