@@ -1,20 +1,36 @@
 (function() {
 
     var app = angular.module("app", [
-        'ngRoute',
+        'ui.router',
         'ui.bootstrap',
-        'template'
+        'package',
+        'resources'
     ]);
 
     app.run(function($rootScope) {
 
     });
 
-    app.config('$routeProvider', function ($routeProvider) {
+    app.config(function ($routeProvider) {
 
         //Configure Routes
-        $routeProvider.when('/template', {templateUrl: 'template/template.html',   controller: 'TemplateController'}).
-                otherwise({redirectTo: '/template'});
+        $routeProvider
+            .when('/package', {
+                templateUrl: 'package/package.html',
+                controller: 'PackageController',
+                controllerAs: 'ctrl'
+            })
+            .when('/package/:Id', {
+                templateUrl: 'package/package-edit.html',
+                controller: 'PackageEditController',
+                controllerAs: 'ctrl'
+            })
+            .when('/template', {
+                templateUrl: 'template/template.html',
+                controller: 'TemplateController',
+                controllerAs: 'ctrl'
+            })
+            .otherwise({redirectTo: '/package'});
 
     });
 })();

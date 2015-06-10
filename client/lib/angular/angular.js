@@ -6802,7 +6802,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
         this[key] = value;
 
-        // translate normalized key to actual key
+        //  normalized key to actual key
         if (attrName) {
           this.$attr[key] = attrName;
         } else {
@@ -8338,7 +8338,7 @@ function directiveNormalize(name) {
  *
  *
  * @param {string} name Normalized element attribute name of the property to modify. The name is
- *          reverse-translated using the {@link ng.$compile.directive.Attributes#$attr $attr}
+ *          reverse-d using the {@link ng.$compile.directive.Attributes#$attr $attr}
  *          property to the original name.
  * @param {string} value Value to set the attribute to. The value can be an interpolated string.
  */
@@ -18695,7 +18695,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  * # Submitting a form and preventing the default action
  *
  * Since the role of forms in client-side Angular applications is different than in classical
- * roundtrip apps, it is desirable for the browser not to translate the form submission into a full
+ * roundtrip apps, it is desirable for the browser not to  the form submission into a full
  * page reload that sends the data to the server. Instead some javascript logic should be triggered
  * to handle the form submission in an application-specific way.
  *

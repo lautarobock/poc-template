@@ -1,0 +1,21 @@
+<div>
+  <h1>Packages</h1>
+  <table class="table table-hover">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="package in ctrl.packages">
+              <td>{{package.Name}}</td>
+              <td>{{package.Description}}</td>
+              <td>
+                  <a href="#/package/{{package.Id}}" class="btn btn-primary">Open</a>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
